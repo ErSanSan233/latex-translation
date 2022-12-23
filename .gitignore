@@ -1,0 +1,6 @@
+
+*.aux
+*.log
+*.gz
+*.toc
+*.code-workspace

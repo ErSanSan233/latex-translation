@@ -1,0 +1,75 @@
+% press command+option+B to build, or change "Auto Build: Run" in Settings.
+
+\documentclass[12pt]{book}
+
+\usepackage{xeCJK}
+\usepackage{geometry}
+\usepackage{titlesec}
+\usepackage{bm}
+\usepackage{underlin}
+\usepackage{wrapfig}
+\usepackage{caption}
+\usepackage{graphicx}
+\usepackage{pdfpages}
+\usepackage{multirow}%表格合并行列单元格
+
+% 分栏并浮动图片
+\usepackage{float}
+\usepackage{multicol}
+\usepackage[none]{hyphenat}
+\usepackage{appendix}
+
+% 数学
+\usepackage{unicode-math}%正体希腊字母
+\usepackage{mathrsfs}
+\usepackage{amsfonts}
+
+% 设置图书版式
+\usepackage{marginnote}%侧栏
+\usepackage{fancyhdr}%页眉页脚页码
+\usepackage{indentfirst}%首段空两格
+\usepackage{mdframed}%加阴影
+\usepackage{color}%特殊字体颜色
+\usepackage{setspace}%行距
+
+%字体
+% \setCJKmainfont[
+%     BoldFont={NotoSerifCJKsc-Bold},
+%     ItalicFont={Kai},
+%     SlantedFont={STFangsong}]
+%     % {STSongti-SC-Regular}
+%     % {NotoSerifCJKsc-Regular}
+% % \setCJKsansfont{NotoSansCJKsc-Regular}
+% \setCJKmonofont{NotoSansMonoCJKsc-Regular}
+% \setmonofont{NotoSansMonoCJKsc-Regular}
+% \setmonofont{Inconsolata-Regular}
+
+
+\title{关于\LaTeX 的那些你想知道却从不敢问的问题\\{\small 或者说，如何在不会使用\LaTeX 的情况下使用\LaTeX }\\~\\Tout ce que vous avez toujours voulu savoir sur \LaTeX \ sans jamais oser le demander\\{\small Ou comment utiliser \LaTeX \ quand on n'y connaît goutte}\\~\\ ver. 1.5}
+\author{Vincent Lozano 著}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\mainmatter
+
+%正文版式
+% \newgeometry{
+
+% }
+\pagestyle{fancy}
+\fancyhead{} 
+\fancyhead[RO,LE]{\thepage}
+\fancyfoot{}
+% \setlength{\headheight}{30pt}
+% \renewcommand{\headrulewidth}{0.4pt}
+% \renewcommand{\footrulewidth}{0pt}
+% \setlength{\headwidth}{\linewidth + \marginparwidth + \marginparsep}
+\setlength{\parskip}{5pt}
+\setstretch{1.5}%倍行距
+
+\input{introduction.tex}
+% \begin{appendices}
+%     \section{附录}
+% \end{appendices}
+\end{document}
