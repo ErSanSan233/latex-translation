@@ -32,6 +32,30 @@
 \usepackage{color}%特殊字体颜色
 \usepackage{setspace}%行距
 
+\usepackage{hyperref}%所有网页用超链接同步挂靠
+
+\def\wz#1{
+    \href{#1}{\texttt{#1}}
+}
+
+\def\jz#1{%原书脚注
+    \footnote{#1}
+}
+
+\def\yz#1{%译注
+    \footnote{译注：#1}
+}
+
+\newenvironment{exclamation}[1][!]%原书的圆圈感叹号
+{
+    % ~\\
+    \begin{mdframed}
+        \paragraph*{\textcircled{#1}}
+}{      
+    \end{mdframed}
+}
+
+
 %字体
 % \setCJKmainfont[
 %     BoldFont={NotoSerifCJKsc-Bold},
@@ -69,6 +93,7 @@
 \setstretch{1.5}%倍行距
 
 \input{introduction.tex}
+\input{chapitre1.tex}
 % \begin{appendices}
 %     \section{附录}
 % \end{appendices}
