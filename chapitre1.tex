@@ -1,3 +1,5 @@
+\part{关于\LaTeX 的那些你想知道却从不敢问的问题}
+
 \chapter{基本原则}
 
 人若身患漏症，他因这漏症就不洁净了。——《圣经·利未记》15:2
@@ -20,5 +22,46 @@
 
 \begin{itemize}
     \item UNIX中，推荐使用\textsf{emacs}或\textsf{vi}，即使前者明显比后者更高级，但二者用户之间无结果的恶意争吵仍在继续。
-    \item 
+    \item \textsf{kile}和\textsf{texmaker}是已集成的开发环境。依靠它们，初学的用户在入门时会觉得更轻松。它们的特点是将编辑、编译和可视化集成在一个界面。这两个环境也使通过菜单、对话框或其他标签来探索\LaTeX 指令称为可能（如图\ref{fig:1.1}a所示）。
+    \item Windows中的对应产品是\textsf{\TeX nicCenter}（如图1.1b所示）。
+    \item macOS中的对应山品是\textsf{\TeX shop}和\textsf{i\TeX max}。
 \end{itemize}
+
+\begin{figure}[H]
+    %TODO 图
+    \centering
+    Kile
+
+    \TeX nicCenter
+    \caption{集成的两个开发环境：Linux中的Kile和Windows中的\TeX nicCenter。它们将编辑、编译和可视化集成在一个界面中}
+    \label{fig:1.1}
+\end{figure}
+
+你很快就会学到，用\LaTeX 制作文档是一个翻译（也称作\textit{编译}）的过程——将编辑者创建的源文件转换为用于显示或印刷的格式\jz{本章会略微多介绍一些这个格式。}。因此，发行版中内置了或多或少的著名工具，可以将编译后的不同格式的文件显示出来。
+
+\paragraph*{对于PDF格式：}除了著名的\textsf{acrobat reader}，UNIX中还有一些可以显示PDF文件，如\textsf{xpdf}、\textsf{evince}等。
+
+\paragraph*{对于DVI格式：}UNIX中的\textsf{xdvi}、\textsf{kdvi}和Windows中的\textsf{yap}都是可以显示这种\LaTeX 编译文件的程序。
+
+\paragraph*{对于PostScript格式：}\textsf{ghostscript}套件（在各平台下的名称可能有差异）可以显示PostScript文件。
+
+\begin{exclamation}
+    需要注意，为了使你选用的发行版包含\LaTeX 的“法文”模式，以确保能够正确处理断字（césure；英：hyphenation），我们需要在编译文档是需要更改其“日志”（见1.6节）%带有引用
+    以使法文模式加载：\\
+    \texttt{LaTeX2e <2005/12/01>\\
+    Babel <v3.8h> and hyphenation patterns for english, [...] dumylang, \fbox{french}, loaded.}
+\end{exclamation}
+
+\section{“生产”周期}
+
+即使\LaTeX 并不是通常意义上说的编译型语言，但我们仍然可以将制作一个\LaTeX 文档的周期与使用一款经典的编程语言开发软件的\textit{编辑—编译—执行}周期进行类比。
+
+\subsection{编辑}
+
+一个\LaTeX \textit{源}文件是一个文本文件\jz{即文件仅由组成其中符号的代码构成。}。因此，对\LaTeX 文件的操作并不依赖于某个特定的软件，只需要一个经典的文本编辑器即可。因此，若要操作\LaTeX 文档：
+
+\texttt{emacs }<文件名>\texttt{.tex &}
+
+或
+
+\texttt{vi }<文件名>\texttt{.tex}
