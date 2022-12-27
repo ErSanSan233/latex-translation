@@ -71,7 +71,7 @@
 注意，\TeX 既不是文字处理器［克努特将其称为“typesetting system”，可以翻译成“排字系统”（système de composition）］也不是一种编译后的编程语言。这是克努特关于\TeX 的一些说明\jz{出自\TeX Book的“The Name of the Game”一章。}：
 
 \begin{quote}
-    “英文的“technology”一词由希腊文词根“$ \tau\epsilon\chi...$”演变而来，这个词根有时也指艺术和科学技术。\TeX 由此而来，正是$ \tau\epsilon\chi$的大写形式。”
+    “英文的‘technology’一词由希腊文词根‘$ \tau\epsilon\chi...$’演变而来，这个词根有时也指艺术和科学技术。\TeX 由此而来，正是$ \tau\epsilon\chi$的大写形式。”
 \end{quote}
 
 关于\TeX 中“X”的发音：
@@ -88,3 +88,73 @@
 
 \section*{\LaTeX 是什么？}
 
+1985年，\TeX 已经传播了一段时间，莱斯利·兰波特（Leslie Lamport）将宏组合起来，创造了一个视野更广的格式，称为\LaTeX ，版本号为2.09。今天，\LaTeX 已经成为了事实标准，只有一些玍古的情况才会只支持\TeX 而不支持\LaTeX 。然而，\LaTeX 有点像\TeX 的“镀层”，提供\TeX 的宏的调用。有时，掌握\TeX 中的部分概念有助于从困难的处境中脱身。兰波特在他的书中这样说[10]：%TODO cf.
+
+\begin{quote}
+    “可以将\LaTeX 想象成一幢房子，它的构架和钉子就是由\TeX 提供的。如果你只是在房子中生活，那么你不需要准备钉子、搭建构架，但如果想要为房子新增一个房间，那么你就会需要它们。”
+\end{quote}
+
+他还说道：
+
+\begin{quote}
+    “\LaTeX 的出名是因为它允许作者从排版工作中抽离，并且专注在写作上。如果你在形式上花费了太多时间，那么你并没有很好地使用\LaTeX 。”
+\end{quote}
+
+从1994年至今，一个由欧美成员组成的团队［以弗朗克·米特尔巴赫（Frank Mittelbach）为核心］着手\LaTeX 的开发。1994年发布的\LaTeX 版本称作\LaTeXe。团队的长期目标是孵化一个名为\LaTeX 3的系统。
+
+\section*{使用许可}
+
+画重点：\TeX 和\LaTeX 属于自由软件——也因此是免费的。同时，自由软件（logiciels libres；英：free software）的标志是其\textit{开放性}。因此，\TeX 也可以有其Web源码\jz{克努特孕育的Web语言被形容为一种“文学性的编程语言”。使用Web源码，可以生成程序的Pascal或C代码，也可以为代码生成\TeX 文档。}。\LaTeX 的宏是以\TeX 源码的格式发布的\yz{此句原文：Les macros de \LaTeX \ sont quant à elles distribuées sous forme de code source \TeX .，翻译时没看懂elles指谁，翻译可能有误。我查到macro可以写成macro-instruction，为阴性，故用elles指代这些宏，但不能确定。请读者赐教。}。对于大部分用户来说，获取程序的源码可能不是首要考虑的，但需要知道，正是这种\textit{不隐藏任何内容}的性质，使得人们可以改进现有的扩展、创造新的扩展。
+
+一款软件是自由软件，并不意味着我们可以使用它做任何想做的事情。自由软件属于其作者，所有的改动都需要被记录。同样，每次改动都需要以与具有与改动前不同的文件名体现。这样可以保证系统的严密和便携（关于\LaTeXe 的使用许可，请参阅\wz{ftp://ftp.lip6.fr/pub/TeX/CTAN/macros/latex/base/lppl.txt}）。
+
+\section*{不使用\LaTeX 的5个理由}
+
+在一些情况下，强烈建议不使用\LaTeX 。具体来说，这些不使用\LaTeX 的理由如下。
+
+\begin{enumerate}
+    \item 你只将文字处理器用于制作贺卡、写邮件、记录几个想法等用途。
+    \item 你十分喜欢鼠标（可能具有1～3个按键），并且认为输入方程的唯一方式就是频繁地使用鼠标点来点去。
+    \item 你觉得UNIX是一个“让人头痛”且“不易使用”的系统，或者你对所有的编程语言都有着强烈的反感。
+    \item 你认为以下情况是正常的：
+        \begin{enumerate}
+            \item 新版软件不能读取其旧版本创建的文档；
+            \item 要使用新版软件，必须换一个操作系统；
+            \item 要使用新版操作系统，必须换一台计算机；
+            \item 要使用新计算机，必须……
+        \end{enumerate}
+    \item 你不知道键盘上的“\backslash”键在哪里。
+\end{enumerate}
+
+如果你的情况满足以上任何一条，最好在你现在的系统上知足常乐。
+
+\section*{使用\LaTeX 的若干理由}
+
+说服本书读者使用\TeX 和\LaTeX 而不是其他系统似乎不成问题——毕竟，你都读这本书了，也就已经不知不觉被说服了。让我们看看\TeX 的设计者是怎么说的：
+
+\begin{quote}
+    “在使用\TeX 起草文档时，你就是在指挥计算机如何准确地把你的稿件转化为几个页面，以媲美世界上最好的打印机能够实现的排版样式。”——D.E. 克努特，\TeX Book[9]
+\end{quote}
+
+\TeX 和\LaTeX 可以生成无与伦比的文档（并可以极细微地调整\jz{
+    作为参考，\LaTeX 内置的衡量单位是\textit{比例点（英：scaled point）}，在\TeX Book中记作\texttt{sp}，合$1/65536$点；1点合约$1/72$英寸；1英寸合2.54厘米。比例点可以在大约50埃米的尺度上调整文档。目前打印机的分辨率对于这个尺度来说，实在是太充裕了。
+}），这显然归功于以下元素：
+
+\begin{itemize}
+    \item 仔细地绘制字体；
+    \item 处理排版上的细节，如连接号（tiret）和合字：
+    \begin{itemize}
+        \item “avez-vous --- bien --- regardé ces tirets (page 19--23) ”这句文字中的各种连接号；
+        \item fin一词中的“f\/i”、souffle一词中的“f\/f\/l”，以及trèfle一词中的“f\/l”；
+    \end{itemize}
+    \item 性能良好的断字算法；
+    \item 专门针对数学公式的呈现。
+\end{itemize}
+
+此外，\LaTeX 是少数瞄准\textit{科技}文档的文字处理软件。这是因为，除了处理方程和公式之外外，\LaTeX 还有大量围绕起草\textit{文章}、生成\textit{参考文献}和\textit{索引}的功能。
+
+最后，\LaTeX 尤其针对大文件的生成做了适配。这不仅是由于处理\LaTeX 文档本身占用的内存空间极小，也是因为\textit{宏}和\textit{交叉引用（référence croisée；英：cross reference）}可以让我们对文件有着全面而灵活的控制。
+
+\paragraph*{交叉引用}\LaTeX 允许\textit{以符号的形式}于文档的任何位置引用有编号的对象。此外，标题、图片、表格、方程、参考文献、列表、定理等的序号都可以在文章的多个位置以简单的方式引用，不需要我们去关心具体的号码本身是多少。
+
+\paragraph*{宏}宏无疑是\LaTeX 最强大的功能。

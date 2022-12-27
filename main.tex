@@ -1,6 +1,7 @@
 % press command+option+B to build, or change "Auto Build: Run" in Settings.
 
-\documentclass[12pt]{book}
+% \documentclass[12pt]{book}
+\documentclass{book}
 
 \usepackage{xeCJK}
 \usepackage{geometry}
@@ -34,8 +35,19 @@
 
 \usepackage{hyperref}%所有网页用超链接同步挂靠
 
-\def\wz#1{
-    \href{#1}{\texttt{#1}}
+\def\<{
+    % $\langle$
+    「
+}
+
+\def\>{
+    % $\rangle$
+    」
+}
+
+\def\wz#1{%网址
+    % \href{#1}{\texttt{#1}}
+    \texttt{#1}
 }
 
 \def\jz#1{%原书脚注
@@ -43,30 +55,49 @@
 }
 
 \def\yz#1{%译注
-    \footnote{译注：#1}
+    \footnote{\textsl{译注：}#1}
+}
+
+\def\dmh#1{%代码行
+    >> \texttt{#1}
 }
 
 \newenvironment{exclamation}[1][!]%原书的圆圈感叹号
 {
-    % ~\\
     \begin{mdframed}
         \paragraph*{\textcircled{#1}}
+        \sffamily
 }{      
+    \rmfamily
     \end{mdframed}
 }
 
+\newenvironment{dmd}{%代码段
+    \ttfamily
+    \setlength{\parindent}{0pt}
+}{
+    \rmfamily
+}
 
 %字体
-% \setCJKmainfont[
-%     BoldFont={NotoSerifCJKsc-Bold},
-%     ItalicFont={Kai},
-%     SlantedFont={STFangsong}]
-%     % {STSongti-SC-Regular}
-%     % {NotoSerifCJKsc-Regular}
-% % \setCJKsansfont{NotoSansCJKsc-Regular}
-% \setCJKmonofont{NotoSansMonoCJKsc-Regular}
-% \setmonofont{NotoSansMonoCJKsc-Regular}
-% \setmonofont{Inconsolata-Regular}
+\setCJKmainfont[
+    BoldFont={NotoSerifCJKjp-SemiBold},
+    ItalicFont={Kai},
+    SlantedFont={STFangsong}]
+    {STSongti-SC-Regular}
+\setCJKsansfont[
+    ItalicFont={SmileySans-Oblique},
+    SlantedFont={SmileySans-Oblique}]
+    {NotoSansCJKsc-DemiLight}
+\setCJKmonofont[
+    ItalicFont={SmileySans-Oblique},
+    SlantedFont={SmileySans-Oblique}]
+    {NotoSansMonoCJKsc-Regular}
+\setmonofont[
+    ItalicFont={SmileySans-Oblique},
+    SlantedFont={SmileySans-Oblique}]
+    {CourierNewPSMT}
+
 
 
 \title{关于\LaTeX 的那些你想知道却从不敢问的问题\\{\small 或者说，如何在不会使用\LaTeX 的情况下使用\LaTeX }\\~\\Tout ce que vous avez toujours voulu savoir sur \LaTeX \ sans jamais oser le demander\\{\small Ou comment utiliser \LaTeX \ quand on n'y connaît goutte}\\~\\ ver. 1.5}
@@ -90,7 +121,7 @@
 % \renewcommand{\footrulewidth}{0pt}
 % \setlength{\headwidth}{\linewidth + \marginparwidth + \marginparsep}
 \setlength{\parskip}{5pt}
-\setstretch{1.5}%倍行距
+\setstretch{1.2}%倍行距
 
 \input{introduction.tex}
 \input{chapitre1.tex}
