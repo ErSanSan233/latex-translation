@@ -80,7 +80,7 @@
     “……它的发音像德语单词ach中的‘ch’，或西班牙语中的‘j’……如果你对着电脑正确地发音，屏幕上会出现哈气。”
 \end{quote}
 
-你谦逊的仆人可能会更想让你读成“TeK”，来避开那种读起来有气无力的感觉和没过几天就要给你擦一次电脑的麻烦工作。\yz{此句原文是“Votre humble serviteur se contente lui de le prononcer « TeK » pour contrecarrer l’aspect caoutchouteux et éviter d’avoir à nettoyer son écran régulièrement.”，没太看懂中间出现的lui是哪个词的宾语，请大家赐教。}
+你谦逊的仆人可能会更想让你读成“TeK”，来避开那种有气无力的感觉和没过几天就要给你擦一次电脑的麻烦工作。\yz{此句原文是“Votre humble serviteur se contente lui de le prononcer « TeK » pour contrecarrer l’aspect caoutchouteux et éviter d’avoir à nettoyer son écran régulièrement.”，没太看懂中间出现的lui是哪个词的宾语，请大家赐教。}
 
 最后，对于\TeX 的标识设计，克努特强调字母E需要稍微错位一些，以提示人们这是关于排版的工具。对于确实会遇到的一些无法使字母E稍微错位的情况，他坚持道，需要将\TeX 写成“\texttt{TeX}”。
 
@@ -108,7 +108,7 @@
 
 一款软件是自由软件，并不意味着我们可以使用它做任何想做的事情。自由软件属于其作者，所有的改动都需要被记录。同样，每次改动都需要以与具有与改动前不同的文件名体现。这样可以保证系统的严密和便携（关于\LaTeXe 的使用许可，请参阅\wz{ftp://ftp.lip6.fr/pub/TeX/CTAN/macros/latex/base/lppl.txt}）。
 
-\section*{不使用\LaTeX 的5个理由}
+\section*{不使用\LaTeX 的五个理由}
 
 在一些情况下，强烈建议不使用\LaTeX 。具体来说，这些不使用\LaTeX 的理由如下。
 
@@ -142,7 +142,7 @@
 
 \begin{itemize}
     \item 仔细地绘制字体；
-    \item 处理排版上的细节，如连接号（tiret）和合字：
+    \item 处理排版上的细节，包括连接号（tiret）和合字，比如你可能没有观察过的以下情况：
     \begin{itemize}
         \item “avez-vous --- bien --- regardé ces tirets (page 19--23) ”这句文字中的各种连接号；
         \item fin一词中的“f\/i”、souffle一词中的“f\/f\/l”，以及trèfle一词中的“f\/l”；
@@ -157,4 +157,79 @@
 
 \paragraph*{交叉引用}\LaTeX 允许\textit{以符号的形式}于文档的任何位置引用有编号的对象。此外，标题、图片、表格、方程、参考文献、列表、定理等的序号都可以在文章的多个位置以简单的方式引用，不需要我们去关心具体的号码本身是多少。
 
-\paragraph*{宏}宏无疑是\LaTeX 最强大的功能。
+\paragraph*{宏}宏无疑是\LaTeX 最强大的功能。要知道，生成文档的\textbf{所有}过程对视都是一系列指令或宏。因此，每个用户都可以文件中的宏来改变文件的生成情况。显然，我们可以很好地定义我们自己的宏，使得文档的一部分呈现出特殊的效果。围绕宏的一个很强烈的观点是，我们\textit{原则上}可以将设置格式的部分从起草文档的过程中分离出去。
+
+\section*{所见即所得的缺陷}
+
+\LaTeX 处于“所见即所得”\jz{
+    英：What you see is what you get，简称为Wysiwyg。指软件允许用户在屏幕上看到即将在纸上获得的结果完全相同的内容。第一款“所见即所得”的文本处理器大概是\textsf{Bravo}，它于1974年出现在施乐帕罗奥多研究中心（英：Xerox Palo Alto Research Center）的机器Alto上。
+}的对立面，因为\LaTeX 源码是包含文本内容本身和页面布局命令的文本文档。兰波特将这种方法成为\textit{逻辑}页面布局而不是\textit{视觉}页面布局\jz{
+    说点不好听的，根据兰伯特在其关于\LaTeX 的书中的描述，“所见即所得”的软件被柯尼汉［译注：Kernighan，可能指UNIX开发者布莱恩·W.克尼汉（Brian W. Kernighan）］描述为“只能看到已经有了的东西”。
+}。
+
+然而，我们也可以说\LaTeX 是“所见即所得”的，因为在编译后，我们就可以在屏幕上呈现出文档未来出现在纸面上的\textbf{精确}形态。
+
+以下是一个能够说明“所见即所得”缺陷和逻辑页面布局优势的案例\jz{
+    兰波特在它的手册中提到了一个类似的案例。
+}：假设在一个文档中，某个具有两个参数的函数出现了一定次数。科学文档的一个精巧之处就是可以使用符号，我们可以定义一个宏\texttt{\backslash mafct}来生成这个函数。如此一来，\texttt{\backslash mafct\{1\}\{2.5\}} 和 \texttt{\backslash mafct\{x\}\{t\}}会分别生成$\mathcal{F}_{\alpha, \beta}(1, 2.5)$和$\mathcal{F}_{\alpha, \beta}(x, t)$。一旦我们想要改变符号，只需重新定义\texttt{\backslash mafct}这个宏，以在需要的位置重新生成对应的符号（比如分别生成$\mathsf{F}^{\alpha, \beta}[1, 2.5]$和$\mathsf{F}^{\alpha, \beta}[x, t]$），就可以了！
+
+另一个例子是：假设你的文件中有很多科技词汇，你想要用一种特殊的形式展示她们。因此你事先定义了宏\texttt{\backslash jargon}\yz{
+    jargon意为“术语”。
+}，以将科技词汇设置为意大利体，并在在文档中写下\texttt{\backslash jargon\{implémentation\}}之类的实现。你的文档中以这种方式提到了235个术语词汇。你如果改变了主意，想把它们从意大利体改成其他的格式，那么只需要重新定义宏\texttt{\backslash jargon}，而不需要逐个排查那235处术语词汇。经过一些联系以后，你甚至能使这个宏自动将术语插入文档的索引中……
+
+以下是一个略微变形的例子：在稍前的名为“不……的五个理由”的章节标题中，我在源码中完全没有写“五\jz{
+    即使在这里也没有写。
+}”这个字。标题是使用“……的\texttt{\backslash ref\{nbraisons\}}个理由”这样的句子写成的，它会自动将文中提到的不使用\LaTeX 的理由的数量替换为对应的法文词汇。这样，如果还想在列表中再插入一条理由，我就不用重新统计一遍数量了\yz{
+    此例特指原版书。翻译时舍弃了原书源码中类似的自动化部分。
+}。
+
+\begin{exclamation}
+    阅读本书的过程中，会有其他案例会为你逐一呈现“所见即所得”的缺陷。这个“说明”（nota）段落为你指出了一些重要的知识点，同时也是另一个案例。理由是：在作者输入这行文字的时候，展示“警示牌”般的版式是细枝末节的问题，但它只是一个nota，作者是这样写的：
+
+    \begin{dmd}
+        \backslash begin\{nota\}\\
+        \hspace*{1em}在阅读本书的过程中……\\
+        \backslash end\{nota\}
+    \end{dmd}
+\end{exclamation}
+
+作为对宏的总结，我们可以说，这是微软公司的著名软件——Word中样式的推广。阅读本文档，尤其是它的第II部分%TODO合适
+，足以使你信服：宏可以比这些脍炙人口的样式走得更远……
+
+对于那些对“所见即所得”模式上瘾的人， 有团队发布了一个\textit{“所见即所表”（原文如此；What you see is what you Mean (sic)）}版本的\LaTeX ，命名为LyX。你可以访问\wz{http://www.lyx.org}来了解它。
+
+\section*{如何打印本书}
+
+准备打印机\jz{
+    啊——啊——［就像弗兰克·扎帕（Frank Zappa）说的那样］（译注：有人知道这是那首歌吗？）
+}，使用源码文档生成的“papier”版本文件，可以获得适用于A5型号纸张的打印预览。
+
+\section*{你可以用本书做什么？}
+
+\paragraph*{作者}Vincent Lozano
+\paragraph*{原书名}Tout ce que vous avez toujours voulu savoir sur \LaTeX \ sans jamais avoir osé le demander
+\paragraph*{日期}2013年11月22日
+\paragraph*{版权开放（Copyleft）}本书是开放图书，遵循开放作品许可（Licence Art Libre，LAL）：
+
+\wz{\centerline{http://www.artlibre.org}
+}
+
+总之，LAL规定你可以复制本书，你同样可以在遵循以下条款的前提下传播本书：
+
+\begin{itemize}
+    \item 注明其遵循LAL；
+    \item 注明原作者名Vincent Lozano即对本书做出修改的人名；
+    \item 注明其源码可以通过\wz{http://cours.enise.fr/info/latex}下载。
+\end{itemize}
+
+最后，你可以在满足以下条件的情况下修改本书：
+
+\begin{itemize}
+    \item 满足以上传播协议；
+    \item 注明你的作品是修改过的版本，以及如果可能，注明修改的内容；
+    \item 以相同的使用协议或与本书的使用协议不冲突的协议规定下传播。
+\end{itemize}
+
+\section*{开始之前}
+
+就像很多非常强大的软件一样，\LaTeX 的使用从来就不简单。实际上，

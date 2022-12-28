@@ -69,7 +69,7 @@
 
 \dmh{vi \textsl{\<文件名\>}.tex}
 
-足以让你进入\LaTeX 文档这个充满野性和未知的世界。在Windows中，根据自己的喜好，我们可以选用一款文字编辑器。注意，对于\LaTeX 源文件，推荐使用\texttt{.tex}扩展名名。
+足以让你进入\LaTeX 文档这个充满野性和未知的世界。在Windows中，根据自己的喜好，我们可以选用一款文字编辑器。注意，对于\LaTeX 源文件，推荐使用\dm{.tex}扩展名名。
 
 \subsection{编译}
 
@@ -77,14 +77,14 @@
 
 \dmh{pdflatex \textsl{\<文件名\>}.tex}
 
-早晚有一天，你会看到编译会产出错误。这将是1.6节会处理的问题。总之，解决了编译问题后，我们会得到一个带有\texttt{.pdf}扩展名的文件，它代表\textit{便携文件格式（英：portable document format）}，这是一种由Adobe公司创造的著名格式。
+早晚有一天，你会看到编译会产出错误。这将是1.6节会处理的问题。总之，解决了编译问题后，我们会得到一个带有\dm{.pdf}扩展名的文件，它代表\textit{便携文件格式（英：portable document format）}，这是一种由Adobe公司创造的著名格式。
 
 \begin{exclamation}
-    历史上，编译\LaTeX 源文件会生成\texttt{dvi}文件，代表\textit{设备无关（英：device independant）}。此类文件独不受输出环境（如屏幕、打印机等）的影响。这是一种包含了“图像”的\LaTeX 便携二进制文件，可以用于各种操作系统。随后，出现了一批用途各异的程序：
+    历史上，编译\LaTeX 源文件会生成\dm{dvi}文件，代表\textit{设备无关（英：device independant）}。此类文件独不受输出环境（如屏幕、打印机等）的影响。这是一种包含了“图像”的\LaTeX 便携二进制文件，可以用于各种操作系统。随后，出现了一批用途各异的程序：
     \begin{itemize}
-        \item 用于显示文档，即\texttt{.dvi}\rightarrow 点阵屏幕；
-        \item 用于打印，即\texttt{.dvi}\rightarrow 打印机语言；
-        \item 用于转换格式，即\texttt{.dvi}\rightarrow PostScript文件。
+        \item 用于显示文档，即\dm{.dvi}\rightarrow 点阵屏幕；
+        \item 用于打印，即\dm{.dvi}\rightarrow 打印机语言；
+        \item 用于转换格式，即\dm{.dvi}\rightarrow PostScript文件。
     \end{itemize}
 \end{exclamation}
 
@@ -116,14 +116,14 @@
 
 \subsection{打印}
 
-对于\texttt{pdf}格式，如何打印它这一问题就丢给了你的操作系统。关于这一点，没有特殊的注意事项。你有了一个文件，可以自由地处置它，无论是直接打印，还是根据你所处的环境来发挥才艺。
+对于\dm{pdf}格式，如何打印它这一问题就丢给了你的操作系统。关于这一点，没有特殊的注意事项。你有了一个文件，可以自由地处置它，无论是直接打印，还是根据你所处的环境来发挥才艺。
 
 \begin{exclamation}
-    从\texttt{dvi}到\texttt{ps}格式的转换需要调用dvips程序：
+    从\dm{dvi}到\dm{ps}格式的转换需要调用dvips程序：
 
     \dmh{dvips \textsl{\<文件名\>}.dvi}
 
-    这可以生成一个PostScrpt格式的文件。这个格式也由Adobe创造，是一种打印机语言，可以看作\texttt{pdf}的祖先。目前的打印机出厂即可识别这种打印机语言。我们可以说，文件发送到打印机时，十有八九传送的是PostScrpt格式的参数。对于PostScript格式的文件，有大量可以显示、修改这种文件的工具。
+    这可以生成一个PostScrpt格式的文件。这个格式也由Adobe创造，是一种打印机语言，可以看作\dm{pdf}的祖先。目前的打印机出厂即可识别这种打印机语言。我们可以说，文件发送到打印机时，十有八九传送的是PostScrpt格式的参数。对于PostScript格式的文件，有大量可以显示、修改这种文件的工具。
 \end{exclamation}
 
 \section{源文件的结构}
@@ -131,8 +131,8 @@
 本节将介绍一种文档类型。实际上，所有\LaTeX 文档都具有相同的结构，形式如下：
 
 \begin{dmd}
-\backslash documentclass[\textsl{\<类选项1\>},\textsl{\<类选项2\>},...]\{\textsl{\<类\>}\}\\
-\backslash usepackage[\textsl{\<包选项1\>},\textsl{\<包选项2\>},...]\{\textsl{\<包\>}\}\\
+\backslash documentclass[\textsl{\<类选项$_1$\>},\textsl{\<类选项$_2$\>},...]\{\textsl{\<类\>}\}\\
+\backslash usepackage[\textsl{\<包选项$_1$\>},\textsl{\<包选项$_2$\>},...]\{\textsl{\<包\>}\}\\
 ...\\
 \textsl{\<文前部分\>}\\
 ...\\
@@ -152,10 +152,195 @@
             \item 使用特定的\textsl{\<包\>}；
             \item 多样的初始化和声明；
         \end{itemize}
-    \item 文档主体，即我们将要亲手输入的全部内容，出现在\texttt{\backslash begin\{document\}}和\texttt{\backslash end\{document\}}之间。
+    \item 文档主体，即我们将要亲手输入的全部内容，出现在\dm{\backslash begin\{document\}}和\dm{\backslash end\{document\}}之间。
 \end{itemize}
 
 以下介绍各部分的细节。
 
 \subsection{文档的类}
 
+所谓类，就是提供给\LaTeX 的一个指示，可以帮助\LaTeX 决定如何为文档的特定部分排版。根据具体使用的类不同，允许使用与否的指令可能不同（如\dm{\backslash chapter}在\dm{book}类中允许使用，在\dm{article}类中不允许使用）。另一方面，根据所选择的类，给出的命令会具有特定的含义（标题、材料表……）。在入门时\jz{
+    实际上，我们可以在\dm{\backslash documentclass}前添加更多神奇的“咒语”……
+}，所有的\LaTeX 文档都必须以的指令开始——\dm{\backslash documentclass}接由花括号括住的类，包含以下几种：
+
+\begin{itemize}
+    \item \dm{article}，用于文章；
+    \item \dm{proc}，用于电气与电子工程师协会（英：Institute of Electrical and Electronics Engineers，IEEE）会刊（英：proceeding）风格的文章；
+    \item \dm{report}，用于几十页篇幅的报告；
+    \item \dm{book}，用于图书或论文；
+    \item \dm{letter}，用于信件；
+    \item \dm{slides}，用于演示文档。
+\end{itemize}
+
+我们当然也可以为文档定义自己的类。类的配置项用方括号括住，可以是以下内容之一：
+
+\begin{itemize}
+    \item \dm{11pt, 12pt}，用于全局地更改文字字号；
+    \item \dm{twoside}，用于生成适合双面打印的文档；
+    \item \dm{draft}，用于以草稿模式生成文档。
+\end{itemize}
+
+例如，输入：
+
+\begin{dmd}
+    \backslash documentclass{article}
+\end{dmd}
+
+以上命令可以将全部配置项配置为默认值（字号为10 pt，单列，单面……）。
+
+\begin{dmd}
+    \backslash documentclass[12pt]{article}
+\end{dmd}
+
+以上命令将字号设置为12 pt（默认为10 pt）。再如：
+
+\begin{dmd}
+    \backslash documentclass[twoside, draft]{report}
+\end{dmd}
+
+以上命令可以以草稿模式生成适合双面打印的报告。
+
+\subsection{文前部分}
+
+文前部分是指位于子句\dm{\backslash documentclass}和子句\dm{\backslash begin\{documennt\}}间的区域。在这个区域中，我们可以明确想要包含的扩展（请看下一小节）%TODO
+、初始化全局参数（如页边距等）、定义风格（如标题样式、序号等）、定义特殊的宏，等等。
+
+\subsection{添加扩展}
+
+\LaTeX 命令\dm{\backslash usepackage}可以与C语言的指令\dm{\#include}类比。这一命令允许添加\LaTeX 中满足宏或环境形式的功能\jz{
+    相关内容将在下一章讲解。%TODO
+}。目前，只需记住，我们可以在一行之内包含多个包：
+
+\begin{dmd}
+    \backslash usepackage\{\textsl{\<包$_1$\>},\textsl{\<包$_2$\>},\textsl{\<包$_3$\>},...\}
+\end{dmd}
+
+如果\textsl{\<包$_1$\>}、\textsl{\<包$_2$\>}、\textsl{\<包$_3$\>}拥有共同的配置项\textsl{\<opt1\>}，我们可以输入：
+
+\begin{dmd}
+    \backslash usepackage[\textsl{\<opt1\>}]\{\textsl{\<包$_1$\>},\textsl{\<包$_2$\>},\textsl{\<包$_3$\>}\}
+\end{dmd}
+
+相反，如果\textsl{\<opt1\>}只涉及\textsl{\<包$_2$\>}，那么我们只能像这样写成两行：
+
+\begin{dmd}
+    \backslash usepackage\{\textsl{\<包$_1$\>},\textsl{\<包$_3$\>}\}\\
+    \backslash usepackage[\textsl{\<opt1\>}]\{\textsl{\<包$_2$\>}\}
+\end{dmd}
+
+下面是两个例子：
+
+\begin{dmd}
+    \% 包graphicx带有配置项draft和xdvi\\
+    \backslash usepackage[xdvi, draft]\{graphicx\}\\
+    \% 包array和包subfig\\
+    \backslash usepackage\{array, subfig\}
+\end{dmd}
+
+\begin{exclamation}
+    根据定义，所有（类、包、命令的）的配置项参数都是\textit{可选的}。因此我们可以这样记：\LaTeX 中所有由方括号括住的参数\dm{[...]}都是非强制的。
+\end{exclamation}
+
+\section{开始！}
+
+在本节，我们将尝试从一个只含几个排版命令的文档开始，介绍\LaTeX 的基本原理。
+
+\begin{codelist}[1.1]{
+    从你手中掉落的工具总是掉到最难够到的地方，或脆弱的物品上。\\
+    这是\emph{墨菲}定律（loi de Murphy）的一个体现。
+}  \begin{dmd}
+    \backslash documentclass\{article\}\\
+    \backslash begin\{document\}\\
+    从你手中掉落的工具\\总是掉到最难够到的地方，\\或脆弱的物品上。\\
+    ~\\
+    这是\backslash emph\{墨菲\}定律（loi\ de\ \ \ \ \  Murphy）的\\一个体现。\\
+    \backslash end{document}
+\end{dmd}
+\end{codelist}
+
+这个示例体现了\LaTeX 中的几个重要的原理，具体如下。
+
+\paragraph*{空行代表跳转至下一段} \LaTeX 中的空行代表一段文字的结尾，因此在以上实例中，第一段从“\dm{从你}”开始，直到“\dm{物品。}”结束。指令\dm{\backslash par}与空行等价，可以用来表示一段文字的起始。
+
+\paragraph*{\LaTeX 会忽略换行}最终的文档中，换行并不由源文件中的换行决定。\LaTeX 会自动为各段文本\textit{打断、压缩、调节}文字，除非你有特殊的要求。
+
+\paragraph*{\LaTeX 会忽略重复的空格}输入1个或18784个空格是等价的，比如源码中\dm{de}和\dm{Murphy}前插入的空格那样。此规则也适用于跳转段落：输入一行或多行空格是等价的。
+
+\paragraph*{“\backslash ”是转义字符（caractère d’échappement；英：escape char）}“\backslash ”可以告诉\LaTeX 它后面的一系列字符是控制序列，也就是说，是最一般意义上的指令（或宏）。这里，它对“墨菲”一词生效，具体的效果由指令\dm{\backslash emph}控制。
+
+\paragraph*{“\{”和“\}”}它们是\textit{组}的定界符，稍后会进一步解释它们。
+
+\section{几个特殊字符}
+
+就像符号“\backslash”的出现所暗示的那样，\LaTeX 中还有10个有特殊含义的符号，在此将其列出：
+
+\begin{dmd}
+    \verb+\ $ & % # ^ _ { } ~+
+\end{dmd}
+
+%todo 此前代码可以重新简化为verb
+
+以下是一个使用部分特殊字符的案例：
+
+\begin{codelist}[1.2]{
+\textbf{是}下标：$x_{i+1}$，还是上标：$e^{i\pi}$；这是问题~1！
+}
+\begin{verbatim}
+%毫无意义的段落
+\textbf{是}下标：$x_{i+1}$，
+还是上标：$e^{i\pi}$；
+这是问题~1！%还是问题2？
+\end{verbatim}
+\end{codelist}
+
+目前，你需要知道：
+
+\begin{itemize}
+    \item \dm{\%}会使得\LaTeX 忽略当前行的剩余部分，因此，它是表示注释的符号（与C中的\dm{//}等价）；
+    \item \verb+~+代表不可拆分的空格\jz{
+        见2.10节。
+    }，可以防止\LaTeX 在指定的位置断字。尽管有大量的情况需要插入这个符号来表示不可拆分（如所有形如“\verb+图~1+”的情况），然而，对于此类符号的使用，并没有系统化的规则。
+    \item \dm{\$}用于标记公式的开始和结束。\LaTeX 遇到一个\dm{\$}符号时，它会切换到\celan{第3章}数学模式，直到遇到下一个\dm{\$}符号。
+    \item \dm{\_}和\dm{\^{}}分别代表将文本转化为下标和上标。\textbf{注意}，这两个符号只能在数学模式下使用。
+    \item \dm{\{}和\dm{\}}分别表示组的开始和结束。本例中出现了两种组：一种出现在数学模式中，用于把将要放到下标或上标的“子公式”组合起来；另一种把将要设置成粗体的文字组合起来。
+\end{itemize}
+
+我们可以使用如下的指令来在让文档生成部分特殊字符：
+
+\begin{dmd}
+    \verb+\$ \& \% \# \{ \} \_+
+\end{dmd}
+
+这串指令可以输出“\$ \& \% \# \{ \} \_”。2.2.5小节%TODO
+会解释如何使文档生成其余特殊字符（即\verb+\ ~ ^+）。
+
+\subsection{调用指令}
+
+你已经知道了，要想调用指令或宏，需要输入转义字符，并紧接着输入你想使用的宏名。%TODO 二对一
+但是，\LaTeX 如何知道宏名的末尾在哪里呢？此处以用于生成\TeX 标识的\dm{\backslash TeX}为例来解释\yz{
+    此例涉及对西文行文中空格的处理，不宜翻译。
+}。
+
+\begin{codelist}{
+    \TeX book is for \TeX hackers.
+
+    \TeX\  has some powerful macros.
+
+    \LaTeX{} is a document preparation system
+}
+    \begin{verbatim}
+\TeX book is for \TeX hackers.
+
+\TeX\  has some powerful macros.
+
+\LaTeX{} is a document preparation system
+    \end{verbatim}
+\end{codelist}
+
+\begin{exclamation}
+    \verb*|\ |（其中\verb*| |代表空格）称作控制空格（espace de contrôle）。这个空格不会被\LaTeX 忽略。因此，指令“\verb*|et\ \ \ hop !|”会生成“et\ \ \ hop !”。实际上，以\dm{\backslash}\textsl{\<函数\>}\dm{\{}\textsl{\<参数\>}\dm{\}}的形式来调用宏是很好的习惯。因此，使用上例中的的第三种方式比第二种方式更佳。这种形式可以避免空格被忽略的情况发生\jz{
+        所以他为什么要跟我们说这些？！
+    }。因此，我们将使用\verb|the \teX{}book|来生成“the \TeX{}book”，使用“\verb*|\LaTeX{} is a ...|”来生成“|\LaTeX{} is a ...”。
+\end{exclamation}
+
+\subsection{变音符号}

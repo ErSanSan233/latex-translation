@@ -37,12 +37,12 @@
 
 \def\<{
     % $\langle$
-    「
+    <
 }
 
 \def\>{
     % $\rangle$
-    」
+    >
 }
 
 \def\wz#1{%网址
@@ -58,14 +58,26 @@
     \footnote{\textsl{译注：}#1}
 }
 
+\def\dm#1{%代码
+    {\xeCJKsetup{CJKecglue={\hskip 0em}}
+    \hspace{0em}\texttt{#1}}\hspace{0em}}
+
 \def\dmh#1{%代码行
-    >> \texttt{#1}
+    {\xeCJKsetup{CJKecglue={\hskip 0pt}}
+    >> \texttt{#1}}
+}
+
+\def\celan#1{%侧栏TODO三角形方向
+$\blacktriangleright$
+\marginpar{
+        $\blacktriangleleft$\textsf{#1}
+    }
 }
 
 \newenvironment{exclamation}[1][!]%原书的圆圈感叹号
 {
     \begin{mdframed}
-        \paragraph*{\textcircled{#1}}
+        \textcircled{#1} \quad
         \sffamily
 }{      
     \rmfamily
@@ -73,15 +85,35 @@
 }
 
 \newenvironment{dmd}{%代码段
+    \xeCJKsetup{CJKecglue={\hskip 0pt}}
     \ttfamily
     \setlength{\parindent}{0pt}
 }{
     \rmfamily
 }
 
+%代码清单，暂时定两个，之后再统一
+\newenvironment{codelist}[2][TODO代码清单序号]{
+    \begin{mdframed}
+        \setlength{\parindent}{0pt}
+        \textbf{清单 #1}
+
+        \textbf{——效果——}
+
+        #2 
+    
+        \textbf{——源码——} 
+        % 用verbatim的时候这里会有一个奇怪的空行TODO
+        % \begin{dmd}
+            
+}{
+        % \end{dmd}
+    \end{mdframed}
+}
+
 %字体
 \setCJKmainfont[
-    BoldFont={NotoSerifCJKjp-SemiBold},
+    BoldFont={NotoSerifCJKsc-Bold},
     ItalicFont={Kai},
     SlantedFont={STFangsong}]
     {STSongti-SC-Regular}
@@ -109,9 +141,12 @@
 \mainmatter
 
 %正文版式
-% \newgeometry{
-
-% }
+\newgeometry{
+    % inner = 2cm, outer = 4cm,
+    % top = 2.5cm, bottom=2.5cm, 
+    marginparwidth = 2cm, marginparsep = 0.5cm,
+    % includeheadfoot
+}
 \pagestyle{fancy}
 \fancyhead{} 
 \fancyhead[RO,LE]{\thepage}
