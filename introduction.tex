@@ -68,7 +68,7 @@
 唐纳德·欧文·克努特（Donald Ervin Knuth）——就是那个有着众多关于数学和算法的著作［包括《计算机程序设计的艺术》（英：\textit{The Art of Computer Programing}）］%todo ref
 的数学家——对20世纪70年代的技术条件下打印出来的文章的样子深感失望，产生了开发称为\TeX 的文字处理系统的初步想法。20世纪80年代初次公布的\TeX 是由一个宏处理器（processeur de macro ；英：macro processsor）和几个基元（primitive）组成的复杂系统。第一组预编译的宏很快以\textit{“普通格式”（format plain）}的名义出现。
 
-注意，\TeX 既不是文字处理器［克努特将其称为“typesetting system”，可以翻译成“排字系统”（système de composition）］也不是一种编译后的编程语言。这是克努特关于\TeX 的一些说明\jz{出自\TeX Book的“The Name of the Game”一章。}：
+注意，\TeX 既不是文字处理器［克努特将其称为“typesetting system”，可以翻译成“排字系统”（système de composition）］也不是一种编译后的编程语言。这是克努特关于\TeX 的一些说明\jz{出自\TeX book的“The Name of the Game”一章。}：
 
 \begin{quote}
     “英文的‘technology’一词由希腊文词根‘$ \tau\epsilon\chi...$’演变而来，这个词根有时也指艺术和科学技术。\TeX 由此而来，正是$ \tau\epsilon\chi$的大写形式。”
@@ -80,7 +80,7 @@
     “……它的发音像德语单词ach中的‘ch’，或西班牙语中的‘j’……如果你对着电脑正确地发音，屏幕上会出现哈气。”
 \end{quote}
 
-你谦逊的仆人可能会更想让你读成“TeK”，来避开那种有气无力的感觉和没过几天就要给你擦一次电脑的麻烦工作。\yz{此句原文是“Votre humble serviteur se contente lui de le prononcer « TeK » pour contrecarrer l’aspect caoutchouteux et éviter d’avoir à nettoyer son écran régulièrement.”，没太看懂中间出现的lui是哪个词的宾语，请大家赐教。}
+你谦逊的仆人可能会更想让你读成“TeK”，来避开那种有气无力的感觉和没过几天就要给你擦一次电脑的麻烦工作。
 
 最后，对于\TeX 的标识设计，克努特强调字母E需要稍微错位一些，以提示人们这是关于排版的工具。对于确实会遇到的一些无法使字母E稍微错位的情况，他坚持道，需要将\TeX 写成“\texttt{TeX}”。
 
@@ -104,7 +104,7 @@
 
 \section*{使用许可}
 
-画重点：\TeX 和\LaTeX 属于自由软件——也因此是免费的。同时，自由软件（logiciels libres；英：free software）的标志是其\textit{开放性}。因此，\TeX 也可以有其Web源码\jz{克努特孕育的Web语言被形容为一种“文学性的编程语言”。使用Web源码，可以生成程序的Pascal或C代码，也可以为代码生成\TeX 文档。}。\LaTeX 的宏是以\TeX 源码的格式发布的\yz{此句原文：Les macros de \LaTeX \ sont quant à elles distribuées sous forme de code source \TeX .，翻译时没看懂elles指谁，翻译可能有误。我查到macro可以写成macro-instruction，为阴性，故用elles指代这些宏，但不能确定。请读者赐教。}。对于大部分用户来说，获取程序的源码可能不是首要考虑的，但需要知道，正是这种\textit{不隐藏任何内容}的性质，使得人们可以改进现有的扩展、创造新的扩展。
+画重点：\TeX 和\LaTeX 属于自由软件——也因此是免费的。同时，自由软件（logiciels libres；英：free software）的标志是其\textit{开放性}。因此，\TeX 也可以有其Web源码\jz{克努特孕育的Web语言被形容为一种“文学性的编程语言”。使用Web源码，可以生成程序的Pascal或C代码，也可以为代码生成\TeX 文档。}。\LaTeX 的宏是以\TeX 源码的格式发布的。对于大部分用户来说，获取程序的源码可能不是首要考虑的，但需要知道，正是这种\textit{不隐藏任何内容}的性质，使得人们可以改进现有的扩展、创造新的扩展。
 
 一款软件是自由软件，并不意味着我们可以使用它做任何想做的事情。自由软件属于其作者，所有的改动都需要被记录。同样，每次改动都需要以与具有与改动前不同的文件名体现。这样可以保证系统的严密和便携（关于\LaTeXe 的使用许可，请参阅\wz{ftp://ftp.lip6.fr/pub/TeX/CTAN/macros/latex/base/lppl.txt}）。
 
@@ -133,11 +133,11 @@
 说服本书读者使用\TeX 和\LaTeX 而不是其他系统似乎不成问题——毕竟，你都读这本书了，也就已经不知不觉被说服了。让我们看看\TeX 的设计者是怎么说的：
 
 \begin{quote}
-    “在使用\TeX 起草文档时，你就是在指挥计算机如何准确地把你的稿件转化为几个页面，以媲美世界上最好的打印机能够实现的排版样式。”——D.E. 克努特，\TeX Book[9]
+    “在使用\TeX 起草文档时，你就是在指挥计算机如何准确地把你的稿件转化为几个页面，以媲美世界上最好的打印机能够实现的排版样式。”——D.E. 克努特，\TeX book[9]
 \end{quote}
 
 \TeX 和\LaTeX 可以生成无与伦比的文档（并可以极细微地调整\jz{
-    作为参考，\LaTeX 内置的衡量单位是\textit{比例点（英：scaled point）}，在\TeX Book中记作\texttt{sp}，合$1/65536$点；1点合约$1/72$英寸；1英寸合2.54厘米。比例点可以在大约50埃米的尺度上调整文档。目前打印机的分辨率对于这个尺度来说，实在是太充裕了。
+    作为参考，\LaTeX 内置的衡量单位是\textit{比例点（英：scaled point）}，在\TeX book中记作\texttt{sp}，合$1/65536$点；1点合约$1/72$英寸；1英寸合2.54厘米。比例点可以在大约50埃米的尺度上调整文档。目前打印机的分辨率对于这个尺度来说，实在是太充裕了。
 }），这显然归功于它们的以下能力：
 
 \begin{itemize}
