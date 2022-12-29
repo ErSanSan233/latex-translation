@@ -89,22 +89,16 @@ $\blacktriangleright$
     \rmfamily
 }
 
-%代码清单，暂时定两个，之后再统一
+%代码清单
 \newenvironment{codelist}[2][TODO代码清单序号]{
+    \setlength{\parindent}{0pt}
     \begin{mdframed}
-        \setlength{\parindent}{0pt}
         \textbf{清单 #1}
-
-        \textbf{——效果——}
-
-        #2 
-    
-        \textbf{——源码——} 
-        % 用verbatim的时候这里会有一个奇怪的空行TODO
-        % \begin{dmd}
-            
-}{
-        % \end{dmd}
+        \begin{mdframed}[backgroundcolor=lightgray,hidealllines=true]
+            #2 
+    \end{mdframed}
+}
+{
     \end{mdframed}
 }
 
@@ -112,7 +106,8 @@ $\blacktriangleright$
 \setCJKmainfont[
     BoldFont={NotoSerifCJKsc-Bold},
     ItalicFont={Kai},
-    SlantedFont={STFangsong}]
+    SlantedFont={STFangsong},
+    ]
     {STSongti-SC-Regular}
 \setCJKsansfont[
     ItalicFont={SmileySans-Oblique},
@@ -153,11 +148,12 @@ $\blacktriangleright$
 % \renewcommand{\headrulewidth}{0.4pt}
 % \renewcommand{\footrulewidth}{0pt}
 % \setlength{\headwidth}{\linewidth + \marginparwidth + \marginparsep}
-\setlength{\parskip}{3pt}
+% \setlength{\parskip}{3pt}
 \setstretch{1.1}%倍行距
 
 \input{introduction.tex}
 \input{chapitre1.tex}
+\input{chapitre2.tex}
 % \begin{appendices}
 %     \section{附录}
 % \end{appendices}

@@ -1,0 +1,96 @@
+\chapter{需要了解的知识}
+
+\begin{quote}
+    亵慢的人受刑罚，愚蒙的人就得智慧。智慧人受训诲，便得知识。——《圣经·箴言》12:11
+\end{quote}
+
+
+本章要研究使用\LaTeX 生成文档时的基本排版指令。我们将零散地处理用于突出显示、\LaTeX 标准环境、标题、页面下方的注释、页眉和页脚，以及浮动的环境。接下来，我们会介绍参考系统和\LaTeX 生成的辅助文件。最后，阅读到本章末尾的人将有机会读到一些关于断字的思考。
+
+所有这些指令都将以其默认行为模式使用。也就是说，我们这里不介绍重新定义它们的方法。对应地，你将能够以传统的版式来生成文档。若要打出一篇更进阶的文章，你需要了解如何输入数学式（第3章）、一些关于科技文档的知识（第6章），以及包含图像的方法（第5章）。
+
+\section{突出显示}
+
+要了解\LaTeX 选用字体的机制，需要知道：我们通常通过4个参数来区别字体。
+
+\paragraph*{族（famille）}指字体的整体形状。默认情况下，\LaTeX 使用三种字体族：罗马体、\textsf{无衬线体}、\texttt{打字机体}。\LaTeX 中，以英文单词\textit{family}来指代字体族。
+
+\paragraph*{风格（style）}指字体体现出的体态（英文以\textit{shape}指代），分为：\textit{意大利体}、\textsl{倾斜}和\textsc{小型大写字母风格（petites capitales）}\yz{
+    本书翻译时，以楷体对应意大利体、以仿宋体对应倾斜排版，按原文翻译。中文字体的族和风格往往是并列的，很少有交叉叠加的情况，因此在展示叠加效果时酌情保留原文。中文中很少见到类似小型大写字母的突出显示方式。因此，除了特意展示西文的部分外，本书忽略小型大写字母格式，必要时以其他风格取代。
+}。
+
+\paragraph*{字重（graisse）}指字体笔画的粗细（\LaTeX 中以\textit{serie}指代）。默认情况下有两种粗细：中等和\textbf{加粗}。
+
+\paragraph*{字号}字{\large 体}{\Large 的}{\LARGE 大}{\small 小}。
+
+\subsection{族--风格--字重}
+
+有两种不同的宏可以设置族、风格、字重这三个变量：\textit{指令}和\textit{声明}（如表\ref{tab:2.1}所示）。指令以花括号的形式将其参数括住。声明可以打断行文，同时修改三个变量之一，直到新的命令出现。总体上的规则是，我们使用指令来突出显示一个词或一组词：
+
+\begin{table}
+    \centering
+    \begin{tabular}{|c|l|c|}
+\hline
+指令 & 声明 & 输出\\
+\hline
+\verb+\textrm{...}+ & \verb+{\rmfamily ...}+ & 罗马（roman） \\
+\verb+\textsf{...}+ & \verb+{\sffamily ...}+ & \textsf{非衬线（sans sérif）} \\
+\verb+\texttt{...}+ & \verb+{\ttfamily ...}+ & \texttt{打字机（machine à écrire）} \\
+\hline
+\verb+\textup{...}+ & \verb+{\upshape ...}+ & 正（droit） \\
+\verb+\textit{...}+ & \verb+{\itshape ...}+ & \textit{意大利（italique）} \\
+\verb+\textsl{...}+ & \verb+{\slshape ...}+ & \textsl{倾斜（penché）} \\
+\verb+\textsc{...}+ & \verb+{\scshape ...}+ & \textsc{小型大写（Petites Capitales）} \\
+\hline
+\verb+\textmd{...}+ & \verb+{\mdseries ...}+ & 中等（médium） \\
+\verb+\textbf{...}+ & \verb+{\bfseries ...}+ & \textbf{加粗（gras）} \\
+\hline
+    \end{tabular}
+    \caption{更改字体的声明}
+    \label{tab:2.1}
+\end{table}
+
+\begin{codelist}[2.1]{
+    \texttt{char}类型的\emph{变量}\textsl{总是}被编码为\textbf{8 位}。
+}
+\begin{verbatim}
+\texttt{char}类型的\emph{变量}\textsl{总是}被编码为\textbf{8 位}。
+\end{verbatim}
+\end{codelist}
+
+注意，在上面的命令中，指令\verb|\emph|（对应的声明是\verb|\em|，可以以更优雅的方式突出显示一组词）。相较声明，强烈建议使用\emph{指令}。当要修改文本的一部分时，使用指令是更明智的选择\jz{定义指令也是。}：
+
+\begin{codelist}[2.2]{
+    {\em \bfseries 马格马（Magma） \mdseries 的音乐就像一面镜子，每个人都能看到他自己的倒影。}
+}
+    \begin{verbatim}
+{\em \bfseries 马格马（Magma） \mdseries 的音乐
+就像一面镜子，每个人都能看到他自己的倒影。}
+    \end{verbatim}
+\end{codelist}
+
+接下来的例子展示了如何使用组。声明\verb|\slshape|出现在一个组中，因此它只在组内发挥作用。此外，组会继承它外层的组的参数。这样一来，“silence”一词会使用\textsf{非衬线}体（根据外层的组），并且\textsl{倾斜}展示（根据内层的声明）：
+
+\begin{codelist}[2.3]{
+    \sffamily 在爵士乐中，{\slshape 沉默（silence）\/}永远是正确的。因此，这是一种充满万千可能的音乐。
+}\begin{verbatim}\sffamily 在爵士乐中，
+{\slshape 沉默（silence）\/}永远是正确的。因此，
+这是一种充满万千可能的音乐。
+\end{verbatim}
+\end{codelist}
+
+\subsection{意大利体校正}
+
+另一个推荐使用指令而不是声明的理由是，与声明不同，指令可以实现\emph{意大利体校正}。所谓意大利体校正，是指在以意大利体显示的字符组后，有必要增加一个间距，使得这组字符不会“碰到”后面的词。这个间距与所涉及的字符有关\yz{此例展示不同情况下\emph{f}和a间距的细微差距，宜保留原文。例句意为：首长永远是对的。}：
+
+\begin{codelist}[2.4]{
+    le {\em chef} a toujours raison.\par
+    le {\em chef\/} a toujours raison.\par
+    le \emph{chef} a toujours raison.\par
+}\begin{verbatim}le {\em chef} a toujours raison.\par
+le {\em chef\/} a toujours raison.\par
+le \emph{chef} a toujours raison.\par
+\end{verbatim}
+\end{codelist}
+
+我们可以看到，指令\verb|\emph|实现了校正，然而，若要使用声明，则需要明确地借助宏\verb|\/|来实现相同的效果。
