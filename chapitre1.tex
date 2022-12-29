@@ -23,16 +23,17 @@
 \begin{itemize}
     \item UNIX中，推荐使用\textsf{emacs}或\textsf{vi}，即使前者明显比后者更高级，但二者用户之间无结果的恶意争吵仍在继续。
     \item \textsf{kile}和\textsf{texmaker}是已集成的开发环境。依靠它们，初学的用户在入门时会觉得更轻松。它们的特点是将编辑、编译和可视化集成在一个界面。这两个环境也使通过菜单、对话框或其他标签来探索\LaTeX 指令称为可能（如图\ref{fig:1.1}a所示）。
-    \item Windows中的对应产品是\textsf{\TeX nicCenter}（如图1.1b所示）。
-    \item macOS中的对应山品是\textsf{\TeX shop}和\textsf{i\TeX max}。
+    \item Windows中的对应产品是\textsf{\TeX nicCenter}（如图\ref{fig:1.1}b所示）。
+    \item macOS中的对应产品是\textsf{\TeX shop}和\textsf{i\TeX max}。
 \end{itemize}
 
-\begin{figure}[H]
+\begin{figure}%[H]
     %TODO 图
     \centering
-    Kile
-
-    \TeX nicCenter
+    \includegraphics[width = 0.8\linewidth]{img/kile.eps}\\
+    (a) Kile\\
+    \includegraphics[width = 0.8\linewidth]{img/texniccenter.eps}\\
+    (b) \TeX nicCenter
     \caption{集成的两个开发环境：Linux中的Kile和Windows中的\TeX nicCenter。它们将编辑、编译和可视化集成在一个界面中}
     \label{fig:1.1}
 \end{figure}
@@ -97,7 +98,7 @@
 \begin{figure}[H]
     %TODO 图
     \centering
-
+    \includegraphics[width = 0.8\linewidth]{img/cycle.eps}
     \caption{UNIX中参与生成过程的工具}
     \label{fig:1.2}
 \end{figure}
@@ -183,19 +184,19 @@
 例如，输入：
 
 \begin{dmd}
-    \backslash documentclass{article}
+    \backslash documentclass\{article\}
 \end{dmd}
 
 以上命令可以将全部配置项配置为默认值（字号为10 pt，单列，单面……）。
 
 \begin{dmd}
-    \backslash documentclass[12pt]{article}
+    \backslash documentclass[12pt]\{article\}
 \end{dmd}
 
 以上命令将字号设置为12 pt（默认为10 pt）。再如：
 
 \begin{dmd}
-    \backslash documentclass[twoside, draft]{report}
+    \backslash documentclass[twoside, draft]\{report\}
 \end{dmd}
 
 以上命令可以以草稿模式生成适合双面打印的报告。
@@ -260,7 +261,7 @@
 
 这个示例体现了\LaTeX 中的几个重要的原理，具体如下。
 
-\paragraph*{空行代表跳转至下一段} \LaTeX 中的空行代表一段文字的结尾，因此在以上实例中，第一段从“\dm{从你}”开始，直到“\dm{物品。}”结束。指令\dm{\backslash par}与空行等价，可以用来表示一段文字的起始。
+\paragraph*{空行代表跳转至下一段} \LaTeX 中的空行代表一段文字的结尾，因此在以上实例中，第一段从“\dm{从你}”开始，直到“\dm{物品上。}”结束。指令\dm{\backslash par}与空行等价，可以用来表示一段文字的起始。
 
 \paragraph*{\LaTeX 会忽略换行}最终的文档中，换行并不由源文件中的换行决定。\LaTeX 会自动为各段文本\textit{打断、压缩、调节}文字，除非你有特殊的要求。
 
@@ -284,13 +285,10 @@
 
 \begin{codelist}[1.2]{
 \textbf{是}下标：$x_{i+1}$，还是上标：$e^{i\pi}$；这是问题~1！
-}
-\begin{verbatim}
-%毫无意义的段落
+}\begin{verbatim}%毫无意义的段落
 \textbf{是}下标：$x_{i+1}$，
 还是上标：$e^{i\pi}$；
-这是问题~1！%还是问题2？
-\end{verbatim}
+这是问题~1！%还是问题2？\end{verbatim}
 \end{codelist}
 
 目前，你需要知道：
@@ -327,9 +325,7 @@
     \TeX\  has some powerful macros.
 
     \LaTeX{} is a document preparation system
-}
-    \begin{verbatim}
-\TeX book is for \TeX hackers.
+}\begin{verbatim}\TeX book is for \TeX hackers.
 
 \TeX\  has some powerful macros.
 
@@ -340,7 +336,172 @@
 \begin{exclamation}
     \verb*|\ |（其中\verb*| |代表空格）称作控制空格（espace de contrôle）。这个空格不会被\LaTeX 忽略。因此，指令“\verb*|et\ \ \ hop !|”会生成“et\ \ \ hop !”。实际上，以\dm{\backslash}\textsl{\<函数\>}\dm{\{}\textsl{\<参数\>}\dm{\}}的形式来调用宏是很好的习惯。因此，使用上例中的的第三种方式比第二种方式更佳。这种形式可以避免空格被忽略的情况发生\jz{
         所以他为什么要跟我们说这些？！
-    }。因此，我们将使用\verb|the \teX{}book|来生成“the \TeX{}book”，使用“\verb*|\LaTeX{} is a ...|”来生成“|\LaTeX{} is a ...”。
+    }。因此，我们将使用\verb|the \teX{}book|来生成“the \TeX{}book”，使用“\verb*|\LaTeX{} is a ...|”来生成“\LaTeX{} is a ...”。
 \end{exclamation}
 
 \subsection{变音符号}
+
+法国人往往对于使用\LaTeX 这件事忧心忡忡，因为法语中带有变音符号。别怕！你不必像表\ref{tab:1.1}\yz{
+    该表与原书不完全相同。
+}中展示的那样输入带有变音符号的字符。然而，你需要知道：无论是什么种类的字符，包括大写字母，我们都可以为其添加变音符号。
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        变音符号 & 源码 & 效果\\
+        \hline
+        尖音符 & \verb|\`z| & \`z \\
+        钝音符 & \verb|\'z| & \'z \\
+        长音符 & \verb|\^z| & \^z \\
+        软音符 & \verb|\c{z}| & \c{z}\\
+        分音符 & \verb|\"{z}| & \"{z}\\
+        \hline
+    \end{tabular}
+    \caption{输入占7位（bit）的变音符号}
+    \label{tab:1.1}
+\end{table}
+
+注意！虽然我们可以输入带有变音符号的字符，但不要忘记：这需要我们调用编码。目前，编码可能只针对地球上的某个地区。在法国，我们使用ISO 8859编码，配合拉丁文1区拓展。这套编码允许我们操纵美丽的变音符号。在详细阅读本书中专为使用法语书写文档的情况准备的章节\celan{第7章}之前，我们建议你在你源码的文前部分添加以下指令，以“攻克”法语文档的难关：
+
+\begin{dmd}
+    \begin{verbatim}
+%源文件编码
+\usepackage[latin1]{inputenc}
+%TeX字体编码
+\usepackage[T1]{fontenc}
+%针对法语文档
+\usepackage[francais]{babel}
+    \end{verbatim}
+\end{dmd}
+
+\section{第一批工具}
+
+以下几个宏和合字在文档中很常用，因此应当了解它们。首先,\LaTeX 会区分三种连接号：
+
+\begin{itemize}
+    \item \verb|-|，用于“Saint-Étienne”；
+    \item \verb|--|，用于“page 12--24”；
+    \item \verb|---|，在法文中用于插入语，如“une parenthèse --- comme cela”。
+\end{itemize}
+
+引号应以如下方式输入：
+
+\begin{itemize}
+    \item \verb|``|和\verb|''|可以输入英文中的引号\yz{
+        此处与原书不同。原书前文输入变音符号时亦直接使用了单弯引号‘和’，但这两个符号作为命令参数时会导致编译错误，因此分别替换为反引号和直单引号。这可能是编译器的差异导致的。
+    }——``English''。
+    \item 如果键盘允许，对于法语，你可以输入«和»\jz{
+        例如，在Linux系统下，分别按键盘的\fbox{Alt Gr}+\fbox{Z}和\fbox{Alt Gr}+\fbox{X}组合键（译注：适用于AZERTY键盘）。
+    }。\textsf{babel}包的法文支持部分（参考第7章）%TODO
+    允许我们通过\verb|\og|和\verb|fg|输入引号，由此，\verb|\og français\fg{}|这类命令是允许的—— «~français~»~。
+\end{itemize}
+
+以下是其余几个使用的命令：
+
+\begin{itemize}
+    \item \verb|\today|可以生成（编译时的）日期——2013年11月22日。
+    \item \verb|\$|可以生成段落符号——\S。
+    \item \verb|\ldots|可以在英文文档中生成省略号“\ldots”。但在法文文档中，应当输入三个点“...”（第7章会介绍更多有关法文排版的内容）。%TODO
+\end{itemize}
+
+最后要记得，英文中的双成分标点（ponctuation double；包括:;!?）前不加空格，但法语相反，它们的前面需要加空格。另外，在法国这个可爱的国家，我们几乎都靠右行驶。
+
+\section{第一组报错}
+
+\begin{exclamation}
+    接下来，我们会看看\LaTeX 编译你的文档时闹的“情绪”。当我们放出编译指令时，我们会直接在终端看到这些输出。为了能让\LaTeX 得到充分使用，我们鼓励你在自己的环境下找到属于你自己的检查\LaTeX “\textsf{日志}”的方法。这些日体可以为你指明错误信息，以及编译过程中出现的其他警告。
+\end{exclamation}
+
+\subsection{症状}
+
+如果你与\LaTeX 打交道，那么早晚有一天，你会看到屏幕上显示出类似这样粗旷的信息：
+
+\begin{dmd}
+    \linenumbers
+    \begin{verbatim}
+This is TeX, Version 3.1415 (C version 6.1)
+(erreur.tex
+LaTeX2e <1995/12/01>
+(/usr/local/lib/texmf/tex/cls/article.cls
+Document Class: article 1995/11/30 v1.3p Standard LaTeX document class
+(/usr/local/lib/texmf/tex/clo/size10.clo)) (erreur.aux)
+! Undefined control sequence.
+l.5 paragraphe de ce \empha
+                           {document}
+?\end{verbatim}
+\end{dmd}
+
+几乎可以肯定，你看不懂这团内容。它是使用\LaTeX 处理文件\dm{erreur.tex}后终端上显示的内容。以下是文件全文\yz{
+    文件正文意为：\dm{我觉得，在这样短的\backslash empha\{文档\}的第一段就有一个错误}。
+}：
+
+\begin{dmd}
+    \begin{verbatim}
+\documentclass{article}
+
+\begin{document}
+Il me semble bien qu’il y ait une erreur dans le
+premier paragraphe de ce \empha{document} somme
+toute assez court.
+\end{document}
+    \end{verbatim}
+\end{dmd}
+
+\subsection{诊断}
+
+我们可以以一种简单的方式来解释以上错误信息。
+
+\paragraph*{第1行}你使用的\TeX 版本为$\pi\pm 10^{-4}$。
+\paragraph*{第2行}你想编译文件\dm{erreur.tex}。
+\paragraph*{第3行}你使用了\LaTeXe ，版本日期为1995年12月。
+\paragraph*{第4行～第5行}你使用了标准文档类\dm{article}。
+\paragraph*{第6行}字号默认设置为10 pt。
+\paragraph*{第7行}错误信息本身。
+\paragraph*{第8行～第9行}\dm{erreur.tex}中造成错误的代码行和对应行号。
+\paragraph*{第10行}\TeX 给出的短促且尤其让人焦虑的消息：\dm{?}。
+
+第8行和第9行之间的“裂缝”精准地表明了\LaTeX 崩不住了的地方。以下消息：
+
+\begin{dmd}
+    ! Undefined control sequence.
+\end{dmd}
+
+向你说明了，\LaTeX 不认识你输入的指令。实际上，指令\verb|\empha|不存在。
+
+\subsection*{治疗方案}
+
+那么，当\LaTeX 给我们展示这个著名的“\dm{?}”时，我们应该怎么回答它呢？这里有3种最简短的方式，可以用来与\LaTeX 轻度交流。
+
+\begin{itemize}
+    \item 按回车键来忽略错误。
+    \item 输入\dm{x}来退出编译。
+    \item 输入\dm{r}让\LaTeX 继续编译，并忽略其他错误信息。
+    \item 输入\dm{i}以插入一条更正信息并继续编译，但新插入的更正信息并不会出现在源文档中。
+    \item 输入\dm{h}以获取更多关于该错误的信息。以下是本例中\TeX 提供给你的更多信息：\begin{verbatim}
+Undefined control sequence :
+  The control sequence at the end of the top line
+  of your error message was never \def’ed. If you have
+  misspelled it (e.g., ‘\hobx’), type ‘I’ and the
+  correct spelling (e.g., ‘I\hbox’). Otherwise just
+  continue, and I’ll forget about whatever was
+  undefined.\end{verbatim}
+\end{itemize}
+
+\subsection{一些消息}
+
+\TeX 和\LaTeX 会根据不同的情况给出大量错误消息，其中有一些在第一次面对时并不能读懂。然而，大多数经常出现的消息有以下类型：
+
+\begin{itemize}
+    \item \LaTeX 语法或保留字错误；
+    \item 花括号没有成对出现；
+    \item 在文本模式中出现了本应出现在数学模式中的内容；
+    \item 数学模式没有关闭；
+    \item 你忘记包含一个包；
+    \item 编译过程无法结束；%TODO核实
+    \item ……
+\end{itemize}
+
+\section{再说几句！}
+
+现在，你知道了如何用\LaTeX 源码创建可打印的文件。同时，本章向你介绍了调用指令的原则。接下来，如果想要了解\LaTeX 语法中的不同功能，需要做的仅仅是去着手接下来的章节。%TODO

@@ -35,15 +35,12 @@
 
 \usepackage{hyperref}%所有网页用超链接同步挂靠
 
-\def\<{
-    % $\langle$
-    <
-}
+%行号
+\usepackage{lineno}
 
-\def\>{
-    % $\rangle$
-    >
-}
+\def\<{\hspace{0em}<\hspace{0em}}
+
+\def\>{\hspace{0em}>\hspace{0em}}
 
 \def\wz#1{%网址
     % \href{#1}{\texttt{#1}}
@@ -119,16 +116,17 @@ $\blacktriangleright$
     {STSongti-SC-Regular}
 \setCJKsansfont[
     ItalicFont={SmileySans-Oblique},
-    SlantedFont={SmileySans-Oblique}]
+    SlantedFont={STFangsong}]
     {NotoSansCJKsc-DemiLight}
 \setCJKmonofont[
-    ItalicFont={SmileySans-Oblique},
-    SlantedFont={SmileySans-Oblique}]
-    {NotoSansMonoCJKsc-Regular}
+    % ItalicFont={SmileySans-Oblique},
+    SlantedFont={STFangsong}]
+    {STYuanti-SC-Regular}
 \setmonofont[
-    ItalicFont={SmileySans-Oblique},
-    SlantedFont={SmileySans-Oblique}]
-    {CourierNewPSMT}
+    ItalicFont={LMMono10-Italic},
+    SlantedFont={SFMono-RegularItalic}
+    ]
+    {LMMono10-Regular}
 
 
 
@@ -155,8 +153,8 @@ $\blacktriangleright$
 % \renewcommand{\headrulewidth}{0.4pt}
 % \renewcommand{\footrulewidth}{0pt}
 % \setlength{\headwidth}{\linewidth + \marginparwidth + \marginparsep}
-\setlength{\parskip}{5pt}
-\setstretch{1.2}%倍行距
+\setlength{\parskip}{3pt}
+\setstretch{1.1}%倍行距
 
 \input{introduction.tex}
 \input{chapitre1.tex}
