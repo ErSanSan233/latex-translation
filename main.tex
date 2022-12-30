@@ -34,6 +34,7 @@
 \usepackage{setspace}%行距
 
 \usepackage{hyperref}%所有网页用超链接同步挂靠
+\usepackage{xpatch}%设置verbatim前后间距
 
 %行号
 \usepackage{lineno}
@@ -56,8 +57,7 @@
 }
 
 \def\dm#1{%代码
-    {\xeCJKsetup{CJKecglue={\hskip 0em}}
-    \hspace{0em}\texttt{#1}}\hspace{0em}}
+    \texttt{#1}}
 
 \def\dmh#1{%代码行
     {\xeCJKsetup{CJKecglue={\hskip 0pt}}
@@ -144,12 +144,11 @@ $\blacktriangleright$
 \fancyhead{} 
 \fancyhead[RO,LE]{\thepage}
 \fancyfoot{}
-% \setlength{\headheight}{30pt}
-% \renewcommand{\headrulewidth}{0.4pt}
-% \renewcommand{\footrulewidth}{0pt}
-% \setlength{\headwidth}{\linewidth + \marginparwidth + \marginparsep}
-% \setlength{\parskip}{3pt}
-\setstretch{1.1}%倍行距
+
+\setstretch{1.2}
+\xpretocmd\verbatim{
+    \setlength{\topsep}{0pt}
+    \setlength{\partopsep}{0pt}}{}{\fail}
 
 \input{introduction.tex}
 \input{chapitre1.tex}

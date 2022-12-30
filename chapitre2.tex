@@ -94,3 +94,315 @@ le \emph{chef} a toujours raison.\par
 \end{codelist}
 
 我们可以看到，指令\verb|\emph|实现了校正，然而，若要使用声明，则需要明确地借助宏\verb|\/|来实现相同的效果。
+
+\subsection{字号}
+
+表\ref{tab:2.2}中展示的宏可以修改行文的字号。这些宏都是\emph{声明}。同时，对于每一个宏都存在同名的环境。
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c||l|c|}
+\hline
+\verb|\Huge| & {\Huge 宏大} & \verb|\normalsize| & {正常} \\
+\verb|\huge| & {\huge 庞大} & \verb|\small| & {\small 小} \\
+\verb|\LARGE| & {\LARGE 特大} & \verb|\footnotesize| & {\footnotesize 加小} \\
+\verb|\Large| & {\Large 加大} & \verb|\scriptsize| & {\scriptsize 特小} \\
+\verb|\large| & {\large 大} & \verb|\tiny| & {\tiny 微小} \\
+\hline
+    \end{tabular}
+    \caption{修改字号}
+    \label{tab:2.2}
+\end{table}
+
+\subsection{几个建议}
+
+习惯上，我们应当尽量减少字体变化。实际上，如果字体变化得不合适宜或没有实际用处，尤其是喧宾夺主，影响了文档的可读性，看起来就会很低级。这里是有关使用字体变化的几条建议（仍然是习惯上的建议！）：
+\begin{itemize}
+    \item 相较于使用其余指令，更多地使用\verb+\emph+（默认会将字体改为\emph{意大利}体）。
+    \item 将\textbf{加粗}的机会留给特别重要的提示。
+    \item 在法文文档中，几乎只在人名中使用小型大写字母（如Donald \textsc{Knuth}）。
+    \item \dm{打字机}字体族经常被用于生成编程语言的代码或类似的内容。
+\end{itemize}
+
+以下内容适用于能读懂其中道理的人……
+
+除以上内容外，我们给出以下两个用于突出显示的情况，读者可以字形斟酌：改变字号、添加下划线（使用指令\verb|\underline|）。
+
+\begin{quote}
+    “也许那些希望{\tiny 小声说话}的诗人会让图书的字体频繁变化，但目前，只有一些字体狂人{\tiny （比如本手册的作者）}才喜欢这样做。”——克努特，\TeX Book[9]
+\end{quote}
+
+\begin{quote}
+    “注意，出版行业认为，以添加下划线的形式来强调内容是不好的习惯。下划线只应用于一种情况——输出设备无法以其他方式突出显示内容，比如使用打字机。”——迈克尔·古森斯（Michel Goossens）等，《\LaTeX 伴侣》（\textit{\LaTeX{} Companion}）[6]
+\end{quote}
+
+\section{环境}
+
+\LaTeX 以\emph{环境}格式提供了一系列工具，具体结构是一个代码块，语法如下：
+
+\begin{dmd}
+    \verb+\begin+\textsl{\<环境名\>}\verb|}|\\
+    \verb|...|\\
+    \verb+\end+\textsl{\<环境名\>}\verb|}|\\
+\end{dmd}
+
+其中\textsl{\<环境名\>}需要替换为具体的环境名称。我们目前遇到的第一个环境是\dm{document}。\verb|\begin| 和\verb|end|间的文字会以特殊版式展示。
+
+\begin{exclamation}
+    我们立刻注意到，环境中所有声明都是局部的。另外，当然可以在我们自己定义的环境中套用已经存在的环境。
+\end{exclamation}
+
+\subsection{居中和对齐}
+
+想要居中显示几行文字，我们使用环境\dm{center}：
+
+\begin{codelist}[2.5]{
+    ……上一段的结尾。
+    \begin{center}
+        完美居中的\\
+        几行文字\\
+        且前后带有间距
+    \end{center}
+    然后继续下一段……
+}\begin{verbatim}……上一段的结尾。
+\begin{center}
+  完美居中的\\
+  几行文字\\
+  且前后带有间距
+\end{center}
+然后继续下一段……
+\end{verbatim}
+\end{codelist}
+
+同样，我们可以轻易地借助环境\dm{flushright}，让一个段落右对齐排列：
+
+\begin{codelist}[2.6]{
+    ……上一段的结尾。
+    \begin{flushright}
+      两行右对齐\\
+      的文字
+    \end{flushright}
+    然后继续下一段……
+    }{
+\begin{verbatim}……上一段的结尾。
+\begin{flushright}
+  两行右对齐\\
+  的文字
+\end{flushright}
+然后继续下一段……
+\end{verbatim}
+    }
+\end{codelist}
+
+注意，以上两个示例中，命令\verb|\\|起到了换行的功能。除一些特殊场景（表格、文档的标题和作者、特意的居中或对齐处理）外，不要使用这个命令——如果想要换行，需要使用空行或命令\verb|\par|。
+
+\begin{flushleft}
+    一般情况下，我们使用环境\dm{flushleft}时需要搭配命令\verb|\\|。但我们可以使用这个环境来生成右侧不对齐的文档，将换行的麻烦工作留给\LaTeX ，就像这段文字一样。（译注：此处给出本段原文。请注意右侧的换行的不对齐处理。En général, on emploie l'environnement \dm{flushleft} avec des commandes \verb|\\|. Mais on peut l'utiliser pour produire un paragraphe comme celui-ci, non justifié à droite, en laissant à \LaTeX{} le soin d’insérer les sauts de lignes.）
+\end{flushleft}
+
+%TODO 排查代码下正文内容
+\begin{exclamation}
+    绝大部分环境都会重启一行来插入内容。然而，重要的是：环境只是在插入内容的位置\emph{中断}当前段落，而不是结束当前段落。你可以在前两个实例中看到，“然后继续下一段……”这句话前没有缩进。另外，\LaTeX 贴心地在每个环境前后都留了一段空白。
+\end{exclamation}
+
+我们可以注意到，前面的三个环境分别代表以下三个声明：
+
+\begin{itemize}
+    \item \verb|\centering|；
+    \item \verb|\raggedleft|；
+    \item \verb|\raggedright|。
+\end{itemize}
+
+例如，我们可以这样写\yz{
+    实际上，Emacs代表Editor MACroS。本例是对Emacs的调侃。
+}：
+
+\begin{codelist}[2.7]{
+    Emacs代表:
+
+    {\centering Emacs\\Makes\\
+      A\\Computer\\Slow\\}
+}{\begin{verbatim}Emacs代表:
+
+{\centering Emacs\\Makes\\
+  A\\Computer\\Slow\\}
+\end{verbatim}
+}
+\end{codelist}
+
+\subsection{列表}
+
+\LaTeX 提供了三种呈现\emph{列表}的基本环境：\dm{itemize}、\dm{enumerate}、\dm{description}。如果它们都不能满足你，也可以定义属于你自己的\celan{9.5节}列表。但目前，先来看看标准的列表。
+
+首先，\dm{itemize}可以生成不编号的项目列表。在法文版本中，一级列表会使用连接号（---）标记；在其他版本中，会使用点（$\bullet$）标记：
+
+\begin{codelist}[2.8]{
+……一句话的结尾。
+\begin{itemize}
+\item 在复杂的计算中，分子的系数需要传递给分母；
+\item 不应当写逗号。
+\end{itemize}
+然后行文继续。
+}\begin{verbatim}
+……一句话的结尾。
+\begin{itemize}
+\item 在复杂的计算中，
+  分子的系数需要
+  传递给分母；
+\item 不应当写逗号。
+\end{itemize}
+然后行文继续。
+\end{verbatim}
+\end{codelist}
+
+环境\dm{enumerate}遵循类似的规则，只不过项目会被编号。一个环境中可以套用另一个环境。下面的例子中，我们同时展示了\dm{ enumerate}和\dm{description}环境：
+
+\begin{codelist}[2.9]{
+    ……还是一句话的结尾。
+    \begin{description}
+    \item[\TeX] \TeX{}book；
+    \item[\LaTeX] 两本重要的书：
+      \begin{enumerate}
+      \item 《\LaTeX{}：一个文档准备系统》（\emph{\LaTeX{}: A Document Preparation System}）。
+      \item 《\LaTeX{}伴侣》。
+      \end{enumerate}
+    \end{description}
+    跟之前一样，接下来段落继续……
+}\begin{verbatim}……还是一句话的结尾。
+\begin{description}
+\item[\TeX] \TeX{}book；
+\item[\LaTeX] 两本重要的书：
+  \begin{enumerate}
+  \item 《\LaTeX{}：一个文档
+    准备系统》（\emph{\LaTeX{}: 
+    A Document Preparation System}）。
+  \item 《\LaTeX{}伴侣》。
+  \end{enumerate}
+\end{description}
+跟之前一样，接下来段落继续……
+\end{verbatim}
+\end{codelist}
+
+至于环境\dm{description}的列表，在我们习惯的文档处理中没有对应内容。不幸的是，对于\LaTeX 初学者，它最好的结果是被误用，最差的结果是被无视。
+
+\subsection{制表}
+
+环境\dm{tabbing}可以用于打字机上使用的那种老式制表过程%TODO查证
+。我们可以使用指令\verb|\=|来放置定位标记，并使用指令\verb|\>|来在定位标记之间移动。此外，\verb|\\|可以用来换行。
+
+\begin{codelist}[2.10]{
+  \begin{tabbing}
+    左倾 \= 中间立场 \= 右倾 \\
+    \> 中立派 \\
+    \> \> 保守派 \\
+    xxxxxxxxx \= \kill
+    \> 无观点
+    \end{tabbing}
+}\begin{verbatim}
+\begin{tabbing}
+  左倾 \= 中间立场 \= 右倾 \\
+  \> 中立派 \\
+  \> \> 保守派 \\
+  字字字字字 \= \kill
+  \> 无观点
+\end{tabbing}
+\end{verbatim}
+\end{codelist}
+
+我们可以从这个例子中看到两个规则：
+
+\begin{itemize}
+    \item 可以在制表时插入一行“模板”，并且使用指令\verb|\kill|来隐藏这一行；
+    \item 如果已经存在定位标记，新的指令\verb|\=|可以在逻辑上移除它们。
+\end{itemize}
+
+\subsection{表格}
+
+\LaTeX 中用于生成\emph{表格}的环境称为\dm{tabular}。表线的处理可能不太精细，但对于线条简单的表格，结果可以接受\jz{
+    附录B提供了一些提示，可以用来找到能够生成更复杂表格的包。
+}：
+
+\begin{codelist}[2.11]{
+    嚯：
+    \begin{tabular}{|r|c|}
+        \hline
+        俩 & 仨 \\
+        五个 & 六个  \\ \hline
+      \end{tabular}
+}\begin{verbatim}嚯：
+\begin{tabular}{|r|c|}
+  \hline
+  俩 & 仨 \\
+  五个 & 六个  \\ \hline
+\end{tabular}
+\end{verbatim}
+\end{codelist}
+通过这个例子，我们可以得到以下结论。
+
+\begin{itemize}
+    \item 环境\dm{tabular}会等待输入一个参数，应用指示表格的格式。每列都应该以一个定位字符表示。
+    \begin{itemize}
+        \item \dm{r}：右对齐。
+        \item \dm{c}：居中。
+        \item \dm{l}：左对齐。
+    \end{itemize}
+    \item 字符\verb|&|用于分隔不同列。
+    \item 指令\verb|\\|用于跳转至下一行。
+    \item 布局字符串中的\dm{|}表示插入纵向表线。
+    \item 横向表线由指令\verb|\hline|插入。
+\end{itemize}
+
+因此，我们可以自由地调整\verb|\hline|和\dm{|}的数量，以隐藏或显示表线。包\textsf{array}可以满足一些关于表格的幻想。
+
+\begin{exclamation}
+大多数环境都会另起一行，但\dm{tabular}不会。\dm{tabular}会紧接当前的文本生成表格。
+\end{exclamation}
+
+此外，我们还可以使用参数来精确地指定表格竖直方向上的位置：
+
+\begin{codelist}[2.12]{
+一个表：\begin{tabular}[b]{|c|} 
+甲\\乙
+\end{tabular}
+，另一个表：\begin{tabular}[t]{|c|} 
+丙\\丁\end{tabular}
+}\begin{verbatim}一个表：\begin{tabular}[b]{|c|} 
+  甲\\乙
+\end{tabular}
+，另一个表：\begin{tabular}[t]{|c|} 
+  丙\\丁
+\end{tabular}
+\end{verbatim}
+\end{codelist}
+
+我们可以看出，参数\dm{b}将表格“放置”在当前行上，参数\dm{t}将表格“悬挂”在当前行下。如果没有参数，表格会在竖直方向上居中，就像前面的例子一样。
+
+显然，表格可以不插入句子中，而可以单独成段，比如配合环境\dm{center}被单独居中。
+
+\subsection{模拟终端}
+
+环境\dm{verbatim}可以将其内容逐字插入文档。因此，无论什么字符，甚至是特殊字符，都可以使用它来插入，如插入一个\textsf{C++}代码片段：
+
+\begin{codelist}[2.13]{\ttfamily
+  \begin{tabbing}
+    cl\=ass pixel \{\\
+      \>int x, y;\\
+    public:\\
+      \>pixel(int i=0, int j=0);\};
+  \end{tabbing}
+}
+\ttfamily
+\backslash begin\{verbatim\}
+\begin{verbatim}
+class pixel{
+  int x,y;
+public:
+  pixel(int i=0, int j=0);};
+\end{verbatim}
+\backslash end\{verbatim\}
+\end{codelist}
+
+\begin{exclamation}
+我们可以在环境\dm{verbatim}中写任何内容，\emph{除了}以下字符串——\verb|\end{verbatim}|！
+\end{exclamation}
+
