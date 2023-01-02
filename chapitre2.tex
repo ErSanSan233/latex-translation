@@ -406,3 +406,278 @@ public:
 我们可以在环境\dm{verbatim}中写任何内容，\emph{除了}以下字符串——\verb|\end{verbatim}|！
 \end{exclamation}
 
+有两个指令可以像\dm{verbatim}一样生成文本片段：\verb|\verb|和\verb|\verb*|。带有星号的版本可以将空格“\verb| |”显示为“\verb*| |”的形式。
+
+这两个指令的参数不使用花括号括起，而夹在任何一种可以满足以下两个条件的符号之间：不能是特殊符号、不能在参数中包含：
+
+\begin{codelist}[2.14]{
+  使用{\ttfamily \#include<stdlib.h>+}可以
+  包含C语言标准库的原型。
+}\begin{verbatim}
+使用\verb+#include<stdlib.h>+可以
+包含C语言标准库的原型。
+\end{verbatim}
+\end{codelist}
+
+\begin{exclamation}
+在任何情况下，指令\verb|\verb|都不能出现在其他指令的参数中，无论这个指令是什么。
+\end{exclamation}
+
+\subsection{引用语}
+
+环境\dm{quote}和\dm{quotation}可以在文本中引用内容。首先来看\dm{quote}：
+
+\begin{codelist}[2.15]{
+  ……仍然是一句话的结尾。
+\begin{quote}
+  万物相关。\hfill\textbf{爱因斯坦}
+
+  有件事情是不确定的，
+  那就是所有事情都是确定的。
+  \hfill\textbf{帕斯卡}
+\end{quote}
+然后继续被打断的段落……
+}\begin{verbatim}
+……仍然是一句话的结尾。
+\begin{quote}
+  万物相关。\hfill\textbf{爱因斯坦}
+
+  有件事情是不确定的，
+  那就是所有事情都是确定的。
+  \hfill\textbf{帕斯卡}
+\end{quote}
+然后继续被打断的段落……
+\end{verbatim}
+\end{codelist}
+
+指令\verb|\hfill|可以插入一段在水平空间上\celan{\S 4.2.4}无限延伸的空白。环境\dm{quotation}有一些细微的差别：
+
+\begin{codelist}[2.16]{
+  ……仍然是一句话的结尾。
+\begin{quotation}
+  人有许多缺陷，但我们若能
+  想到他们被创造的那个年代，
+  就能对此感到宽容。\par
+  \raggedleft 阿方斯·阿莱
+  （Alphonse Allais）
+\end{quotation}
+然后继续被打断的段落……
+}\begin{verbatim}
+……仍然是一句话的结尾。
+\begin{quotation}
+  人有许多缺陷，但我们若能
+  想到他们被创造的那个年代，
+  就能对此感到宽容。\par
+  \raggedleft 阿方斯·阿莱
+  （Alphonse Allais）
+\end{quotation}
+然后继续被打断的段落……
+\end{verbatim}
+\end{codelist}
+
+实际上，对于这两个环境，根据莱斯利·兰波特的介绍，一个（\dm{quote}）是为引用一条或多条短的内容而准备的，另一个（\dm{quotation}）是为引用一条长的内容而准备。
+
+\section{页边注}
+
+指令\verb|\marginpar|可以在页边缘创建一个小段落，语法如下：
+
+\begin{dmd}
+\backslash marginpar\{\textsl{\<文字\>}\}
+\end{dmd}
+
+对于双面打印的模式，为了区分左侧和右侧的页面，我们可以使用如下指令\yz{
+  原书有误。此处已更正。
+}：
+
+\begin{dmd}
+\backslash marginpar[\textsl{\<左侧文字\>}]\{\textsl{\<右侧文字\>}\}
+\end{dmd}
+
+其中\textsl{\<左侧文字\>}和\textsl{\<右侧文字\>}会根据当前页码的奇偶性在页面左侧或右侧呈现。如此一来，以下指令：
+
+\begin{dmd}
+\backslash marginpar[这！]\{嚯！\}
+\end{dmd}\marginpar[这！]{嚯！}
+
+会生成你在本页页边缘看到的内容。
+
+\section{标题}
+
+表\ref{tab:2.3}给出了\LaTeX 种可用的\emph{章节}命令。对于类型为\dm{article}的文档，指令\verb|\chapter|不可用；对于类型为\dm{letter}的文档，任何标题类型都不可用。目前，你需要了解以下两点：
+
+\begin{itemize}
+  \item 使用指令生成的每个标题都可以自动\emph{编号}，并可以在必要时列入目录。
+  \item 使用指令\verb|\tableofcontents|可以生成目录，并将其插入该指令所在的位置。
+\end{itemize}
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{|l|l|l|}
+    \hline
+    \verb|\part{...}| & \verb|\chapter{...}| & \\
+    \verb|\section{...}| & \verb|\subsection{...}| & \verb|\subsubsection{...}| \\
+    \verb|\paragraph{...}| & \verb|\subparagraph{...}| &  \\
+    \hline
+  \end{tabular}
+  \caption{章节指令}
+  \label{tab:2.3}
+\end{table}
+
+\begin{exclamation}
+此外，所有的标题指令都带有可以自定义的相关类型。% TODO
+总的来说，这些指令会自动生成标题前后的间距。如此一来，指令前后的任何空行都会被忽略。
+\end{exclamation}
+
+\begin{codelist}[2.17]{
+  ……一句话的结尾。
+  \section*{3.2\quad 结论}
+  最终，……
+}\begin{verbatim}
+……一句话的结尾。
+\section{结论}
+最终，……
+\end{verbatim}
+\end{codelist}
+
+每种标题指令都带有一种“带星”形式（例如，\verb|\section*|），可以插入不参与编号的标题。但需要注意，这种标题不会出现在\celan{\S 2.9.2}目录中。与节（section）相关的标题指令中可以接受参数，用于明确目录中展示的内容。例如：
+
+\begin{dmd}
+\verb+\section[张三]{太帅了！}+
+\end{dmd}
+
+可以在文档中插入节标题“太帅了！”，但在目录中将其展示为“张三”。
+
+\section{页面底部的注释}
+
+有一种方便的方式可以在页面底部插入注释：使用指令\verb|\footnote{|\textsl{\<文本\>}\verb|}|。注释会自动编号，且在默认情况下按章重新编号。如下是\LaTeX 可以实现的效果：
+
+\begin{codelist}[2.18]{
+  无论如何，指令\texttt{footnote}$^a$可以在页面底部插入注释。\\
+  ————\\%TODO 
+  {\footnotesize $^a$正如其名。}
+}\ttfamily
+无论如何，指令\backslash verb +footnote+
+\backslash footnote\{正如其名。\}可以在页面
+底部插入注释。\rmfamily
+\end{codelist}
+
+在一些特殊情况中，\verb|\footnote|不能生成我们想要的效果。此时，有必要分两步走：
+
+\begin{enumerate}
+  \item 使用指令\verb|\footnotemark|放置\emph{注释标记}；
+  \item 当条件允许时，使用指令\verb|\footnotetext|在页面底部输入\emph{文字}。
+\end{enumerate}
+
+例如，在表格中插入注释似乎有点棘手，此时可以这样写：
+
+\begin{codelist}[2.19]{
+  \begin{tabular}{cc}
+    甲 & 乙$^a$ \\
+    丙 & 丁\\
+  \end{tabular}\\
+  ————\\
+  {\footnotesize $^a$一个注释。}
+}\begin{verbatim}
+\begin{tabular}{cc}
+  甲 & 乙\footnotemark \\
+  丙 & 丁
+\end{tabular}\footnotetext{一个注释。}
+\end{verbatim}
+\end{codelist}
+
+\section{页眉和页脚}
+
+\LaTeX 生成页眉和页脚的标准指令有些简陋，但这里也值得一提，因为这些指令对于一些特定情况已经足够了。
+
+\begin{exclamation}
+关于这些指令，在这里就不讲更多内容了，因为\dm{fancyhdr.dvi}中介绍的fancyhdr包易用得多，也提供了比\LaTeX 的标准指令多得多的有趣选项。本书关于使用此包生成页眉页脚的详细解释在10.4节。
+\end{exclamation}
+
+如果不调用其他包，可以在文档的文前部分使用指令\verb|\pagestyle|来指定页眉页脚的风格：
+
+\begin{dmd}
+\verb|\pagestyle{|\textsl{\<风格\>}\verb|}|
+\end{dmd}
+
+其中，参数\textsl{\<风格\>}可以从以下值中选择：
+
+\begin{itemize}
+  \item \dm{empty}，不显示页眉和页脚；
+  \item \dm{plain}，默认风格，页脚居中显示当前页码；
+  \item \dm{headings}，在页眉显示一定的内容，根据文档风格的不同而不同（例如，在双面的\dm{report}文档中，会显示当前的章名或节名）；
+  \item \dm{myheadings}，自定义插入内容。
+\end{itemize}
+
+此外，使用指令\verb|\thispagestyle|，可以变更或指定当前页的风格。
+
+\section{浮动环境}
+
+\LaTeX 为其优秀的用户提供了使用\emph{浮动}环境的可能性。这种环境的特点是，其内容会被“漂浮地”渲染到正文中。也就是说，\LaTeX 通过一种算法，综合考虑一系列参数，在文档中为这种环境挑选位置。
+
+\begin{exclamation}
+\LaTeX 中的环境\dm{figure}和\dm{table}并不仅仅可以用来插入图片和表格，这一点与它们的名字相反。实际上，这两种环境只是将其内容浮动起来，并且为添加图题或表题提供了可能性。实际上，这两种环境中可以是你喜欢的任何内容，也不一定要是图形。
+\end{exclamation}
+
+\subsection{图（figure）和表（table）}
+
+环境\dm{figure}一般用来插入图像，而环境\dm{tale}一般用于插入表格。这两种环境都可以带有自己的小标题，使用语法如下：
+
+\begin{codelist}[2.20]{
+  此段包含了浮动环境“figure”，
+其内容可以在页面中浮动。
+% \begin{figure} 插环境会报错
+  \begin{center}
+三\\
+O丁O\\
+四\\
+Figure 1: 有个老丁头
+  \end{center}
+%   \caption*{有个老丁头}
+% \end{figure}
+
+}\begin{verbatim}
+此段包含了浮动环境“figure”，
+其内容可以在页面中浮动。
+\begin{figure}
+  \begin{center}
+    三\\
+    O丁O\\
+    四\\
+  \end{center}
+  \caption{有个老丁头}
+\end{figure}
+\end{verbatim}
+\end{codelist}
+
+注意到，使用指令\verb|\caption|可以生成图题或表题。文本“Figure 1:”会自动生成，并给出对应该图片的编号。这种“风格”也是可以自定义的。
+
+\subsection{确定位置}
+
+我们可以在\verb|\begin|后面用方括号中给出参数，来让\LaTeX 尝试依此放置浮动的内容，具体如下：
+
+\begin{itemize}
+  \item \dm{h}，放置在源码中出现的原位置；
+  \item \dm{t}，放置在页面顶部；
+  \item \dm{b}，放置在页面底部；
+  \item \dm{p}，放置在单独的页面上。
+\end{itemize}
+
+注意，有时我们会为如何放置浮动环境而抓狂。为了不因此而烦躁，需要理解（并接受）下面这一点：\LaTeX 会综合考虑多个参数来安排环境\dm{figure}和\dm{table}的位置，其中包括：
+
+\begin{itemize}
+  \item 放置在页面顶部和底部的浮动环境的最大数量；
+  \item 顶部和底部放置有浮动环境的页面占全部页面的最大可接受比例；
+  \item 浮动环境前后的空白。
+\end{itemize}
+
+如果你在放置图片时遇到了关于其位置的问题\jz{并且你确定它真的成问题……}，我们建议你遵循以下建议：
+
+\begin{itemize}
+  \item 如果你尝试写“\textsl{如下图所示：}”之类的话，并且希望紧接着放一个图片，\emph{不要使用环境}\dm{figure}！。
+  \item 尽量使用\emph{参考}系统，例如写成“如图3所示”。
+  \item 我们总是喜欢放一些超大图片——缩小它们！
+  \item 如果你的表格太长，把它放到附录中去。无论如何，它会让读者很难受。
+  \item \LaTeX 中的参数经过精心研究，目的是平衡文档中文字和图片的数量。所以如果你的文档是连环画，请做好最坏的准备……
+  \item 只有到了\textbf{印刷你的最终版文档}时才有必要去纠结图片的位置。
+\end{itemize}
+
