@@ -1,3 +1,4 @@
+% \chapter{(占位)}
 \chapter{需要了解的知识}
 
 \begin{quote}
@@ -681,3 +682,81 @@ Figure 1: 有个老丁头
   \item 只有到了\textbf{印刷你的最终版文档}时才有必要去纠结图片的位置。
 \end{itemize}
 
+\subsection{图片列表}
+
+使用指令\verb|\listoffigures|（对应地，\verb|\listoftables|）可以在文档中插入全部图片（对应地，表格）的列表。列表会出现在指令所在的位置。此类指令会生成扩展名为\dm{.lof}（对应地，\dm{.lot}）的文件。此外，与插入节标题时使用参数指定目录中展示的内容类似，指令\verb|\caption|中也可以带有一个参数，来控制其在列表中显示的内容。默认情况下，列表中会显示图题（对应地，表题）：
+
+\begin{dmd}
+\verb|\caption[嚯]{|你可以在这里尽情写些人生故事，因为无论你写多长，它都不会出现在图片列表中，因为我们已经指定了这个无比长的小标题显示成“嚯”……\verb|}|
+\end{dmd}
+
+\section{引用}
+
+\LaTeX 的引用系统以为对象编号的方式允许你以符号的方式操作文档中任何部分的序号，因此，没有必要去记忆一个图片究竟是图4还是图5。\LaTeX 通过这种方式为你减少了很多工作，并且这种方式可以通过几行文字就能解释清楚。
+
+\subsection{原理}
+
+为了在文档中成功使用引用，我们需要做两件事：第一，在文档中添加符号标记；第二，调用这个标记来进行引用，要么引用相应对象的序号，要么引用其出现的页码。这样简单的方式简化了工作：
+
+\begin{enumerate}
+  \item 使用指令\verb|\label|来添加标记：\\
+  \verb|\label{|\textsl{\<标记内容\>}\verb|}|\\
+  其中\textsl{\<标记内容\>}是一个不带有特殊字符的字符串；
+  \item 使用指令\verb|\ref|来引用相应对象的序号：\\
+  \verb|\ref{|\textsl{\<标记内容\>}\verb|}|
+\end{enumerate}
+
+使用\verb|\pageref|，可以引用相应页码：
+
+\verb|\pageref{|\textsl{\<标记内容\>}\verb|}|
+
+\subsection{需要引用什么？}
+
+我们可以引用的内容如下：
+
+\begin{itemize}
+  \item 各级标题；
+  \item 浮动环境（\dm{figure}、\dm{table}……）；
+  \item 数学式（参见第3章）；
+  \item 带编号列表（如\dm{enumerate}）的项；
+  \item 等等。
+\end{itemize}
+
+如下的示例综合了三种引用指令：
+
+\begin{codelist}[2.21]{
+  \section*{3.5\quad 二次方程}
+二次方程即以下形式的方程 :
+\begin{equation}
+  ax^2 + bx + c = 0 \tag{2.12}
+\end{equation}
+第13页3.5节中的方程2.12这么说完那么说……
+}\begin{verbatim}
+\section{二次方程}\label{sec-2dg}
+二次方程具有以下形式 :
+\begin{equation}
+  ax^2 + bx + c = 0 \label{equ}
+\end{equation}
+第\pageref{sec-2dg}页\ref{sec-2dg}节中的方程\ref{equ}这么说完那么说……
+\end{verbatim}
+\end{codelist}
+
+在这个示例中，我们引用了对象\verb|\section|和另一个\verb|\equation|。此外，我们还引用了这个关于方程的节所在页的页码。
+
+\begin{exclamation}
+当在浮动环境中放置\verb|\label|时，请一定将其放置指令\verb|\caption|的\textbf{后面}。否则，引用会“指向”当前的节，而不是图形。
+\end{exclamation}
+
+\section{辅助文件}
+
+为了进一步理解引用的机制，我们需要检查以下\LaTeX 编译源文件时向你的硬盘中写入了什么。目前，你可以看到的文件有如下格式。
+
+\begin{description}
+  \item[\fbox{\texttt{dvi}}] 文档中的图片。
+  \item[\fbox{\texttt{log}}] \LaTeX 在最近一次编译时的“自言自语”。一般情况下，它多多少少代表了你编译时在终端上看到的内容。
+  \item[\fbox{\texttt{aux}}] 辅助文件，储存引用、页码、标题等信息。
+  \item[\fbox{\texttt{toc}}] 目录文件。
+  \item[\fbox{\texttt{lof}}] 图片列表文件。
+\end{description}
+
+\subsection{与引用的交互}
