@@ -524,10 +524,10 @@ public:
   \label{tab:2.3}
 \end{table}
 
-\begin{exclamation}
+\begin{ii}
 此外，所有的标题指令都带有可以自定义的相关类型。% TODO
 总的来说，这些指令会自动生成标题前后的间距。如此一来，指令前后的任何空行都会被忽略。
-\end{exclamation}
+\end{ii}
 
 \begin{codelist}[2.17]{
   ……一句话的结尾。
@@ -590,9 +590,9 @@ public:
 
 \LaTeX 生成页眉和页脚的标准指令有些简陋，但这里也值得一提，因为这些指令对于一些特定情况已经足够了。
 
-\begin{exclamation}
+\begin{ii}
 关于这些指令，在这里就不讲更多内容了，因为\dm{fancyhdr.dvi}中介绍的fancyhdr包易用得多，也提供了比\LaTeX 的标准指令多得多的有趣选项。本书关于使用此包生成页眉页脚的详细解释在10.4节。
-\end{exclamation}
+\end{ii}
 
 如果不调用其他包，可以在文档的文前部分使用指令\verb|\pagestyle|来指定页眉页脚的风格：
 
@@ -760,3 +760,90 @@ Figure 1: 有个老丁头
 \end{description}
 
 \subsection{与引用的交互}
+
+\LaTeX 以如下的方式处理引用：在第一次编译时，在文件\textsl{\<文件名\>}\dm{.aux}中储存引用，其中\textsl{\<文件名\>}是你的文档的文件名。我们可以在如下示例中看到其解决引用的问题时的机制和原理，在该示例中，我们尝试引用位于第35页的第3节中的一个名为\dm{truc}的标记\yz{“truc”意为“小东西”。}。
+
+\begin{enumerate}
+  \item 在第一次编译时，\LaTeX 在\dm{.aux}格式的辅助文件中存储该标记的号码（在本例中，存储其所在节的序号）和该标记出现页的页码：
+  
+  \begin{figure*}[h]
+    \begin{center}
+      \includegraphics{img/ref1.eps}
+    \end{center}
+  \end{figure*}
+
+  因此，此次编译时，会\LaTeX 发送警告，指出标记\dm{truc}未定义。
+  \item 我们会进行第二次编译，这次编译会使用辅助文件的内容：
+  
+  \begin{figure*}[h]
+    \begin{center}
+      \includegraphics{img/ref2.eps}
+    \end{center}
+  \end{figure*}
+\end{enumerate}
+
+在以下情况中的引用定义是不正确的。
+
+\begin{enumerate}
+  \item 你插入了一个新的标记，并且在插入标记后第一次编译（引用\emph{未被定义}）。此时，对于新插入的标记，会得到如下形式的消息：
+  
+  \begin{dmd}
+  \verb|Reference 'vlunch' on page 2 undefined on input line 17.|
+  \end{dmd}
+
+  \item 你在文档中引入的变化无疑会改变页码或对象（图片、方程等）的位置，因此引用会被\emph{错误定义}。在编译结束时，你会看到如下警告：
+  
+  \begin{dmd}
+  Label(s) may have changed.\\
+  Rerun to get cross-references right.
+  \end{dmd}
+
+  \item 你引用了一个不存在的标记。在这种情况下，再编译八百次也无济于事。
+\end{enumerate}
+
+\subsection{与目录的交互}
+
+对于目录，你会发现，其原理与引用是类似的。在文档中插入指令\verb|\tableofcontents|意味着目录将会分两步创建，具体如下。
+
+\begin{enumerate}
+  \item 第一轮遍历会收集文档中与\emph{表题}相关的信息，并将其存入文件\textsl{\<文件名\>}\dm{.toc}中：
+  
+  \begin{figure*}[h]
+    \begin{center}
+      \includegraphics{img/toc1.eps}
+    \end{center}
+  \end{figure*}
+
+  \item 第二轮遍历会使最终的文档中包含\textsl{\<文件名\>}\dm{.toc}，因此，目录也会被包含。
+  \item 
+  \begin{figure*}[h]
+    \begin{center}
+      \includegraphics{img/toc2.eps}
+    \end{center}
+  \end{figure*}
+
+\end{enumerate}
+
+你可能会遇到这种情况：在写草稿时，文档已经包含了目录指令（\verb|tableofcontents|），而你又添加了新的章节指令。在这种情况下，新的章节只有经过\textbf{两次}编译后才会显示在目录中。
+
+\subsection{一些建议}
+
+要养成为每个文档生成目录的习惯。实际上，\LaTeX 会围绕你的\dm{.tex}文件生成多个文件\jz{
+  这还没有涉及参考文献、索引、术语目录等。
+}。另外，在起草文档时，不必过于关心目录是否时刻更新——它早晚会更新的！实际上，只有在\textbf{印刷}之前才有必要去确认所有的引用都是正确的。
+
+最后，就像我们在不再能确定目标文件时会时不时运行一下\dm{make clean}指令一样，在看起来一切都运行不正常时，删掉辅助文件\celan{\S B.2}并重新编译是个好习惯。
+
+\section{断字的处理}
+
+\LaTeX 依靠\TeX 对特定的语言来实现不同的断字效果。这种算法在\TeX Book的附录H中有描述，也体现出\TeX 最成功的一面。通过检查文档打断段落的方式，可以识别出文档是不是由\LaTeX 生成的，因为其他很多软件都喜欢以在单词间添加更多空间的方式来处理此类问题。然而，也会有一些\LaTeX 无法正确断字的情况。在这种情况下，\LaTeX 会以以下两种“吓人的”信息之一为你给出警告：
+
+\begin{dmd}
+Underfull \backslash hbox (badness 1810) detected at line 33
+\end{dmd}
+
+或
+
+\begin{dmd}
+Overfull \backslash hbox (14.24376pt too wide) detected at line 41
+\end{dmd}

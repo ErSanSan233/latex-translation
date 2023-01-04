@@ -81,20 +81,20 @@
 
 早晚有一天，你会看到编译会产出错误。这将是1.6节会处理的问题。总之，解决了编译问题后，我们会得到一个带有\dm{.pdf}扩展名的文件，它代表\textit{便携文件格式（英：portable document format）}，这是一种由Adobe公司创造的著名格式。
 
-\begin{exclamation}
+\begin{ii}
     历史上，编译\LaTeX 源文件会生成\dm{dvi}文件，代表\textit{设备无关（英：device independant）}。此类文件独不受输出环境（如屏幕、打印机等）的影响。这是一种包含了“图像”的\LaTeX 便携二进制文件，可以用于各种操作系统。随后，出现了一批用途各异的程序：
     \begin{itemize}
         \item 用于显示文档，即\dm{.dvi}\rightarrow 点阵屏幕；
         \item 用于打印，即\dm{.dvi}\rightarrow 打印机语言；
         \item 用于转换格式，即\dm{.dvi}\rightarrow PostScript文件。
     \end{itemize}
-\end{exclamation}
+\end{ii}
 
 图\ref{fig:1.2}表明了UNIX生成最终文件过程中参与流程的多种程序。
 
-\begin{exclamation}
+\begin{ii}
     除了使用pdflatex外，也可以使用其他“编译器”来生成PDF文件。例如，xelatex和lualatex可以能正确地处理以UTF-8编码的文件，是常用的替代选项。
-\end{exclamation}
+\end{ii}
 
 \begin{figure}[H]
     %TODO 图
@@ -120,13 +120,13 @@
 
 对于\dm{pdf}格式，如何打印它这一问题就丢给了你的操作系统。关于这一点，没有特殊的注意事项。你有了一个文件，可以自由地处置它，无论是直接打印，还是根据你所处的环境来发挥才艺。
 
-\begin{exclamation}
+\begin{ii}
     从\dm{dvi}到\dm{ps}格式的转换需要调用dvips程序：
 
     \dmh{dvips \textsl{\<文件名\>}.dvi}
 
     这可以生成一个PostScrpt格式的文件。这个格式也由Adobe创造，是一种打印机语言，可以看作\dm{pdf}的祖先。目前的打印机出厂即可识别这种打印机语言。我们可以说，文件发送到打印机时，十有八九传送的是PostScrpt格式的参数。对于PostScript格式的文件，有大量可以显示、修改这种文件的工具。
-\end{exclamation}
+\end{ii}
 
 \section{源文件的结构}
 
@@ -272,7 +272,7 @@
 
 \paragraph*{“\{”和“\}”}它们是\textit{组}的定界符，稍后会进一步解释它们。
 
-\section{几个特殊字符}
+\subsection{几个特殊字符}
 
 就像符号“\backslash”的出现所暗示的那样，\LaTeX 中还有10个有特殊含义的符号，在此将其列出：
 
@@ -410,9 +410,9 @@
 
 \section{第一组报错}
 
-\begin{exclamation}
+\begin{ii}
     接下来，我们会看看\LaTeX 编译你的文档时闹的“情绪”。当我们放出编译指令时，我们会直接在终端看到这些输出。为了能让\LaTeX 得到充分使用，我们鼓励你在自己的环境下找到属于你自己的检查\LaTeX “\textsf{日志}”的方法。这些日体可以为你指明错误信息，以及编译过程中出现的其他警告。
-\end{exclamation}
+\end{ii}
 
 \subsection{症状}
 

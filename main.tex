@@ -74,7 +74,17 @@ $\blacktriangleright$
 \newenvironment{exclamation}[1][!]%原书的圆圈感叹号
 {
     \begin{mdframed}
-        \textcircled{#1} \quad
+        \textcolor{red}{\textcircled{#1}} \quad
+        \sffamily
+}{      
+    \rmfamily
+    \end{mdframed}
+}
+
+\newenvironment{ii}[1][i]%原书的圆圈i
+{
+    \begin{mdframed}
+        \textcolor{blue}{\textcircled{#1}} \quad
         \sffamily
 }{      
     \rmfamily

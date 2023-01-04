@@ -253,7 +253,7 @@
 \verb+这样的\emph{就}是\LaTeX 代码了。+
 \end{dmd}
 
-相关内容会使用\LaTeX 的“\texttt{打字机}”（\texttt{ machine à écrire}）字体显示。代码也会使用如下的形式展示，中间竖条上的数字偶尔会被引用\yz{这个格式我不一定能调出来，暂时用清单编号代替了}：%TODO
+相关内容会使用\LaTeX 的“\texttt{打字机}”（\texttt{machine à écrire}）字体显示。代码也会使用如下的形式展示，中间竖条上的数字偶尔会被引用\yz{这个格式我不一定能调出来，暂时用清单编号代替了}：%TODO
 
 \begin{codelist}[0.1]{
     这样的\emph{就}是\LaTeX 代码了。
@@ -263,6 +263,33 @@
 \end{verbatim}
 \end{codelist}
 
+\begin{ii}
+一些内容会以“补充说明”的形式给出，这是为了强调一个知识点。读者不需要第一时间阅读。
+\end{ii}
+
 \begin{exclamation}
-todo
+对于请读者务必阅读的内容，我们会使用这种形式来引起注意……
 \end{exclamation}
+
+\textsf{软件名}或\LaTeX 中的\textsf{包名}会以本句所展示的形式展示。英文词汇会以\emph{这种形式（英：like this）}展示。为了展示指令中通用的部分，我们会使用\textsl{\<这种形式\>}。例如：
+
+\begin{dmd}
+\verb|这是\LaTeX 源码中的\emph{|\textsl{\<强调文字\>}\verb|}。|
+\end{dmd}
+
+偶尔出现的UNIX指令会以如下形式展示：
+
+\dmh{grep -wi bidule /tmp/truc.dat | sort -n}
+
+在其中一个附录中，\textsf{emac}指令会以如下形式展示：
+
+\dmh{\textsf{M-x doctor}}
+
+最后，作为让人反感的精华，\dm{Makefile}片段会以如下形式展示：
+
+\begin{mdframed}
+    \verb|bidule : bidule.o truc.o|\\
+    $\longmapsto$ \verb|gcc -o $@ $^|
+\end{mdframed}
+
+\section*{致谢}
