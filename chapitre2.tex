@@ -14,19 +14,19 @@
 
 要了解\LaTeX 选用字体的机制，需要知道：我们通常通过4个参数来区别字体。
 
-\paragraph*{族（famille）}指字体的整体形状。默认情况下，\LaTeX 使用三种字体族：罗马体、\textsf{无衬线体}、\texttt{打字机体}。\LaTeX 中，以英文单词\textit{family}来指代字体族。
+\paragraph*{族（famille）}指字体的整体形状。默认情况下，\LaTeX 使用三种字体族：罗马体、\textsf{无衬线体}、\texttt{打字机体}。\LaTeX 中，以英文单词\emph{family}来指代字体族。
 
-\paragraph*{风格（style）}指字体体现出的体态（英文以\textit{shape}指代），分为：\textit{意大利体}、\textsl{倾斜}和\textsc{小型大写字母风格（petites capitales）}\yz{
+\paragraph*{风格（style）}指字体体现出的体态（英文以\emph{shape}指代），分为：\textit{意大利体}、\textsl{倾斜}和\textsc{小型大写字母风格（petites capitales）}\yz{
     本书翻译时，以楷体对应意大利体、以仿宋体对应倾斜排版，按原文翻译。中文字体的族和风格往往是并列的，很少有交叉叠加的情况，因此在展示叠加效果时酌情保留原文。中文中很少见到类似小型大写字母的突出显示方式。因此，除了特意展示西文的部分外，本书忽略小型大写字母格式，必要时以其他风格取代。
 }。
 
-\paragraph*{字重（graisse）}指字体笔画的粗细（\LaTeX 中以\textit{serie}指代）。默认情况下有两种粗细：中等和\textbf{加粗}。
+\paragraph*{字重（graisse）}指字体笔画的粗细（\LaTeX 中以\emph{serie}指代）。默认情况下有两种粗细：中等和\textbf{加粗}。
 
 \paragraph*{字号}字{\large 体}{\Large 的}{\LARGE 大}{\small 小}。
 
 \subsection{族--风格--字重}
 
-有两种不同的宏可以设置族、风格、字重这三个变量：\textit{指令}和\textit{声明}（如表\ref{tab:2.1}所示）。指令以花括号的形式将其参数括住。声明可以打断行文，同时修改三个变量之一，直到新的命令出现。总体上的规则是，我们使用指令来突出显示一个词或一组词：
+有两种不同的宏可以设置族、风格、字重这三个变量：\emph{指令}和\emph{声明}（如表\ref{tab:2.1}所示）。指令以花括号的形式将其参数括住。声明可以打断行文，同时修改三个变量之一，直到新的命令出现。总体上的规则是，我们使用指令来突出显示一个词或一组词：
 
 \begin{table}
     \centering
@@ -134,7 +134,7 @@ le \emph{chef} a toujours raison.\par
 \end{quote}
 
 \begin{quote}
-    “注意，出版行业认为，以添加下划线的形式来强调内容是不好的习惯。下划线只应用于一种情况——输出设备无法以其他方式突出显示内容，比如使用打字机。”——迈克尔·古森斯（Michel Goossens）等，《\LaTeX 伴侣》（\textit{\LaTeX{} Companion}）[6]
+    “注意，出版行业认为，以添加下划线的形式来强调内容是不好的习惯。下划线只应用于一种情况——输出设备无法以其他方式突出显示内容，比如使用打字机。”——迈克尔·古森斯（Michel Goossens）等，《\LaTeX 伴侣》（\emph{\LaTeX{} Companion}）[6]
 \end{quote}
 
 \section{环境}
@@ -774,7 +774,6 @@ Figure 1: 有个老丁头
 
   因此，此次编译时，会\LaTeX 发送警告，指出标记\dm{truc}未定义。
   \item 我们会进行第二次编译，这次编译会使用辅助文件的内容：
-  
   \begin{figure*}[h]
     \begin{center}
       \includegraphics{img/ref2.eps}
@@ -788,7 +787,7 @@ Figure 1: 有个老丁头
   \item 你插入了一个新的标记，并且在插入标记后第一次编译（引用\emph{未被定义}）。此时，对于新插入的标记，会得到如下形式的消息：
   
   \begin{dmd}
-  \verb|Reference 'vlunch' on page 2 undefined on input line 17.|
+  Reference 'vlunch' on page 2 undefined on input line 17.
   \end{dmd}
 
   \item 你在文档中引入的变化无疑会改变页码或对象（图片、方程等）的位置，因此引用会被\emph{错误定义}。在编译结束时，你会看到如下警告：
