@@ -39,9 +39,9 @@
 %行号
 \usepackage{lineno}
 
-\def\<{\hspace{0em}<\hspace{0em}}
-
-\def\>{\hspace{0em}>\hspace{0em}}
+\def\codereplace#1{%代码中的可替换部分
+    \textsl{⟨#1⟩}
+}
 
 \def\wz#1{%网址
     % \href{#1}{\texttt{#1}}
@@ -135,6 +135,10 @@ $\blacktriangleright$
     ]
     {LMMono10-Regular}
 
+\xeCJKsetcharclass{"2580}{"259F}{1}
+\xeCJKsetcharclass{"27E8}{"27E9}{1}
+\xeCJKsetup{AutoFallBack=true}
+\setCJKfallbackfamilyfont{\CJKrmdefault}{STIXTwoMath-Regular}
 
 
 \title{关于\LaTeX 的那些你想知道却从不敢问的问题\\{\small 或者说，如何在不会使用\LaTeX 的情况下使用\LaTeX }\\~\\Tout ce que vous avez toujours voulu savoir sur \LaTeX \ sans jamais oser le demander\\{\small Ou comment utiliser \LaTeX \ quand on n'y connaît goutte}\\~\\ ver. 1.5}

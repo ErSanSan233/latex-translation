@@ -56,7 +56,7 @@
 你正阅读的这本图书在令人称赞的同时也有以下知识面漏洞。
 
 \begin{itemize}
-    \item 本书不含有关于\TeX 或\LaTeX 生成字体原理的清晰解释。你不会找到关于“元字体”（METAFONT）一词的知识。
+    \item 本书不含有关于\TeX 或\LaTeX 生成字体原理的清晰解释。你不会找到关于“元字体”\linebreak （METAFONT）一词的知识。
     \item 你不会找到关于在UNIX系统下安装\LaTeX 发布版的知识。
     \item 你不会找到任何现有扩展包的“目录”或清单，无论扩展包是否实用、是否兼容。
     \item 本书回避了“先有鸡还是先有蛋”之类的问题，也避免讨论关于上帝和科学的问题。
@@ -110,7 +110,7 @@
 
 画重点：\TeX 和\LaTeX 属于自由软件——也因此是免费的。同时，自由软件（logiciel libre；英：free software）的标志是其\emph{开放性}。因此，\TeX 也可以有其Web源码\jz{克努特孕育的Web语言被形容为一种“文学性的编程语言”。使用Web源码，可以生成程序的Pascal或C代码，也可以为代码生成\TeX 文档。}。\LaTeX 的宏是以\TeX 源码的格式发布的。对于大部分用户来说，获取程序的源码可能不是首要考虑的，但需要知道，正是这种\emph{不隐藏任何内容}的性质，使得人们可以改进现有的扩展、创造新的扩展。
 
-一款软件是自由软件，并不意味着我们可以使用它做任何想做的事情。自由软件属于其作者，所有的改动都需要被记录。同样，每次改动都需要以与具有与改动前不同的文件名体现。这样可以保证系统的严密和便携（关于\LaTeXe 的使用许可，请参阅\wz{ftp://ftp.lip6.fr/pub/TeX/CTAN/macros/latex/base/lppl.txt}）。
+一款软件是自由软件，并不意味着我们可以使用它做任何想做的事情。自由软件属于其\linebreak 作者，所有的改动都需要被记录。同样，每次改动都需要以与具有与改动前不同的\linebreak 文件名体现。这样可以保证系统的严密和便携（关于 \LaTeXe  的使用许可，请参阅\linebreak \wz{ftp://ftp.lip6.fr/pub/TeX/CTAN/macros/latex/base/lppl.txt}）。
 
 \section*{不使用\LaTeX 的五个理由}
 
@@ -177,9 +177,9 @@
     兰波特在它的手册中提到了一个类似的案例。
 }：假设在一个文档中，某个具有两个参数的函数出现了一定次数。科学文档的一个精巧之处就是可以使用符号，我们可以定义一个宏\texttt{\backslash mafct}来生成这个函数。如此一来，\texttt{\backslash mafct\{1\}\{2.5\}} 和 \texttt{\backslash mafct\{x\}\{t\}}会分别生成$\mathcal{F}_{\alpha, \beta}(1, 2.5)$和$\mathcal{F}_{\alpha, \beta}(x, t)$。一旦我们想要改变符号，只需重新定义\texttt{\backslash mafct}这个宏，以在需要的位置重新生成对应的符号（比如分别生成$\mathsf{F}^{\alpha, \beta}[1, 2.5]$和$\mathsf{F}^{\alpha, \beta}[x, t]$），就可以了！
 
-另一个例子是：假设你的文件中有很多科技词汇，你想要用一种特殊的形式展示她们。因此你事先定义了宏\texttt{\backslash jargon}\yz{
+另一个例子是：假设你的文件中有很多科技词汇，你想要用一种特殊的形式展示她们。\linebreak 因此你事先定义了宏\texttt{\backslash jargon}\yz{
     jargon意为“术语”。
-}，以将科技词汇设置为意大利体，并在在文档中写下\texttt{\backslash jargon\{implémentation\}}之类的实现。你的文档中以这种方式提到了235个术语词汇。你如果改变了主意，想把它们从意大利体改成其他的格式，那么只需要重新定义宏\texttt{\backslash jargon}，而不需要逐个排查那235处术语词汇。经过一些练习以后，你甚至能使这个宏自动将术语插入文档的索引中……
+}，以将科技词汇设置为意大利体，并在在文档中写下\linebreak \texttt{\backslash jargon\{implémentation\}}之类的实现。你的文档中以这种方式提到了235个术语词汇。你如果改变了主意，想把它们从意大利体改成其他的格式，那么只需要重新定义宏\texttt{\backslash jargon}，而不需要逐个排查那235处术语词汇。经过一些练习以后，你甚至能使这个宏自动将术语插入文档的索引中……
 
 以下是一个略微变形的例子：在稍前的名为“不……的五个理由”的章节标题中，我在源码中完全没有写“五\jz{
     即使在这里也没有写。
@@ -271,10 +271,10 @@
 对于请读者务必阅读的内容，我们会使用这种形式来引起注意……
 \end{exclamation}
 
-\textsf{软件名}或\LaTeX 中的\textsf{包名}会以本句所展示的形式展示。英文词汇会以\emph{这种形式（英：like this）}展示。为了展示指令中通用的部分，我们会使用\textsl{\<这种形式\>}。例如：
+\textsf{软件名}或\LaTeX 中的\textsf{包名}会以本句所展示的形式展示。英文词汇会以\emph{这种形式（英：like this）}展示。为了展示指令中通用的部分，我们会使用\codereplace{这种形式}。例如：
 
 \begin{dmd}
-\verb|这是\LaTeX 源码中的\emph{|\textsl{\<强调文字\>}\verb|}。|
+\verb|这是\LaTeX 源码中的\emph{|\codereplace{强调文字}\verb|}。|
 \end{dmd}
 
 偶尔出现的UNIX指令会以如下形式展示：

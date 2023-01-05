@@ -65,11 +65,11 @@
 
 一个\LaTeX \textit{源}文件是一个文本文件\jz{即文件仅由组成其中符号的代码构成。}。因此，对\LaTeX 文件的操作并不依赖于某个特定的软件，只需要一个经典的文本编辑器即可。因此，若要操作\LaTeX 文档，指令
 
-\dmh{emacs \textsl{\<文件名\>}.tex \&} %TODO <>
+\dmh{emacs \codereplace{文件名}.tex \&} %TODO <>
 
 或
 
-\dmh{vi \textsl{\<文件名\>}.tex}
+\dmh{vi \codereplace{文件名}.tex}
 
 足以让你进入\LaTeX 文档这个充满野性和未知的世界。在Windows中，根据自己的喜好，我们可以选用一款文字编辑器。注意，对于\LaTeX 源文件，推荐使用\dm{.tex}扩展名名。
 
@@ -77,7 +77,7 @@
 
 我们用如下指令开始编译：
 
-\dmh{pdflatex \textsl{\<文件名\>}.tex}
+\dmh{pdflatex \codereplace{文件名}.tex}
 
 早晚有一天，你会看到编译会产出错误。这将是1.6节会处理的问题。总之，解决了编译问题后，我们会得到一个带有\dm{.pdf}扩展名的文件，它代表\textit{便携文件格式（英：portable document format）}，这是一种由Adobe公司创造的著名格式。
 
@@ -108,7 +108,7 @@
 
 在编译后，可以简单地使用\textsf{evince}程序来完成显示步骤。输入以下指令：
 
-\dmh{evince \textsl{\<文件名\>}.pdf \&}
+\dmh{evince \codereplace{文件名}.pdf \&}
 
 这是一个\textsf{linux}下运行的十分直观的程序，能够给出一个方便阅读的文件预览。
 
@@ -123,7 +123,7 @@
 \begin{ii}
     从\dm{dvi}到\dm{ps}格式的转换需要调用dvips程序：
 
-    \dmh{dvips \textsl{\<文件名\>}.dvi}
+    \dmh{dvips \codereplace{文件名}.dvi}
 
     这可以生成一个PostScrpt格式的文件。这个格式也由Adobe创造，是一种打印机语言，可以看作\dm{pdf}的祖先。目前的打印机出厂即可识别这种打印机语言。我们可以说，文件发送到打印机时，十有八九传送的是PostScrpt格式的参数。对于PostScript格式的文件，有大量可以显示、修改这种文件的工具。
 \end{ii}
@@ -133,14 +133,14 @@
 本节将介绍一种文档类型。实际上，所有\LaTeX 文档都具有相同的结构，形式如下：
 
 \begin{dmd}
-\backslash documentclass[\textsl{\<类选项$_1$\>},\textsl{\<类选项$_2$\>},...]\{\textsl{\<类\>}\}\\
-\backslash usepackage[\textsl{\<包选项$_1$\>},\textsl{\<包选项$_2$\>},...]\{\textsl{\<包\>}\}\\
+\backslash documentclass[\codereplace{类选项$_1$},\codereplace{类选项$_2$},...]\{\codereplace{类}\}\\
+\backslash usepackage[\codereplace{包选项$_1$},\codereplace{包选项$_2$},...]\{\codereplace{包}\}\\
 ...\\
-\textsl{\<文前部分\>}\\
+\codereplace{文前部分}\\
 ...\\
 \backslash begin\{document\}\\
 ...\\
-\textsl{\<文本\>}\\
+\codereplace{文本}\\
 ...\\
 \backslash end\{document\}
 \end{dmd}
@@ -148,10 +148,10 @@
 如此一来，所有的\LaTeX 文档都可以按以下方式拆解。
 
 \begin{itemize}
-    \item 说明文档的\textsl{\<类\>}；
+    \item 说明文档的\codereplace{类}；
     \item 文前部分，包含以下内容：
         \begin{itemize}
-            \item 使用特定的\textsl{\<包\>}；
+            \item 使用特定的\codereplace{包}；
             \item 多样的初始化和声明；
         \end{itemize}
     \item 文档主体，即我们将要亲手输入的全部内容，出现在\dm{\backslash begin\{document\}}和\dm{\backslash end\{document\}}之间。
@@ -214,20 +214,20 @@
 }。目前，只需记住，我们可以在一行之内包含多个包：
 
 \begin{dmd}
-    \backslash usepackage\{\textsl{\<包$_1$\>},\textsl{\<包$_2$\>},\textsl{\<包$_3$\>},...\}
+    \backslash usepackage\{\codereplace{包$_1$},\codereplace{包$_2$},\codereplace{包$_3$},...\}
 \end{dmd}
 
-如果\textsl{\<包$_1$\>}、\textsl{\<包$_2$\>}、\textsl{\<包$_3$\>}拥有共同的配置项\textsl{\<opt1\>}，我们可以输入：
+如果\codereplace{包$_1$}、\codereplace{包$_2$}、\codereplace{包$_3$}拥有共同的配置项\codereplace{opt1}，我们可以输入：
 
 \begin{dmd}
-    \backslash usepackage[\textsl{\<opt1\>}]\{\textsl{\<包$_1$\>},\textsl{\<包$_2$\>},\textsl{\<包$_3$\>}\}
+    \backslash usepackage[\codereplace{opt1}]\{\codereplace{包$_1$},\codereplace{包$_2$},\codereplace{包$_3$}\}
 \end{dmd}
 
-相反，如果\textsl{\<opt1\>}只涉及\textsl{\<包$_2$\>}，那么我们只能像这样写成两行：
+相反，如果\codereplace{opt1}只涉及\codereplace{包$_2$}，那么我们只能像这样写成两行：
 
 \begin{dmd}
-    \backslash usepackage\{\textsl{\<包$_1$\>},\textsl{\<包$_3$\>}\}\\
-    \backslash usepackage[\textsl{\<opt1\>}]\{\textsl{\<包$_2$\>}\}
+    \backslash usepackage\{\codereplace{包$_1$},\codereplace{包$_3$}\}\\
+    \backslash usepackage[\codereplace{opt1}]\{\codereplace{包$_2$}\}
 \end{dmd}
 
 下面是两个例子：
@@ -251,12 +251,15 @@
     从你手中掉落的工具总是掉到最难够到的地方，或脆弱的物品上。\\
     这是\emph{墨菲}定律（loi de Murphy）的一个体现。
 }  \begin{dmd}
-    \backslash documentclass\{article\}\\
-    \backslash begin\{document\}\\
-    从你手中掉落的工具\\总是掉到最难够到的地方，\\或脆弱的物品上。\\
+    \verb+\documentclass{article}+\\
+    \verb+\begin{document}+\\
+    从你手中掉落的工具\\
+    总是掉到最难够到的地方，\\
+    或脆弱的物品上。\\
     ~\\
-    这是\backslash emph\{墨菲\}定律（loi\ de\ \ \ \ \  Murphy）的\\一个体现。\\
-    \backslash end{document}
+    \verb+这是\emph{墨菲}定律（loi de      Murphy）的+\\
+    一个体现。\\
+    \verb+\end{document}+
 \end{dmd}
 \end{codelist}
 
@@ -335,7 +338,7 @@
 \end{codelist}
 
 \begin{exclamation}
-    \verb*|\ |（其中\verb*| |代表空格）称作控制空格（espace de contrôle）。这个空格不会被\LaTeX 忽略。因此，指令“\verb*|et\ \ \ hop !|”会生成“et\ \ \ hop !”。实际上，以\dm{\backslash}\textsl{\<函数\>}\dm{\{}\textsl{\<参数\>}\dm{\}}的形式来调用宏是很好的习惯。因此，使用上例中的的第三种方式比第二种方式更佳。这种形式可以避免空格被忽略的情况发生\jz{
+    \verb*|\ |（其中\verb*| |代表空格）称作控制空格（espace de contrôle）。这个空格不会被\LaTeX 忽略。因此，指令“\verb*|et\ \ \ hop !|”会生成“et\ \ \ hop !”。实际上，以\dm{\backslash}\codereplace{函数}\dm{\{}\codereplace{参数}\dm{\}}的形式来调用宏是很好的习惯。因此，使用上例中的的第三种方式比第二种方式更佳。这种形式可以避免空格被忽略的情况发生\jz{
         所以他为什么要跟我们说这些？！
     }。因此，我们将使用\verb|the \teX{}book|来生成“the \TeX{}book”，使用“\verb*|\LaTeX{} is a ...|”来生成“\LaTeX{} is a ...”。
 \end{exclamation}

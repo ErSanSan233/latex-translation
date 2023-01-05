@@ -100,7 +100,7 @@ le \emph{chef} a toujours raison.\par
 
 表\ref{tab:2.2}中展示的宏可以修改行文的字号。这些宏都是\emph{声明}。同时，对于每一个宏都存在同名的环境。
 
-\begin{table}[h]
+\begin{table}[ht]
     \centering
     \begin{tabular}{|c|c||l|c|}
 \hline
@@ -142,12 +142,12 @@ le \emph{chef} a toujours raison.\par
 \LaTeX 以\emph{环境}格式提供了一系列工具，具体结构是一个代码块，语法如下：
 
 \begin{dmd}
-    \verb+\begin+\textsl{\<环境名\>}\verb|}|\\
+    \verb+\begin+\codereplace{环境名}\verb|}|\\
     \verb|...|\\
-    \verb+\end+\textsl{\<环境名\>}\verb|}|\\
+    \verb+\end+\codereplace{环境名}\verb|}|\\
 \end{dmd}
 
-其中\textsl{\<环境名\>}需要替换为具体的环境名称。我们目前遇到的第一个环境是\dm{document}。\verb|\begin| 和\verb|end|间的文字会以特殊版式展示。
+其中\codereplace{环境名}需要替换为具体的环境名称。我们目前遇到的第一个环境是\dm{document}。\verb|\begin| 和\verb|end|间的文字会以特殊版式展示。
 
 \begin{exclamation}
     我们立刻注意到，环境中所有声明都是局部的。另外，当然可以在我们自己定义的环境中套用已经存在的环境。
@@ -483,7 +483,7 @@ public:
 指令\verb|\marginpar|可以在页边缘创建一个小段落，语法如下：
 
 \begin{dmd}
-\backslash marginpar\{\textsl{\<文字\>}\}
+\backslash marginpar\{\codereplace{文字}\}
 \end{dmd}
 
 对于双面打印的模式，为了区分左侧和右侧的页面，我们可以使用如下指令\yz{
@@ -491,10 +491,10 @@ public:
 }：
 
 \begin{dmd}
-\backslash marginpar[\textsl{\<左侧文字\>}]\{\textsl{\<右侧文字\>}\}
+\backslash marginpar[\codereplace{左侧文字}]\{\codereplace{右侧文字}\}
 \end{dmd}
 
-其中\textsl{\<左侧文字\>}和\textsl{\<右侧文字\>}会根据当前页码的奇偶性在页面左侧或右侧呈现。如此一来，以下指令：
+其中\codereplace{左侧文字}和\codereplace{右侧文字}会根据当前页码的奇偶性在页面左侧或右侧呈现。如此一来，以下指令：
 
 \begin{dmd}
 \backslash marginpar[这！]\{嚯！\}
@@ -511,7 +511,7 @@ public:
   \item 使用指令\verb|\tableofcontents|可以生成目录，并将其插入该指令所在的位置。
 \end{itemize}
 
-\begin{table}[h]
+\begin{table}[ht]
   \centering
   \begin{tabular}{|l|l|l|}
     \hline
@@ -550,7 +550,7 @@ public:
 
 \section{页面底部的注释}
 
-有一种方便的方式可以在页面底部插入注释：使用指令\verb|\footnote{|\textsl{\<文本\>}\verb|}|。注释会自动编号，且在默认情况下按章重新编号。如下是\LaTeX 可以实现的效果：
+有一种方便的方式可以在页面底部插入注释：使用指令\verb|\footnote{|\codereplace{文本}\verb|}|。注释会自动编号，且在默认情况下按章重新编号。如下是\LaTeX 可以实现的效果：
 
 \begin{codelist}[2.18]{
   无论如何，指令\texttt{footnote}$^a$可以在页面底部插入注释。\\
@@ -597,10 +597,10 @@ public:
 如果不调用其他包，可以在文档的文前部分使用指令\verb|\pagestyle|来指定页眉页脚的风格：
 
 \begin{dmd}
-\verb|\pagestyle{|\textsl{\<风格\>}\verb|}|
+\verb|\pagestyle{|\codereplace{风格}\verb|}|
 \end{dmd}
 
-其中，参数\textsl{\<风格\>}可以从以下值中选择：
+其中，参数\codereplace{风格}可以从以下值中选择：
 
 \begin{itemize}
   \item \dm{empty}，不显示页眉和页脚；
@@ -700,15 +700,15 @@ Figure 1: 有个老丁头
 
 \begin{enumerate}
   \item 使用指令\verb|\label|来添加标记：\\
-  \verb|\label{|\textsl{\<标记内容\>}\verb|}|\\
-  其中\textsl{\<标记内容\>}是一个不带有特殊字符的字符串；
+  \verb|\label{|\codereplace{标记内容}\verb|}|\\
+  其中\codereplace{标记内容}是一个不带有特殊字符的字符串；
   \item 使用指令\verb|\ref|来引用相应对象的序号：\\
-  \verb|\ref{|\textsl{\<标记内容\>}\verb|}|
+  \verb|\ref{|\codereplace{标记内容}\verb|}|
 \end{enumerate}
 
 使用\verb|\pageref|，可以引用相应页码：
 
-\verb|\pageref{|\textsl{\<标记内容\>}\verb|}|
+\verb|\pageref{|\codereplace{标记内容}\verb|}|
 
 \subsection{需要引用什么？}
 
@@ -761,12 +761,12 @@ Figure 1: 有个老丁头
 
 \subsection{与引用的交互}
 
-\LaTeX 以如下的方式处理引用：在第一次编译时，在文件\textsl{\<文件名\>}\dm{.aux}中储存引用，其中\textsl{\<文件名\>}是你的文档的文件名。我们可以在如下示例中看到其解决引用的问题时的机制和原理，在该示例中，我们尝试引用位于第35页的第3节中的一个名为\dm{truc}的标记\yz{“truc”意为“小东西”。}。
+\LaTeX 以如下的方式处理引用：在第一次编译时，在文件\codereplace{文件名}\dm{.aux}中储存引用，其中\codereplace{文件名}是你的文档的文件名。我们可以在如下示例中看到其解决引用的问题时的机制和原理，在该示例中，我们尝试引用位于第35页的第3节中的一个名为\dm{truc}的标记\yz{“truc”意为“小东西”。}。
 
 \begin{enumerate}
   \item 在第一次编译时，\LaTeX 在\dm{.aux}格式的辅助文件中存储该标记的号码（在本例中，存储其所在节的序号）和该标记出现页的页码：
   
-  \begin{figure*}[h]
+  \begin{figure*}[ht]
     \begin{center}
       \includegraphics{img/ref1.eps}
     \end{center}
@@ -774,7 +774,7 @@ Figure 1: 有个老丁头
 
   因此，此次编译时，会\LaTeX 发送警告，指出标记\dm{truc}未定义。
   \item 我们会进行第二次编译，这次编译会使用辅助文件的内容：
-  \begin{figure*}[h]
+  \begin{figure*}[ht]
     \begin{center}
       \includegraphics{img/ref2.eps}
     \end{center}
@@ -805,17 +805,17 @@ Figure 1: 有个老丁头
 对于目录，你会发现，其原理与引用是类似的。在文档中插入指令\verb|\tableofcontents|意味着目录将会分两步创建，具体如下。
 
 \begin{enumerate}
-  \item 第一轮遍历会收集文档中与\emph{表题}相关的信息，并将其存入文件\textsl{\<文件名\>}\dm{.toc}中：
+  \item 第一轮遍历会收集文档中与\emph{表题}相关的信息，并将其存入文件\codereplace{文件名}\dm{.toc}中：
   
-  \begin{figure*}[h]
+  \begin{figure*}[ht]
     \begin{center}
       \includegraphics{img/toc1.eps}
     \end{center}
   \end{figure*}
 
-  \item 第二轮遍历会使最终的文档中包含\textsl{\<文件名\>}\dm{.toc}，因此，目录也会被包含。
-  \item 
-  \begin{figure*}[h]
+  \item 第二轮遍历会使最终的文档中包含\codereplace{文件名}\dm{.toc}，因此，目录也会被包含。
+  
+  \begin{figure*}[ht]
     \begin{center}
       \includegraphics{img/toc2.eps}
     \end{center}
@@ -846,3 +846,94 @@ Underfull \backslash hbox (badness 1810) detected at line 33
 \begin{dmd}
 Overfull \backslash hbox (14.24376pt too wide) detected at line 41
 \end{dmd}
+
+\TeX 在很底层用你的文档生成一系列\emph{字盒}。每个字符都装入合适的字盒，字盒组合成词，再以类似的方式组合成行、成段，然后成页面。
+
+这里以一种简单的方式总结和介绍原理。我们可以简单地理解为，\TeX 在水平模式下操纵\verb|\hbox|来组合单词，在竖直模式下操纵\verb|\vbox|来生成页面。此外，组合这些字盒时，\TeX 如果觉得结果不太美观，就会用以上述两种信息警告你。信息的含义如下。
+
+\begin{itemize}
+  \item \verb|Underfull \hbox|表示字盒组合得有些稀疏。通过显示badness的值，\TeX 会告诉你它认为当前行“有多丑”。如果一行文字排列得很完美，该值为0。在最差的情况下，该值为10000.
+  \item \verb|Overfull \hbox|表示字盒有些太挤了。\TeX 可以以\dm{pt}为单位显示文字越界深入边缘的长度。
+\end{itemize}
+
+如果一个页面过于稀疏，\LaTeX 会以\verb|\vbox|代替\verb|\hbox|显示类似的消息。表\ref{tab:2.4}展示了同一句话的不同疏密程度\yz{
+  表中的例句出自法国古典主义戏剧大师高乃依（Pierre Corneille）的戏剧《熙德》（\textit{Le Cid}），意为“哦，愤怒！哦，绝望！哦，宿敌！”。
+}排列效果。
+
+\newcommand{\phrase}[1]{\noindent\makebox[\width +
+#1][s]{%
+  Ô rage ! ô désespoir ! ô vieillesse ennemie !}\par}
+\begin{table}[ht] 
+\begin{center}
+  % \addtolength{\extrarowheight}{4pt} 
+  \begin{tabular}{|l|c|}
+    \hline
+    效果 & 评价 \\
+    \hline
+    % \typeout{UNDERFULL HBOX AUTORISE}%
+    \phrase{1.0cm}  & 稀疏\\
+    \phrase{0.75cm} & 稀疏\\
+    \phrase{0.45cm} & 稀疏\\
+    \hline
+    % \typeout{UNDERFULL HBOX AUTORISE}%
+    \phrase{0cm}    & 理想 \\ 
+    \hline
+    \phrase{-0.1cm} & 过密\\
+    \phrase{-0.2cm} & 过密\\
+    \phrase{-0.25cm} & 过密\\
+    \hline
+  \end{tabular}
+  \caption{横向的不同疏密排列}
+  \label{tab:2.4}
+\end{center} 
+\end{table}
+
+\begin{ii}
+  \makebox[\width+2pt][s]{可以在文档选项中启用\dm{draft}，来使在出现\dm{Overfull \backslash hbox}问题的位置的侧栏显示一个黑色的\char"258C}
+  方块，就像本段的侧栏一样。这个选项可以帮助快速定位导致问题的行。
+\end{ii}
+
+\subsection{控制断字}
+
+对于以下情况，\LaTeX 的断字处理可能遇到困难。
+
+\begin{itemize}
+  \item 它不能识别需要打断的词——这是个极端情况。
+  \item 不能打断的对象占据了需要打断的位置，例如\verb+\verb|...|+或方程类型的对象。
+\end{itemize}
+
+这里提供以下几个控制断字的方法。
+
+\begin{exclamation}
+如果以下方法都不能使你满意（如果你的句子中包含太多\TeX 不能打断的对象，就会产生这种情况），就只能想办法更换表达方式来规避问题了。
+\end{exclamation}
+
+\subsection{引导断字}
+
+我们可以通过在必要的位置插入指令\verb|\-|来指出可以断字的位置，从而帮助\LaTeX 实现断字。例如，如果\LaTeX 不能成功地打断“nonmaiçavapamieu”\yz{
+  作者的生造词，形似句子“Non, mais ça ne va pas mieux.”，意为“不，没有变得更好”。
+}一词，我们可以输入：
+
+\begin{dmd}
+\verb|non\-mai\-ça\-va\-pa\-mieu|
+\end{dmd}
+
+如果这个词频繁出现，为了避免反复像上面这样给出指示，可以在文前部分输入指令\linebreak \verb|\hyphenation|：
+
+\begin{dmd}
+\verb|\hyphenation{non-mai-ça-va-pa-mieu}|
+\end{dmd}
+
+这样就可以告诉\LaTeX 这个生词的断字方式。
+
+\subsection{强制断字}
+
+通过输入指令\verb|\linebreak[|\codereplace{数字}\verb|]|，我们可以强制断字，但这样做可能带来灾难性的后果——如果你明白我的意思。参数\codereplace{数字}可以调节指令\verb|\linebreak|。你可以“腼腆”地给出指示——\verb|\linebreak[0]|，或是不由分说地给出命令——\verb|\linebreak[4]|。
+
+指令\verb|\pagebreak[|\codereplace{数字}\verb|]|可以打断页面。另一方面，还有两个指令可以用来换页：
+
+\begin{itemize}
+  \item \verb|\clearpage| 完成当前页面，换页另起。
+  \item \verb|\cleardoublepage| 完成当前页面，并在双面模式下从单数页另起。
+\end{itemize}
+
