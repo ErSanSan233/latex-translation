@@ -1,6 +1,5 @@
 % press command+option+B to build, or change "Auto Build: Run" in Settings.
 
-% \documentclass[12pt]{book}
 \documentclass{book}
 
 \usepackage{xeCJK}
@@ -40,13 +39,11 @@
 \usepackage{lineno}
 
 \def\codereplace#1{%代码中的可替换部分
-    \textsl{⟨#1⟩}
-}
+    \textsl{⟨#1⟩}}
+    % \textsl{#1}}
 
 \def\wz#1{%网址
-    % \href{#1}{\texttt{#1}}
-    {\ttfamily #1}
-}
+    {\ttfamily #1}}
 
 \def\jz#1{%原书脚注
     \footnote{#1}
@@ -61,7 +58,7 @@
 
 \def\dmh#1{%代码行
     {\xeCJKsetup{CJKecglue={\hskip 0pt}}
-    >> \texttt{#1}}
+    \char"258E \texttt{#1}}
 }
 
 \def\celan#1{%侧栏TODO三角形方向
@@ -71,20 +68,22 @@ $\blacktriangleright$
     }
 }
 
+\definecolor{LightPink}{RGB}{230,173,173}
 \newenvironment{exclamation}[1][!]%原书的圆圈感叹号
 {
-    \begin{mdframed}
-        \textcolor{red}{\textcircled{#1}} \quad
+    \begin{mdframed}[backgroundcolor=LightPink,hidealllines=true]
+        {\textcircled{\scriptsize #1}} \quad
         \sffamily
 }{      
     \rmfamily
     \end{mdframed}
 }
 
+\definecolor{LightBlue}{RGB}{173,216,230}
 \newenvironment{ii}[1][i]%原书的圆圈i
 {
-    \begin{mdframed}
-        \textcolor{blue}{\textcircled{#1}} \quad
+    \begin{mdframed}[backgroundcolor=LightBlue,hidealllines=true]
+        {\textcircled{\scriptsize #1}} \quad
         \sffamily
 }{      
     \rmfamily
@@ -135,11 +134,18 @@ $\blacktriangleright$
     ]
     {LMMono10-Regular}
 
+%特殊字符的字体显示
 \xeCJKsetcharclass{"2580}{"259F}{1}
 \xeCJKsetcharclass{"27E8}{"27E9}{1}
 \xeCJKsetup{AutoFallBack=true}
 \setCJKfallbackfamilyfont{\CJKrmdefault}{STIXTwoMath-Regular}
 
+\definecolor{MediumBlue}{RGB}{0,0,205}
+%引用颜色
+\hypersetup{
+    colorlinks = true,
+    linkcolor = MediumBlue
+}
 
 \title{关于\LaTeX 的那些你想知道却从不敢问的问题\\{\small 或者说，如何在不会使用\LaTeX 的情况下使用\LaTeX }\\~\\Tout ce que vous avez toujours voulu savoir sur \LaTeX \ sans jamais oser le demander\\{\small Ou comment utiliser \LaTeX \ quand on n'y connaît goutte}\\~\\ ver. 1.5}
 \author{Vincent Lozano 著}
