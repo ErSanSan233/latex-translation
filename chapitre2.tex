@@ -764,21 +764,26 @@ Figure 1: 有个老丁头
 \LaTeX 以如下的方式处理引用：在第一次编译时，在文件\codereplace{文件名}\dm{.aux}中储存引用，其中\codereplace{文件名}是你的文档的文件名。我们可以在如下示例中看到其解决引用的问题时的机制和原理，在该示例中，我们尝试引用位于第35页的第3节中的一个名为\dm{truc}的标记\yz{“truc”意为“小东西”。}。
 
 \begin{enumerate}
-  \item 在第一次编译时，\LaTeX 在\dm{.aux}格式的辅助文件中存储该标记的号码（在本例中，存储其所在节的序号）和该标记出现页的页码：
+  \item 在第一次编译时，\LaTeX 在\dm{.aux}格式的辅助文件中存储该标记的号码（在本例中，存储其所在节的序号）和该标记出现页的页码（如图\ref{fig:ref1}所示）。
   
-  \begin{figure*}[ht]
+  \begin{figure}[ht]
     \begin{center}
       \includegraphics{img/ref1.eps}
     \end{center}
-  \end{figure*}
+    \caption{使用\dm{.aux}的第一次编译}
+    \label{fig:ref1}
+  \end{figure}
 
   因此，此次编译时，会\LaTeX 发送警告，指出标记\dm{truc}未定义。
-  \item 我们会进行第二次编译，这次编译会使用辅助文件的内容：
-  \begin{figure*}[ht]
+  \item 我们会进行第二次编译，这次编译会使用辅助文件的内容（如图\ref{fig:ref2}所示）。
+  
+  \begin{figure}[ht]
     \begin{center}
       \includegraphics{img/ref2.eps}
     \end{center}
-  \end{figure*}
+    \caption{使用\dm{.aux}的第二次编译}
+    \label{fig:ref2}
+  \end{figure}
 \end{enumerate}
 
 在以下情况中的引用定义是不正确的。
@@ -805,21 +810,25 @@ Figure 1: 有个老丁头
 对于目录，你会发现，其原理与引用是类似的。在文档中插入指令\verb|\tableofcontents|意味着目录将会分两步创建，具体如下。
 
 \begin{enumerate}
-  \item 第一轮遍历会收集文档中与\emph{表题}相关的信息，并将其存入文件\codereplace{文件名}\dm{.toc}中：
+  \item 第一轮遍历会收集文档中与\emph{表题}相关的信息，并将其存入文件\codereplace{文件名}\dm{.toc}中（如图\ref{fig:toc1}所示）。
   
-  \begin{figure*}[ht]
+  \begin{figure}[ht]
     \begin{center}
       \includegraphics{img/toc1.eps}
     \end{center}
-  \end{figure*}
+    \caption{使用\dm{.toc}的第一次编译}
+    \label{fig:toc1}
+  \end{figure}
 
-  \item 第二轮遍历会使最终的文档中包含\codereplace{文件名}\dm{.toc}，因此，目录也会被包含。
+  \item 第二轮遍历会使最终的文档中包含\codereplace{文件名}\dm{.toc}，因此，目录也会被包含（如图\ref{fig:toc2}所示）。
   
-  \begin{figure*}[ht]
+  \begin{figure}[ht]
     \begin{center}
       \includegraphics{img/toc2.eps}
     \end{center}
-  \end{figure*}
+    \caption{使用\dm{.toc}的第二次编译}
+    \label{fig:toc2}
+  \end{figure}
 
 \end{enumerate}
 
@@ -908,7 +917,7 @@ Overfull \backslash hbox (14.24376pt too wide) detected at line 41
 如果以下方法都不能使你满意（如果你的句子中包含太多\TeX 不能打断的对象，就会产生这种情况），就只能想办法更换表达方式来规避问题了。
 \end{exclamation}
 
-\subsection{引导断字}
+\subsubsection{引导断字}
 
 我们可以通过在必要的位置插入指令\verb|\-|来指出可以断字的位置，从而帮助\LaTeX 实现断字。例如，如果\LaTeX 不能成功地打断“nonmaiçavapamieu”\yz{
   作者的生造词，形似句子“Non, mais ça ne va pas mieux.”，意为“不，没有变得更好”。
@@ -926,14 +935,62 @@ Overfull \backslash hbox (14.24376pt too wide) detected at line 41
 
 这样就可以告诉\LaTeX 这个生词的断字方式。
 
-\subsection{强制断字}
+\subsubsection{强制断字}
 
-通过输入指令\verb|\linebreak[|\codereplace{数字}\verb|]|，我们可以强制断字，但这样做可能带来灾难性的后果——如果你明白我的意思。参数\codereplace{数字}可以调节指令\verb|\linebreak|。你可以“腼腆”地给出指示——\verb|\linebreak[0]|，或是不由分说地给出命令——\verb|\linebreak[4]|。
+通过输入指令\verb|\linebreak[|\codereplace{数字}\verb|]|，我们可以强制断字，但这样做可能带来灾难性的后果——如果你明白我的意思。参数\codereplace{数字}可以调节指令\verb|\linebreak|。你可以“腼腆”地给出指示——\verb|\linebreak[0]|，或是给出不容置疑的命令——\verb|\linebreak[4]|。
 
 指令\verb|\pagebreak[|\codereplace{数字}\verb|]|可以打断页面。另一方面，还有两个指令可以用来换页：
 
 \begin{itemize}
   \item \verb|\clearpage| 完成当前页面，换页另起。
-  \item \verb|\cleardoublepage| 完成当前页面，并在双面模式下从单数页另起。
+  \item \verb|\cleardoublepage| 完成当前页面，并在双面模式下从奇数页另起。
 \end{itemize}
+
+这两条指令会强制\LaTeX 在布局过程中插入所有浮动的图像。%TODO 所以这句是在说啥？？？
+
+\begin{ii}
+另外一种对某些情况很实用的手动介入方式是将当前页面纵向长度加长，需要调用如下指令：
+
+\begin{dmd}
+  \backslash enlargethispage
+\end{dmd}
+
+指令需要给出尺寸，且其后需要插入一个空行：
+
+\begin{tabbing}
+  \verb|\enlargethispage{10cm}   | \= \leftarrow 针对过短的页面 \\
+  ~\\
+  \verb|[……一段过长的文字……]|\\
+  \verb|\clearpage| \> \leftarrow 明确延长10 cm的页面的结尾
+\end{tabbing}
+\end{ii}
+
+\subsubsection{防止断字}
+
+有三种方式可以强制\LaTeX 不打断文本。
+
+\begin{enumerate}
+  \item 通过\verb|~|插入不可打断的空格。
+  \item 通过\verb|\mbox{|\codereplace{单词}\verb|}|将词放入一个字盒中\jz{
+    这是因为\TeX \textbf{永远不会}打断字盒。
+  }。
+  \item 对于防止换行使用指令\verb|\nolinebreak|:
+  
+  \begin{dmd}
+  \backslash nolinebreak[\codereplace{数字}]
+  \end{dmd}
+
+  同样，为了防止换页，可以使用如下指令：
+
+  \begin{dmd}
+    \backslash nopagebreak[\codereplace{数字}]
+  \end{dmd}
+
+  其中\codereplace{数字}与\verb|\linebreak|或\verb|\pagebreak|中的作用一致。
+
+\end{enumerate}
+
+\section{小结}
+
+本章介绍了\LaTeX 的标准功能。你如果专心地阅读至此，应该已经可以创建任何类型的简单文档了（目前还不能处理带有公式和图表的文档）。即使你还不能自由地定制你的文档，你的文档的排版质量也会足够好，不需要你提出很多形而上学的问题，如多大的页边距才“理想”、标题和文字间留出多少空白才“合适”……实际上，\LaTeX 中的默认特性已经足够满足全世界范围内有关印刷的大部分实用性规则。
 
