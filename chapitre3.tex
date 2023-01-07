@@ -216,3 +216,146 @@ $sin^2x + cos^2x=1$
 $sin^2x + cos^2x=1$
 \end{verbatim}
 \end{codelist}
+
+二者的区别在于，\LaTeX 会将字符串\dm{cos}视为一系列变量（因此生成意大利体），而将函数\verb|\cos|生成为罗马体的“cos”。另一个区别是对可能存在的下标的处理（参见以下\verb|\max|的示例）。以下函数都是\LaTeX 的标准数学函数。
+
+\begin{itemize}
+  \item 各种三角函数：\verb|\sin|、\verb|\cos|、\verb|\tan|。在前面加\dm{arc}，可以得到对应的反函数。在后面加\dm{h}，可以得到双曲三角函数。
+  \item 自然对数和常用对数\yz{
+    指以10为底的对数，标准的写法为$\lg$。本书以原书习惯为准，约定使用$\log$。
+  }分别使用函数\verb|\ln|和\verb|\log|。
+  \item 函数\verb|\sup|、\verb|\inf|、\verb|\max|、\verb|\min|、\verb|\arg|可以用于如下形式的数学式中：
+  
+  \begin{codelist}[3.7]{
+    \begin{displaymath}
+      T=\arg \max_{t<0} f(t)
+    \end{displaymath}
+  }\begin{verbatim}
+\begin{displaymath}
+  T=\arg \max_{t<0} f(t)
+\end{displaymath}
+  \end{verbatim}
+  \end{codelist}
+\end{itemize}
+
+注意搭配\verb|\max|使用下标操作符\dm{\_}的结果。
+
+\subsection{积分、求和和其他极限}
+
+\LaTeX 使用一套简单的语法来生成\emph{积分}、\emph{求和}等内容，具体如下：
+
+\begin{dmd}
+\backslash \codereplace{操作}\verb|_{|\codereplace{下界}\verb|}^{|\codereplace{上界}\verb|}|
+\end{dmd}
+
+其中\codereplace{操作}可以是\dm{sum}、\dm{prod}、\dm{int}、\dm{lim}之一，\codereplace{上界}和\codereplace{下界}会排列在操作符号的周围。例如：
+
+\begin{codelist}[3.8]{
+  对几何级数各项求和：
+\begin{displaymath}
+  \sum_{i=0}^{n}q^i=
+  \frac{1-q^{n+1}}{1-q}
+\end{displaymath}
+}\begin{verbatim}
+对几何级数各项求和：
+\begin{displaymath}
+  \sum_{i=0}^{n}q^i=
+  \frac{1-q^{n+1}}{1-q}
+\end{displaymath}
+\end{verbatim}
+\end{codelist}
+
+类似地，使用指令\verb|\prod|可以生成求积符号$\prod$。
+以下是使用积分的示例：
+
+\begin{codelist}[3.9]{
+对于$x>0$，定义自然对数如下：
+\begin{displaymath}
+  \ln(x)=\int_{1}^{x}\frac{1}{t}
+  \,\mathrm{dt}
+\end{displaymath}
+}\begin{verbatim}
+对于$x>0$，定义自然对数如下：
+\begin{displaymath}
+  \ln(x)=\int_{1}^{x}\frac{1}{t}
+  \,\mathrm{dt}
+\end{displaymath}
+\end{verbatim}
+\end{codelist}
+
+指令\verb|\,|可以在“dt”前插入很小的空格（参见3.5.1小节）。你如果更喜欢\emph{线积分}，可以使用\verb|\oint|，这个指令可以生成符号$\oint$。好了，这里会给出一个关于极限的示例，相信你可以看懂：
+
+\begin{codelist}[3.10]{
+  $f(x)$在$x_0$处存在极限$\ell$：
+\begin{displaymath}
+  \lim_{x\rightarrow x_0}f(x)=\ell
+\end{displaymath}
+}\begin{verbatim}
+$f(x)$在$x_0$处存在极限$\ell$：
+\begin{displaymath}
+  \lim_{x\rightarrow x_0}f(x)=\ell
+\end{displaymath}
+\end{verbatim}
+\end{codelist}
+
+希望你能注意到示例中漂亮的$\ell$。为了巩固一下关于两种数学模式的知识，这里给出相同的数学式，但它们这次会镶嵌在行文中：求和，$\sum_{i=0}^{n}q^i=\frac{1-q^{n+1}}{1-q}$；求积分，$\ln(x)=\int_{1}^{x}\frac{1}{t}\,\mathrm{dt}$；求极限，$\lim_{x\rightarrow x_0}f(x)=\ell$。
+
+\section{重叠的符号}
+
+\subsection{操作符\dm{not}}
+
+操作符\verb|\not|可以生成特定关系的“否定”样式：
+
+\begin{codelist}[3.11]{
+  令实数$x \not\in I$……
+}\begin{verbatim}
+  令实数$x \not\in I$……
+\end{verbatim}
+\end{codelist}
+
+\verb|\not|的输出结果就是在其下一个符号上加上一道“斜杠”。\textbf{注意}，这个操作符并不能总是呈现出完美的效果，例如\verb|$\not\longrightarrow$|会显示为$\not\longrightarrow$。但对于宽度合适的符号，它给出的结果还能令人满意。
+
+\subsection{“变音符号”}
+
+对于特殊的数学概念，经常需要\jz{
+  实际上，一些名副其实的大数学家很喜欢这种符号上面的小帽子。一些人甚至还喜欢在上面叠两层、三层……
+}在符号上加“变音”符号。以下是可用的符号示例：
+
+\begin{center}
+  \begin{tabular}{lc@{\quad}lc@{\quad}lc}
+    \verb+\hat{x}+  &$\hat{x}$  & \verb+\check{x}+&$\check{x}$&
+    \verb+\breve{x}+&$\breve{x}$\\
+    \verb+\acute{x}+&$\acute{x}$& \verb+\grave{x}+&$\grave{x}$&
+    \verb+\tilde{x}+&$\tilde{x}$\\ 
+    \verb+\bar{x}+  &$\bar{x}$  & \verb+\dot{x}+&$\dot{x}$&
+    \verb+\ddot{x}+ &$\ddot{x}$\\  
+  \end{tabular}
+\end{center}
+
+
+\subsection{向量}
+
+有两种\jz{
+由埃迪·索德雷（Eddie Saudrais）开发的包\textsf{esvect}可以为向量生成更好看的箭头。
+}方式可以得到向量：
+
+\begin{itemize}
+  \item 对于小些的符号，可以使用\verb|\vec|，因为这个指令是用于添加“变音”符号的。
+  \item 对于其他情况，可以使用\verb|\overrightarrow|。
+\end{itemize}
+
+\begin{codelist}[3.12]{
+设$\overrightarrow{A\!B}$在基底
+$(\vec{\imath},\vec{\jmath})$
+下定义。
+}\begin{verbatim}
+设$\overrightarrow{A\!B}$在基底
+$(\vec{\imath},\vec{\jmath})$
+下定义。
+\end{verbatim}
+\end{codelist}
+
+注意，\verb|$\vec{A\!B}$|会显示为$\vec{A\!B}$（关于\verb|\!|的用途，参见3.5.1小节）。此外，指令\verb|\imath|和\verb|\jmath|分别可以生成不带点的字母i和j：$\imath$、$\jmath$。
+
+\subsection{指令\dm{stackrel}}
+
