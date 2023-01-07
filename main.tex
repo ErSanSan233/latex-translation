@@ -5,7 +5,7 @@
 \usepackage{xeCJK}
 \usepackage{geometry}
 \usepackage{titlesec}
-\usepackage{bm}
+
 \usepackage{underlin}
 \usepackage{wrapfig}
 \usepackage{caption}
@@ -23,6 +23,9 @@
 \usepackage{unicode-math}%正体希腊字母
 \usepackage{mathrsfs}
 \usepackage{amsfonts}
+\usepackage{bm}
+\usepackage{bbm}
+% \usepackage{amssymb}
 
 % 设置图书版式
 \usepackage{marginnote}%侧栏
@@ -39,7 +42,7 @@
 \usepackage{lineno}
 
 \def\codereplace#1{%代码中的可替换部分
-    \textsl{⟨#1⟩}}
+    \textsl{〈#1〉}}
     % \textsl{#1}}
 
 \def\wz#1{%网址
@@ -135,10 +138,12 @@ $\blacktriangleright$
     {LMMono10-Regular}
 
 %特殊字符的字体显示
-\xeCJKsetcharclass{"2580}{"259F}{1}
-\xeCJKsetcharclass{"27E8}{"27E9}{1}
+\xeCJKsetcharclass{"2580}{"259F}{1}%侧栏小方块示例
+% \xeCJKsetcharclass{"27E8}{"27E9}{1}%〈〉半角括号
+\xeCJKsetcharclass{"211A}{"211F}{1}%双钩R
 \xeCJKsetup{AutoFallBack=true}
-\setCJKfallbackfamilyfont{\CJKrmdefault}{STIXTwoMath-Regular}
+\setCJKfallbackfamilyfont{\CJKrmdefault}{ArialUnicodeMS}
+% \setCJKfallbackfamilyfont{\CJKrmdefault}{STIXTwoMath-Regular}
 
 \definecolor{MediumBlue}{RGB}{0,0,205}
 %引用颜色

@@ -40,3 +40,179 @@ $$
 
 3.7节会介绍\LaTeX 的不同环境。
 
+\section{常用指令}
+
+\subsection{上标和下标}
+
+正如1.4.1小节提到的，指令\verb|_|和\verb|^|分别可以生成\emph{下标}和\emph{上标}。若需要这两条指令处理多个字符，需要将这些参数“打包”到一组花括号中。
+
+\begin{center}
+  \begin{tabular}{lc|lc|lc}
+    \verb|x_2| & $x_2$ & \verb|x_{2y}| & $x_{2y}$ & \verb|x_{t_0}| & $x_{t_0}$ \\
+    \hline
+    \verb|x^2| & $x^2$ & \verb|x^{2y}| & $x^{2y}$ & \verb|x_{t^0}| & $x_{t^0}$ \\
+    \hline
+    & &  \verb|x^{2y}_{t_0}| & $x^{2y}_{t_0}$ & \verb|x_{t^1}^{2y}| & $x_{t^1}^{2y}$
+  \end{tabular}
+\end{center}
+
+\subsection{分式和根式}
+
+生成\emph{分式}和\emph{根式}的指令如下：
+
+\begin{itemize}
+  \item 指令\verb|\frac{|\codereplace{分子}\verb|}{|\codereplace{分母}\verb|}|可以生成分式，\codereplace{分子}会排在分数线上方，\codereplace{分母}会排在分数线下方；
+  \item 指令\verb|\sqrt[|\codereplace{n}\verb|]{|\codereplace{arg}\verb|}|可以生成分式，表示变量\codereplace{arg}的\codereplace{n}次方根。
+\end{itemize}
+
+注意，这两种指令在字间模式和方程模式下生成的效果不同。对于分式$\frac{1}{\sin x + 1}$和根式$\sqrt{3x^2-1}$，他们在方程模式下的显示效果为：
+\begin{displaymath}
+  \frac{1}{\sin x + 1}\quad \sqrt{3x^2-1}
+\end{displaymath}
+
+作为介绍这两条指令的结尾，我们来看看它们是如何套用的：
+
+\begin{codelist}[3.2]{
+  \begin{displaymath}
+    \sqrt{\frac{1+\sqrt[3]{3x+1}}
+              {3x+\frac{1-x}{1+x}}}
+  \end{displaymath}
+}\begin{verbatim}
+\begin{displaymath}
+  \sqrt{\frac{1+\sqrt[3]{3x+1}}
+             {3x+\frac{1-x}{1+x}}}
+\end{displaymath}
+\end{verbatim}
+\end{codelist}
+
+\subsection{符号}
+
+\subsubsection{常用符号}
+
+表\ref{tab:3.1}展示了部分生成你可能需要的符号的宏。
+
+\begin{table}[hbt]
+  \centering
+  \begin{tabular}{cccccccc}
+    \verb+\pm+       & $\pm$  & \verb+\otimes+      &  $\otimes$ & 
+    \verb+\cong+     & $\cong$  & \verb+\imath+     &  $\imath$     \\
+    \verb+\mp+       & $\mp$  & \verb+\oslash+      &  $\oslash$ &  
+    \verb+\subset+   & $\subset$  & \verb+\jmath+   &  $\jmath$     \\
+    \verb+\div+      & $\div$  & \verb+\odot+       &  $\odot$     & 
+    \verb+\supset+   & $\supset$  & \verb+\ell+     &  $\ell$         \\
+    \verb+\ast+      & $\ast$  & \verb+\leq+        &  $\leq$       & 
+    \verb+\subseteq+ & $\subseteq$  & \verb+\aleph+ &  $\aleph$     \\
+    \verb+\times+    & $\times$  & \verb+\geq+      &  $\geq$       & 
+    \verb+\supseteq+ & $\supseteq$  & \verb+\nabla+ &  $\nabla$     \\
+    \verb+\bullets+  & $\bullet$  & \verb+\equiv+   &  $\equiv$   & 
+    \verb+\in+       & $\in$      & \verb+\|+       &  $\|$         \\
+    \verb+\circ+     & $\circ$  & \verb+\ll+        &  $\ll$         & 
+    \verb+\ni+       & $\ni$    & \verb+\partial+   &  $\partial$  \\
+    \verb+\star+     & $\star$  & \verb+\gg+     &  $\gg$         & 
+    \verb+\emptyset+ & $\emptyset$  & \verb+\wedge+ &  $\wedge$     \\
+    \verb+\setminus+ & \backslash & \verb+\sim+ &  $\sim$       & %setminus与unicode-math包冲突，会显示空白
+    \verb+\forall+   & $\forall$  & \verb+\vee+   &  $\vee$         \\
+    \verb+\oplus+    & $\oplus$  & \verb+\simeq+    &  $\simeq$   & 
+    \verb+\infty+    & $\infty$  & \verb+\cup+    &  $\cup$         \\
+    \verb+\ominus+   & $\ominus$  & \verb+\approx+   &  $\approx$ & 
+    \verb+\exists+   & $\exists$  & \verb+\cap+   &  $\cap$   
+  \end{tabular}
+  \caption{常用数学符号}
+  \label{tab:3.1}
+\end{table}
+
+\begin{ii}
+我们盘点了latexsym和amssymb包中的近450个符号（参见附录C）%TODO
+。目的不是介绍它们！表\ref{tab:3.1}是标准符号中的一部分，我们认为它们可能是最常用的那一批——除了完全偶然出现的$\aleph$\yz{
+  aleph，希伯来文字母表的第一个字母。
+}。也许这证明了作者的数学水平不太高。
+\end{ii}
+
+\subsubsection{省略号}
+
+为了节省篇幅，数学式中经常使用省略号。省略号有三种，指令\verb|\dots|可以生成点“放置在”基线上的省略号：
+
+\begin{codelist}[3.3]{
+$C=\{\vec{c}_0,\vec{c}_1,\dots,
+    \vec{c}_N\}$
+为$N$个颜色的集合。
+}\begin{verbatim}
+$C=\{\vec{c}_0,\vec{c}_1,\dots,
+    \vec{c}_N\}$
+为$N$个颜色的集合。
+\end{verbatim}
+\end{codelist}
+
+指令\verb|\cdots|生成的省略号圆点上下居中，就像等号一样：
+
+\begin{codelist}[3.4]{
+  $\vec{\mu}=\frac{1}{N}
+(\vec{c}_0+\vec{c}_1+\cdots+\vec{c}_N)$
+为$N$个颜色的平均值。
+}\begin{verbatim}
+$\vec{\mu}=\frac{1}{N}
+(\vec{c}_0+\vec{c}_1+\cdots+\vec{c}_N)$
+为$N$个颜色的平均值。
+\end{verbatim}
+\end{codelist}
+
+最后，指令\verb|\vdots|和\verb|\ddots|主要在矩阵中使用（参见3.6节、例3.15）。这两个指令分别可以生成$\vdots$和$\ddots$这两种省略号。
+
+\subsubsection{箭头}
+
+用于生成箭头的指令可以使用以下简单的方法来记忆：
+
+\begin{itemize}
+  \item 所有指令均以\dm{arrow}结尾；
+  \item 必须带有前缀\dm{left}或\dm{right}，表示方向；
+  \item 可以带有前缀\dm{long}，表示加长；
+  \item 指令的第一个字母可以改为大写，表示箭头使用双线；
+  \item 可以连写\dm{left}和\dm{right}，表示双向箭头。
+\end{itemize}
+
+综上：
+
+\begin{center}
+  \begin{tabular}{lll|lll}
+    \verb+\rightarrow+ & 表示  &$\rightarrow$ &
+    \verb+\Longleftarrow+ & 表示 & $\Longleftarrow$ \\
+    \verb+\Leftarrow+ & 表示 &$\Leftarrow$ &
+    \verb+\Longleftrightarrow+ & 表示 &$\Longleftrightarrow$
+  \end{tabular}
+\end{center}
+
+\subsubsection{希腊字母}
+
+可以以一种极简单的方式使用希腊字母：打出它们的名字。也就是说，\verb|\alpha|表示$\alpha $，\verb|\pi|表示$\pi $。将指令的第一个字母改为大写，表示将对应希腊字母改为大写：\verb|\Gamma|表示$\Gamma $。注意，不是所有大写希腊字母都有对应的指令，如果要将$\alpha $改为大写，直接使用字母A即可（指令\verb|\Alpha|不存在）。
+
+\subsubsection{实数集}
+
+科技文档的作者常常会面临一个“至关重要”的问题：“我们应当如何打出代表实数集的字母`R'？”关于这个问题，这里分享几个观点。从历史上看，似乎最初的数学资料上将实数符号排版为加粗的形式（“令$x \in \mathbf{R}$”），老师们会使用粉笔反复在字母“R”上描几遍，来代表这个符号。这种比较烦琐的方法促成了我们“更熟悉”的写法：“令$x \in \mathbbm{R}$”。因此，出现了不同的流派：$\mathbf{R}$、ℝ，等等。如果你想自己选择，那么有如下包和指令供你选择：
+
+\begin{itemize}
+  \item \textsf{bbm}提供的指令\verb|\mathbbm{R}|可以生成$\mathbbm{R}$、指令\verb|\mathbbmss{R}|可以生成$\mathbbmss{R}$，等等；
+  \item \textsf{bbold}提供的指令\verb|\mathbbm{R}|可以生成$\mathbbm{R}$；
+  \item \textsf{amssymb}提供的指令\verb|\mathbb{R}|可以生成ℝ、指令\verb|\mathbf{R}|可以生成$\mathbf{R}$。
+\end{itemize}
+
+\section{函数}
+
+\subsection{标准函数}
+
+要生成经典的数学函数（如对数函数、三角函数等），需要使用\LaTeX 预装的函数来实现，这里是一个示例：
+
+\begin{codelist}[3.5]{
+$\sin^2x + \cos^2 x=1$
+}\begin{verbatim}
+$\sin^2x + \cos^2 x=1$
+\end{verbatim}
+\end{codelist}
+
+如果不使用\LaTeX 函数：
+
+\begin{codelist}[3.6]{
+$sin^2x + cos^2x=1$
+}\begin{verbatim}
+$sin^2x + cos^2x=1$
+\end{verbatim}
+\end{codelist}
