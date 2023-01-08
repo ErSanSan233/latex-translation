@@ -251,13 +251,13 @@ $sin^2x + cos^2x=1$
 其中\codereplace{操作}可以是\dm{sum}、\dm{prod}、\dm{int}、\dm{lim}之一，\codereplace{上界}和\codereplace{下界}会排列在操作符号的周围。例如：
 
 \begin{codelist}[3.8]{
-  对几何级数各项求和：
+  对此等比数列求和：
 \begin{displaymath}
   \sum_{i=0}^{n}q^i=
-  \frac{1-q^{n+1}}{1-q}
+  \frac{\quad 1-q^{n+1}}{1-q}
 \end{displaymath}
 }\begin{verbatim}
-对几何级数各项求和：
+  对此等比数列求和：
 \begin{displaymath}
   \sum_{i=0}^{n}q^i=
   \frac{1-q^{n+1}}{1-q}
@@ -358,4 +358,94 @@ $(\vec{\imath},\vec{\jmath})$
 注意，\verb|$\vec{A\!B}$|会显示为$\vec{A\!B}$（关于\verb|\!|的用途，参见3.5.1小节）。此外，指令\verb|\imath|和\verb|\jmath|分别可以生成不带点的字母i和j：$\imath$、$\jmath$。
 
 \subsection{指令\dm{stackrel}}
+
+指令\verb|\stackrel|可以将两个符号叠放在一起：
+
+\begin{dmd}
+\verb|\stackrel{|\codereplace{符号$_1$}\}\{\codereplace{符号$_2$}\}
+\end{dmd}
+
+\codereplace{符号$_1$}会置于\codereplace{符号$_2$}上方。例如：
+
+\begin{dmd}
+\verb|x\stackrel{f}{\longmapsto}y|
+\end{dmd}
+
+以上代码会生成$x\stackrel{f}{\longmapsto}y$。
+
+\section{两个重要原则}
+
+为了掌握\LaTeX 生成数学式的方法，需要知道以下两个原则。
+
+\begin{description}
+  \item[空格] \LaTeX 会忽略数学式中夹带的空格，因此\verb|$x+1$|和\verb|$x + 1$|生成的结果是相同的。\LaTeX 会在它认为最合适的地方添加空格。
+  \item[文本] 任何的符号组都会被当作同一系列变量或函数对待，因此\verb|$x=t avec t>0$|\yz{
+    此问题几乎只在西文排版中出现，因此保留原文。avec可理解为“且其中”。
+  }会生成“$x=t avec t>0$”，而不是你所期待的“$x=t$ avec $t>0$”
+  \jz{
+    数学式中夹带文本的问题只会在使用\dm{displaymath}系列的环境时显现出来。毕竟，使用“\dm{\$x=t\$ avec \$t>0\$}”总是可以的！
+  }。
+\end{description}
+
+在了解了两个原则后，来看看入门如何处理相关的问题。
+
+\subsection{数学模式的空格}
+
+首先需要知道，\LaTeX 选择添加空格的方式一般是正确的。然而，如果有一天你非要去\rlap{ㄨㄨㄨㄨ}吹毛求疵，表\ref{tab:3.2}可以帮助你在数学式中插入空格。在该表格中，我们在两个$\Box$符号之间夹入不同的空格指令，来展示它们的效果。
+
+\begin{table}[ht]
+  \begin{center}
+    \begin{tabular}{|ll|ll|ll|ll|}
+      \hline
+      \verb+\!+ & $\Box\!\Box$ &
+      \emph{无指令} & $\Box\Box$ &
+      \verb+\,+ & $\Box\,\Box$ &
+      \verb+\:+ & $\Box\:\Box$ \\
+      \hline
+      \verb+\;+ & $\Box\;\Box$ &
+      \verb*+\ + & $\Box\ \Box$ &
+      \verb|\quad| & $\Box\quad\Box$ &
+      \verb|\qquad| & $\Box\qquad\Box$ \\
+      \hline
+    \end{tabular}
+    \caption{数学模式中的空格}
+    \label{tab:3.2}
+  \end{center}
+\end{table}
+
+对于那些关注“毛”“疵”的人，要强调一下，本书在等比数列的示例（参见3.3.2小节）中偷偷了在分子上添加了一些空格，以让分式中的两个$q$稍微对齐。如果按照默认的生成方式，结果会是这样的：
+
+\begin{displaymath}
+  \sum_{i=0}^{n}q^i=
+  \frac{1-q^{n+1}}{1-q}
+\end{displaymath}
+
+不知道这个关于$q$的故事是否为你带来了更敏锐的观察力。
+
+\subsection{数学模式中的文本}
+
+在数学式中插入文本，最简单的方法是将文本“装箱”，并适当地插入空格：
+
+\begin{codelist}[3.13]{
+设数列$(u_n),(v_n)$：
+\begin{displaymath}
+  u_n=\ln n\quad
+  \mbox{且}\quad v_n=(1+\frac{1}{n})^n
+  \label{ex-maths-suite}
+\end{displaymath}
+}\begin{verbatim}
+设数列$(u_n),(v_n)$：
+\begin{displaymath}
+  u_n=\ln n\quad
+  \mbox{且}\quad v_n=(1+\frac{1}{n})^n
+  \label{ex-maths-suite}
+\end{displaymath}
+\end{verbatim}
+\end{codelist}
+
+你可以在4.4.1小节找到关于指令\verb|\mbox|的细节。如果你已经在考虑使用包\textsf{amsmath}，相比于使用\verb|\mbox|，也可以考虑使用指令\verb|\text|。
+
+\section{阵列（array）：简单且高效}
+
+阵列环境\dm{array}可以满足生成大多数数学式的需求。正如其名，它可以将对象排列成一行行、一列列的样子。实际上，它和环境\dm{tabular}对应。也正如\dm{tabular}一样，\dm{array}也不会换行。
 

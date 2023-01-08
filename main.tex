@@ -42,9 +42,8 @@
 \usepackage{lineno}
 
 \def\codereplace#1{%代码中的可替换部分
-    % \textsl{〈#1〉}}
+    \xeCJKsetup{CJKecglue={\hskip 0pt}}
     \textsl{⟨#1⟩}}
-    % \textsl{#1}}
 
 \def\wz#1{%网址
     {\ttfamily #1}}
@@ -181,7 +180,8 @@ $\blacktriangleright$
 \setstretch{1.2}
 \xpretocmd\verbatim{
     \setlength{\topsep}{0pt}
-    \setlength{\partopsep}{0pt}}{}{\fail}
+    \setlength{\partopsep}{0pt}
+    }{}{\fail}
 
 \input{introduction.tex}
 \input{chapitre1.tex}

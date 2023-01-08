@@ -13,11 +13,14 @@
     如果你不知道操作系统是什么东西，那么你使用的是macOS；如果你不知道你的计算机用的\textit{具体是哪个}操作系统，那么你在用Windows；否则，你在用UNIX……
 }。发行版中带有可以自动安装和配置\LaTeX 、\TeX 和其他相关内容的程序。
 
-\paragraph*{对于UNIX}我们可以找到称为te\TeX 的发行版，虽然它的开发早在2006年就停止了。今天，我们一般安装\TeX Live（\wz{http://www.tug.org/texlive}）。
+\begin{description}
+\item[对于UNIX]我们可以找到称为te\TeX 的发行版，虽然它的开发早在2006年就停止了。今天，我们一般安装\TeX Live（\wz{http://www.tug.org/texlive}）。
 
-\paragraph*{对于macOS}建议安装的发行版是Mac\TeX（\wz{http://www.tug.org/mactex}）。
+\item[对于macOS]建议安装的发行版是Mac\TeX（\wz{http://www.tug.org/mactex}）。
 
-\paragraph*{对于Windows}最简单的方式无疑是选择pro\TeX t（\wz{http://www.tug.org/protext}）。它会安装称为MiK\TeX 的发行版（\wz{http://www.miktex.org}）和几个开发工具，其中包含一个查看PostScript文件的程序（\textsf{gsview}）。
+\item[对于Windows]最简单的方式无疑是选择pro\TeX t（\wz{http://www.tug.org/protext}）。它会安装称为MiK\TeX 的发行版（\wz{http://www.miktex.org}）和几个开发工具，其中包含一个查看PostScript文件的程序（\textsf{gsview}）。
+
+\end{description}
 
 偶尔，需要在为发行版中搭配一款文字编辑器（如果其中没有包含），因为你很快就能看到，使用\LaTeX 就是在文件中输入文字和命令。
 
@@ -41,11 +44,15 @@
 
 你很快就会学到，用\LaTeX 制作文档是一个翻译（也称作\textit{编译}）的过程——将编辑者创建的源文件转换为用于显示或印刷的格式\jz{本章会略微多介绍一些这个格式。}。因此，发行版中内置了或多或少的著名工具，可以将编译后的不同格式的文件显示出来。
 
-\paragraph*{对于PDF格式}除了著名的\textsf{acrobat reader}，UNIX中还有一些可以显示PDF文件，如\textsf{xpdf}、\textsf{evince}等。
+\begin{description}
 
-\paragraph*{对于DVI格式}UNIX中的\textsf{xdvi}、\textsf{kdvi}和Windows中的\textsf{yap}都是可以显示这种\LaTeX 编译文件的程序。
+\item[对于PDF格式]除了著名的\textsf{acrobat reader}，UNIX中还有一些可以显示PDF文件，如\textsf{xpdf}、\textsf{evince}等。
 
-\paragraph*{对于PostScript格式}\textsf{ghostscript}套件（在各平台下的名称可能有差异）可以显示PostScript文件。
+\item[对于DVI格式]UNIX中的\textsf{xdvi}、\textsf{kdvi}和Windows中的\textsf{yap}都是可以显示这种\LaTeX 编译文件的程序。
+
+\item[对于PostScript格式]\textsf{ghostscript}套件（在各平台下的名称可能有差异）可以显示PostScript文件。
+
+\end{description}
 
 \begin{exclamation}
     需要注意，为了使你选用的发行版包含\LaTeX 的“法文”模式，以确保能够正确处理断字（césure；英：hyphenation），我们需要在编译文档是需要更改其“日志”（见1.6节）%带有引用
@@ -265,15 +272,20 @@
 
 这个示例体现了\LaTeX 中的几个重要的原理，具体如下。
 
-\paragraph*{空行代表跳转至下一段} \LaTeX 中的空行代表一段文字的结尾，因此在以上实例中，第一段从“\dm{从你}”开始，直到“\dm{物品上。}”结束。指令\dm{\backslash par}与空行等价，可以用来表示一段文字的起始。
+\begin{description}
 
-\paragraph*{\LaTeX 会忽略换行}最终的文档中，换行并不由源文件中的换行决定。\LaTeX 会自动为各段文本\textit{打断、压缩、调节}文字，除非你有特殊的要求。
 
-\paragraph*{\LaTeX 会忽略重复的空格}输入1个或18784个空格是等价的，比如源码中\dm{de}和\dm{Murphy}前插入的空格那样。此规则也适用于跳转段落：输入一行或多行空格是等价的。
+\item[空行代表跳转至下一段] \LaTeX 中的空行代表一段文字的结尾，因此在以上实例中，第一段从“\dm{从你}”开始，直到“\dm{物品上。}”结束。指令\dm{\backslash par}与空行等价，可以用来表示一段文字的起始。
 
-\paragraph*{“\backslash ”是转义字符（caractère d’échappement；英：escape char）}“\backslash ”可以告诉\LaTeX 它后面的一系列字符是控制序列，也就是说，是最一般意义上的指令（或宏）。这里，它对“墨菲”一词生效，具体的效果由指令\dm{\backslash emph}控制。
+\item[\LaTeX 会忽略换行]最终的文档中，换行并不由源文件中的换行决定。\LaTeX 会自动为各段文本\textit{打断、压缩、调节}文字，除非你有特殊的要求。
 
-\paragraph*{“\{”和“\}”}它们是\textit{组}的定界符，稍后会进一步解释它们。
+\item[\LaTeX 会忽略重复的空格]输入1个或18784个空格是等价的，比如源码中\dm{de}和\dm{Murphy}前插入的空格那样。此规则也适用于跳转段落：输入一行或多行空格是等价的。
+
+\item[“\backslash ”是转义字符（caractère d’échappement；英：escape char）]“\backslash ”可以告诉\LaTeX 它后面的一系列字符是控制序列，也就是说，是最一般意义上的指令（或宏）。这里，它对“墨菲”一词生效，具体的效果由指令\dm{\backslash emph}控制。
+
+\item[“\{”和“\}”]它们是\textit{组}的定界符，稍后会进一步解释它们。
+
+\end{description}
 
 \subsection{几个特殊字符}
 
@@ -456,14 +468,18 @@ toute assez court.
 
 我们可以以一种简单的方式来解释以上错误信息。
 
-\paragraph*{第1行}你使用的\TeX 版本为$\pi\pm 10^{-4}$。
-\paragraph*{第2行}你想编译文件\dm{erreur.tex}。
-\paragraph*{第3行}你使用了\LaTeXe ，版本日期为1995年12月。
-\paragraph*{第4行～第5行}你使用了标准文档类\dm{article}。
-\paragraph*{第6行}字号默认设置为10 pt。
-\paragraph*{第7行}错误信息本身。
-\paragraph*{第8行～第9行}\dm{erreur.tex}中造成错误的代码行和对应行号。
-\paragraph*{第10行}\TeX 给出的短促且尤其让人焦虑的消息：\dm{?}。
+\begin{description}
+
+\item[第1行]你使用的\TeX 版本为$\pi\pm 10^{-4}$。
+\item[第2行]你想编译文件\dm{erreur.tex}。
+\item[第3行]你使用了\LaTeXe ，版本日期为1995年12月。
+\item[第4行～第5行]你使用了标准文档类\dm{article}。
+\item[第6行]字号默认设置为10 pt。
+\item[第7行]错误信息本身。
+\item[第8行～第9行]\dm{erreur.tex}中造成错误的代码行和对应行号。
+\item[第10行]\TeX 给出的短促且尤其让人焦虑的消息：\dm{?}。
+
+\end{description}
 
 第8行和第9行之间的“裂缝”精准地表明了\LaTeX 崩不住了的地方。以下消息：
 
