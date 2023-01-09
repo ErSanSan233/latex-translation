@@ -449,3 +449,244 @@ $(\vec{\imath},\vec{\jmath})$
 
 阵列环境\dm{array}可以满足生成大多数数学式的需求。正如其名，它可以将对象排列成一行行、一列列的样子。实际上，它和环境\dm{tabular}对应。也正如\dm{tabular}一样，\dm{array}也不会换行。
 
+\subsection{阵列的原理}
+
+关于阵列环境的语法，可以回忆一下\dm{tabular}，有：
+
+\begin{dmd}
+\verb|\begin{array}[|\codereplace{垂直位置}]\{\codereplace{格式}\verb|} ... \end{array}|
+\end{dmd}
+
+其中，\codereplace{格式}指明各列的对齐方式：\dm{c}表示居中，\dm{l}表示左对齐，\dm{r}表示右对齐。可选的参数\codereplace{垂直位置}可以明确整个表格的垂直位置\celan{\S 2.2.4}。与表格中相同，我们使用以下指令：
+
+\begin{itemize}
+  \item 使用\verb|&|分隔不同列；
+  \item 使用\verb|\\|换行。
+\end{itemize}
+
+\begin{codelist}[3.14]{
+  设$A=\begin{array}{rc}
+    -1&1\\
+    3&4
+  \end{array}$为数字阵列……
+}\begin{verbatim}
+设$A=\begin{array}{rc}
+  -1&1\\
+  3&4
+\end{array}$为数字阵列……
+\end{verbatim}
+\end{codelist}
+
+以下示例使用了省略号：
+
+\begin{codelist}[3.15]{
+  \begin{displaymath} A=\left[\begin{array}{ccc}
+    a_{00} & \dots & a_{0n}\\
+    \vdots & \ddots & \vdots\\
+    a_{n0} & \dots & a_{nn}
+  \end{array}\right]\end{displaymath}
+}\begin{verbatim}
+\begin{displaymath} A=\left[\begin{array}{ccc}
+  a_{00} & \dots & a_{0n}\\
+  \vdots & \ddots & \vdots\\
+  a_{n0} & \dots & a_{nn}
+\end{array}\right]\end{displaymath}
+\end{verbatim}
+\end{codelist}
+
+\subsection{阵列和定界符号}
+
+我们经常需要\dm{array}来生成矩阵，这需要借助\emph{定界符号}的辅助。定界符号是一类特殊的括号，可能是方括号、花括号等，可以将数学对象包裹其中。其语法如下：
+
+\begin{dmd}
+\verb|\left|\codereplace{定界$_1$} \codereplace{对象} \verb|\right|\codereplace{定界$_2$}
+\end{dmd}
+
+其中，\codereplace{定界$_1$}和\codereplace{定界$_2$}为定界符号，\codereplace{对象}为其包裹的数学对象。
+
+较常用的定界符号如下：
+
+\begin{center}
+  \begin{tabular}{cccc}
+    \verb+(+ 和 \verb+)+               & $(\Pi)$             &
+    \verb+[+ 和 \verb+]+               & $[\Pi]$             \\
+    \verb+\{+ 和 \verb+\}+             & $\{\Pi\}$           &
+    \verb|\lfloor| 和 \verb|\rfloor| & $\lfloor\Pi\rfloor$ \\
+    \verb|\lceil| 和 \verb|\rceil|   & $\lceil\Pi\rceil$   &
+    \verb|\langle| 和 \verb|\rangle| & $\langle\Pi\rangle$  \\
+    \verb+|+                           & $|\Pi|$             &
+    \verb+\|+                         & $\|\Pi\|$           
+  \end{tabular}
+\end{center}
+
+使用定界符号的好处是，这种符号可以自动适应它包裹的对象的尺寸：
+
+\begin{codelist}[3.16]{
+  设$I=
+\left[\begin{array}{cc}
+  1&0\\0&1
+\end{array}\right]$
+为单位矩阵。
+}\begin{verbatim}
+设$I=
+\left[\begin{array}{cc}
+  1&0\\0&1
+\end{array}\right]$
+为单位矩阵。
+\end{verbatim}
+\end{codelist}
+
+我们同样可以使用定界符号重写示例3.13，来改变括号的尺寸：
+
+\begin{codelist}[3.17]{
+  设数列$(u_n),(v_n)$：
+\begin{displaymath}
+  u_n=\ln n\quad\mbox{et}
+  \quad v_n=\left(1+\frac{1}{n}\right)^n
+\end{displaymath}
+}\begin{verbatim}
+设数列$(u_n),(v_n)$：
+\begin{displaymath}
+  u_n=\ln n\quad\mbox{et}
+  \quad v_n=\left(1+\frac{1}{n}\right)^n
+\end{displaymath}
+\end{verbatim}
+\end{codelist}
+
+\begin{exclamation}
+对于每一个指令\verb|\left|，都应该有一个指令\verb|\right|与其对应。然而，左侧和右侧分别使用的符号不必是配套的。
+\end{exclamation}
+
+以下示例中使用了\verb|\right.|，表示我们不需要右侧的符号：
+
+\begin{codelist}[3.18]{
+  设$ S_i=\left\{\begin{array}{rl}
+    -1  & \mbox{若$i$为偶数，}    \\
+    1  & \mbox{否则。}
+  \end{array}\right.$
+}\begin{verbatim}
+设$ S_i=\left\{\begin{array}{rl}
+  -1  & \mbox{若$i$为偶数，}    \\
+  1  & \mbox{s否则。}
+\end{array}\right.$
+\end{verbatim}
+\end{codelist}
+
+\subsection{说话的方式简单点……}
+
+包\textsf{amsmath}中提供了两种环境——\verb|pmatrix|（p代表parenthèse，即圆括号）和\verb|bmatrix|（b代表英文的\emph{braket}，即方括号），可以简单地插入矩阵：
+
+\begin{codelist}[3.19]{
+  \begin{displaymath}
+    \bar{\bar{\sigma}}=\begin{bmatrix}
+      \sigma_{11} & \sigma_{12} \\
+      \sigma_{21} & \sigma_{22} \\
+    \end{bmatrix}
+  \end{displaymath}
+}\begin{verbatim}
+\begin{displaymath}
+  \bar{\bar{\sigma}}=\begin{bmatrix}
+    \sigma_{11} & \sigma_{12} \\
+    \sigma_{21} & \sigma_{22} \\
+  \end{bmatrix}
+\end{displaymath}
+\end{verbatim}
+\end{codelist}
+
+\section{方程和环境}
+
+本节会介绍\LaTeX 中可以生成数学式的三种标准环境。
+
+\subsection{环境\dm{displaymath}}
+
+你如果已经阅读到这里，应该已经明白，\dm{displaymath}可以打断当前段落，并居中显示一行公式。\verb|\begin{displaymath}...\end{displaymath}|的一种简略的写法是：
+\verb|\[...\]|。例如：
+
+\begin{codelist}[3.20]{
+  色度距离：\[
+  \Delta E=\sqrt{
+   \Delta L^{*2}+ \Delta a^{*2}
+  +\Delta b^{*2}} \]
+}\begin{verbatim}
+色度距离：\[
+  \Delta E=\sqrt{
+   \Delta L^{*2}+ \Delta a^{*2}
+  +\Delta b^{*2}} \]
+\end{verbatim}
+\end{codelist}
+
+\subsection{方程环境\dm{equation}}
+
+方程环境\dm{equation}的作用与\dm{displaymath}相同，但可以为数学式编号：
+
+\begin{codelist}[]{
+  请牢记，若$a>0$且$b>0$，有
+\begin{equation}
+  \ln(ab)=\ln(a)+\ln(b)
+\end{equation}
+}\begin{verbatim}
+请牢记，若$a>0$且$b>0$，有
+\begin{equation}
+  \ln(ab)=\ln(a)+\ln(b)
+\end{equation}
+\end{verbatim}
+\end{codelist}
+
+\begin{ii}
+文档类中的选项\dm{leqno}可以将方程的编号放在左侧。方程环境的选项\dm{fleqn}可以将方程居左，而非居中显示。
+\end{ii}
+
+\subsection{多行数学式}
+
+\begin{ii}
+在本书的某个旧版本中，作为介绍标准环境的结尾，我们曾引入环境\dm{eqnarray}。这个环境可以生成多行数学式，但\textbf{要知道这是错误的}。关于这个话题，有一些资料（如[12]或[14]）会向你解释如何生成“正确”的文档。要坚定不移地相信，使用\dm{eqnarray}（以及很多其他工具）\textbf{是在造孽}。无论如何，如果你没有禁住诱惑而向\dm{eqnarray}让步，那么终有一天，审判会顺着搜索引擎袭来，任何忏悔都将无济于事，任何赦免都将无法拯救你。勿谓言之不预也。
+\end{ii}
+
+我们在此介绍包\textsf{amsmath}中的环境\dm{align}：
+
+\begin{itemize}
+  \item 使用\verb|\\|换行；
+  \item 每行数学式都会编号，除非指令\verb|\nonumber|出现在该行中；
+  \item 使用两个操作符\verb|&|\jz{
+    因为共有三列。（译注：原文如此。）
+  }来对齐。
+\end{itemize}
+
+\begin{codelist}[3.22]{
+\begin{align}%TODO align会产生奇怪的空行
+  (a+b)^2 & =  (a+b)(a+b)\nonumber\\
+          & =  a^2+b^2+2ab
+  \end{align}
+}\begin{verbatim}
+\begin{align}
+  (a+b)^2 & =  (a+b)(a+b)\nonumber\\
+          & =  a^2+b^2+2ab
+\end{align}
+\end{verbatim}
+\end{codelist}
+
+\begin{ii}
+带有星号的环境\dm{align*}可以使所有行都不编号。要想引用环境\dm{align}中的多行，需要插入同样数量的\verb|\label|，分别对应相应行。
+\end{ii}
+
+若要为占用多行的方程编号，可以使用环境\dm{split}（同样由\textsf{amsmath}提供）：
+
+\begin{codelist}[3.23]{
+  \begin{equation}
+    \begin{split}
+      (a+b)^2 & =  (a+b)(a+b)\\
+      & =  a^2+b^2+2ab
+    \end{split}
+  \end{equation}
+}\begin{verbatim}
+\begin{equation}
+  \begin{split}
+    (a+b)^2 & =  (a+b)(a+b)\\
+    & =  a^2+b^2+2ab
+  \end{split}
+\end{equation}
+\end{verbatim}
+\end{codelist}
+
+\section{数学模式的风格}
+
