@@ -690,3 +690,124 @@ $(\vec{\imath},\vec{\jmath})$
 
 \section{数学模式的风格}
 
+\subsection{字体}
+
+\LaTeX 支持多种用于在数学模式中切换字体的指令\yz{
+  本节疑似原书作者的包和译稿使用的xeCJK都有冲突，仅针对使用法文书写的环境。此小节暂时按原文誊写。% todo conflict
+}。默认情况下，所有符号或字符序列（除了特定函数）在最终文档中都会以意大利体呈现。在一些情况下，强制切换字体风格会很有用。实现方法具体如下：
+
+\begin{center}
+  \begin{tabular}{ll}
+    \verb|设$\mathit{A\in\Phi}$| & 设$\mathit{A\in Φ}$\\
+    \verb|设$\mathrm{A\in\Phi}$| & 设$\mathrm{A\in Φ}$\\
+    \verb|设$\mathbf{A\in\Phi}$| & 设$\mathbf{A\in Φ}$\\
+    \verb|设$\mathsf{A\in\Phi}$| & 设$\mathsf{A\in Φ}$\\
+    \verb|设$\mathtt{A\in\Phi}$| & 设$\mathtt{A\in Φ}$\\
+    \verb|设$\mathcal{A\in\Phi}$| & 设$\mathcal{A\in\Phi}$\\
+  \end{tabular}
+\end{center}
+
+\begin{exclamation}
+指令\verb|\mathcal|只接受大写拉丁字母作为变量，否则结果会展示为乱码。例如：
+
+\begin{dmd}
+\verb|\mathcal{abcd\Gamma}|
+\end{dmd}
+
+上述指令的运行结果为$\dashv \lfloor \rfloor \lceil -$。
+\end{exclamation}
+
+\subsection{符号的字号}
+
+\LaTeX 会区分四种数学式写作\emph{风格}。\LaTeX 生成数学式时，会根据当前的“处境”选择模式。
+
+\begin{description}
+  \item[文本] 适用于行文间插入的数学式。
+  \item[方程] 适用于\emph{方程}格式下的数学式。
+  \item[角标] 适用于角标。
+  \item[子角标] 适用于角标的角标。 
+\end{description}
+
+每种模式都可以明确地使用以下声明激活：
+
+\begin{itemize}
+  \item 使用\verb|\textstyle|切换文本模式；
+  \item 使用\verb|\displaystyle|切换方程模式；
+  \item 使用\verb|\scriptstyle|切换角标模式；
+  \item 使用\verb|\scriptscriptstyle|切换子角标模式；
+\end{itemize}
+
+以下示例阐明了如何在\emph{方程}模式中强制使用\emph{文本}模式，以及相反的操作：
+
+\begin{codelist}[3.24]{
+两种形式的积：$\prod_{1}^{n}f_i$
+和$\displaystyle\prod_{1}^{n}f_i$
+相反操作：
+\[ \prod_{1}^{n}f_i
+\mbox{ 和 }\textstyle\prod_{1}^{n}f_i \]
+}\begin{verbatim}
+两种形式的积：$\prod_{1}^{n}f_i$
+和$\displaystyle\prod_{1}^{n}f_i$
+相反操作：
+\[ \prod_{1}^{n}f_i
+\mbox{ 和 }\textstyle\prod_{1}^{n}f_i \]
+\end{verbatim}
+\end{codelist}
+
+\subsection{创建新操作符}
+
+想象在一个场景中，你需要创建一个特殊的操作符，称作“burps”。只需要通过如下形式生成：
+
+\begin{codelist}[3.25]{
+\newcommand{\burps}{
+\mathop{\textrm{burps}}}
+$x=\burps_i f(i)$
+}\begin{verbatim}
+\newcommand{\burps}{
+\mathop{\textrm{burps}}}
+$x=\burps_i f(i)$
+\end{verbatim}
+\end{codelist}
+
+再看一个例子。为了让“反正弦函数”（默认显示为arcsin）依法国的习惯显示，可以按如下示例操作：
+
+\begin{codelist}[3.26]{
+  $\theta = \arcsin x$
+\renewcommand{\arcsin}{%
+  \mathop{\textrm{Arcsin}}\nolimits}
+$\theta = \arcsin x$
+}\begin{verbatim}
+$\theta = \arcsin x$
+\renewcommand{\arcsin}{%
+  \mathop{\textrm{Arcsin}}\nolimits}
+$\theta = \arcsin x$
+\end{verbatim}
+\end{codelist}
+
+指令\verb|\nolimits|可以使相关操作符不再将参数显示为上标或下标的形式，正如操作符\verb|\lim|、\verb|\int|等所做的那样\yz{
+  此句疑似说反了。
+}。此外，前文的两个示例使用了指令\verb|\newcommand|和\verb|\renewcommand|，相关问题请参见4.5节。
+
+最后，还有一种方式可以达到类似的目的。如果你已经加载了\textsf{amsmath}包，并在文前部分进行了以下声明：
+
+\begin{dmd}
+\verb|\DeclareMathOperator*{\vlunch}{vlunch}|
+\verb|\DeclareMathOperator{\zirgl}{Zirgl}|
+\end{dmd}
+
+那么可以实现以下操作：
+
+\begin{codelist}[3.27]{
+  \[
+  x=\mathop{\rm vlunch}\limits_{i} f(\theta)
+  \]
+  其中$\theta =$ Zirgl $y$。
+}\begin{verbatim}
+\[x=\vlunch_i f(\theta)\]
+其中$\theta = \zirgl y$。
+\end{verbatim}
+\end{codelist}
+
+\section{小结}
+
+本章介绍了用于生成数学式的基本方程。对于大多数科学文档，这些指令已经足够使用了。如果你不得不起草一份充斥这复杂数学式的文档，仅靠\LaTeX 的宏可能不能满足需求。因此，著名的\emph{美国数学协会（英：American Mathematical Society）}孵化了称为\AmS\TeX 的包（通过\verb|\usepackage{amsmath}|使用），可以生成尤其“奇形怪状”的数学式。

@@ -25,6 +25,7 @@
 \usepackage{amsfonts}
 \usepackage{bm}
 \usepackage{bbm}
+% \usepackage{amsmath}
 % \usepackage{amssymb}
 
 % 设置图书版式
@@ -139,16 +140,15 @@ $\blacktriangleright$
 
 %特殊字符的字体显示
 \xeCJKDeclareSubCJKBlock{angleBracket}{
-    "27E8 -> "27E9
+    "27E8 -> "27E9 %〈〉半角括号
 }
 \setCJKmainfont[angleBracket]{STIXTwoMath-Regular}
 
 \xeCJKsetcharclass{"2580}{"259F}{1}%侧栏小方块示例
-% \xeCJKsetcharclass{"27E8}{"27E9}{1}%〈〉半角括号
 \xeCJKsetcharclass{"211A}{"211F}{1}%双钩R
+\xeCJKsetcharclass{"0370}{"03FF}{1}%希腊字母
 \xeCJKsetup{AutoFallBack=true}
 \setCJKfallbackfamilyfont{\CJKrmdefault}{ArialUnicodeMS}
-% \setCJKfallbackfamilyfont{\CJKrmdefault}{STIXTwoMath-Regular}
 
 \definecolor{MediumBlue}{RGB}{0,0,205}
 %引用颜色
@@ -187,6 +187,7 @@ $\blacktriangleright$
 \input{chapitre1.tex}
 \input{chapitre2.tex}
 \input{chapitre3.tex}
+\input{chapitre4.tex}
 % \begin{appendices}
 %     \section{附录}
 % \end{appendices}
