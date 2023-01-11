@@ -1,1 +1,109 @@
 \chapter{成为小魔仙}
+
+\begin{quote}
+    羔羊揭开第七印的时候，天上寂静约有二刻……——《圣经·启示录》8:1
+\end{quote}
+
+在继续探索\LaTeX 这个庞大且出色的系统前，有必要停下脚步来了解一些重要的概念。实际上，为了成为能在组成这个系统的大量文件中大展身手的“赫尔克里·波洛”\yz{
+    Hercule Poirot，阿加莎·克里斯蒂所著系列侦探小说中的主角。
+}，掌握这些概念是基本的要求。在本章，我们介绍有关计数器、长度、空白和字盒的内容。如果你在使用\LaTeX 时，除了顺从地使用它提供给你的格式外，还想要其他版式，这4个概念会很有用。
+
+\begin{exclamation}
+    本章涉及的概念有些微妙的细节，比较难以把握\jz{
+        作者本人也不能保证掌握了全部内容……
+    }。我们建议你实际上手体验一下，因为这里介绍的工具一方面可以为你生成最令人满意的结果，另一方面也能让你掉最多的头发，基本上跟直接在你头上薅差不多。
+\end{exclamation}
+\section{计数器}
+
+文档中所有带有编号的对象都由\emph{计数器}生成。计数器可以递增、递减，也可以重设为0，等等。我们也可以根据自己的需要来创建计数器。
+
+\subsection{可用的计数器}
+
+计数器主要与标题、页码、浮动环境（环境\dm{figure}和\dm{table}）、方程（环境\dm{equation}）、页面底部的注释、编号列表（环境\dm{enumerate}）息息相关。
+
+表\ref{tab:4.1}列出了\LaTeX 中基础的计数器的名称。可以注意到，它们基本上都由相关对象的名称组成。计数器\dm{enumi}～\dm{enumiv}分别与环境\dm{enumerate}中的第1层～第4层相关。\dm{mpfootnote}是环境\dm{minipage}中脚注的计数器，会在4.4.3小节提到。
+
+\begin{table}
+  \centering
+  \ttfamily
+  \begin{tabular}{|l|l|l|l|}
+    \hline
+    part       & paragraph    & figure     & enumi\\
+    chapter    & subparagraph & table      & enumii\\
+    section    & page         & footnote   & enumiii\\
+    subsection & equation     & mpfootnote & enumiv\\
+    subsubsection &&&\\
+    \hline
+  \end{tabular}
+  \caption{\LaTeX 的计数器}
+  \label{tab:4.1}
+\end{table}
+
+\subsection{操作}
+
+在接下来的段落中，我们介绍几个操作计数器的基本工具。注意，计数器是\emph{全局}变量，因此以下描述的三个指令也会在全局范围内生效。同时，也需要注意，其中的变量都是\emph{整数}。
+
+\subsubsection{创建计数器}
+
+可以通过以下指令\emph{创建}计数器：
+
+\begin{dmd}
+\backslash newcounter\{\codereplace{计数}\}[\codereplace{父计数}]
+\end{dmd}
+
+该指令可以创建一个新的计数器，名为\codereplace{计数}。参数\codereplace{父计数}是非强制的，如果配置，则每次\codereplace{父计数}递增时，\codereplace{计数}都会归零。
+
+\subsubsection{指定计数}
+
+可以通过以下方法为计数器指定一个值：
+
+\begin{dmd}
+\backslash setcounter\{\codereplace{计数}\}\{\codereplace{值}\}
+\end{dmd}
+
+其中，\codereplace{计数}代表我们想要指定值的计数器，\codereplace{值}即具体指定的值。
+
+\subsubsection{增值}
+
+可以通过以下指令使计数器的值增加或减少：
+
+\begin{dmd}
+  \backslash addtocounter\{\codereplace{计数}\}\{\codereplace{值}\}
+\end{dmd}
+
+其中，若\codereplace{值}为正数（对应地，负数），则可以使计数器的值增加（对应地，减少）。为了展现该指令的效果，我们在本书的文档中添加以下一行指令：
+
+\begin{dmd}
+\verb|\addtocounter{footnote}{357}|
+\end{dmd}
+
+\addtocounter{footnote}{357}
+可以看到页面下方脚注的编号变化\jz{
+  虽然这个值变了这么多属实有些荒谬……
+}了。为了接下来的脚注恢复正确的序号，我们在源码中插入以下指令：
+
+\begin{dmd}
+  \verb|\addtocounter{footnote}{-357}|
+\end{dmd}
+
+\addtocounter{footnote}{-357}
+可以看到，现在的脚注序号恢复正常\jz{
+  不正常我遭天打雷劈！
+}了。
+
+\subsection{显示}
+
+使用如下指令可以将计数显示出来：
+
+\begin{dmd}
+\backslash the\codereplace{计数器名}
+\end{dmd}
+
+实际上，所有可以显示计数器的指令或环境都调用了类似的指令。这样一来，我们有如下指令：
+
+\begin{itemize}
+  \item \verb|\thepage|，在此处可以生成“\thepage ”，会在每次换页时调用；
+  \item \verb|\thefootnote|，在此处可以生成“\thefootnote ”，会被\verb|\footnote|调用；
+  \item \verb|\thesubsection|，在此处可以生成“\thesubsection ”，会被指令\verb|\subsection|调用；
+  \item ……
+\end{itemize}
