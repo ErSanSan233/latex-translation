@@ -88,7 +88,7 @@
 
 \addtocounter{footnote}{-357}
 可以看到，现在的脚注序号恢复正常\jz{
-  不正常我遭天打雷劈！
+  天灵灵，地灵灵！
 }了。
 
 \subsection{显示}
@@ -107,3 +107,136 @@
   \item \verb|\thesubsection|，在此处可以生成“\thesubsection ”，会被指令\verb|\subsection|调用；
   \item ……
 \end{itemize}
+
+“\verb|\the|”家族的指令通常借助以下格式指令定义：
+
+\begin{itemize}
+  \item \verb|\arabic{|\codereplace{计数器}\verb|}|；
+  \item \verb|\roman{|\codereplace{计数器}\verb|}|和\verb|\Roman{|\codereplace{计数器}\verb|}|；
+  \item \verb|\alph{|\codereplace{计数器}\verb|}|和\verb|\Alph{|\codereplace{计数器}\verb|}|。
+\end{itemize}
+
+以下是几个示例：
+
+\begin{itemize}
+  \item \verb|\arabic{page}|在此处可以生成“\arabic{page}”；
+  \item \verb|\alph{footnote}|在此处可以生成“\alph{footnote}”，\verb|\Alph{section}|在此处可以生成“\Alph{section}”；
+  \item \verb|\Roman{subsection}|在此处可以生成“\Roman{subsection}”，\verb|\roman{page}|在此处可以生成“\roman{page}”；
+  \item ……
+\end{itemize}
+
+为了自定义文档，重定义“\verb|\the|”家族的指令的做法很常见。例如，在本书的文档中，指令\verb|\thefigure|以如下形式重定义：
+
+\begin{dmd}
+\verb|\arabic{chapter}.\arabic{figure}|
+\end{dmd}
+
+这样一来，本书的图题会依次以如下形式编号：
+
+\begin{enumerate}
+  \item 阿拉伯数字形式的章号；
+  \item 圆点；
+  \item 阿拉伯数字形式的图号。
+\end{enumerate}
+
+可以以如下的形式重新定义图题编号的显示形式。例如，以如下的形式定义：
+
+\begin{dmd}
+\verb|(\Roman{chapter}):\arabic{section}.\arabic{figure}|
+\end{dmd}
+
+这样可以在图题中以另一种形式——也是一种相对不整洁的形式——来为图编号。这里，我们重定义了指令\verb|\thefigure|，来生成新的编号方式：先在括号中以罗马数字形式显示章号，再以圆点分隔以阿拉伯数字形式显示的节号和图号。“\textsc{Fig.}”等字样、图号后的连接号等则需要在指令\verb|\caption|的层级去定义。
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics{img/latex.eps}\\
+  \textsc{Figure} (IV):1.1: 特殊编号的图题
+\end{figure}
+
+\section{长度}
+
+如果说计数器需要依托文档中对象的\emph{序号}而存在，那么长度就定义了实体\emph{占的空间}。长度是\LaTeX 中的一种参数，旨在以某种方式来表述对象的尺寸。
+
+\subsection{单位}
+
+所有的尺寸都需要带有单位。\emph{刚性}\jz{
+  我们稍后会看到\emph{弹性}的尺寸。
+}的尺寸具有如下形式：
+
+\begin{dmd}
+  \codereplace{数字}\codereplace{单位}
+\end{dmd}
+
+其中，\codereplace{数字}可以是正值或负值，在需要时也可以带小数；\codereplace{单位}需要是\LaTeX 可以识别的单位。可以使用包括但不仅限于如下列出的单位：
+
+\begin{description}
+  \item[cm] \emph{厘米}；
+  \item[mm] \emph{毫米}；
+  \item[in] \emph{英寸}（约\dm{2.54cm}）\yz{
+    目前，1英寸严格定义为2.54 cm，原文中的“约”不严谨。
+  }；
+  \item[pt] \emph{点}，通常在排版领域使用，合$\frac{1}{72.27}$英寸；
+  \item[em] 当前字体下字母“M”的宽度；
+  \item[ex] 当前字体下字母“x”的高度。
+\end{description}
+
+注意，单位\dm{em}（对应地，\dm{ex}）一般会在水平（对应地，竖直）方向上衡量尺寸时使用，且使我们得以根据当前字体字号来决定尺寸。
+
+\begin{table}[ht]
+  \begin{tabular}{lcl}%todo现在是用字母凑的，看看能不能改成真的线段
+    \dm{1cm} & ： & \textsf{I}\!\rule{1cm}{1pt}\!\textsf{I} \\
+    \dm{1in} & ： & \textsf{I}\!\rule{1in}{1pt}\!\textsf{I} \\
+    \dm{3mm} & ： & \textsf{I}\!\rule{3mm}{1pt}\!\textsf{I} \\
+    \dm{2em} & ： & \textsf{I}\!\rule{2em}{1pt}\!\textsf{I} \\
+    \dm{10pt} & ： & \textsf{I}\!\rule{10pt}{1pt}\!\textsf{I} \\
+  \end{tabular}
+\end{table}
+
+
+\subsection{\LaTeX 中的几个长度}
+
+在\LaTeX 和各个扩展中都存在一些预定义的长度。这些长度一般决定了文档中某个部分的尺寸，例如：
+
+\begin{itemize}
+  \item \verb|\parindent|为段首缩进，默认为\dm{15pt}；
+  \item \verb|\textwidth|和\verb|\textheight|分别定义文本的宽度和高度；
+  \item \verb|\baselineskip|定义了相邻两行间的基线距离（本书中为\dm{10pt}\yz{
+    本项及下一项的具体尺寸都指原书。
+  }）；
+  \item \verb|\parskip|为段间距，初始化为\dm{0pt plus 1pt}\jz{
+    关于\texttt{p}\texttt{lus}的含义，参见弹性尺寸部分。%连写plus一词会触发奇怪的编译不过bug
+  }；
+  \item ……
+\end{itemize}
+
+需要理解，可以使用这些“内置”长度的函数来表示另一个长度，例如：
+
+\begin{dmd}
+\verb|0.5\textwidth|
+\end{dmd}
+
+这表示页面文本宽度的一半。再如：
+
+\begin{dmd}
+\verb|3\parindent|
+\end{dmd}
+
+这表示段间距的三倍。注意，对于长度\verb|-1\baselineskip|，可以直接将其写成\verb|-\baselineskip|。
+
+\subsection{操作长度}
+
+就像计数器，长度也可以使用一些指令来操作。
+
+\subsubsection{创建长度}
+
+以下指令可以创建一个长度：
+
+\begin{dmd}
+\backslash newlength\{\codereplace{尺寸}\}
+\end{dmd}
+
+其中\codereplace{尺寸}是该长度的名称。长度会被初始化为\dm{0pt}（参见示例4.1）。
+
+\begin{exclamation}
+注意，不论指令\verb|\newlength|出现在哪里，它的定义都是\textbf{全局的}。此外，一个长度被定义两次会引发报错。相反，对长度的修改是局部的，只会在它出现的组（\verb|{...}|）内生效。
+\end{exclamation}
