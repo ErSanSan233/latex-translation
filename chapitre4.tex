@@ -240,3 +240,343 @@
 \begin{exclamation}
 注意，不论指令\verb|\newlength|出现在哪里，它的定义都是\textbf{全局的}。此外，一个长度被定义两次会引发报错。相反，对长度的修改是局部的，只会在它出现的组（\verb|{...}|）内生效。
 \end{exclamation}
+
+\subsubsection{指定长度}
+
+可以使用以下指令来指定长度的值：
+
+\begin{dmd}
+\backslash setlength\{\codereplace{尺寸}\}\{\codereplace{值}\}
+\end{dmd}
+
+该指令可以将\codereplace{值}赋给\codereplace{尺寸}。
+
+\subsubsection{增量}
+
+可以使用以下方式来增加长度：
+
+\begin{dmd}
+\backslash alltolength\{\codereplace{尺寸}\}\{\codereplace{值}\}
+\end{dmd}
+
+该指令可以使\codereplace{尺寸}的值增加\codereplace{值}。
+
+\addtolength{\parindent}{30pt} 在你读得正爽的时候，我们使用如下指令，冒昧地将长度\verb|\parindent|增加了30 pt：
+
+\begin{dmd}
+\verb+\addtolength{\parindent}{30pt}+ 在你读得正爽的时候，我们……
+\end{dmd}
+
+\addtolength{\parindent}{-30pt}
+这样可以向你展示为长度增量的效果。在这之后，我们又写下了如下指令：
+
+\begin{dmd}
+\verb|\addtolength{\parindent}{-30pt}|
+\end{dmd}
+
+这样，接下来的缩进就又回到之前的样子了。
+
+\subsubsection{获取对象尺寸}
+
+\celan{\S 2.10}之前有模糊地提到过，在\TeX 层面上，组成文档的不同对象会被打包成\emph{字盒}。排列这些字盒时，实际上是将它们各自的\emph{参考点}码放整齐。这些码放整齐的点组成了一条虚拟的线，也就是该行文字的基线。所有的字盒都可以从以下三个维度衡量。
+
+\begin{itemize}
+  \item \emph{宽度}。
+  \item \emph{高度}：从基线到字盒顶部的距离。
+  \item \emph{深度}：从基线到字盒底部的距离。
+\end{itemize}
+
+例如，单词“Ingénierie”中，字盒的组合方式如下：
+
+\newsavebox{\boitecar}
+\newlength{\interletter}
+\newlength{\letterwidth}
+\newcommand{\refpoint}{\raisebox{-0.5\height}{\small$\circ$}}
+
+\newcommand{\letterbox}[1]{%
+   \setlength{\fboxsep}{0pt}%            
+   \setlength{\fboxrule}{0.2pt}%            
+   \sbox{\boitecar}{\framebox{\Huge#1}}%  
+   \settowidth{\letterwidth}{\usebox{\boitecar}}%
+   \settowidth{\interletter}{\Huge#1}%
+   \makebox[0pt]{\refpoint}%
+   \usebox{\boitecar}%
+   \kern-\fboxrule%
+}
+
+\begin{center}
+  \letterbox{\letterbox{I}%
+  \letterbox{n}%
+  \letterbox{g}%
+  \letterbox{é}%
+  \letterbox{n}%
+  \letterbox{i}%
+  \letterbox{e}%
+  \letterbox{r}%
+  \letterbox{i}%
+  \letterbox{e}}
+\end{center}
+
+其中，符号“\refpoint”代表参考点。可以看到，除了带有字母“g”得字盒外，其他字盒的深度均为0。
+
+但现在，我们还是先不接着说关于字盒的内容了！
+
+借助以下指令，可以从对象（字母、单词、字盒等）中提取尺寸特征：
+
+\begin{dmd}
+\backslash settowidth\{\codereplace{尺寸}\}\{\codereplace{对象}\}\\
+\backslash settoheight\{\codereplace{尺寸}\}\{\codereplace{对象}\}\\
+\backslash settodepth\{\codereplace{尺寸}\}\{\codereplace{对象}\}
+\end{dmd}
+
+这三条指令分别将对象\codereplace{对象}的宽度、高度、深度指派给\codereplace{尺寸}。例如：
+
+\begin{codelist}[4.1]{
+\newlength{\malongueur}
+\settowidth{\malongueur}{鸡零狗碎}
+\begin{itemize}
+\item 鸡零狗碎
+\item \hspace{\malongueur}一地毛
+\end{itemize}
+}\begin{verbatim}
+\newlength{\malongueur}
+\settowidth{\malongueur}{鸡零狗碎}
+\begin{itemize}
+\item 鸡零狗碎
+\item \hspace{\malongueur}一地毛
+\end{itemize}
+\end{verbatim}
+\end{codelist}
+
+长度\verb|\malongueur|代表了文字“鸡零狗碎”的宽度，被用作空格（参见关于\celan{\S 4.3}空格的段落）。
+
+\subsection{弹性长度}
+
+到目前为止，我们介绍的尺寸都属于\emph{刚性}尺寸\jz{
+  除了\texttt{\backslash parskip}。
+}。然而，还有一种\emph{弹性（élastiques或ressort）}长度。在\TeX 的层面，大量的尺寸都是以如下形式定义的：
+
+\begin{dmd}
+\codereplace{值} plus \codereplace{增值} plus \codereplace{减值}
+\end{dmd}
+
+这种语法可以定义一个尺寸\codereplace{值}，但根据所处环境，它可以膨胀或缩小。也就是说，如果我们将创建的尺寸称为\codereplace{尺寸}，则有
+
+$$
+\mbox{\codereplace{值}}-\mbox{\codereplace{减值}}\leqslant \mbox{\codereplace{尺寸}} \leqslant \mbox{\codereplace{值}}+\mbox{\codereplace{增值}}
+$$
+
+例如，长度\verb|\parskip|用于分隔相邻的段落，它被定为：
+
+\begin{dmd}
+0pt plus 1pt
+\end{dmd}
+
+这意味着，如果页面比较稀疏，\LaTeX 就会在段落之间增加1 pt垂直方向的空白。若要细微地调整水平或竖直方向上的距离，就很适合使用这种尺寸。此外，\LaTeX 的用户会有个奇特的机会，来处理另一类同样有趣的弹性长度。这类长度由以下两个特点：
+
+\begin{itemize}
+  \item 长度为\textbf{零}；
+  \item 可以在特定力的作用下\textbf{无限}伸长。
+\end{itemize}
+
+只要指明弹性的强弱，\LaTeXe 的指令就可以生成相应的弹性长度：
+
+\begin{dmd}
+\backslash stretch\{\codereplace{数字}\}
+\end{dmd}
+
+其中\codereplace{数字}代表弹力。这个数字可以带有符号，也可以是小数。以下是一个示例：
+
+\begin{codelist}[4.2]{
+  〇\hspace{\stretch{1}}%
+三分点\hspace{\stretch{2}}一
+}\begin{verbatim}
+〇\hspace{\stretch{1}}%
+三分点\hspace{\stretch{2}}一
+\end{verbatim}
+\end{codelist}
+
+这段\LaTeX 代码在“〇”和“三分点”、“三分点”和“一”之间依据弹性长度生成了空间\jz{
+  指令\texttt{\backslash hspace}生成了水平方向的空间，空间的长度取决于传入的参数。
+}，其中第二个空间的“僵硬”程度是第一个空间的两倍，对应地，空白占据了两倍的空间。此外需要注意，这种弹力是\emph{相对}但\emph{无限}的，因此，“〇”和“一”被“推”向了页面边缘。此外补充一点：\verb|\fill|是\verb|\stretch{1}|的简便写法。
+
+\subsection{显示长度}
+
+有时，显示长度的值十分有用。为了达成这个目的，可以借助指令\verb|\showthe|。该指令可以打断编译过程，并显示作为参数传入的长度的值，即：
+
+\begin{dmd}
+\verb|\showthe\linewidth|
+\end{dmd}
+
+该指令可以显示长度\verb|\linewidth|的值，同时打断\celan{\S 1.6}编译。我们可以在终端看到类似这样的信息：
+
+\begin{dmd}
+\begin{tabbing}
+Document Class: book 2001/04/\= 21 v1.4 Standard LaTeX document\kill
+\verb|[ ... ]| \> $\leftarrow$ \textsf{开头的一些套话}\\
+Document Class: book 2001/04/21 v1.4 Standard LaTeX document\\
+(/usr/share/texmf/tex/latex/base/bk12.clo)) (./test.aux)\\
+> 17.62482pt. \> $\leftarrow$ \textsf{长度的值}\\
+\verb|l.10 \showthe\parindent| \> $\leftarrow$ \textsf{要显示的长度}\\
+~\\
+?
+\end{tabbing}
+\end{dmd}
+
+若编译是使用指令终端启动的，按\verb|<回车>|键就可以回到编译过程。
+
+\begin{ii}
+正如1.6节所说%TODO
+，你使用的开发环境很可能不会显示来自\LaTeX 的消息。这种情况下，找到这些消息的任务就交给你了……
+\end{ii}
+
+
+\section{空间}
+
+我们将在文档不同位置插入的空白区域统称为\emph{空间}。有很多指令可用于按预定义或由用户选择的长度插入空白。当然，此处的“长度”是指\LaTeX 中的长度。
+
+\subsection{基本长度}
+
+以下形式的指令可以在对象间插入一段空间（une espace）\jz{
+我们使用了单词\emph{espace}的阴性形式，这可以指代印刷厂中用以分隔词或字母的小金属条。今天，该词作为阴性词依然在排版或印刷领域使用。
+}：
+
+\begin{dmd}
+\backslash \codereplace{方向}space\{\codereplace{尺寸}\}
+\end{dmd}
+
+其中，\codereplace{尺寸}可以是刚性或弹性的长度，\codereplace{方向}按以下规则取值：
+
+\begin{itemize}
+  \item 对于竖直方向，为\dm{v}；
+  \item 对于水平方向，为\dm{h}。
+\end{itemize}
+
+有：
+
+\begin{codelist}[4.3]{
+空\hspace{1cm}出\texttt{1cm}
+
+\vspace{2\baselineskip}
+
+再跳过两行。
+}\begin{verbatim}
+空\hspace{1cm}出\texttt{1cm}
+
+\vspace{2\baselineskip}
+
+再跳过两行。
+\end{verbatim}
+\end{codelist}
+
+\begin{ii}
+\TeX 会在某些情况下删除空间。因此，有必要使用“带星”版本的指令：\verb|\hspace*|和\verb|\vspace*|。会造成问题的情况如下：
+
+\begin{itemize}
+  \item 页首和页末；
+  \item 非段首或段末的行首和行末。
+\end{itemize}
+\end{ii}
+
+\subsection{预定义的空间}
+
+此处给出数个空间指令，并依照水平或竖直模式分为两类。
+
+\subsubsection{水平空间}
+
+刚性空间有如下示例：
+
+% \begin{table}[ht]
+\begin{tabular}{lcll}
+  \verb+\enspace+ & ： & \textsf{I}\!\rule{0.5em}{1pt}\!\textsf{I} & 合\verb+0.5\quad+\\
+  \verb+\quad+ & ： & \textsf{I}\!\rule{1em}{1pt}\!\textsf{I} & 合\verb+1em+\\
+  \verb+\qquad+ & ： & \textsf{I}\!\rule{2em}{1pt}\!\textsf{I} & 合\verb+2\quad+\\
+\end{tabular}
+% \end{table}
+
+弹性空间有如下示例：
+
+% \begin{table}[ht]
+  \begin{tabular}{lcl}%todo现在是用字母凑的，看看能不能改成真的线段
+    \verb|\hfill| & ：& 即\verb+\hspace{\fill}+\\
+    \verb|\hrulefill| & ：& 与\verb+\hfill+相似，但会画一条线\\
+    \verb|\dotfill| & ：& 与\verb+\hfill+相似，但会画一条圆点线\\
+  \end{tabular}
+% \end{table}
+
+以下几个示例使用了水平方向的空间。首先，需要注意，指令\verb|\hspace|两侧的空格不会被忽略：
+
+\begin{codelist}[4.4]{
+〇\hspace{1cm}一\par
+〇 \hspace{1cm}一\par
+〇 \hspace{1cm} 一\par
+}\begin{verbatim}
+〇\hspace{1cm}一\par
+〇 \hspace{1cm}一\par
+〇 \hspace{1cm} 一\par
+\end{verbatim}
+\end{codelist}
+
+接下来，展示\LaTeX 的弹性空间：
+
+\begin{codelist}[4.5]{
+〇 \hfill{} 一\par
+〇 \hrulefill{} 一\par
+〇 \dotfill{} 一\par
+}\begin{verbatim}
+〇 \hfill{} 一\par
+〇 \hrulefill{} 一\par
+〇 \dotfill{} 一\par
+\end{verbatim}
+\end{codelist}
+
+最后，展示以下相对弹力：
+
+\begin{codelist}[4.6]{
+〇 \dotfill{} 二分 \hfill{} 一\par
+〇 \hrulefill{} 三分
+\hspace{\stretch{2}} 一\par
+}\begin{verbatim}
+〇 \dotfill{} 二分 \hfill{} 一\par
+〇 \hrulefill{} 三分
+\hspace{\stretch{2}} 一\par
+\end{verbatim}
+\end{codelist}
+
+现在，你应该已经明白了\LaTeX 预定义的“弹力”（即\verb|\hfill|、\verb|\hrulefill|、\verb|\dotfill|）的“僵硬程度”为1。
+
+\subsubsection{竖直空间}
+
+以下是垂直空间类中有代表性的三条指令：
+
+\begin{itemize}
+  \item \verb|\smallskip|，用于垂直方向的\emph{小}空间；
+  \item \verb|\medskip|，用于垂直方向的\emph{中等}空间；
+  \item \verb|\bigskip|，用于垂直方向的\emph{大}空间。
+\end{itemize}
+
+这些空间的用法就像指令\verb|\vspace|一样。效果如下。
+
+\begin{center}
+  \begin{minipage}[t]{0.2\textwidth}
+  默认：
+  \par
+  \S 下一段……
+  \end{minipage}
+  \begin{minipage}[t]{0.2\textwidth}
+  小：
+  \par\smallskip
+  \S 下一段……
+  \end{minipage}
+  \begin{minipage}[t]{0.2\textwidth}
+  中等：
+  \par\medskip
+  \S 下一段……
+  \end{minipage}
+  \begin{minipage}[t]{0.2\textwidth}
+  大：
+  \par\bigskip
+  \S 下一段……
+  \end{minipage}
+  \end{center}
+
