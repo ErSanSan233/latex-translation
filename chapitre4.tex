@@ -580,3 +580,234 @@ Document Class: book 2001/04/21 v1.4 Standard LaTeX document\\
   \end{minipage}
   \end{center}
 
+存在一个预定义的弹性空间：\verb|\vfill|。它等价于
+
+\begin{dmd}
+\verb|\par\vspace{\fill}|
+\end{dmd}
+
+也就是说，它会切换自然段，并且插入尺寸为\verb|\fill|的竖直空间：
+
+\begin{codelist}[]{
+%   \hrulefill{}%TODO 重排此处效果
+
+% 高
+
+% \vfill
+
+% \hfill{}悬在中间\hfill{}
+
+% \vspace{\stretch{2}}
+
+% \hfill{}低
+
+% \hrulefill{}
+\hrulefill{}%TODO 重排此处效果
+
+高
+
+~\\
+
+\hfill{}悬在中间\hfill{}
+
+~\\
+
+~\\
+
+\hfill{}低
+
+\hrulefill{}
+}\begin{verbatim}
+\hrulefill{}
+
+高
+
+\vfill
+
+\hfill{}悬在中间\hfill{}
+
+\vspace{\stretch{2}}
+
+\hfill{}低
+
+\hrulefill{}
+\end{verbatim}
+\end{codelist}
+
+
+\begin{ii}
+为了避免产生意料以外的结果，重要的是在将指令\verb|\vspace|使用在\textbf{两段之间}。因此，建议养成在\verb|\vspace|之前或之后切换段落，具体做法是插入一个空行或使用指令\verb|\par|。
+\end{ii}
+
+\section{字盒}
+
+本章的最后一个主题是\emph{字盒}。通过这个主题，你将明白本章的标题不是空口无凭的。正如我们之前大致了解过的，字盒是包含其他元素的实体（字盒也可以包含另一个字盒）。这种特殊的实体可以根据用户的幻想\jz{
+嗯……还有一点耐心和幽默感……
+}来放置。
+
+字盒有两种基本类型（在\TeX 的层面上，分类会更精巧一些），它们都有自己的特殊行为。我们可以以这样的称呼来区分它们：
+
+\begin{itemize}
+  \item \emph{简单}字盒；
+  \item \emph{段落}字盒。
+\end{itemize}
+
+我们将会看到一些精妙的操作，它们可以结合透明的概念，精益求精地实现一些实用的版式。
+
+第一个示例实用了一些简单的字盒。我能肯定，它曾经让你的眼珠子瞪出来过——\dm{TeX}的标识\TeX 。实际上，其中有三个字母：T、E、X。它们被“装盒”排列，并且在水平和竖直方向上错开：
+
+\begin{center}
+  \setlength{\fboxsep}{0pt} \setlength{\fboxrule}{0.2pt} 
+  \Huge\fbox{T}\kern-.1667em%
+  \raisebox{-.5ex}{\fbox{E}}%
+  \kern-.125em\fbox{X}
+\end{center}
+
+注意，“E”的字盒向下错开，三个字盒彼此重叠。再举一个例子：
+
+\newlength{\tmplength}
+
+\begin{center}
+  \footnotesize
+  \settowidth{\tmplength}{citroen}
+  \rotatebox{45}{citroën}%
+  \hspace{-.82\tmplength}%
+  \raisebox{-4ex}{\rotatebox{45}{citroën}}%
+  \raisebox{0.707\tmplength}{\rotatebox{-45}{citroën}}%
+  \hspace{-0.82\tmplength}%
+  \raisebox{0.707\tmplength-4ex}{\rotatebox{-45}{citroën}}
+\end{center}
+
+同时，为了避免争吵\yz{
+  Citroën即雪铁龙，Renault即雷诺，二者都是法国的汽车品牌。此处是在用单词拼成两个品牌的车标，但雷诺的车标中间没有一横。
+}：
+
+\begin{center}
+  {\normalsize }
+  \tiny
+  \settowidth{\tmplength}{renault}
+  \rotatebox{60}{renault}%
+  \hspace{-.5\tmplength}%
+  renault%
+  \hspace{-.5\tmplength}\raisebox{0.866\tmplength}{\rotatebox{-60}{renault}}%
+  \hspace{-1.2\tmplength}\rotatebox{-60}{renault}
+  \hspace{-0.25\tmplength}\raisebox{-0.866\tmplength}{\rotatebox{60}{renault}}%
+\end{center}
+
+这里，每个单词都放在字盒中。字盒互相参考，实现一系列偏移和旋转。作为初级示例的收官，此处展示几个使用\emph{段落}字盒的案例：
+
+\noindent\fbox{%
+  \begin{minipage}{4cm}这个字盒宽4 cm。这样一个字盒基本上可以包含\LaTeX 文档中的任何内容。
+  \end{minipage}}——接着往后看——
+\rotatebox{45}{\fbox{\begin{minipage}[b]{3cm}
+  \textbf{嘭！}\\
+  这个“小盒盒”里面有一个数学公式！
+  \begin{displaymath}
+    ax+b=c
+  \end{displaymath}
+\end{minipage}}}
+
+下面的示例展示了彩色图片三个通道的原理：
+
+\begin{center}
+  \settowidth{\tmplength}{字字字字}
+  \fbox{\begin{minipage}{\tmplength}
+    红红红红\par 红红红红\par 红红红红\par 红红红红
+  \end{minipage}}%
+  \hspace{-3em}%
+  \raisebox{-\baselineskip}{\fbox{\begin{minipage}{\tmplength}
+    绿绿绿绿\par 绿绿绿绿\par 绿绿绿绿\par 绿绿绿绿
+  \end{minipage}}}%
+  \hspace{-3em}%
+  \raisebox{-2\baselineskip}{\fbox{\begin{minipage}{\tmplength} 
+    蓝蓝蓝蓝蓝\par 蓝蓝蓝蓝\par 蓝蓝蓝蓝\par 蓝蓝蓝蓝
+  \end{minipage}}}
+\end{center}
+
+\subsection{简单字盒}
+
+第一类字盒是简单字盒，它可以像普通的单词一样出现在段落中。简单字盒有如下特点：
+
+\begin{itemize}
+  \item 可以指定长度；
+  \item 其\emph{高度}取决于其中的内容；
+  \item \textbf{不能包含}段落跳转。
+\end{itemize}
+
+\subsubsection{不带边框}
+使用指令\verb|\makebox|可以创建简单字盒：
+
+\begin{dmd}
+\backslash makebox[\codereplace{宽}][\codereplace{位置}]\{\codereplace{内容}\}
+\end{dmd}
+
+其中，\codereplace{宽}指定字盒宽度，\codereplace{位置}指定字盒中\codereplace{内容}的对齐方式（居中为\dm{c}，左对齐为\dm{l}，右对齐为\dm{r}）。如下所示：
+
+\begin{codelist}[4.8]{
+  啪\makebox[2cm][c]{嚓！}一个字盒\par
+啪\makebox[3cm][r]{嚓嚓！}又一个字盒。
+}\begin{verbatim}
+啪\makebox[2cm][c]{嚓！}一个字盒\par
+啪\makebox[3cm][r]{嚓嚓！}又一个字盒。
+\end{verbatim}
+\end{codelist}
+
+参数\codereplace{宽}和\codereplace{位置}可以省略。如果省略，则字盒的宽度就是其中文本的宽度。此时可以使用：
+
+\begin{dmd}
+\backslash mbox\{\codereplace{文本}\}
+\end{dmd}
+
+而不是\verb|\makebox[][]{|\codereplace{文本}\verb|}|。同时需要注意，在指令\verb|\makebox|中使用选项\dm{s}可以使内容伸展排列，使得指定的尺寸被完全填满：
+
+\begin{codelist}[4.9]{
+  \makebox[4cm][s]{好累啊！}
+}\begin{verbatim}
+\makebox[4cm][s]{好累啊！}
+\end{verbatim}
+\end{codelist}
+
+\subsubsection{带边框}
+
+使用指令\verb|\framebox|可以创建带边框的字盒。该指令与\verb|\makebox|的语法相同：
+
+\begin{dmd}
+  \backslash framebox[\codereplace{宽}][\codereplace{位置}]\{\codereplace{内容}\}
+\end{dmd}
+
+与不带边框的字盒一样，带边框的字盒同样存在语法糖\verb|\fbox{|\codereplace{文本}\verb|}|。例如：
+
+\begin{codelist}[4.10]{
+  好了\framebox[1.5cm][c]{那个}嗒哒！\par
+  然后\framebox[2.8cm][r]{对对对}说得对
+  \par 还有\fbox{那啥}
+}\begin{verbatim}
+好了\framebox[1.5cm][c]{那个}嗒哒！\par
+然后\framebox[2.8cm][r]{对对对}说得对
+\par 还有\fbox{那啥}
+\end{verbatim}
+\end{codelist}
+
+%TODO 到这里，长度这个翻译就显得不太好了
+可以调整两个长度，来修改\verb|\framebox|的效果：
+
+\begin{itemize}
+  \item \verb|\fboxsep|，可以修改边框与文本的距离；
+  \item \verb|\fboxrule|，可以修改线条宽度。
+\end{itemize}
+
+\begin{codelist}[4.11]{
+  \setlength{\fboxrule}{5pt}
+红 \framebox[2cm]{绿} 蓝\par
+\setlength{\fboxrule}{0.4pt}
+\setlength{\fboxsep}{8pt}
+青 \framebox[2cm]{品} 黄
+}\begin{verbatim}
+\setlength{\fboxrule}{5pt}
+红 \framebox[2cm]{绿} 蓝\par
+\setlength{\fboxrule}{0.4pt}
+\setlength{\fboxsep}{8pt}
+青 \framebox[2cm]{品} 黄
+\end{verbatim}
+\end{codelist}
+
