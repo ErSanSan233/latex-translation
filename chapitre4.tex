@@ -811,3 +811,130 @@ Document Class: book 2001/04/21 v1.4 Standard LaTeX document\\
 \end{verbatim}
 \end{codelist}
 
+\begin{exclamation}
+  相较本章后文要提到的段落字盒，简单字盒有一个特点：不断字。这样一来，对于指令：
+
+  \verb|=== \framebox[3cm]{这句话再长也不会被打断} ===|
+
+  其会生成：
+
+  === \framebox[3cm]{这句话再长也不会被打断} ===
+
+  我们可以进一步利用这个特性，来让文字重叠（参见4.2.2小节中宽度为0的字盒）
+\end{exclamation}
+
+\subsection{简单字盒的操作}
+
+只要培养出一点习惯，我们就可以将字盒朝任何方向移动。
+
+\subsubsection{竖直方向平移}
+
+平移可以通过如下指令实现。
+
+\begin{dmd}
+\verb|\raisebox{|\codereplace{平移}\}[\codereplace{深}][\codereplace{高}]\{\codereplace{文本}\}
+\end{dmd}
+
+其中，\codereplace{平移}是期望施加到\codereplace{文本}的平移量。例如：
+
+\begin{codelist}[4.12]{
+\raisebox{8pt}{纽约}飘了，
+纽约在\raisebox{-1ex}{美国。}
+}\begin{verbatim}
+\raisebox{8pt}{纽约}飘了，
+纽约在\raisebox{-1ex}{美国。}
+\end{verbatim}
+\end{codelist}
+
+两个参数\codereplace{深}和\codereplace{高}可以“骗过”\LaTeX ，使其认为生成的字盒高度为\codereplace{高}、深度为\codereplace{深}。以下示例中，指令\verb|\raisebox|选择性地使用了一些参数。
+
+\begin{dmd}
+  \begin{verbatim}
+第1行：XXXXX\\
+第2行：
+XX\raisebox{0.8\baselineskip}{O}XX\\
+第3行：XXXXX\\
+第4行：XXXXX\\
+第5行：
+XX\raisebox{0.8\baselineskip}[1ex][2ex]{O}XX\\ 
+第6行：XXXXX\\
+  \end{verbatim}
+\end{dmd}
+
+代码运行结果为：
+
+\newcommand{\blob}{\makebox[\tmplength]{O}}
+
+\begin{flushleft}
+  第1行：XXXXX\\
+  第2行：
+  XX\hspace{-\fboxrule}%
+  \fbox{\raisebox{0.8\baselineskip}{\blob}}%
+  \hspace{-\fboxrule}XX \\
+  第3行：XXXXX\\
+  第4行：XXXXX\\
+  第5行：
+  XX\hspace{-\fboxrule}%
+  \fbox{\raisebox{0.8\baselineskip}[1ex][2ex]{\blob}}%
+  \hspace{-\fboxrule}XX \\
+  第6行：XXXXX\\
+\end{flushleft}
+
+我们将第2行中间的“〇”提高了一些，边框显示出被提高的字盒的位置\jz{
+  此处的边框出于帮助理解机制的目的而特别展示。
+}。在第5行中间的“〇”同样被提高，但这次我们指定了字盒（以边框展示）的尺寸。因此，\LaTeX 认为字盒的高度是\dm{1ex}，而深度是\dm{2ex}，生成的结果中，看上去O和字盒不在一行上。
+
+\subsubsection{水平方向平移}
+
+严格地说，水平方向的平移不是字盒的特性，因为通过插入合适的\celan{\S 4.3}空间即可实现。如下所示：
+
+\begin{codelist}[4.13]{
+  Internet这个词不要\makebox[1.5cm]{打断}
+\hspace{-1.5cm}\makebox[1.5cm]{///////}。
+}\begin{verbatim}
+Internet这个词不要\makebox[1.5cm]{打断}
+\hspace{-1.5cm}\makebox[1.5cm]{///////}。
+\end{verbatim}
+\end{codelist}
+
+注意，这不是“划掉”单词的最佳方法，但它展示了如何在水平方向上移动字盒——借助长度为负值的\verb|\hspace|。
+
+\subsubsection{宽度为0的简单字盒}
+
+宽度为0的字盒有时很有用。例如，对于需要叠加元素的情况，通过指令\verb|\makebox|第一个可选的变量指定尺寸为0：
+
+\begin{codelist}[4.14]{
+  \newcommand{\grogra}{\huge\bfseries}
+前前\makebox[0cm][c]{\grogra 戴}后后
+
+前前\makebox[0cm][l]{\grogra 高}后后
+
+前前\makebox[0cm][r]{\grogra 乐}后后
+}\begin{verbatim}
+\newcommand{\grogra}{\huge\bfseries}
+前前\makebox[0cm][c]{\grogra 戴}后后
+
+前前\makebox[0cm][l]{\grogra 高}后后
+
+前前\makebox[0cm][r]{\grogra 乐}后后
+\end{verbatim}
+\end{codelist}
+
+我们成功叠加了元素，但对齐方式似乎与我们想象的不太一样。实际上，变量\dm{l}将内容放在了插入字盒位置的\emph{右侧}，而变量\dm{r}则会将其放在\emph{左侧}。
+
+\subsubsection{旋转}
+
+有若干\LaTeX 扩展可以旋转文本中的元素。此处选择介绍指令\verb|\rotatebox|，它属于第5章中会提到的扩展\textsf{graphicx}。语法如下：
+
+\begin{dmd}
+\backslash rotatebox\{\codereplace{角度}\}\{\codereplace{文本}\}
+\end{dmd}
+
+其中，\codereplace{角度}指沿顺时针方向旋转的角度，\codereplace{文本}即需要旋转的内容：
+
+\begin{codelist}[4.15]{
+  当心\rotatebox{30}{转弯}。
+}\begin{verbatim}
+当心\rotatebox{30}{转弯}。
+\end{verbatim}
+\end{codelist}
