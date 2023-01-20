@@ -938,3 +938,141 @@ Internet这个词不要\makebox[1.5cm]{打断}
 当心\rotatebox{30}{转弯}。
 \end{verbatim}
 \end{codelist}
+
+\begin{ii}
+本书使用的xdvi版本不能成功显示带有旋转的对象\jz{
+  对象可以显示，但不会旋转。
+}。这个缺陷（以及一些其他问题）在未来的版本中可能修复。目前的解决办法是使用ghostview或gv实现输出PostScript，或输出Pdf（参阅附录A）。%TODO
+\end{ii}
+
+\subsection{段落字盒}
+
+\emph{段落字盒}的特点是其内容可以换行和换段（而\emph{简单}字盒的内容不能）。有两种方法可以创建段落字盒，第一种方法是使用指令\verb|\parbox|：
+
+\begin{dmd}
+\backslash parbox [\codereplace{盒位置}][\codereplace{高}][\codereplace{文位置}]\{\codereplace{宽度}\}\{\codereplace{内容}\}
+\end{dmd}
+
+其中，\codereplace{内容}是想要放入字盒的内容，\codereplace{宽度}是要创建的字盒的宽度。选项\codereplace{底位置}是可选的，可以精确地确定参考点。这个参数可以类比环境\dm{tabular}\celan{\S 2.2.4}中的参数。例如：
+
+\begin{dmd}
+  \begin{verbatim}
+这是--- \parbox{2cm}{一个段落\\字盒}
+---另一个--- \parbox[t]{2cm}{段落\\字盒}
+---再来--- \parbox[b]{2cm}{一个段落\\字盒}
+  \end{verbatim}
+\end{dmd}
+
+该段指令的运行结果（为展示字盒，显示了边框）是：
+
+这是--- \fbox{\parbox{2cm}{一个段落\\字盒}}
+---另--- \fbox{\parbox[t]{2cm}{一个段落\\字盒}}
+---再来--- \fbox{\parbox[b]{2cm}{一个段落\\字盒}}
+
+为了在创建段落字盒时指定高度，我们可以选用参数\codereplace{高}。\codereplace{文位置}可以控制字盒中文字的垂直位置，默认与\codereplace{盒位置}相同，但在需要时也可以由我们指定。一般地，它可以取\dm{c}以表示居中、取\dm{t}或\dm{b}以分别表示靠上和靠下。此外，它还可以取\dm{s}，表示将文字拉伸（英：strech）填满整个字盒——此时，为文字安排位置的工作就落到了用户的头上。例如：
+
+\begin{dmd}
+\begin{verbatim}
+---\parbox[b][2cm]{2cm}{高\par 中\par 低}
+  \parbox[b][2cm][t]{2cm}{高\par 中\par 低}
+  \parbox[b][2cm][c]{2cm}{高\par 中\par 低}
+  \parbox[b][2cm][s]{2cm}{高\par
+    \vspace{\stretch{2}} 中\par\vfill 低}---
+\end{verbatim}
+\end{dmd}
+
+为清晰起见，配合\verb|\fbox|使用该段指令。运行结果如下：
+
+---\fbox{\parbox[b][2cm]{2cm}{高\par 中\par 低}}
+  \fbox{\parbox[b][2cm][t]{2cm}{高\par 中\par 低}}
+  \fbox{\parbox[b][2cm][c]{2cm}{高\par 中\par 低}}
+  \fbox{\parbox[b][2cm][s]{2cm}{高\par
+    \vspace{\stretch{2}} 中\par\vfill 低}}---
+
+可以使用环境\dm{minipage}创建段落字盒。该环境可以模拟创建出一个页面，并且带有所需的元素，如页脚注释、表格、列表，等等\jz{
+  然而，该环境不能带有浮动元素。
+}。\dm{minipage}的语法和指令\verb|\parbox|类似，只不过使用环境的形式：
+
+\begin{dmd}
+\verb+\begin{minipage}+[\codereplace{盒位置}][\codereplace{高度}][\codereplace{文位置}]\{\codereplace{宽度}\}
+\begin{verbatim}
+  ... \marg{文本} ...
+\end{minipage}
+\end{verbatim}
+\end{dmd}
+
+如下所示：
+
+\noindent\parbox{0.40\textwidth}{%
+  由于三个因素$x$、$y$、$z$，我们可能会想利用\dm{minipage}来说些人生大道理，正如这个例子所示$\longrightarrow$}%
+\hfill%
+\begin{minipage}{0.55\textwidth}
+我将要说的话\footnote{这话还挺有分量的}不会很坦率：
+ \begin{itemize}
+ \item 也不会很有趣；
+ \item 尤其也没什么必要。
+ \end{itemize}
+……但我还是说了。
+
+我本来还想说点别的，但忘了是什么了……
+\end{minipage}
+
+在本例中，我们创建了一个\dm{minipage}，它的宽度约是文本宽度的一半（55\%），且其中包含了环境\dm{itemize}和脚注\verb|\footnote|。这样一来，创建的字盒会与“由于三个因素……”居中对齐，因为此处没有指定相关的\codereplace{位置}参数：
+
+\begin{dmd}
+\begin{verbatim}
+\parbox{0.40\textwidth}{
+  ……正如这个例子所示$\longrightarrow$}\hfill%
+\begin{minipage}{0.55\textwidth}
+  我将要说的话\footnote{这话还挺有分量的}
+  不会很坦率：
+  \begin{itemize}
+    \item 也不会很有趣；
+    \item 尤其也没什么必要。
+  \end{itemize}
+  ……但我还是说了。
+
+  我本来还想说点别的，但忘了是什么了……
+\end{minipage}
+\end{verbatim}
+\end{dmd}
+
+\begin{ii}
+在段落字盒中，长度\verb|\parindent|会被设置为0。正因如此，前面的示例中“我本来还想说点别的……”一句的段首没有缩进。此外，与使用\verb|\parbox|的情况相反，当我们在\dm{minipage}中参考长度\verb|\textwidth|时，调用的是字盒的宽度，而非文本的宽度。
+\end{ii}
+
+\subsection{小技巧}
+
+所有涉及字盒的函数都可以将以下尺寸作为参数。
+
+\begin{itemize}
+  \item \verb|width|：内容文本的宽度。
+  \item \verb|\height|：内容文本的高度。
+  \item \verb|\depth|：内容文本的深度。
+  \item \verb|\totalheight|：文本的高度和深度之和。
+\end{itemize}
+
+因此，可以借由所含文本精确指定字盒的尺寸。在一些情况下，这种方式很有用：
+
+\begin{codelist}[4.16]{
+  这个\framebox[.7\width]{字盒}太挤了。
+
+  这个\framebox[1.8\width]{字盒}有些宽。
+  
+  这个\fbox{%
+    \parbox[c][3\height]{1cm}{%
+      字盒\\空荡荡。}}
+}\begin{verbatim}
+这个\framebox[.7\width]{字盒}太挤了。
+
+这个\framebox[1.8\width]{字盒}有些宽。
+
+这个\fbox{%
+  \parbox[c][3\height]{1cm}{%
+    字盒\\空荡荡。}}
+\end{verbatim}
+\end{codelist}
+
+\subsection{保留和复用}
+
+可以将一段\LaTeX 源代码储存在字盒中，方便复用。
