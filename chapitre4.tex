@@ -1075,4 +1075,96 @@ Internet这个词不要\makebox[1.5cm]{打断}
 
 \subsection{保留和复用}
 
-可以将一段\LaTeX 源代码储存在字盒中，方便复用。
+可以将一段\LaTeX 源代码储存在字盒中，方便复用——例如对于需要大量\LaTeX 重要资源的代码。在这种情况下，可以通过三个步骤实现：
+
+\begin{enumerate}
+  \item 使用指令\verb|\newsavebox|声明一个字盒；
+  \item 使用\verb|\sbox|或\verb|\savebox|实现存储；
+  \item 使用\verb|\usebox|实现复用。
+\end{enumerate}
+
+例如，此处使用Gnu作为纹理铺贴：
+
+\begin{codelist}[4.17]{
+  \newsavebox{\gnu}
+  \sbox{\gnu}{\fbox{\textsc{Gnu}}}
+  \begin{center}
+  \usebox{\gnu}\usebox{\gnu}\usebox{\gnu}\\
+  \usebox{\gnu}\usebox{\gnu}\usebox{\gnu}\\
+  \usebox{\gnu}\usebox{\gnu}\usebox{\gnu}
+  \end{center}
+}\begin{verbatim}
+\newsavebox{\gnu}
+\sbox{\gnu}{\fbox{\textsc{Gnu}}}
+\begin{center}
+\usebox{\gnu}\usebox{\gnu}\usebox{\gnu}\\
+\usebox{\gnu}\usebox{\gnu}\usebox{\gnu}\\
+\usebox{\gnu}\usebox{\gnu}\usebox{\gnu}
+\end{center}
+\end{verbatim}
+\end{codelist}
+
+可以将指令\verb|\sbox|和\verb|\savebox|与指令\verb|\mbox|和\verb|\makebox|（参见\S 4.4.1）类比。
+
+\section{定义}
+
+专家又发话了：
+
+\begin{quote}
+  “……这些宏应当被了解，因为它们的力量如此强大。简短的宏可以代表大量的内容。可以说，宏在某种程度上有一种宏观的效果。”——D.E. 克努特，\TeX book
+\end{quote}
+
+在文档中，我们会定义独立的“实体”。如果这个实体出现的次数多于“某个特定值”，就有必要去敏锐地判断是否应该将它做成\emph{宏}。这个句子表述得有些模糊。总的来说，使用宏可以避免你将相同的动作重复做$x$次。稍微从实践的角度来说，在情况变得越来越复杂时，可以方便地定义一些指令。
+
+\subsection{指令}
+
+指令\verb|\newcommand|可以用来定义宏。该指令使用起来十分简单：
+
+\begin{dmd}
+\backslash newcommand\{\codereplace{宏名}\}[\codereplace{参量}]\{\codereplace{\LaTeX 代码}\}
+\end{dmd}
+
+其中\codereplace{参量}是指\emph{参数}的数量——所谓参数，是编程中的术语。此外，\codereplace{\LaTeX 代码}是指你的指令的定义。使用宏的示例如下，其中定义了测色法中表示空间的符号：
+
+\begin{codelist}[4.18]{
+  \newcommand{\lab}{$L^*a^*b^*$}
+设空间\lab{}……
+}\begin{verbatim}
+\newcommand{\lab}{$L^*a^*b^*$}
+设空间\lab{}……
+\end{verbatim}
+\end{codelist}
+
+注意，这个指令不接受参数，因此没有必要选用参数\codereplace{参量}。可以通过以下方式来改善该指令的使用方法：
+
+\begin{codelist}[4.19]{
+\newcommand{\Lab}{
+  \ensuremath{L^*a^*b^*}}
+对于空间\Lab{}及$\vec{c}\in\Lab$……
+}\begin{verbatim}
+\newcommand{\Lab}{
+  \ensuremath{L^*a^*b^*}}
+对于空间\Lab{}及$\vec{c}\in\Lab$……
+\end{verbatim}
+\end{codelist}
+
+指令\verb|\ensuremath|确保指令需要在数学环境中使用，上下文可以是任意内容。正如上例所示。
+
+\begin{ii}
+\LaTeX 的宏或指令并不完全承载编程语言中函数的意义，它更像是C中的\dm{\# define}，在这种意义上遵循\emph{扩展}机制。如此一来，在前一次出现\verb|\Lab|的示例中，\verb|\Lab|会“扩展”成\verb|$L^*a^*b^*$|。因此，我们就知道了为什么此时的\verb|$...\Lab$|会造成编译错误。
+\end{ii}
+
+如下指令使用了一个参数，可以用来代表键盘上的按键\jz{
+  其中调用了包\textsf{fancybox}中定义的指令\dm{\backslash Ovalbox}。
+}：
+
+\begin{codelist}[4.20]{
+  \newcommand{\Touche}[1]{\Ovalbox{#1}}
+先按\Touche{Tab}，
+再按\Touche{Entrée}
+}\begin{verbatim}
+\newcommand{\Touche}[1]{\Ovalbox{#1}}
+先按\Touche{Tab}，
+再按\Touche{Entrée}
+\end{verbatim}
+\end{codelist}
