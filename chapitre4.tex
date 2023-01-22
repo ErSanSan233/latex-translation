@@ -1142,7 +1142,7 @@ Internet这个词不要\makebox[1.5cm]{打断}
   \ensuremath{L^*a^*b^*}}
 对于空间\Lab{}及$\vec{c}\in\Lab$……
 }\begin{verbatim}
-\newcommand{\Lab}{
+\newcommand{\Lab}{%
   \ensuremath{L^*a^*b^*}}
 对于空间\Lab{}及$\vec{c}\in\Lab$……
 \end{verbatim}
@@ -1160,11 +1160,135 @@ Internet这个词不要\makebox[1.5cm]{打断}
 
 \begin{codelist}[4.20]{
   \newcommand{\Touche}[1]{\Ovalbox{#1}}
-先按\Touche{Tab}，
-再按\Touche{Entrée}
+先按\Touche{Tab}键，
+再按\Touche{Entrée}键。
 }\begin{verbatim}
 \newcommand{\Touche}[1]{\Ovalbox{#1}}
-先按\Touche{Tab}，
-再按\Touche{Entrée}
+先按\Touche{Tab}键，
+再按\Touche{Entrée}键。
 \end{verbatim}
 \end{codelist}
+
+可以看到，此处的指令会等待\emph{一个}变量（这也是变量“\dm{[1]}”的作用）。在指令的定义中，可以使用\verb|#1|来引用这个变量。
+
+如果希望定义带有多个参数的函数（最多9个），也完全\emph{OK}：
+
+\begin{codelist}[4.21]{
+  \newcommand{\fraction}[2]{
+  \raisebox{0.5ex}{#1}%
+  \slash\raisebox{-0.5ex}{#2}}
+\fraction{1}{2}加\fraction{3}{4}等于
+\fraction{5}{4}
+}\begin{verbatim}
+\newcommand{\fraction}[2]{%
+  \raisebox{0.5ex}{#1}%
+  \slash\raisebox{-0.5ex}{#2}}
+\fraction{1}{2}加\fraction{3}{4}等于
+\fraction{5}{4}
+\end{verbatim}
+\end{codelist}
+
+可以注意到以下内容：
+
+\begin{itemize}
+  \item 宏\verb|\fraction|可以接受2个变量；
+  \item 可以使用\dm{\#\textit{n}}来引用第$n$个变量；
+  \item 符号\verb|%|看起来可能会有些突兀——它的作用是使得代码换行，同时避免在最终文档中插入空格（参见9.2.1小节）。
+\end{itemize}
+
+除此之外，也可以将指令的定义第一个参数为可选参数。语法如下：
+
+\begin{dmd}
+\backslash newcommand\{\codereplace{宏名}\}[\codereplace{参量}][\codereplace{默认值}]\{\codereplace{\LaTeX 代码}\}
+\end{dmd}
+
+其中，\codereplace{参量}依然指参数的数量，参数\verb|#1|带有默认值\codereplace{默认值}，\codereplace{\LaTeX 代码}是指令的内容。以下示例再次实现了前文实现过的效果——显示键盘按键：
+
+\begin{codelist}[4.22]{
+  \newcommand{\Key}[1][Entrée]{\Ovalbox{#1}} 
+  先按\Key[Tab]{}键，
+  再按\Key{}键。
+}\begin{verbatim}
+\newcommand{\Key}[1][Entrée]{\Ovalbox{#1}} 
+先按\Key[Tab]{}键，
+再按\Key{}键。
+\end{verbatim}
+\end{codelist}
+
+可以看到，参数\verb|#1|不是强制的，它的默认值是“Entrée”。同时，我们可以注意到，使用非强制参数时，应该使用方括号而非花括号。
+
+\begin{exclamation}
+可以充分地想象这样一种情景：我们定义的指令带有一个非强制参数和多个强制参数。这种情况下，第一个强制参数应该是\verb|#2|。此外，需要注意到，我们只能将\textbf{第一个参数}设为非强制参数。
+\end{exclamation}
+
+\subsection{环境}
+
+我们可以使用以下方式定义自己的环境：
+
+\begin{dmd}
+\backslash newenvironment\{\codereplace{环境名}\}[\codereplace{参量}]\{\codereplace{begin条目}\}\{\codereplace{end条目}\}
+\end{dmd}
+
+其中，可以通过\codereplace{环境名}定义环境名，\codereplace{参量}代表参数的数量，\codereplace{起始条目}和\codereplace{结束条目}分别代表环境“开端”和“末尾”所需的处理。在定义环境时使用其他环境（如\LaTeX 的环境）是很实用的技巧\yz{
+  正如下文所说，译者也只能查到这句话来自维克多·雨果的说法，但没有查到具体出处，只能照字面意义硬翻。
+}：
+
+\begin{codelist}[4.23]{
+  \newenvironment{bonmot}%
+{\small\slshape\begin{flushright}}%
+{\end{flushright}\normalsize\upshape}
+\begin{bonmot}
+  男人从自然界得到了\\
+  一把钥匙，\\
+  可以每24小时\\
+  为女人上一次发条。
+\end{bonmot}
+}\begin{verbatim}
+\newenvironment{bonmot}%
+{\small\slshape\begin{flushright}}%
+{\end{flushright}\normalsize\upshape}
+\begin{bonmot}
+  男人从自然界得到了\\
+  一把钥匙，\\
+  可以每24小时\\
+  为女人上一次发条。
+\end{bonmot}
+\end{verbatim}
+\end{codelist}
+
+的确，如果我们不指明来源，那么这句“名言”（bon mot）看起来疑点重重。通过为我们的环境添加一个参数，可以补救一下。参数可以使用\verb|#|访问，但这种访问方式只能在\dm{begin}条目中使用。将参数存到字盒中，就能规避这种限制，从而在\dm{end}条目中复用\celan{\S 4.4.5}参数：
+
+\begin{codelist}[4.24]{
+  \newsavebox{\auteurbm}
+\newenvironment{Bonmot}[1]%
+  {\small\slshape%
+  \savebox{\auteurbm}{%
+    \upshape\sffamily#1}%
+  \begin{flushright}}
+  {\\[4pt]\usebox{\auteurbm}
+  \end{flushright}\normalsize\upshape}
+\begin{Bonmot}{维克多·雨果}
+  男人从自然界得到了\\
+  一把钥匙，\\
+  可以每24小时\\
+  为女人上一次发条。
+\end{Bonmot}
+}\begin{verbatim}
+\newsavebox{\auteurbm}
+\newenvironment{Bonmot}[1]%
+  {\small\slshape%
+  \savebox{\auteurbm}{%
+    \upshape\sffamily#1}%
+  \begin{flushright}}
+  {\\[4pt]\usebox{\auteurbm}
+  \end{flushright}\normalsize\upshape}
+\begin{Bonmot}{维克多·雨果}
+  男人从自然界得到了\\
+  一把钥匙，\\
+  可以每24小时\\
+  为女人上一次发条。
+\end{Bonmot}
+\end{verbatim}
+\end{codelist}
+
+好吧，即使这样做了，这句“名言”的疑点也没有减少……
