@@ -1121,10 +1121,10 @@ Internet这个词不要\makebox[1.5cm]{打断}
 指令\verb|\newcommand|可以用来定义宏。该指令使用起来十分简单：
 
 \begin{dmd}
-\backslash newcommand\{\codereplace{宏名}\}[\codereplace{参量}]\{\codereplace{\LaTeX 代码}\}
+\backslash newcommand\{\codereplace{宏名}\}[\codereplace{参数量}]\{\codereplace{\LaTeX 代码}\}
 \end{dmd}
 
-其中\codereplace{参量}是指\emph{参数}的数量——所谓参数，是编程中的术语。此外，\codereplace{\LaTeX 代码}是指你的指令的定义。使用宏的示例如下，其中定义了测色法中表示空间的符号：
+其中\codereplace{参数量}是指\emph{参数}的数量——所谓参数，是编程中的术语。此外，\codereplace{\LaTeX 代码}是指你的指令的定义。使用宏的示例如下，其中定义了测色法中表示空间的符号：
 
 \begin{codelist}[4.18]{
   \newcommand{\lab}{$L^*a^*b^*$}
@@ -1135,7 +1135,7 @@ Internet这个词不要\makebox[1.5cm]{打断}
 \end{verbatim}
 \end{codelist}
 
-注意，这个指令不接受参数，因此没有必要选用参数\codereplace{参量}。可以通过以下方式来改善该指令的使用方法：
+注意，这个指令不接受参数，因此没有必要选用参数\codereplace{参数量}。可以通过以下方式来改善该指令的使用方法：
 
 \begin{codelist}[4.19]{
 \newcommand{\Lab}{
@@ -1199,10 +1199,10 @@ Internet这个词不要\makebox[1.5cm]{打断}
 除此之外，也可以将指令的定义第一个参数为可选参数。语法如下：
 
 \begin{dmd}
-\backslash newcommand\{\codereplace{宏名}\}[\codereplace{参量}][\codereplace{默认值}]\{\codereplace{\LaTeX 代码}\}
+\backslash newcommand\{\codereplace{宏名}\}[\codereplace{参数量}][\codereplace{默认值}]\{\codereplace{\LaTeX 代码}\}
 \end{dmd}
 
-其中，\codereplace{参量}依然指参数的数量，参数\verb|#1|带有默认值\codereplace{默认值}，\codereplace{\LaTeX 代码}是指令的内容。以下示例再次实现了前文实现过的效果——显示键盘按键：
+其中，\codereplace{参数量}依然指参数的数量，参数\verb|#1|带有默认值\codereplace{默认值}，\codereplace{\LaTeX 代码}是指令的内容。以下示例再次实现了前文实现过的效果——显示键盘按键：
 
 \begin{codelist}[4.22]{
   \newcommand{\Key}[1][Entrée]{\Ovalbox{#1}} 
@@ -1226,11 +1226,11 @@ Internet这个词不要\makebox[1.5cm]{打断}
 我们可以使用以下方式定义自己的环境：
 
 \begin{dmd}
-\backslash newenvironment\{\codereplace{环境名}\}[\codereplace{参量}]\{\codereplace{begin条目}\}\{\codereplace{end条目}\}
+\backslash newenvironment\{\codereplace{环境名}\}[\codereplace{参数量}]\{\codereplace{begin条目}\}\{\codereplace{end条目}\}
 \end{dmd}
 
-其中，可以通过\codereplace{环境名}定义环境名，\codereplace{参量}代表参数的数量，\codereplace{起始条目}和\codereplace{结束条目}分别代表环境“开端”和“末尾”所需的处理。在定义环境时使用其他环境（如\LaTeX 的环境）是很实用的技巧\yz{
-  正如下文所说，译者也只能查到这句话来自维克多·雨果的说法，但没有查到具体出处，只能照字面意义硬翻。
+其中，可以通过\codereplace{环境名}定义环境名，\codereplace{参数量}代表参数的数量，\codereplace{begin条目}和\codereplace{end条目}分别代表环境“开端”和“末尾”所需的处理。在定义环境时使用其他环境（如\LaTeX 的环境）是很实用的技巧\yz{
+  正如下文所说，译者也只能查到这句话来自维克多·雨果（Vector Hugo）的说法，但没有查到具体出处，只能照字面意义硬翻。
 }：
 
 \begin{codelist}[4.23]{
@@ -1292,3 +1292,67 @@ Internet这个词不要\makebox[1.5cm]{打断}
 \end{codelist}
 
 好吧，即使这样做了，这句“名言”的疑点也没有减少……
+
+\subsection{重定义}
+
+可以使用以下方式\emph{重新定义}指令或环境。对于指令：
+
+\begin{dmd}
+\backslash renewcommand\{\codereplace{指令名}\}[\codereplace{参数量}]\{\codereplace{\TeX 代码}\}
+\end{dmd}
+
+对于环境：
+
+\begin{dmd}
+\backslash renewenvironment\{\codereplace{环境名}\}[\codereplace{参数量}]\{\codereplace{begin条目}\}\{\codereplace{end条目}\}
+\end{dmd}
+
+我们可以通过重定义所需的指令来\emph{定制}一些\LaTeX 的滑稽行为，也可以按照最自然的习惯行事。例如：
+
+\begin{dmd}
+\verb|\renewcommand{\thepage}{\Roman{page}}|
+\end{dmd}
+
+以上指令可以将页码改为罗马数字。%TODO 验证
+
+\begin{exclamation}
+对\LaTeX 默认行为的修改是一个很广的话题，超出了本小节的讨论范围。然而需要明白，如果修改某个指令或某个环境时没有统筹考虑所有功能，那么最终的结果会很奇怪！本书第II部分%TODO
+会介绍一些重定义\LaTeX 指令的方法。
+\end{exclamation}
+
+\section{然后呢？}
+
+如果想要创建一个包含你的指令的文件，则需要添加一行指令。如果你使用\textsf{bash}，则需要在\verb+.bash_profile+中添加：
+
+\begin{dmd}
+\verb|export TEXINPUTS=$HOME/LaTeX/mesmacros//:|
+\end{dmd}
+
+这行指令可以让\LaTeX 额外搜索目录\verb|$HOME/LaTeX/mesmacros|（此处为一个示例目录）和其字目录。此时，使用指令\verb|\usepackage{moncru}|即可使用你定义的指令集。\LaTeX 会搜索文件\dm{moncru.sty}。另一个方法是使用指令\verb|\input{moncru.sty}|。
+
+对于绝大部分\LaTeX 发行版，文件\dm{texmf.cnf}会包含一系列参数，用于配置\LaTeX 引擎，特别是搜寻文件的路径。借助以下指令，可以找到这个文件：
+
+\dmh{kpsewhich texmf.cnf}
+
+此外，存在一种机制，可以使lambda用户在发布树外存储其指令。%TODO
+请看以下指令：
+
+\dmh{kpsewhich -var-value=TEXMFHOME}
+
+在我的系统（\TeX Live Ubuntu）下，这条指令返回了以下信息：
+
+\begin{dmd}
+/home/lozano/texmf
+\end{dmd}
+
+这条信息表明，系统会在我的私人目录下的\dm{texmf}目录中寻找需要包含单文件。因此，可以将“古法酿造”的扩展放入目录\verb+~/texmf/tex/latex+。
+
+最后再给出一个建议：为了以一种舒适的方式定义属于你单指令或环境，我们建议你稍微看一看以下工具。
+
+\begin{itemize}
+  \item 扩展\textsf{ifthen}\celan{\S 9.3}。借助它，可以使用“如果—则—否则”和“do-while”形式的控制指令。
+  \item 包\textsf{calc}，可以实现有关计数器和长度的算术。
+  \item 环境\textsf{list}\celan{\S 9.5}。对于自定义列表种类的环境，它可以实现很好用的项目符号。
+\end{itemize}
+
+这些扩展和它们的使用方式会在本书第II部分详细介绍。%TODO
