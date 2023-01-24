@@ -1,9 +1,78 @@
-\chapter{图表学}
+\chapter{图像}
 
 \begin{quote}
     不可为自己雕刻偶像，也不可作什么形像……不可跪拜那些像，也不可事奉它。——《圣经·申命记》5:8\yz{
-        本句实际出自《圣经·申命记》5:8和5:9。
+        本句实际上拼合了《圣经·申命记》的5:8和5:9。
     }
 \end{quote}
 
-今天，在文档中插入画、照片或其他类型的图像看起来稀松平常。这是由于印刷技术的性能日渐强大、运行日渐稳定。与此不同，在20世纪80年代
+今天，在文档中插入画、照片或其他类型的图像看起来稀松平常，这是由于印刷技术的性能日渐强大、运行日渐稳定。但我们需要在20世纪80年代，也就是\TeX 仍在发展的背景下去看问题。在那个年代，打印机刚刚出现，个体无法接触到具有高质量打印能力的设备。然而，很多打印的解决方案将会诞生，其中的大部分都会基于PostScript语言，因为使用PostScript已经成为了\emph{事实上的}标准做法。
+
+围绕\LaTeX ，有很多在文档中插入图像的解决方案。我们会注意到，其中的一些使用了\textsf{metafont}（管理\LaTeX 字体的实用工具），一些编写了环境\dm{picture}，还有一些使用了PIC\TeX 的代码。此处不会介绍这些解决方案，因为我们认为它们有些难以上手。即便如此，你还是需要知道这些解决方案的存在。本书采纳的操作图像的方式是：在\LaTeX 源码中插入封装了相关内容的PostScript格式文件。这种文件可以使用\textsf{xfig}、\textsf{gnuplot}、\textsf{gimp}等绘图软件生成。
+
+\section{开胃小菜}
+
+了解一下用于画线的指令\verb|\rule|多少有些用处：
+
+\begin{dmd}
+\backslash rule[\codereplace{纵向位置}]\{\codereplace{长度}\}\{\codereplace{宽度}\}
+\end{dmd}
+
+其中\codereplace{纵向位置}可以根据需要在竖直方向上平移线，另外两个参数足以描述线的形态：
+
+\begin{codelist}[5.1]{
+    这些都是“线”：
+\begin{center}
+    \rule[1ex]{1mm}{5mm}
+    \quad\rule{1in}{0.4pt}
+    \quad\rule[-0.5em]{1em}{1em}
+\end{center}
+}\begin{verbatim}
+这些都是“线”：
+\begin{center}
+    \rule[1ex]{1mm}{5mm}
+    \quad\rule{1in}{0.4pt}
+    \quad\rule[-0.5em]{1em}{1em}
+\end{center}
+\end{verbatim}
+\end{codelist}
+
+\section{图像文件的格式}
+
+为了在文档中包含图像，需要插入\emph{文件}。\LaTeX 的配置允许其夹带PS（即PostScript）和EPS（即Encapsuled PostScript）类型的文件，至于要插入的文件是由什么软件生成的，\LaTeX 并不关心。你如果认为PostScript格式有诸多限制，那么需要认识到以下事实。
+
+\begin{itemize}
+    \item 所有\emph{合格}的“矢量”绘图软件都具有将图表导出为EPS格式文件的功能。对于印刷设备，这种格式已经成为标准。
+    \item 所有图片都可以转换为EPS格式。在UNIX系统中，可以借助程序\textsf{convert}完成这一操作\jz{
+        如果你的系统中没有这个程序，请查找“ImageMagick”套件来获取它。
+    }。我们也可以使用软件\textsf{gimp}（一款自由软件，可以用于修图和创建数字图片）完成这一操作，它也适用于其他操作系统。
+\end{itemize}
+
+\section{包\textsf{graphicx}}
+
+\LaTeX ，或者说\TeX ，在最初的设想中并不以操作图像（图片、图画等）为目的。基于此，大量扩展被提出，但它们都不是必需的，也不能真正独立于操作系统。
+
+\subsection{标准}
+
+目前，\LaTeX 设计师似乎同意将\emph{图像的}扩展统一起来。1994年年末，两个扩展走入了人们的视野：
+
+\begin{itemize}
+    \item \textsf{graphics}，作为“标准”扩展；
+    \item \textsf{graphicx}，作为“升级版”扩展。
+\end{itemize}
+
+此处选择介绍\textsf{graphicx}。需要理解，即使该扩展单界面独立于操作系统，用于管理不同种类图像文件的那部分代码也依赖底层系统。这样一来，就需要指明包的\emph{驱动（driver）}。在不同平台上\jz{
+    其中可以注意到：对于UNIX，有\textsf{xdvi}和\textsf{dvips}；对于macOS，有\textsf{texture}和Oz\TeX ；对于Windows，有em\TeX 和\textsf{dviwin}。
+}，已有的驱动对应\TeX 识别到的实现。在UNIX中，通常使用\textsf{dvips}。它在\TeX 的发布版中默认选用，如此一来，以下指令足以调用扩展\textsf{graphicx}：
+
+\begin{dmd}
+\backslash usepackage\{graphicx\}
+\end{dmd}
+
+此时，使用以下指令就能在文档中包含图画或图片：
+
+\begin{dmd}
+\backslash includegraphics[\codereplace{选项}]\{\codereplace{文件}\}
+\end{dmd}
+
+其中，\codereplace{文件}即包含你的图片的文件，
