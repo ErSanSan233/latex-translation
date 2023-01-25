@@ -75,4 +75,182 @@
 \backslash includegraphics[\codereplace{选项}]\{\codereplace{文件}\}
 \end{dmd}
 
-其中，\codereplace{文件}即包含你的图片的文件，
+其中，\codereplace{文件}即包含图片的文件，\codereplace{选项}可以是以逗号隔开的一系列配置。\verb|\includegraphics|不会创建特殊的版式，只会在文本中插入一个包含图像的字盒：
+
+\begin{codelist}[5.2]{
+    前前
+\includegraphics{img/punch_small}
+后后。
+}\begin{verbatim}
+前前
+\includegraphics{punch}
+后后。
+\end{verbatim}
+\end{codelist}
+
+\begin{exclamation}
+    为了确保源代码的便携性、确保代码能够再不同格式下插入图像文件，有必要\emph{在指令}\dm{\backslash includegraphics}\emph{中不指定文件的扩展名}
+\end{exclamation}
+
+通常来说，我们会将\verb|\includegraphics|与环境\dm{figure}\celan{\S 2.7}结合使用。例如，图\ref{fig:5.1}依靠以下代码生成：
+
+\begin{figure}
+    \centering\includegraphics[width=5cm]{img/punch}
+    \caption{罗伯特（酒后版）}
+    \label{fig:5.1}
+\end{figure}
+
+\begin{dmd}
+\begin{verbatim}
+\begin{figure}
+    \centering\includegraphics[width=5cm]{punch}
+    \caption{罗伯特（酒后版）}
+    \label{fig-exemple}
+\end{figure}
+\end{verbatim}
+\end{dmd}
+
+\begin{exclamation}
+注意，环境\dm{figure}可以使图像在页面中“浮动”，而指令\verb|\includegraphics|无法做到这一点。为了防止有人漏掉这一点，再重复一遍：
+\begin{center}
+    \bfseries
+    环境\dm{figure}可以确保\\
+    图像在页面中“浮动”。\\
+    这不是由指令\dm{\backslash includegraphics}\\
+    来确保的。
+\end{center}
+\end{exclamation}
+
+\subsection{选项}
+
+包\textsf{graphicx}中含有若干选项，可以用于控制图像的插入过程。此处介绍其中一组最实用的选项。
+
+\subsubsection{更改比例}
+
+有三种调整图像尺寸的方式：
+
+\begin{itemize}
+    \item \dm{scale=}\codereplace{比例}，其中\codereplace{比例}用于整体调整图片的大小，可以为正值或负值。
+    \item \dm{width=}\codereplace{尺寸}，可以指定图片的宽度；
+    \item \dm{height=}\codereplace{尺寸}，可以指定图片的高度。
+\end{itemize}
+
+\begin{codelist}[]{
+    \begin{center} 
+    \includegraphics[scale=0.2]{img/magma}\\
+    \includegraphics[width=8.5mm]{img/magma}\\
+    \includegraphics[width=2cm,
+                    height=3mm]{img/magma}
+    \end{center}
+}\begin{verbatim}
+\begin{center}
+  \includegraphics[scale=0.2]{magma}\\
+  \includegraphics[width=8.5mm]{magma}\\
+  \includegraphics[width=2cm,
+                   height=3mm]{magma}
+\end{center}
+\end{verbatim}
+\end{codelist}
+
+\subsubsection{旋转}
+
+如果你希望，可以使用选项\dm{option}来让旋转图片。语法如下：
+
+\begin{dmd}
+angle=\codereplace{角}
+\end{dmd}
+
+其中\codereplace{角}以角度为单位，以逆时针方向为正方向。
+
+\begin{codelist}[5.4]{
+\includegraphics[angle=45,
+                 scale=0.2]{img/magma}
+}\begin{verbatim}
+\includegraphics[angle=45,
+                 scale=0.2]{magma}
+\end{verbatim}
+\end{codelist}
+
+我们可以在文件\dm{grfguide.pdf}\jz{
+  可以使用\dm{locate}或\dm{find}在你的系统中找到。
+}中找到有关此扩展的详细描述，也可以参阅文档\dm{fepslatex.pdf}\jz{
+  \wz{http://tug.ctan.org/tex-archive/info/epslatex/french/fepslatex.pdf}。
+}。
+
+\subsubsection{草稿模式}
+
+选项\dm{draft}可以将图片生成为\emph{草稿}模式，即在最终文档中仅生成带有被包含文件文件名的方框。
+
+\begin{codelist}[5.5]{
+前前
+\includegraphics[draft,scale=.2]{punch}
+后后。
+}\begin{verbatim}
+前前
+\includegraphics[draft,scale=.2]{punch}
+后后。
+\end{verbatim}
+\end{codelist}
+
+模式\dm{draft}默认在文档选项\dm{draft}指定时启用。如果想要阻止文档选项的转中效果\jz{
+  例如，你希望同时看到图像和“字盒Overfull标记”。
+}，可以在使用指令\verb|\includegraphics|或通过\verb|\usepackage|包含扩展时使用选项\dm{final}。
+
+\section{几个实用扩展}
+
+接下来介绍三个可以生成带有图像文档的实用扩展。
+
+\subsection{\textsf{subfig}}
+
+该扩展可以管理带有若干分图的图片，分图会自动编号并能单独引用。例如：
+
+\begin{dmd}
+\begin{verbatim}
+\begin{figure}[htbp]
+  \begin{center}
+      \leavevmode \subfloat[Magma]{%
+        \label{fig-uniweria-magma}
+        \includegraphics[width=2cm]{magma}}
+      \hspace{2cm} \subfloat[UZMK]{%
+        \label{fig-uniweria-uzmk}
+        \includegraphics[height=2cm]{uzmk}}
+    \caption{Uniweria Zëkt}
+    \label{fig-uniweria}
+  \end{center}
+\end{figure}
+\end{verbatim}
+\end{dmd}
+
+\begin{figure}[htbp]
+  \begin{center}
+      \leavevmode \subfloat[Magma]{%
+        \label{fig-uniweria-magma}
+        \includegraphics[width=2cm]{img/magma}}
+      \hspace{2cm} \subfloat[UZMK]{%
+        \label{fig-uniweria-uzmk}
+        \includegraphics[height=2cm]{img/uzmk}}
+    \caption{Uniweria Zëkt}
+    \label{fig-uniweria}
+  \end{center}
+\end{figure}
+
+在需要引用时，可以通过\verb|\ref{fig-uniweria}|整体引用该图，结果会展示为\ref{fig-uniweria}，也可以通过对应的标签来引用分图，如使用\verb+\ref{fig-uniweria-magma}+和\verb|\ref{fig-uniweria-uzmk}|的结果分别为\ref{fig-uniweria-magma}和\ref{fig-uniweria-uzmk}。
+%注意，分图没有括号。疑似这也是相关标准的来源。
+
+\begin{ii}
+有一种优雅的分图管理方法，即将每个分图打包为一个\dm{minipage}。发行版%TODO
+附带的文件\dm{subfig.pdf}中说明了如何自定义环境\dm{subfigure}，尤其是处理图题间的空白。
+\end{ii}
+
+\subsection{包\textsf{wrapfig}}
+
+包\textsf{wrapfig}提供了环境\dm{wrapfigure}，可以让图片在段落中浮动。此处浮动的含义不同于描述\LaTeX 的环境\dm{figure}时所用的浮动，因为此处的环境可以穿插在段落内。语法如下：
+
+\begin{dmd}
+\verb|\begin{wrapfigure}{|\codereplace{位置}\}\{\codereplace{宽度}\}\\
+...\\
+\verb|\end{wrapfigure}|
+\end{dmd}
+
+其中\codereplace{位置}即图片的位置（\dm{l}或\dm{r}），\codereplace{宽度}即要插入的图片宽度。如下所示。
+
