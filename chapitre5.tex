@@ -252,5 +252,180 @@ angle=\codereplace{角}
 \verb|\end{wrapfigure}|
 \end{dmd}
 
-其中\codereplace{位置}即图片的位置（\dm{l}或\dm{r}），\codereplace{宽度}即要插入的图片宽度。如下所示。
+其中\codereplace{位置}即图片的位置（\dm{l}或\dm{r}），\codereplace{宽度}即要插入的图片宽度：
+
+\begin{dmd}
+\begin{verbatim}
+\begin{wrapfigure}{r}{1.5cm}
+  \includegraphics[width=1cm]{img/polygons}
+\end{wrapfigure}
+
+据我所知，包\textsf{wrapfig}并未
+以提供\dm{dvi}文件的形式给出文档。
+相反，可以在……
+\end{verbatim}
+\end{dmd}
+
+\begin{wrapfigure}{r}{1.5cm}
+  \includegraphics[width=1cm]{img/polygons}
+\end{wrapfigure}
+
+据我所知，包\textsf{wrapfig}并未以提供\dm{dvi}文件的形式给出文档。相反，可以在位于\dm{[...]/misc/wrapfig.stys}的\dm{.sty}文件自身中找到十分详细的信息。为了展示图片在段落中浮动带来的文字环绕效果，这段篇幅需要长一些，所以这里我多说一点：我们可以顺便注意到，借助一个著名的扩展——\textsf{docstrip}，所有的包文档都可以“自动归纳”。这些扩展（extension），或者英文的\emph{package}，包含其文档所需的代码，在安装过程中，会陆续被提取出来。\textsf{wrapfig}的作者八成没有遵循这个规则，可惜了……
+
+\subsection{包\textsf{psfrag}}
+
+另一个有趣的扩展是\textsf{psfrag}。它的目的是结合PostScript文件的强大和\LaTeX 方程的美观。我们想要在图片中集成数学式时，往往会遇到一个问题：大多数此类软件都不将支持数学方程作为预设。\textsf{psfrag}作者给出的解决方案中，可以使用指令\verb|\psfrag|在图中出现字符串的位置插入数学式。这样一来，使用以下方法即可生成图\ref{fig:5.3b}而非\ref{fig:5.3a}。
+%此处源代码替换有问题，采用的解决方案来自https://zhidao.baidu.com/question/695901494124304244.html，即代码：
+% \documentclass[border=2mm]{standalone}
+% \usepackage{graphicx}
+% \usepackage{psfrag}
+% \begin{document}
+% \psfrag{abc}{$\sin{a}$}%
+% \includegraphics[width=5cm]{example.eps}
+% \end{document}
+% 然后执行 latex example; dvips example.dvi; epspdf example.ps
+% 生成 example.pdf，在你的主文件中使用 \includegraphics{example.pdf} 导入。
+
+\begin{figure}[ht]
+  \begin{center}
+      \leavevmode \subfloat[替换前]{%
+        \label{fig:5.3a}
+        \includegraphics[width=0.4\linewidth]{img/courbe-sans-psfrag}}
+      \hspace{2cm} \subfloat[替换后]{%
+        \label{fig:5.3b}
+        \includegraphics[width=0.4\linewidth]{img/courbe-avec-psfrag-replace}}
+    \caption{\textsf{psfrag}的使用，右图中的\LaTeX 方程替换了左图的对应部分。}%TODO 分图引用不规范
+    \label{fig:5.3}
+  \end{center}
+\end{figure}
+
+\begin{enumerate}
+  \item 在\verb+\includegraphics{courbe}+前添加一行代码：
+  
+  \begin{dmd}
+  \verb+\psfrag{exp(-x)*sin(10*x)}[r][r]{$e^{-x}\sin(10x)$}+
+  \end{dmd}
+  
+  该代码可以将图例中的字符串替换为漂亮的方程。
+  \item 结果在\dm{.dvi}文件中不可见。相反，\textsf{dvips}会负责使用前面的指令来修改生成的PostScript文件。
+\end{enumerate}
+
+为公式确定位置的方法即为两个参考点确定位置，其中一个参考点来自方程，另一个来自需要替换的字符串。参考点的位置由用户通过指定指令\verb|\psfrag|中间的两个可选参数确定。假设我们像这样定义了参考点：
+
+\begin{dmd}
+\backslash psfrag\{字符串\}[l][c]\{\codereplace{数学方程}\}
+\end{dmd}
+
+这样的指令对应如下对其方式：
+
+\newlength{\tempdimdemobox}
+
+\newcommand{\chaine}{\dm{字符串}}
+\newcommand{\ekouation}{\codereplace{数学方程}}
+
+\newcommand{\contenu}[1]{%
+  \ifthenelse{\equal{#1}{b}}{\raisebox{-5pt}[0pt]}{\raisebox{5pt}[0pt]}}
+
+\newcommand{\point}[2]{% #1 (r ou l) #2 ($\bullet$ par ex.)
+  \ifthenelse{\equal{#1}{r}}{%
+    \setlength{\tempdimdemobox}{\fboxsep+.5\fboxrule}}{%
+    \setlength{\tempdimdemobox}{-\fboxsep-.5\fboxrule}}%
+  \makebox[0pt][l]{%
+    \hspace{\tempdimdemobox}\makebox[0pt]{#2}}}
+
+\newcommand{\boxdemo}[6][-5pt]{%
+  \fbox{%
+    \rule[#1]{0pt}{#2}%
+    \ifthenelse{\equal{#3}{r}}{% point droite
+      \contenu{#5}{\footnotesize#6}%
+      \point{r}{#4}}{% sinon
+      \ifthenelse{\equal{#3}{l}}{% point gauche
+        \point{l}{#4}%
+        \contenu{#5}{\footnotesize#6}}{% sinon
+        \settowidth{\tempdimdemobox}{\footnotesize#6}%
+        \makebox[0pt][l]{%
+          \hspace{.5\tempdimdemobox}\makebox[0pt]{#4}}%
+        \contenu{#5}{\footnotesize#6}}}}}%大括号随意转行会造成空格计入方框宽度
+
+\begin{center}
+  \newlength{\zob}
+  \settowidth{\zob}{\boxdemo{14pt}{c}{$\bullet$}{t}{\chaine}}
+  \boxdemo{14pt}{c}{$\bullet$}{t}{\chaine}\quad 和\quad
+  \boxdemo[-7pt]{18pt}{l}{$\odot$}{b}{\ekouation} \quad 叠加的结果为 \quad
+  \boxdemo{14pt}{c}{$\bullet$}{t}{\chaine}\kern-.5\zob\kern-.5\fboxrule%此行对比原书有改动
+  \boxdemo[-7pt]{18pt}{l}{$\odot$}{b}{\ekouation}
+\end{center}
+
+同样地，如果使用如下指令：
+
+\begin{dmd}
+  \backslash psfrag\{字符串\}[r][l]\{\codereplace{数学方程}\}
+\end{dmd}
+
+则有如下结果：
+
+\begin{center}
+  \boxdemo{14pt}{l}{$\bullet$}{t}{\chaine}\quad 和\quad
+  \boxdemo[-7pt]{18pt}{r}{$\odot$}{b}{\ekouation} \quad 叠加的结果为 \quad
+  \boxdemo[-7pt]{18pt}{r}{$\odot$}{b}{\ekouation}\kern-\fboxrule%
+  \boxdemo{14pt}{l}{$\bullet$}{t}{\chaine}
+\end{center}
+
+在图\ref{fig:5.3b}中，我们使方程的右侧（第一个可选参数为\dm{r}）与原字符串的右侧（第二个可选参数为\dm{r}）对齐。该包的文档十分具有参考价值……
+
+\begin{exclamation}
+注意，如果我们使用\LaTeX 源码生成PDF文件，则只能以使用一些扭曲的操作（参见\S A%TODO
+）为代价来使用包\textsf{psfrag}。
+\end{exclamation}
+
+\subsection{包\textsf{xcolor}}
+
+扩展\textsf{xcolor}由包\textsf{graphicx}的开发团队开发，在生成彩色文本时可能会很有趣——例如，生成带有透明度的颜色。包\textsf{xcolor}可以生成以下结构：
+
+\begin{codelist}[5.6]{
+  {一些\color{red}红色}和\textcolor{cyan}{青色}的文本。
+
+  一个\colorbox{green}{绿色}字盒。
+  
+  另一个\fcolorbox{blue}{yellow}{字盒}。
+}\begin{verbatim}
+{一些\color{red}红色}和\textcolor{cyan}{青色}的文本。
+
+一个\colorbox{green}{绿色}字盒。
+
+另一个\fcolorbox{blue}{yellow}{字盒}。
+\end{verbatim}
+\end{codelist}
+
+在这里，我们可以理解指定颜色的方法。
+
+\begin{itemize}
+  \item 使用声明：
+  
+  \begin{dmd}
+    \backslash color\{\codereplace{颜色}\}
+  \end{dmd}
+
+  \item 使用指令：
+
+  \begin{dmd}
+  \backslash textcolor\{\codereplace{颜色}\}\{\codereplace{文本}\}
+  \end{dmd}
+\end{itemize}
+
+类似地，对于字盒，有以下方法指定颜色。
+
+\begin{itemize}
+  \item 无边框：
+  
+  \begin{dmd}
+    \backslash colorbox\{\codereplace{填充颜色}\}\{\codereplace{内容}\}
+  \end{dmd}
+
+  \item 有边框：
+  
+  \begin{dmd}
+    \backslash fcolorbox\{\codereplace{边框颜色}\}\{\codereplace{填充颜色}\}\{\codereplace{内容}\}
+  \end{dmd}
+\end{itemize}
 
