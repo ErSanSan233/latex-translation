@@ -61,7 +61,7 @@
 你正阅读的这本图书在令人称赞的同时也有以下知识面漏洞。
 
 \begin{itemize}
-    \item 本书不含有关于\TeX 或\LaTeX 生成字体原理的清晰解释。你不会找到关于“元字体”\linebreak （METAFONT）一词的知识。
+    \item 本书不含有关于\TeX 或\LaTeX 生成字体原理的清晰解释。你不会找到关于“元字体”\linebreak （\MF）一词的知识。
     \item 你不会找到关于在UNIX系统下安装\LaTeX 发布版的知识。
     \item 你不会找到任何现有扩展包的“目录”或清单，无论扩展包是否实用、是否兼容。
     \item 本书回避了“先有鸡还是先有蛋”之类的问题，也避免讨论关于上帝和科学的问题。
@@ -302,8 +302,11 @@
 最后，作为让人反感的精华，\dm{Makefile}片段会以如下形式展示：
 
 \begin{mdframed}
-    \verb|bidule : bidule.o truc.o|\\
-    $\longmapsto$ \verb|gcc -o $@ $^|
+\begin{tabbing}
+\verb|abcd|\=\kill
+\verb|bidule : bidule.o truc.o|\\
+$\longmapsto$ \>\verb|gcc -o $@ $^|
+\end{tabbing}
 \end{mdframed}
 
 \section*{致谢}

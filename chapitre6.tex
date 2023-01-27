@@ -1,0 +1,104 @@
+\chapter{科技文档}
+
+\begin{quote}
+    智慧人积存知识，愚妄人的口速致败坏。——《圣经·箴言》10:14
+\end{quote}
+
+现在，终于到了跟你聊聊所谓\emph{科技}文档特性的时刻。虽然关于数学式和其他方程的问题已经在第3章妥善解决，但还有一块骨头要啃：参考文献。对于这个问题，虽然不能一口吃个胖子，但接下来的内容可以让你大幅简化工作。在本章，我们还会解释生成索引的机制。
+
+本章首先会介绍起草文章的几点特别之处，然后展示参考文献的生成和索引的生成，最后介绍将大篇幅文档拆解成几个小部分的实用方法。
+
+\section{文章（article）}
+
+为了起草一篇文章，没有什么新内容可以介绍的，我们目前为止见过的所有内容都适用。只需要注意，在文前部分中，可以使用以下指令：
+
+\begin{itemize}
+    \item \verb|\title|，定义标题；
+    \item \verb|\date|，定义日期；
+    \item \verb|\author|，定义作者团队；
+    \item \verb|\thanks|，定义作者单位。
+\end{itemize}
+
+若要利用这些定义来插入标题，需要在\verb|\begin{document}|之\textbf{后}插入指令\verb|\maketitle|：
+
+\begin{dmd}
+\begin{verbatim}
+\documentclass{article}
+\title{Le seuillage à 128 : une révolution !}
+\author{M. C. Orlanrien\\
+        Institut du Pixel\\
+        42007 Saint-Etienne---FRANCE}
+\date{2 Avril 1927}
+\begin{document}
+\end{verbatim}
+\backslash maketitle\textsl{\% 标题插到此处}\\
+...\\
+\verb|\end{document}|
+\end{dmd}
+
+此处重复一遍\jz{
+    因为传授知识就是重复的过程。
+}：标题是由指令\verb|\maketitle|生成并插入的，而不是文前部分的定义。
+
+通常来说，会议或期刊提供的模板文件中会引入一些变化（例如使用\verb|\address|分隔作者和其地址），但基本原理是一致的。
+
+\section{参考文献}
+
+由两种方式可以使用\LaTeX 起草文章的参考文献部分。其中，可以称得上是“手动”的方式是，在文章中插入环境\dm{thebibliography}。另一种方式，即此处要介绍的方式，是使用\bib ，主要分为如下步骤。
+
+\begin{enumerate}
+    \item 创建一个或多个参数文件，包含\bib 格式的各条参考文献入口（entrée；文章、会议……）。这个步骤不可避免地需要我们去\emph{输入}。
+    \item 在文档中，使用指令\verb|\cite|去引用这些入口。
+    \item 参考文献会自动根据你选择的特殊风格排版。
+\end{enumerate}
+
+这种方法的优势是，对于每条参考文献，你只需输入一次。此外，考虑到可以使用\emph{风格文件}，你不用去担心它的版式。有几十种风格文件，对应各种标准，包含期刊和其他会议所使用的标准。我们也可以在互联网上找到\bib 格式的参考文献数据库，可以在文档中直接使用。
+
+我们重复一遍：参考文献有多种标准。但不幸的是，一些期刊偏偏喜欢指定属于自己的参考文献格式。有朝一日你在这种期刊上发表文章时，就需要去创建或调整风格文件。为了实现这一点，可以去查找工具\textsf{makebst}。
+
+\subsection{\dm{.bib}文件}
+
+第一个操作是构建\jz{
+    \textbf{Emacs}的Auc\TeX 组件包含了很好用的\bib 模式。
+}参考文献文件，其扩展名最好为\dm{.bib}。该文件需要遵循特殊的语法。首先需要知道，\bib 通过\emph{类型（type）}区分每个入口。这样一来，每个入口都带有一个文档类型：图书、文章、会议、科技报告……一共有二十多种不用的文档类型。
+
+\begin{ii}
+正常来说，我们可以在伴随\LaTeX 发行版提供的文件找到名为\bib ing的文件（命名为\dm{btxdoc.pdf}），由奥兰·帕塔什尼克（Oran Patashnik）在约二十年前创作。该文件包含有关构建\bib 格式文件方法的重要信息来源。
+\end{ii}
+
+每个入口\emph{类型}都包含一定数量描述该入口的\emph{字段（champ）}。参考文件入口的结构如下：
+
+\begin{dmd}
+@\codereplace{入口}\{\codereplace{关键描述},\\
+\verb|  |\codereplace{字段$_1$}\ =\ \{...\},\\
+\verb|  |\codereplace{字段$_2$}\ =\ \{...\},\\
+\verb|  |...\\
+\verb|  |\codereplace{字段$_n$}\ =\ \{...\},\\
+\}
+\end{dmd}
+
+其中，\codereplace{入口}表示文档类型（\dm{article}、\dm{inproceedings}等），\codereplace{字段$_1$}、\codereplace{字段$_2$}……\codereplace{字段$_n$}表示参考文献入口的不同字段。这些\bib 的保留字可以以大写或小写形式输入。
+
+符号\codereplace{关键描述}需要以唯一方法描述该文档，以备通过用于识别标签的符号\verb|\label|来重新找到。为了你能够快速上手\bib ，接下来的示例综合了三个你需要使用的基本入口。
+
+\subsubsection{期刊文章}
+
+有一篇期刊文章需要以如下形式输入：
+
+\begin{dmd}
+\begin{verbatim}
+@article{qtz:UchArb,
+author ={Uchiyama, Toshio and Arbib, Michael A.},
+title = {Color Image Segmentation
+         Using Competitive Learning},
+journal=pami,
+volume =16, number=2, pages={1197--1206},
+month=dec, year=1994}
+\end{verbatim}
+\end{dmd}
+
+有以下几点需要注意。
+
+\begin{enumerate}
+    \item 1
+\end{enumerate}

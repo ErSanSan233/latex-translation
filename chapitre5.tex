@@ -429,3 +429,170 @@ angle=\codereplace{角}
   \end{dmd}
 \end{itemize}
 
+以上两个指令生成的彩色字盒对于长度\verb|\fboxsep|比较敏感。“如果颜色没有名字\emph{怎么办}？”我听到你在\emph{嘟囔}什么了……对于这个问题，我可以马上回答：
+
+\begin{codelist}[5.7]{
+  这是
+{\color[rgb]{.2,.4,.5}\bfseries 
+ 蓝灰色}……
+}\begin{verbatim}
+这是
+{\color[rgb]{.2,.4,.5}\bfseries 
+ 蓝灰色}……
+\end{verbatim}
+\end{codelist}
+
+也可以为上例中的颜色起一个“小名”：
+
+\begin{codelist}[5.8]{
+  \definecolor{bleugris}{rgb}{.2,.4,.5}
+这是
+{\color{bleugris}\bfseries 蓝灰色}……
+}\begin{verbatim}
+\definecolor{bleugris}{rgb}{.2,.4,.5}
+这是
+{\color{bleugris}\bfseries 蓝灰色}……
+\end{verbatim}
+\end{codelist}
+
+\begin{ii}
+可以注意到，除了使用“\dm{rgb}”色彩模型，也可以使用定义灰度的\dm{gray}模型。同样地，如果使用\dm{html}模型，则可以使用HTML语法来指定颜色。
+\end{ii}
+
+\begin{figure}
+  \centering TODO缺图%TODO
+  \caption{推荐使用的储存图像文件树状结构：图像存储在一个目录中，矢量图存储在一个目录中，EPS格式的文件存储在另外的目录中}
+  \label{fig:5.4}
+\end{figure}
+
+\section{使用\textsf{make}}
+
+\begin{exclamation}
+本节面向使用部署了GNU Make（更多有关信息，请参阅相关必读资料[11]）的操作系统的用户准备的。其他人可以跳过这段学习路径……
+\end{exclamation}
+
+makefile使生成过程自动化的思路有：
+
+\begin{itemize}
+  \item 使用“位图”图像文件生成EPS格式的文件；
+  \item 使用带有矢量绘图软件内置格式的文件生成EPS格式的文件。
+\end{itemize}
+
+为了实现以上思路，我们需要树立一个目标，可以用以下命令行表示：
+
+\dmh{make figs}
+
+假设图片和图像文件分别存储在主文件所在目录下的子目录\dm{Imgs}和\dm{Figs}中，生成的EPS文件同样存储在子目录\dm{Epss}中（如图\ref{fig:5.4}所示）。此时，就可以开始定义一系列变量，来指明需要用到的不同目录：
+
+\begin{mdframed}
+\begin{verbatim}
+FIGSDIR=Figs
+EPSSDIR=Epss
+IMGSDIR=Imgs
+\end{verbatim}
+\end{mdframed}
+
+\subsection{图像转码}
+
+首先，（作为示例）我们列出JPEG和PNG格式文件的列表，使用如下两个变量来储存列表：
+
+\begin{mdframed}
+\begin{verbatim}
+PNGS=$(notdir $(wildcard $(IMGSDIR)/*.png))
+JPGS=$(notdir $(wildcard $(IMGSDIR)/*.jpg))
+\end{verbatim}
+\end{mdframed}
+  
+使用函数\dm{wildcard}可以获得文件夹\verb|$(IMGSDIR)|中文件的列表，而对于每个文件，函数\dm{notdir}可以删除其“目录”的部分。最终，变量\dm{PNGS}包含：
+
+\begin{dmd}
+i.png j.png
+\end{dmd}
+
+变量\dm{JPGS}包含：
+
+\begin{dmd}
+k.jpg
+\end{dmd}
+
+接下来，我们可以从这两个变量除法，创建即将生成的EPS文件的列表（再提醒一次，EPS文件应当单独存放在一个目录中）：
+
+\begin{mdframed}
+\begin{verbatim}
+IMGS2EPSS=$(patsubst %,$(EPSSDIR)/%,\
+          $(PNGS:.png=.eps) $(JPGS:.jpg=.eps))
+\end{verbatim}
+\end{mdframed}
+
+赋值符号右侧的表达式可以将前文中两个列表中文件的扩展名改为\dm{eps}，并且文件名前加上存储EPS文件的目录作为前缀。因此，\dm{IMG2EPSS}包含：
+
+\begin{dmd}
+Epss/i.eps Epss/j.eps Epss/k.eps
+\end{dmd}
+
+该列表构成了（\textsf{make}意义上）生成图像的“先决”条件。因此，按以下方式定义目标：
+
+\begin{mdframed}
+\begin{verbatim}
+figs : $(IMGS2EPSS)
+\end{verbatim}
+\end{mdframed}
+
+此外，也需要向\textsf{make}解释我们如何将图像文件转换为封装好的PostScript格式。可以通过如下规则描述：
+
+\begin{mdframed}
+\begin{tabbing}
+\verb|abcd|\=\kill
+\verb+$(EPSSDIR)/%.eps : $(IMGSDIR)/%.png+\\
+$\longmapsto$\>\verb+convert $< EPS:$@ +\\
+\verb+$(EPSSDIR)/%.eps : $(IMGSDIR)/%.jpg+\\
+$\longmapsto$\>\verb+convert $< EPS:$@+
+\end{tabbing}
+\end{mdframed}
+
+这样的规则详细描述道：我们将会用到工具\textsf{convert}\jz{
+  其属于包ImageMagick，可以在\wz{http://www.imagemagick.org}获取。该工具几乎可以转换所有格式的图片。
+}来将JPEG和PNG文件转换为EPS格式。
+
+\subsubsection{转换图像文件}
+
+图像文件的转码严格遵循同一原则。假设我们指明了一个由\textsf{xfig}生成的fig格式源文件和一个由\textsf{Inkscape}生成的svg格式源文件，则\dm{makefile}有：
+
+\begin{mdframed}
+\begin{verbatim}
+FIGS=$(notdir $(wildcard $(FIGSDIR)/*.fig))
+SVGS=$(notdir $(wildcard $(FIGSDIR)/*.svg))
+FIGS2EPSS=$(patsubst %,$(EPSSDIR)/%,\
+          $(FIGS:.fig=.eps) $(SVGS:.svg=.eps))
+\end{verbatim}
+\end{mdframed}
+
+当然，两条转换规则是不同的，因为它们分别会调用\textsf{fig2dev}（\textsf{xfig}的相关工具）和\textsf{Inkscape}本身：
+
+\begin{mdframed}
+\begin{tabbing}
+\verb|abcd|\=\kill
+\verb+$(EPSSDIR)/%.eps : $(FIGSDIR)/%.fig+\\
+$\longmapsto$\>\verb+fig2dev -L eps $< > $@+\\
+\verb+$(EPSSDIR)/%.eps : $(FIGSDIR)/%.svg+\\
+$\longmapsto$\>\verb+inkscape -E $@ $<+
+\end{tabbing}
+\end{mdframed}
+
+最终，用于输出图像文件和图片的目标如下：
+
+\begin{mdframed}
+\begin{verbatim}
+figs : $(IMGS2EPSS) $(FIGS2EPSS)
+\end{verbatim}
+\end{mdframed}
+
+\section{除此之外……}
+
+针对特殊的需求，我们可以找到大量可以生成能满足需要的图像（电路图、直方图、树形图……）的扩展。实际上，你可能在某天需要使用一个指令自动生成若干图像，这时请看看可用的不同扩展（\textsf{pstricks}、\MP……）、环境\dm{picture}及其扩展\textsf{epic}和\textsf{eepic}。加油！
+
+\begin{ii}
+目前，包TikZ的发展顺风顺水。该包可以为其优秀的用户提供使用一种依赖\LaTeX 的语言创作图画的可能。如果文档中的图以等价的形式出现多次，这种解决方案会非常有趣。该包会在本书的未来版本中介绍\yz{
+  我等到花儿也谢了……
+}。
+\end{ii}

@@ -43,6 +43,8 @@
 \usepackage{hyperref}%所有网页用超链接同步挂靠
 \usepackage{xpatch}%设置verbatim前后间距
 
+\usepackage{mflogo}%METAPOST和METAFONT logo
+
 %行号
 \usepackage{lineno}
 
@@ -78,6 +80,8 @@ $\blacktriangleright$
         $\blacktriangleleft$\textsf{#1}
     }
 }
+
+\def\bib{\textsc{Bib}\TeX }
 
 \definecolor{LightPink}{RGB}{230,173,173}
 \newenvironment{exclamation}[1][!]%原书的圆圈感叹号
@@ -196,6 +200,7 @@ $\blacktriangleright$
 \input{chapitre3.tex}
 \input{chapitre4.tex}
 \input{chapitre5.tex}
+\input{chapitre6.tex}
 % \begin{appendices}
 %     \section{附录}
 % \end{appendices}
