@@ -88,17 +88,85 @@
 \begin{dmd}
 \begin{verbatim}
 @article{qtz:UchArb,
-author ={Uchiyama, Toshio and Arbib, Michael A.},
-title = {Color Image Segmentation
-         Using Competitive Learning},
-journal=pami,
-volume =16, number=2, pages={1197--1206},
-month=dec, year=1994}
+    author ={Uchiyama, Toshio and Arbib, Michael A.},
+    title = {Color Image Segmentation
+            Using Competitive Learning},
+    journal=pami,
+    volume =16, number=2, pages={1197--1206},
+    month=dec, year=1994}
 \end{verbatim}
 \end{dmd}
 
 有以下几点需要注意。
 
 \begin{enumerate}
-    \item 1
+    \item 字段\dm{author}、\dm{title}、\dm{journal}、\dm{year}是必需的。
+    \item 对于作者\jz{
+        此处关于作者的注意事项对于其他入口（会议、书等）也同样适用。
+    }姓名，需要遵循\codereplace{姓}、\codereplace{名}的顺序。\textbf{所有}作者姓名都需要以\dm{and}分隔。
+    \item 对于复合姓或其他特殊作者名，可以以如下形式输入：
+    \begin{center}
+        \dm{author="de la Motte Beuvron, Alain"}
+    \end{center}
+    其中遵循的顺序为：\codereplace{特殊组成部分}、\codereplace{姓}、\codereplace{名}。逗号作为分割符，起到与上例中相似的作用。
+    \item 所有月份可以以字符串的形式给出，如\dm{jan}、\dm{feb}、\dm{mar}等。
 \end{enumerate}
+
+
+在\dm{.bib}文件的开头，为简洁起见，我们已经创建了\emph{缩写}\dm{pami}：
+
+\begin{dmd}
+\begin{verbatim}
+@string{pami="IEEE transactions on Pattern Analysis and
+              Machine Intelligence"}
+\end{verbatim}
+\end{dmd}
+
+\subsubsection{会议析出文章}
+
+没错，\bib 会区分对待\emph{期刊}和\emph{会议}中的文章。格式结构与上例很相似，只不过\dm{booktitle}用于会议标题而不是期刊标题：
+
+\begin{dmd}
+\begin{verbatim}
+@Inproceedings{qtz:BouOrch,
+    author={Bouman, Charles A. and Orchard, Michael T.}
+    title={Color Image Display with a Limited Palette Size},
+    booktitle={SPIE Conference on Visual Communications
+               and Image Processing},
+    volume=1199,pages={522--533},
+    year=1989}
+\end{verbatim}
+\end{dmd}
+
+这里，\dm{author}、\dm{title}、\dm{booktitle}、\dm{year}是必填字段，我们可以选用\dm{volume}和\dm{number}。
+
+\subsubsection{图书片段}
+
+相比于整本书，我们经常指参考其中的一个片段——若干章、若干页：
+
+\begin{dmd}
+\begin{verbatim}
+@inBook{col:McA,
+    author =    {MacAdam, David L.},
+    title =     {Color Measurement},
+    chapter =   4,
+    pages   =   {48--49},
+    publisher = {Springer-Verlag},
+    year =      1985}
+\end{verbatim}
+\end{dmd}
+
+强制字段为：\dm{author}、\dm{title}、\dm{chapter}或\dm{pages}、\dm{publisher} （出版方），以及\dm{year}。
+
+\begin{ii}
+我们再次强烈建议你使用Emacs组件Auc\TeX 的\textsc{Bib}\TeX 模式。特别是该模式为你提供了包含所有入口类型的菜单。选择菜单中的一项，就可以在你的文件中插入入口“骨架”。该组件可以在\wz{ftp.lip6.fr/pub/TeX/CTAN/support/auctex}下载，也可以以包Debian的形式获取。
+\end{ii}
+
+\subsection{参考文献的标注}
+
+一旦参考文献建立完成，就可以即刻在文档中借助关键描述使用指令\verb|\cite|来标明引用：
+
+\begin{dmd}
+\backslash cite\{\codereplace{关键描述}\}
+\end{dmd}
+
