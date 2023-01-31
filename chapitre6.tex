@@ -385,4 +385,62 @@ Transcript written in guide.ilg.
 \verb|\index{bonjour@\textbf{bonjour}}|
 \end{dmd}
 
-该指令可以在索引中插入\textbf{bonjour}（即将bonjour加粗），同时按“bonjour”将该入口分类。
+该指令可以在索引中插入\textbf{bonjour}（即将bonjour加粗），同时按“bonjour”将该入口分类。此外，借助以下指令，我们还可以以特殊版式显示页码：
+
+\begin{dmd}
+\backslash index\{\codereplace{入口}|\codereplace{版式指令}\}
+\end{dmd}
+
+例如：
+
+\begin{dmd}
+\verb+\index{bidule|textbf}+
+\end{dmd}
+
+该指令可以让索引中“bidule”的页码显示为加粗样式（注意，在版式指令中没有符号\verb|\|）。
+
+\subsection{术语词典}
+
+有时，我们需要详细列出文档中一些术语的含义。文档中重新组织这些术语解释的部分称为\emph{术语词典（glossaire）}。为了生成术语词典，需要采用与生成\celan{\S 6.3.1}索引相似的方法，只需做一些小的改动，将在11.6节详细介绍。
+
+\section{拆分文档}
+
+如果文档的篇幅很长，我们可以将其自然地按章或部分来拆解。因此，建议创建一个\emph{主}文档，并在其中包含各章或各部分。主文档的形式如下：
+
+\begin{dmd}
+\begin{verbatim}
+\documentclass{book}
+
+\begin{document}
+\end{verbatim}
+\verb+\frontmatter +\textsl{\% 所有介绍性的文字}
+\begin{verbatim}
+\include{preface}
+\tableofcontents
+\end{verbatim}
+\verb+\mainmatter +\textsl{\% 文档的“主体”}
+\begin{verbatim}
+\include{chapitre1}
+\include{chapitre2}
+\end{verbatim}
+\verb+\backmatter +\textsl{\% 文档末尾的索引内容}
+\begin{verbatim}
+\bibliographstyle{plain} 
+\bibliography{machin,bidule,truc}
+\end{document}
+\end{verbatim}
+\end{dmd}
+
+其中的指令\verb|\include|的作用在于，它们减少了你需要同时处理的章节数量，却依然保证了文档的完整性。为此，我们可以在文前部分使用指令\verb|\includeonly|：
+
+\begin{dmd}
+\verb|\includeonly{preface,savoir}|
+\end{dmd}
+
+使用该指令，可以仅编译前言部分（作为文件\dm{preface.tex}的内容）和文档\dm{savoir.tex}中的章节。
+
+\begin{exclamation}
+每条指令\verb|\include|都具有换页的效果，并且似乎没有规避该指令换页的方法。因此，你应该了解，\verb|\include|应当配合能够换页的章节指令（如\verb|\chapter|）使用。若要在插入其他文件时不换页，则应使用指令\verb|\input|，否则这种主文件机制就不会为你带来好处。
+\end{exclamation}
+
+最后需要注意到，\verb|\frontmatter|、\verb|\mainmatter|、\verb|\backmatter|这三条指令不是必需的。它们的作用是自动将页码改为罗马数字，常常用于介绍性质的文前页或其他短小部分（然而，它们只在文件类型\dm{book}中可用）。
