@@ -170,3 +170,219 @@
 \backslash cite\{\codereplace{关键描述}\}
 \end{dmd}
 
+指令\verb|\cite|有如下功能：
+
+\begin{enumerate}
+    \item 根据选择的风格插入跳转符号（如[2]、[Loz95]等）；
+    \item 在文档的参考文献部分中添加所引用的文章。
+\end{enumerate}
+
+\begin{ii}
+    文章（此处指广义的文章）只有在被\verb|cite|作为引用对象时才会出现在参考文献中。若要列出未于正文中直接引用的文章，则需要使用指令\verb|\nocite{|\codereplace{关键描述}\verb|}|将\codereplace{关键描述}的对应文章插入文档的参考文献部分。此外，指令\verb|\nocite{*}|会将\dm{.bib}文件中的\emph{所有}入口插入文档。
+\end{ii}
+
+在实际进入生成参考文献的步骤前，需要在\LaTeX 文档末尾添加对以下指令的引用来指定参考文献的风格：
+
+\begin{dmd}
+\verb|\bibliographystyle|
+\end{dmd}
+
+然后，引用如下指令来实际插入参考文献：
+
+\begin{dmd}
+\verb|\bibliography|
+\end{dmd}
+
+对于风格，有：
+
+\begin{dmd}
+\backslash bibliographystyle\{\codereplace{风格}\}
+\end{dmd}
+
+\LaTeX 预定义的风格\jz{
+    在CTAN网站的\dm{biblio/bibtex/contrib}可以找到几十种可供使用的其他风格。
+}如下。
+
+\begin{itemize}
+    \item \dm{plain}，引用的形式为[2]，参考文献会根据作者名排序。
+    \item \dm{unsrt}，参考文献根据引用顺序排序。会议文章经常使用这种风格。
+    \item \dm{alphs}，引用的形式为“作者缩写+年份”。
+\end{itemize}
+
+接下来，需要指定哪些文件包含了文档中指令\verb|\cite|所“指向”的那些参考文献：
+
+\begin{dmd}
+\backslash bibliography\{\codereplace{文件$_1$}, \codereplace{文件$_2$}, \codereplace{……}\}
+\end{dmd}
+
+这样的指令会使\bib 在处理过程中包含\codereplace{文件$_1$}\dm{.bib}、\codereplace{文件$_2$}\dm{.bib}……
+
+\subsection{生成参考文献}
+
+生成参考文献的步骤如下。
+
+\begin{enumerate}
+    \item 借助\LaTeX 实现第一次编译，使得辅助文件\dm{doc.aux}包含\emph{引用标注}信息：
+    
+    \begin{center}
+        \includegraphics{img/bibtex1}
+    \end{center}
+    
+    \item 运行\bib ，在文件\dm{doc.bbl}中生成参考文献：
+    
+    \dmh{bibtex doc}
+
+    \begin{center}
+        \includegraphics{img/bibtex2}
+    \end{center}
+
+    \item 借助\LaTeX 的第二次编译插入参考文献：
+    
+    \begin{center}
+        \includegraphics{img/bibtex3}
+    \end{center}
+
+    %TODO 图片中bibtex和latex替换
+
+    \item 通过第三次编译解析交叉引用。
+\end{enumerate}
+
+如果你对这个过程感到好奇，可以看到：文件\dm{doc.bbl}包含了环境\dm{thebibliography}以供随时使用\jz{
+    也就是说，你如果不使用\bib ，就必须着手处理该环境。
+}；文件\dm{doc.blg}是与那些\dm{.log}文件相似的“日志”文件，储存着上一次使用\bib 时一些可能出现的错误或警告。
+
+\begin{exclamation}
+程序\bib 对环境\dm{BIBINPUTS}中的参数敏感。因此，在某些情况下，有必要在\linebreak\dm{.bash\_profile}中添加以下一行命令：
+
+\dmh{export BIBINPUTS=\$HOME/LaTeX/biblio//:}
+
+这样可以使\bib 在目录\dm{\$HOME/LaTeX/biblio}中搜索你的参考文献文件（此处的目录为示例）。
+\end{exclamation}
+
+\section{索引}
+
+生成索引需要依靠以下两个概念：
+
+\begin{enumerate}
+    \item 在\LaTeX 文档中添加指令\verb|\index|来添加索引入口；
+    \item 使用程序\textbf{makeindex}来正确地抽取和展示索引。
+\end{enumerate}
+
+负责在文档中插入索引部分的是指令\verb|\printindex|。可以将该指令与\verb|\tableofcontents|类比。
+
+\subsection{必要步骤}
+
+这里给出简短的索引制作备忘录：
+
+\begin{enumerate}
+    \item 在主文件中插入两条指令：
+    \begin{dmd}
+    \begin{tabbing}
+12345678902234567890\=\kill
+\verb|\makeindex|\>\textsf{$\leftarrow$告知\LaTeX 需要生成索引}\\
+\verb|\begin{document}|\\
+{\rmfamily ……文档正文……}\\
+\verb|\printindex|\>\textsf{$\leftarrow$在文档中实际插入索引部分}\\
+\verb|\end{document}|
+    \end{tabbing}
+    \end{dmd}
+
+    \item 插入索引入口：
+\begin{dmd}
+\begin{tabbing}
+12345678902234567890\=\kill
+\verb|\index{bidule}|\>\textsf{$\leftarrow$在索引中插入“bidule”}
+\end{tabbing}
+\end{dmd}
+
+    \item 为了为文档\dm{doc.tex}生成索引，需要成功执行以下三条指令：
+    
+    \begin{dmd}
+        latex doc\\makeindex doc\\latex doc
+    \end{dmd}
+\end{enumerate}
+
+\subsection{机制细节}
+
+文档\dm{doc.tex}的第一次编译（在满足文前部分带有控制序列\verb|\makeindex|的条件下）会生成包含“散装”的索引入口文件\dm{doc.idx}：
+
+\begin{center}
+    \includegraphics{img/makeindex1}
+\end{center}
+
+接下来，使用\textsf{makeindex}，在这个文件\dm{doc.idx}中整理条目、删除重复项，并将结果存入\dm{doc.ind}。执行轨迹会存储在\dm{doc.ilg}中：
+
+\begin{center}
+    \includegraphics{img/makeindex2}
+\end{center}
+
+终端下运行的\textsf{makeindex}嘴很碎。如下展示了它生成文档索引时展示的信息：
+
+\begin{dmd}
+\begin{verbatim}
+This is makeindex, version 2.13 [07-Mar-1997] (using kpathsea).
+Scanning input file guide.idx....done (982 entries accepted, 0 rejected).
+Sorting entries...........done (11254 comparisons).
+Generating output file guide.ind....done (745 lines written, 0 warnings).
+Output written in guide.ind.
+Transcript written in guide.ilg.
+\end{verbatim}
+\end{dmd}
+
+因此，在运行失败的情况下，需要警惕可能出现的抛出和警告（\emph{warning}）。\LaTeX 的第二次编译可以在\dm{doc.tex}中指令\verb|\printindex|指出的位置插入格式化过的索引（文件\dm{doc.ind}）：
+
+\begin{center}
+    \includegraphics{img/makeindex3}
+\end{center}
+
+\begin{ii}
+工具makeindex可以识别选项\dm{-s}，该选项用于为索引指定\emph{风格}。这里所说的风格定义在带有扩展名\dm{.ist}的文件中，可以改变索引的排版央视。可以以如下方式修改文件风格：
+
+\dmh{makeindex -s}\codereplace{文件风格}\codereplace{主文件}
+
+可以在你使用的发行版中寻找风格文件并测试它们。
+\end{ii}
+
+\subsection{索引入口的不同类型}
+
+目前为止，我们看到的索引形式都是\emph{\codereplace{索引词}及\codereplace{页码}}，但也可以使用更讲究些的入口形式，至少包含如下三种。
+
+\begin{enumerate}
+    \item 带有层级的入口：
+    
+    \begin{dmd}
+    \verb|\index{bidule!chouette}|
+    \end{dmd}
+
+    该指令可以在索引中插入“bidule”的子入口“bidule”。
+
+    \item 跨页入口：
+\begin{dmd}
+\begin{tabbing}
+12345678902234567890\=\kill
+\verb+\index{bidule|(}+\>\textsf{$\leftarrow$位于第$i$页}\\
+\verb+\index{bidule|)}+\>\textsf{$\leftarrow$位于第$j$页}
+\end{tabbing}
+\end{dmd}
+    该指令插入的索引形式为bidule $i$--$j$。
+
+    \item 符号化的入口：
+    
+    \begin{dmd}
+    \verb|\index{alpha@\alpha}|
+    \end{dmd}
+
+    这样的指令会在索引中插入$\alpha$，并按“alpha”将其分类。同样地，以下指令会在索引中插入“épluche”，但分类时会将首字母看作“e”：
+
+    \begin{dmd}
+    \verb|\index{eplucher@éplucher}|
+    \end{dmd}
+\end{enumerate}
+
+此处列出的最后一个格式同样可以用于为索引插入带有特殊版式的入口。例如：
+
+\begin{dmd}
+\verb|\index{bonjour@\textbf{bonjour}}|
+\end{dmd}
+
+该指令可以在索引中插入\textbf{bonjour}（即将bonjour加粗），同时按“bonjour”将该入口分类。
