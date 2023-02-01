@@ -17,5 +17,69 @@
 今天，这些不悦不再成为人们的糟糕记忆。1990年起，一种容纳了多种语言中带变音符号的字符的字体编码被采用，称为\emph{Cork encoding}或\emph{T1编码（codage T1）}。当然，这种\TeX 编码本身和目前的字符编码标准间存在一定的联系。一些\LaTeX 包就包含了从字符编码（如iso-latin1）到字体编码（如T1编码）的“翻译”操作。
 
 \begin{exclamation}
-    于20实际90年代末出现的标准是ISO8859，带有针对称为\emph{latin1}的欧洲语言的编码方案扩展。这也是今天最常用的编码方案。然而，近年来，
+    于20实际90年代末出现的标准是ISO8859，带有针对称为\emph{latin1}的欧洲语言的编码方案扩展。这也是今天最常用的编码方案。然而，近年来，通用的字符表格\emph{统一码（Unicode）}及其编码\dm{UTF-8}标准得到了大多数系统的良好支持。不幸的是，\LaTeX 引擎最初并没有考虑处理含以多个字节存储的带有变音符号的字符的文档的情况\jz{这正是\dm{UTF-8}面临的情况。}。因此，有多种新型引擎见于公众，如pdftex、xe\TeX 、lua\TeX ，但它们暂时都没有被社区承认为标准。因此，编译以\dm{UTF-8}编码的文件时，需要在这些引擎中自行选用。本书创作时，选用了编码ISO88559和引擎pdftex。
 \end{exclamation}
+
+\section{使用\LaTeX 以法文创作}
+
+有两个\LaTeX 包可以将文档“法国化”：\textsf{french}和\textsf{babel}。我们凭借带有绝对偏见的理由选用了后者，使用以下方法激活了包\textsf{babel}：
+
+\begin{dmd}
+\verb|\usepackage[francais]{babel}|
+\end{dmd}
+
+这条指令出现在文前部分，它使得五个功能运转起来，具体如下。
+
+\begin{description}
+    \item[断字] \textsf{babel}在处理段落中的断字时，会考虑法文的使用习惯\jz{
+        英文单词和法文单词需要依据不同的规则打断。
+    }，尤其是会特殊考虑带有变音符号的法文单词。
+    \item[排版] 应用法文的排版规则，特别是在面对涉及引号和其他标点符号的情况时。
+    \item[版式] 主要涉及为章节标题后的首段文字重新引入首行缩进\jz{在英文排版时不需引入。}，为列表替换符号、调整空白等。
+    \item[翻译] 将敏感词翻译为法文，如“章”（chapitre）、“目录”（table des matières）等。
+    \item[宏] 包\textsf{babel}中提供了一组可用的宏，用于插入一些法文中日常使用的结构，如no、1er、2o、37°C等。
+\end{description}
+
+\section{包\textsf{babel}和排版}
+
+与法文排版相关的“规则”集合远远超出了本章的框架。幸运的是，包\textsf{babel}从实践的角度，允许我们在不了解这些规则的情况下去使用它们。我们只需简单地遵守\LaTeX 文档的几条\emph{输入}规则，就能使编译结果遵循那些最常用的排版规则。举例来说，\textsf{babel}会自动在分号前插入一个无法打断的四分之一全空格\yz{全空格（cadratin）指当前字体下字符M的宽度。}。对于法文排版，这是十分常见的做法。
+
+\begin{ii}
+如果你不想自动插入此类空格，可以调用指令\verb|\NoAutoSpaceBeforeFDP|。这样一来，你就可以全权决定是否在标点符号前插入空格。
+\end{ii}
+
+\subsection{标点符号}
+
+关于标点符号，需要你了解的规则可以总结为以下两点。
+
+\begin{enumerate}
+    \item \emph{双}标点——即; : ! ? « »——的前后都应该添加空格。
+    \item \emph{单}标点——即. , ( )——的后面应当插入空格，而前面不需要\yz{此处显然是原书纰漏了，左圆括弧的空格应当加在括弧外，即前面。}。
+\end{enumerate}
+
+以遵循上述规则的方式输入文档，\textsf{babel}就可以在标点符号前后自动插入空格。对于这个话题，有个有趣的知识点——问号和句号前的空格会更窄一些：
+
+\begin{codelist}[7.1]{
+    fouilla\,! et\enspace\,fouilla !
+}\begin{verbatim}
+fouilla ! et \selectlanguage{english}
+fouilla !\selectlanguage{french}
+\end{verbatim}
+\end{codelist}
+
+\subsection{a中的e}
+
+我改编了塞尔日·甘斯堡（Serge Gainsbourg）的歌词作为本小节的标题\yz{
+    原歌词为“Elaeudanla teïtéïa”，出自歌曲\emph{Elaeudanla téitéia}。该句歌词描述了拼读Lætitia一词时的发音，其中将æ读作“e dans l’a”，意为“a中的e”。Lætitia为人名。本小节原标题为“L-a, e dans l’a, t-i, t-i, a !”，作者以更贴近Lætitia一词的形式重新拼写该发音，以强调“a中的e”。
+}，来借此介绍法文中的两个“美丽”的合字：æ和œ。为了输入这两个合字，我们可以选择输入\verb|\ae|和\verb+\oe+（对于大写，则使用\verb|\AE|和\verb+\OE+）：
+
+\begin{codelist}[7.2]{
+    拉蒂希娅（L\ae titia）去了圣心教堂（Sacré-C\oe ur）。
+}\begin{verbatim}
+拉蒂希娅（L\ae titia）去了圣心教堂（Sacré-C\oe ur）。
+\end{verbatim}
+\end{codelist}
+
+如果你的键盘允许，也可以直接输入æ。作为参考，在Linux系统上使用组合键\ovalbox{Alt Gr}+\ovalbox{A}可以输入名副其实地得到这种“a中的e”。出于历史原因，“o中的e”不在范式iso-latin1中，我的键盘不支持直接输入合字æ。
+
+\subsection{包\textsf{babel}中的工具}
