@@ -11,3 +11,4 @@ texs/*
 .vscode/*
 
 original-book/*
+.DS_Store
