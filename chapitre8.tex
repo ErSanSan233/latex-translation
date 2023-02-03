@@ -5,3 +5,115 @@
 
     \hfill《圣经·利未记》18:22
 \end{quote}
+
+如果说\LaTeX 真的可以让制作几乎所有我们能想到的文档，那么难处往往在于如何向它发号施令。这里，我们提供几个方便你围绕这个功能怪兽寻找更多文档的要点。
+
+\section{图书和其他手册}
+
+以下作品包含了\TeX 和\LaTeX 的标准文档：
+
+\begin{itemize}
+    \item L. 兰波特（L. Lamport）的《\LaTeX ：一个文档准备系统》（\emph{\LaTeX : A Document Preparation System}）[10]；
+    \item M. 古森斯（M. Goossens）、F. 米特尔巴赫（F. Mittelbach）和A. 萨马兰（A. Samarin）的《\LaTeX 伴侣》（\emph{The \LaTeX  Companion}）[6]；
+    \item 《\LaTeX 图形学伴侣》（\emph{The \LaTeX  Graphics Companion}）[5]，作者同上；
+    \item 克努特的\TeX book（\emph{The \TeX book}）[9]；
+    \item （日渐消弭的）\LaTeX 法文问答网站，网址为
+    
+    \begin{center}
+        \wz{http://www.grappa.univ-lille3.fr/FAQ-LaTeX}
+    \end{center}
+
+    目前，网站记录了大约70个问题，基本能够回答关于版式的经典问题。
+\end{itemize}
+
+最近，出现了两本法文的入门书：
+
+\begin{itemize}
+    \item D. 比图泽（D. Bitouzé）和J.C.沙尔庞捷（J.C. Charpentier）的\emph{\LaTeX }[4]；
+    \item C. 舍瓦利耶（C. Chevalier）等人的《\LaTeX 速成》（\emph{\LaTeX  pour l'impatient}）[3]。
+\end{itemize}
+
+以下列出了针对\LaTeXe 的法文书：
+
+\begin{itemize}
+    \item M. 博杜安（M. Baudoin）的《去学LaTeX！》（\emph{Apprends LaTeX !}）；
+    \item B. 巴亚尔（B. Bayart）的《好看的\LaTeXe 手册》（\emph{Joli manuel pour \LaTeXe}）；
+    \item C. 威廉斯（C. Willems）和F. 杰拉尔（F. Geraerds）的《\LaTeX 备忘录》（\emph{Aide mémoire pour \LaTeX}）；
+    \item F. 杰拉尔的《\LaTeX 文本处理指南》（\emph{Guide d'introduction français au traitement de texte}）；
+    \item T. 厄伊提克（T. Oetiker）、H. 帕特尔（H. Partl）、I. 希纳（I. Hyna）、E. 薛格尔（E. Schlegl）的《\LaTeXe 简短（吗？）教程》（\emph{Une courte (?) introduction à \LaTeXe}），原书为德文。
+\end{itemize}
+
+这些文档通常可以以\dm{pdf}格式获取。
+
+\subsection{本地使用}
+
+在你扎到可怜的国际网络之前，需要知道，你如果有幸使用了发行版\TeX Live，那么就有了一个可以在全部文档中进行搜索的工具。例如：
+
+\dmh{texdoc graphicx}
+
+该指令可以为你自动查找扩展\textsf{graphicx}的手册。以下位置可以提供一个你的发行版\TeX Live中已安装的包的索引页面：
+
+\begin{dmd}
+file:///usr/local/texlive/2013/doc.html
+\end{dmd}
+
+当然，前提是该发行版安装在了\dm{/usr/local/}文件夹中。
+
+最后，请善用你系统中搜索可用文件的指令，以尝试借助名称查询关于包或字体的信息。例如，在UNIX中，可以尝试使用：
+
+\dmh{locate babel.pdf}
+
+\subsection{FTP、网络和新闻订阅}
+
+正如很多开源软件一样，关于\LaTeX ，我们也可以在网上找到大量信息。
+
+\subsection{CTAN}
+
+该网站为\TeX 及周边团队（\TeX et Cie）创建了\emph{标准}档案。CTAN这个悦耳的名字代表“综合\TeX 档案网络”（英：Comprehensive TeX Archive Network）。该档案被复制为多个镜像，其中就支持法文。参考链接为：
+
+\begin{dmd}
+\wz{http://www.ctan.org}
+\end{dmd}
+
+该网站提供了大多数\LaTeX 包，并配有文档和源代码，便于你将其安装到自己的系统中。如果你有需要，该网站也有FTP镜像，例如：
+
+\begin{dmd}
+\wz{ftp://ftp.lip6.fr/pub/TeX/CTAN}
+\end{dmd}
+
+\subsection{其他网站}
+
+以下网站介绍围绕\LaTeX 的计划：
+
+\begin{dmd}
+\wz{http://www.latex-project.org}
+\end{dmd}
+
+可以在这里找到关于\LaTeXe 格式修改的信息和\LaTeX 3的进展。需要注意，该网站为英文。另一个英文网站\TeX FAQ也很有启发性：
+
+\begin{dmd}
+\wz{http://tex.stackexchange.com}
+\end{dmd}
+
+\subsection{新闻订阅}
+
+有两个关于\TeX 和\LaTeX 的讨论组：
+
+\begin{itemize}
+    \item \wz{fr.comp.text.tex}，为法文版；
+    \item \wz{comp.text.tex}，功能相同，但为英文版，有更多流量。
+\end{itemize}
+
+如果你愿意在面对偶尔特别多的信息时去花些心思整理，这些讨论组可以构成卓越的信息源。你可以将在小组中提问作为最后的手段——最后手段的意思是，你已经掌握了大量资料。如果你的问题简短而明确，你通常不同等待太久就能得到解答。
+
+~\\
+
+\begin{center}
+    *
+
+    *\quad *
+
+    ~\\
+
+    \textbf{轮到你了！}
+\end{center}

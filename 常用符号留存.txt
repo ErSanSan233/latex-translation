@@ -4,9 +4,10 @@
 
 
 一些统查问题
-TeXBook / TeXbook
+TeXBook X / TeXbook V
 软件名体例
 格式大小写
 法文/法语
 引用 citation reference
 quote
+ftp的替换
