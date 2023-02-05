@@ -35,3 +35,331 @@
 \begin{dmd}
 /usr/share/texmf-texlive/tex/latex/base/book.cls
 \end{dmd}
+
+\subsection{检查宏}
+
+查找指令定义的一个非常便捷的方法是在交互式会话中求助于\LaTeX 。可以直接在操作系统的命令行终端中执行以下指令：
+
+\dmh{latex}
+
+我的系统是这样冷冰冰地回答的：
+
+\begin{dmd}
+\begin{verbatim}
+This is e-TeXk, Version 3.14159-2.1 (Web2C 7.4.5)
+%&-line parsing enabled.
+**
+\end{verbatim}
+\end{dmd}
+
+在“赤裸裸的\TeX ”呼喊出这个冷峻的提示（\dm{**}）的邀请下，我勇敢地回复了\verb|&latex|来要求加载\LaTeX 格式。没有丝毫延迟，就得到了答复：
+
+\begin{dmd}
+\begin{verbatim}
+**&latex
+entering extended mode
+LaTeX2e <2001/06/01>
+Babel <v3.7h> and hyphenation patterns for american,
+french loaded.
+*
+\end{verbatim}
+\end{dmd}
+
+注意，提示中少了一个星号。从现在开始，我们就可以交互式地编写\LaTeX 文档了。从绝对意义商来说，这样做的乐趣不大，但从获取指令的定义和语法上来说，却很有帮助。因此，举例来说，我们可以写下这样的指令：
+
+\begin{dmd}
+\verb|*\show|\codereplace{指令}
+\end{dmd}
+
+这样可以获取\codereplace{指令}的定义。例如：
+
+\begin{dmd}
+\begin{verbatim}
+*\show\mbox
+> \mbox=\long macro:
+\end{verbatim}
+\verb|#1->\leavevmode \hbox {#1}.| \quad $\leftarrow$\textsf{此处为定义}\\
+\verb+<*> \show\mbox+
+\end{dmd}
+
+其中向我们提供了指令\verb|\mbox|的定义。可以注意到，该指令被调用时，将这种调用转化为对\verb|\leavevmode|和\verb|\hbox|的调用。在好奇心的驱使下，我们继续查看指令的定义：
+
+\begin{dmd}
+\verb|*\show\hbox|\\
+\verb|> \hbox=\hbox.| \quad $\leftarrow$\textsf{这是一个原语}\\
+\verb|<*> \show\hbox|
+\end{dmd}
+
+可以观察到，\verb|\hbox|不是由其他指令定义而成的。在\TeX 中，这种指令称为原语（primitive）。我们的探索可以继续：
+
+\begin{dmd}
+\verb|*\show\leavevmode|\\
+\verb|> \leavevmode=macro:|\\
+\verb|->\unhbox \voidb@x .|\quad $\leftarrow$\backslash leavevmode\textsf{的定义}\\
+\verb|<*> \show\leavevmode|
+\end{dmd}
+
+以此类推……
+
+\section{底层工具}
+
+\subsection{百分号图个什么？}
+
+你可能已经注意到，有时\LaTeX 源代码中的行末带有百分号\dm{\%}。基于代码换行时文本间会自动添加空格这样的情况，百分号就有理由出现了。请看如下指令：
+
+\begin{dmd}
+\verb|\newcommand{\beurk}{bidule}|
+\end{dmd}
+
+为了增强可读性，这条指令可以拆分为多行代码：
+
+\begin{codelist}[9.1]{
+\newcommand{\beurk}{
+    bidule
+}
+==(\beurk)==
+}\begin{verbatim}
+\newcommand{\beurk}{
+    bidule
+}
+==(\beurk)==
+\end{verbatim}
+\end{codelist}
+
+可以观察到，“bidule”一词的两侧出现了我们不想要的空格。为了避免这种现象，可以使用如下方式改写：
+
+
+\begin{codelist}[9.2]{
+\newcommand{\beurk}{%
+    bidule%
+}
+==(\beurk)==
+}\begin{verbatim}
+\newcommand{\beurk}{%
+    bidule%
+}
+==(\beurk)==
+\end{verbatim}
+\end{codelist}
+
+在另一些场景下，空格会为行文带来有害的干预。定义以下环境：
+
+\begin{dmd}
+\begin{verbatim}
+\newenvironment{hyperimportant}{% 
+    \bfseries\itshape}{% 
+    \upshape\mdseries}
+\end{verbatim}
+\end{dmd}
+
+\newenvironment{hyperimportant}{% 
+    \bfseries\itshape}{% 
+    \upshape\mdseries}
+
+\begin{codelist}[9.3]{
+    Il est impératif
+\begin{hyperimportant}
+  de multiplier les sauvegardes
+\end{hyperimportant}
+de vos documents personnels
+}\begin{verbatim}
+Il est impératif
+\begin{hyperimportant}
+    de multiplier les sauvegardes
+\end{hyperimportant}
+de vos documents personnels
+\end{verbatim}
+\end{codelist}
+
+如果仔细观察生成的文本，可以注意到，在粗斜体部分文本“{\bfseries\itshape de ... sauvegardes}”的两侧各有两个空格：
+
+\begin{itemize}
+    \item “{\bfseries\itshape de}”前面的两个空格分别由“\dm{impératif}”和begin条目“\verb|\begin{hyperimportant}|”后的换行引入；
+    \item “{\bfseries\itshape sauvegardes}”后面的两个空格分别由“\dm{sauvegardes}”和end条目“\verb|\end{hyperimportant}|”后的换行引入。
+\end{itemize}
+
+我们可以删除换行，来证明这种观点：
+
+\begin{codelist}[9.4]{
+Il est impératif\begin{hyperimportant} de
+multiplier  les
+sauvegardes\end{hyperimportant} de vos
+documents personnels
+}\begin{verbatim}
+Il est impératif\begin{hyperimportant} de
+multiplier  les
+sauvegardes\end{hyperimportant} de vos
+documents personnels
+\end{verbatim}
+\end{codelist}
+
+为了防止被这种问题牵扯精力，一般可以求助于两条用于删除双重空格的指令。对于序列之前的双重空格，可以调用指令\verb+\ignorespaces+来消除它；对于序列之后的，可以调用\verb|\unskip|。
+
+\subsubsection{指令\dm{\backslash ignorespaces}}
+
+该指令可以展开后续的指令，并忽略后面的所有空格：
+
+\begin{codelist}[9.5]{
+\newcommand{\truc}{ }
+\newcommand{\bidule}{ }
+
+a\truc\bidule b\par
+a\ignorespaces\truc\bidule b
+}\begin{verbatim}
+\newcommand{\truc}{ }
+\newcommand{\bidule}{ }
+
+a\truc\bidule b\par
+a\ignorespaces\truc\bidule b
+\end{verbatim}
+\end{codelist}
+
+以上示例中，指令\verb|\truc|和\verb|\bidule|的唯一作用都是在被调用时生成空格。例如，以下指令会生成“\verb*|a { }b|”：
+
+\begin{dmd}
+\verb|a\truc\bidule b|
+\end{dmd}
+
+也就是说，字母a和b之间由两个空格隔开。调用指令\verb|\ignorespaces|——正如其名——可以忽略指令\verb|\truc|和\verb|\bidule|产生的空格。因此，对于前面的示例，可以使用以下指令：
+
+\begin{dmd}
+\begin{verbatim}
+\newenvironment{hyperimportant}{% 
+    \bfseries\itshape\ignorespaces}{\upshape\mdseries}
+\end{verbatim}
+\end{dmd}
+
+这样就能删除一个空格：
+
+\renewenvironment{hyperimportant}{% 
+    \bfseries\itshape\ignorespaces}{\upshape\mdseries}
+
+\begin{codelist}[9.6]{
+    Il est impératif
+\begin{hyperimportant}
+    de multiplier les sauvegardes
+\end{hyperimportant}
+de vos documents personnels.
+}\begin{verbatim}
+Il est impératif
+\begin{hyperimportant}
+    de multiplier les sauvegardes
+\end{hyperimportant}
+de vos documents personnels.
+\end{verbatim}
+\end{codelist}
+
+\subsubsection{指令\dm{\backslash unskip}}
+
+如果细心一些，我们可以发现，“{\bfseries\itshape sauvegardes}”和“de”之间仍然有两个空格抵住了我们的攻击。这就到了\TeX 的原语\verb|\unskip|的用武之地：它可以删除后一个被插入的空格：
+
+\begin{codelist}[9.7]{
+    \newcommand{\truc}{ }
+\newcommand{\bidule}{ }
+a\truc\bidule b\par
+a\truc\bidule\unskip b
+}\begin{verbatim}
+\newcommand{\truc}{ }
+\newcommand{\bidule}{ }
+a\truc\bidule b\par
+a\truc\bidule\unskip b
+\end{verbatim}
+\end{codelist}
+
+最后，我们环境的“正确”定义如下：
+
+\begin{dmd}
+\begin{verbatim}
+\newenvironment{hyperimportant}{% 
+    \bfseries\itshape\ignorespaces}{\unskip\upshape\mdseries}
+\end{verbatim}
+\end{dmd}
+
+这样，就可以删除所有我们不希望插入的空格：
+
+\renewenvironment{hyperimportant}{% 
+    \bfseries\itshape\ignorespaces}{\unskip\upshape\mdseries}
+
+\begin{codelist}[9.8]{
+Il est impératif
+\begin{hyperimportant}
+  de multiplier les sauvegardes
+\end{hyperimportant}
+de vos documents personnels.
+}\begin{verbatim}
+Il est impératif
+\begin{hyperimportant}
+  de multiplier les sauvegardes
+\end{hyperimportant}
+de vos documents personnels.
+\end{verbatim}
+\end{codelist}
+
+\subsection{字符\dm{@}}
+
+在开始探索包的源代码时，你会发现，有很大一部分的指令名称定义中都带有字符\dm{@}。然而，在\dm{.tex}文档中，不允许执行名称带有该字符的指令。这样可以保护或限制包指令的能力范围。例如，在包\textsf{changebar}中定义了指令\verb+\cb@defpoint+，它不能被包的使用者调用。若要重定义该内部指令，需要做出以下小操作：
+
+\begin{dmd}
+\begin{verbatim}
+\makeatletter
+% 我们可以在这里胡说八道
+\renewcommand{\@ttention}{oulala...}
+\makeatother
+% 但在这里就不行了
+\end{verbatim}
+\end{dmd}
+
+这里举例的指令\verb+\@ttention+只有在字符\dm{@}被当作字母的情况下才能被操作。这正是\verb+\makeatletter+的作用：将字符\dm{@}转化为字母，就像其他字母一样。而指令\verb+\makeatother+可以重新赋予该字符区别于其他字母的特殊性。
+
+\begin{exclamation}
+这种操作在使用指令\verb+\usepackage+包含的风格文件中不是必需的。对于这些文件，字符\dm{@}可以当作字母使用。
+\end{exclamation}
+
+\TeX 得以更改此字符的类别的方法在10.5.1小节会详细解释。
+
+\subsection{\TeX 的\dm{\backslash let}}
+
+有时，修改\LaTeX 内部的指令以在其默认行为中添加功能是很有用的做法。例如，为了修改内部指令\verb+\bidule+\jz{
+    好吧，这并不是一条内部指令。它只是作为愚蠢的例子而使用的指令名称……
+}，可以遵循以下步骤。
+
+\begin{enumerate}
+    \item 借助\TeX 的指示\verb+\let+保存该指令：
+    
+    \begin{dmd}
+    \verb|\let\biduleORIG\bidule|
+    \end{dmd}
+
+    \item 在初始定义的基础上重新定义指令\verb+\bidule+：
+    
+    \begin{dmd}
+    \begin{verbatim}
+\renewcommand{\bidule}{%
+    一些新东西\biduleORIG}
+    \end{verbatim}
+    \end{dmd}
+
+    \item 如果有需要，可以借助如下指令重新回到其原定义：
+    
+    \begin{dmd}
+    \verb+\let\bidule\biduleORIG+
+    \end{dmd}
+\end{enumerate}
+
+\section{控制结构和测试}
+
+包\textsf{ifthen}引入的结构遵循以下语法：
+
+\begin{dmd}
+\verb+\ifthenelse{+\codereplace{布尔表达式}\}\\
+\{ ……若真，LaTeX代码……\}\\
+\{ ……若假，LaTeX代码……\}
+\end{dmd}
+
+以及
+
+\begin{dmd}
+\verb+\whiledo{+\codereplace{布尔表达式}\}\\
+\{……当真时，LaTeX代码……\}
+\end{dmd}
+
