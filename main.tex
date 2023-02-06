@@ -87,7 +87,7 @@ $\blacktriangleright$
     }
 }
 
-\def\bib{\textsc{Bib}\TeX }
+\def\bib{\textsc{Bib}\TeX }%bibtex logo
 
 \definecolor{LightPink}{RGB}{230,173,173}
 \newenvironment{exclamation}[1][!]%原书的圆圈感叹号
@@ -122,15 +122,26 @@ $\blacktriangleright$
 }
 
 %代码清单
-\newenvironment{codelist}[2][TODO代码清单序号]{
-    \setlength{\parindent}{0pt}
-    \begin{mdframed}
-        \textbf{清单 #1}
-        \begin{mdframed}[backgroundcolor=lightgray,hidealllines=true]
-            #2 
-        \end{mdframed}
+\newsavebox{\codelistnumber}
+\newsavebox{\coderesult}
+
+\newenvironment{codelist}[2][TODO代码清单序号]{%
+    \setlength{\parindent}{0pt}%
+    \sbox{\codelistnumber}{%
+        \colorbox{black}{\color{white}\textbf{#1}}%
+    }%
+    \sbox{\coderesult}{%
+        \begin{minipage}{\linewidth - 21pt}%
+            \begin{mdframed}[backgroundcolor=lightgray,hidealllines=true]%
+                #2%
+            \end{mdframed}%
+        \end{minipage}%
+    }%
+    \begin{mdframed}%
 }
 {
+    \usebox{\codelistnumber}\\%
+    \usebox{\coderesult}%
     \end{mdframed}
 }
 
