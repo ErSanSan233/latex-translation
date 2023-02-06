@@ -10,7 +10,7 @@
 
 \section{赫尔克里·波洛}
 
-\section{在文件中挖掘信息}
+\subsection{在文件中挖掘信息}
 
 首先，为了让使用\LaTeX 写成的文档带有一些个人特色，需要知道组成你使用的\TeX 或\LaTeX 的发行版的文件的组织方法。鄙人使用了UNIX平台的发行版\TeX Live（\wz{http://www.tug.org/texlive}）。在这个发行版中，我们可以在第一时间在以下目录中查阅各种包的文档：
 
@@ -352,14 +352,164 @@ de vos documents personnels.
 
 \begin{dmd}
 \verb+\ifthenelse{+\codereplace{布尔表达式}\}\\
-\{ ……若真，LaTeX代码……\}\\
-\{ ……若假，LaTeX代码……\}
+\{ ……若真，\LaTeX 代码……\}\\
+\{ ……若假，\LaTeX 代码……\}
 \end{dmd}
 
 以及
 
 \begin{dmd}
 \verb+\whiledo{+\codereplace{布尔表达式}\}\\
-\{……当真时，LaTeX代码……\}
+\{……只要为真时，\LaTeX 代码……\}
+\end{dmd}
+
+\codereplace{布尔表达式}可以根据可以由包\textsf{ifthen}中不同指令的上下文构成，具体如下：
+
+\begin{itemize}
+    \item 表达式\codereplace{数$_1$}\dm{>}\codereplace{数$_2$}、\codereplace{数$_1$}\dm{<}\codereplace{数$_2$}及\codereplace{数$_1$}\dm{=}\codereplace{数$_2$}都可以用于比较\codereplace{数$_1$}和\codereplace{数$_2$}；
+    \item \verb+\equal{+\codereplace{$C_1$}\verb+}{+\codereplace{$C_2$}\dm{\}}可以根据字符串\codereplace{$C_1$}是否等于\codereplace{$C_2$}来返回真或假；
+    \item \verb+\isodd{+\codereplace{数}\verb+}+在\codereplace{数}是奇数的时候返回真，否则返回假；
+    \item \verb+\value{+\codereplace{计数器}\dm{\}}可以以可被布尔条件使用的形式返回\codereplace{计数器}的值；
+    \item \verb+\lengthtest{\codereplace{长度检验}+\dm{\}}返回表达式\codereplace{长度检验}的结果，所谓“长度检验”包含操作符\dm{>}、\dm{<}或\dm{=}和作为运算量的\LaTeX 长度。
+\end{itemize}
+
+可以注意到，我们可以使用逻辑连接符\verb+\OR+、\verb+\AND+和\verb+\NOT+，它们在布尔表达式中扮演的正是我们所想象的角色。也可以使用操作符\verb+\(+和\verb+\)+来组合表达式。
+
+\subsection{布尔值和相关操作符}
+
+包\textsf{ifthen}为其朝气蓬勃的用户提供了操作布尔值的方式。可以使用指令\verb+\newboolean+声明一个布尔值：
+
+\begin{dmd}
+\verb+\newboolean{+\codereplace{布尔值标识}\}
+\end{dmd}
+
+这样就定义了一个可以以\codereplace{布尔值标识}唯一指代的布尔值。接下来，可以使用指令\verb+\setboolean+为其赋值\dm{true}或\dm{false}：
+
+\begin{dmd}
+\verb|\setboolean{|\codereplace{布尔值标识}\}\{\codereplace{值}\}
+\end{dmd}
+
+当然，可以在控制结构\celan{\S 9.3}中使用以此种方式创建的布尔值，例如：
+
+\begin{dmd}
+\verb|\ifthenelse{\boolean{|\codereplace{布尔值标识}\}\}\\
+\{……\codereplace{布尔值标识}为真时的\LaTeX 代码……\}\\
+\{……\codereplace{布尔值标识}为假时的\LaTeX 代码……\}
+\end{dmd}
+
+这里提议了解一下前面内容中的\TeX 版本。实际上，我们可以在\LaTeX 包中找到使用\TeX 编写的代码，特别是对结构“若--则--否则”的使用。如下示例使用了\TeX 定义了新的布尔值\yz{
+    其中，imprimante couleur意为“彩色打印机”。
+}：
+
+\begin{dmd}
+\verb|\newif\ifimprimantecouleur|
+\end{dmd}
+
+使用如下指令将其置为假：
+
+\begin{dmd}
+\verb|\imprimantecouleurfalse|
+\end{dmd}
+
+使用如下指令将其置为真：
+
+\begin{dmd}
+\verb|\imprimantecouleurtrue|
+\end{dmd}
+
+接下来，就可以在\TeX 模式的结构“若--则--否则”中操作这个布尔值：
+
+\begin{dmd}
+\backslash ifimprimantecouleur\\
+... \textsl{\% 针对彩色打印机的代码}\\
+\backslash else\\
+... \textsl{\% 针对黑白打印机的代码}
+\end{dmd}
+
+\subsection{示例}
+
+我们希望通过编写指令来生成阶乘函数的展开\jz{
+    有人整天没什么事情可做……
+}，使得以下方法可以生成预期效果：
+
+\begin{codelist}[9.9]{
+    9的阶乘可以表达为：
+    \begin{displaymath}
+        9!=9\times 8\times 7\times 6\times 5\times 4\times 3\times 2\times 1
+    \end{displaymath}
+}\begin{verbatim}
+9的阶乘可以表达为：
+\begin{displaymath}
+    9!=\itfactorielle{9}
+\end{displaymath}
+\end{verbatim}
+\end{codelist}
+
+解决该问题的一种方法是，编写一个指令，其中包含循环\verb|\whiledo|：
+
+\begin{dmd}
+    \begin{verbatim}
+\verb|\newcommand{\itfactorielle}[1]{%
+    \setcounter{cptfact}{#1} % 使用一个计数器来存储变量
+    \whiledo{\value{cptfact}>1}{ % 只要变量大于1
+    \thecptfact\times % 显示一个乘号
+    \addtocounter{cptfact}{-1}} % 计数器递减
+1} % 在末尾显示1
+    \end{verbatim}
+\end{dmd}
+
+当然，需要声明计数器：
+
+\begin{dmd}
+\verb+\newcounter{cptfact}+
+\end{dmd}
+
+可以注意到，在“只要……”循环中的布尔条件中，我们调用了指令\verb|\value|来比较计数器的值和1。更迂回的办法是，我们可以以递归的方式来实现这个指令：
+
+\begin{dmd}
+\begin{verbatim}
+\newcommand{\recfactorielle}[1]{ % 递归的方式
+\setcounter{cptfact}{#1} % 为计数器赋值
+\ifthenelse{#1>1}{ % 如果值大于1
+    \thecptfact\times % 显示计数器，并紧跟一个乘号
+    \addtocounter{cptfact}{-1} % 计数器递减
+    \recfactorielle{\thecptfact}} % 做一次递归调用
+{1}} % 否则（即值为1）显示1
+\end{verbatim}
+\end{dmd}
+
+该指令当然与之前的方法生成相同的结果。注意到，在\verb|\ifthenelse|的条件中，我们将一个数（\dm{\#1}）与另一个数（1）作比较。我们也能注意到，\verb|\times|的出现说明了该指令需要在数学模式中执行。如果有需要，我们也可以通过指令\verb|\ensuremath|\celan{\S 4.5.1}来避开这个问题。
+
+在你当前阅读的这个文档中，使用了\verb|\whiledo|\verb|\ifthenelse|来生成表\ref{tab:C.22}，以及第7章中的表??\yz{
+    原文此处链接丢失。
+}。首先，我们创建了用于以如下形式显示一个符号的指令：
+
+\newcommand{\affsymb}[2]{%
+\framebox{% un cadre
+\parbox[][16pt][b]{1em}{% autour d’une boîte paragraphe 
+\centering% de 16 pt de hauteur, 1em de large,
+\Pisymbol{#1}{#2}\\% dont le contenu centré 
+\tiny#2}}}
+
+\begin{codelist}[9.10]{
+    \affsymb{pzd}{249} \affsymb{pzd}{75}
+    \affsymb{pzd}{221} \affsymb{pzd}{88}
+}\begin{verbatim}
+\affsymb{pzd}{249} \affsymb{pzd}{75}
+\affsymb{pzd}{221} \affsymb{pzd}{88}
+\end{verbatim}
+\end{codelist}
+
+这个指令如下：
+
+\begin{dmd}
+\begin{verbatim}
+\newcommand{\affsymb}[2]{% 
+    \framebox{% un cadre
+        \parbox[][16pt][b]{1em}{ % 使用段落字盒框起
+        \centering % 字盒高度为16pt，宽度为1em
+        \Pisymbol{#1}{#2}\\ % 字盒的内容居中 
+        \tiny#2}}} % 字盒的内容由符号和其编号组成
+\end{verbatim}
 \end{dmd}
 
