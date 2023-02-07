@@ -507,9 +507,163 @@ de vos documents personnels.
 \newcommand{\affsymb}[2]{% 
     \framebox{% un cadre
         \parbox[][16pt][b]{1em}{ % 使用段落字盒框起
-        \centering % 字盒高度为16pt，宽度为1em
-        \Pisymbol{#1}{#2}\\ % 字盒的内容居中 
-        \tiny#2}}} % 字盒的内容由符号和其编号组成
+            \centering % 字盒高度为16pt，宽度为1em
+            \Pisymbol{#1}{#2}\\ % 字盒的内容居中 
+            \tiny#2}}} % 字盒的内容由符号和其编号组成
 \end{verbatim}
 \end{dmd}
+
+参数\dm{\#1}是字体名（\dm{pzd}或\dm{psy}），参数\dm{\#2}是符号\celan{\S C}的编号。如果你一路阅读本书到这里，并且已经仔细阅读了第4章，尤其是4.4节，那么这段指令对你来说没什么特别的……接下来，我们定义一个指令，用于显示一系列符号：
+
+\newcounter{clig}
+\newcounter{csym}
+\newcounter{cligmax}
+\newcounter{ccol}
+\newcounter{ccolmax}
+
+\newcommand{\symboles}[4][0]{%
+\setcounter{clig}{0}% Mise à zéro des compteurs de ligne 
+\setcounter{ccol}{0}% et de colonne 
+\setcounter{cligmax}{#3}% arguments 3 et 4 pour fixer 
+\setcounter{ccolmax}{#4}% le nbre max de colonnes et de lignes 
+% Pour chaque ligne : 
+\whiledo{\value{clig}<\value{cligmax}}{%
+\setcounter{ccol}{0}% remise à zéro du compteur de colonne 
+% et pour chaque colonne : 
+\whiledo{\value{ccol}<\value{ccolmax}}{%
+% on calcule le numéro du symbole 
+\setcounter{csym}{%
+         \value{clig}*\value{ccolmax}+\value{ccol}+#1}
+% si sa valeur est inférieure à 256 
+\ifthenelse{\value{csym}<256}{%
+\affsymb{#2}{\thecsym}}{% on l’affiche
+\mbox{}}% sinon on créé un boîte vide 
+\stepcounter{ccol}}% on passe à la colonne suivante
+\stepcounter{clig}% on passe à la ligne suivante
+% on saute une ligne, sauf à la fin 
+\ifthenelse{\value{clig}<\value{cligmax}}{\\}{}}}
+
+\begin{codelist}[9.11]{
+如下是Zapf Dingbats字体下的一些符号，
+从40号开始，排列成3行6列：
+\begin{center}
+    \symboles[40]{pzd}{3}{6}
+\end{center}
+}\begin{verbatim}
+如下是Zapf Dingbats字体下的一些符号，
+从40号开始，排列成3行6列：
+\begin{center}
+    \symboles[40]{pzd}{3}{6}
+\end{center}
+\end{verbatim}
+\end{codelist}
+
+如下所示，是指令\verb|\symboles|：
+
+\begin{dmd}
+\begin{verbatim}
+\newcommand{\symboles}[4][0]{%
+    \setcounter{clig}{0} % 行计数器置0
+    \setcounter{ccol}{0} % 列计数器置0
+    \setcounter{cligmax}{#3} % 变量3和4分别用于控制
+    \setcounter{ccolmax}{#4} % 行数和列数的最大值
+    % 对于每行：
+    \whiledo{\value{clig}<\value{cligmax}}{%
+        \setcounter{ccol}{0} % 将列计数器重新置0
+        % 对于某列： 
+        \whiledo{\value{ccol}<\value{ccolmax}}{%
+            % 计算符号的编号
+            \setcounter{csym}{%
+                \value{clig}*\value{ccolmax}+\value{ccol}+#1}
+            % 若值小于256 
+            \ifthenelse{\value{csym}<256}{%
+                \affsymb{#2}{\thecsym}}{ % 显示该符号
+                \mbox{}}% 否则，创建空字盒
+            \stepcounter{ccol}} % 进到下一列
+        \stepcounter{clig} % 进到下一行
+    % 换行，除非到达结尾
+    \ifthenelse{\value{clig}<\value{cligmax}}{\\}{}}}
+\end{verbatim}
+\end{dmd}
+
+当然，需要使用指令\verb|\newcounter|声明其中的五个计数器。
+
+\begin{codelist}[9.12]{
+    我知道，你尤其好奇在计数器到达边界时，
+    指令会怎样处理：
+\begin{center}
+    \symboles[240]{psy}{3}{6}
+\end{center}
+}\begin{verbatim}
+我知道，你尤其好奇在计数器到达边界时，
+指令会怎样处理：
+\begin{center}
+    \symboles[240]{psy}{3}{6}
+\end{center}
+\end{verbatim}
+\end{codelist}
+
+\subsection{判断页码的奇偶性}
+
+有个十分日常的实践，就是创建可以根据页码的奇偶性显示不同内容的指令。我们接下来就来研究下这个事情。在英文问答网站[1]的“Finding if you're on an odd or an even page”入口可以找到，以下天真做法不能得到预期效果：
+
+\begin{dmd}
+\begin{verbatim}
+\ifthenelse{\isodd{\value{page}}} 
+{……对于奇数页……}
+{……对于偶数页……}
+\end{verbatim}
+\end{dmd}
+
+这是因为，在\emph{两个页面的交界处}检测时，页码计数器可能不会被更新：如果在页面开头请求的页码计数器，它会返回前一页的页码……这要归咎于\TeX 实现换页时的处理方法。为了避开这个问题，有很多可用的解决方案。此处采用的方法是使用包\textbf{chngpage}。它使得我们可以在想要检测页码奇偶性的时候人工插入一个\verb|\label|。
+
+所以，在页码奇偶性的检测过程被评估成位于两页的交接处时，可以这样写：
+
+\begin{dmd}
+\begin{verbatim}
+\checkoddpage% \ifcpoddpage
+    ……对于奇数页……
+\else
+    ……对于偶数页……
+\fi 
+\end{verbatim}
+\end{dmd}
+
+\section{字体}
+
+\subsection{“三个”字体族的游戏}
+
+为了保持\LaTeX 文档中字体外形的一直性，三个字体族被定义：
+
+\begin{enumerate}
+    \item 罗马族，正如此处所展现的——\\La famille roman celle que vous êtes en train de lire.
+    \item \textsf{非衬线族，正如此处所展现的——\\La famille sans sérif que vous êtes également en train de lire à l'instant même.}
+    \item 打字机族，对于使用英文的人，也称\emph{typewriter}族——你无疑没办法避开这个字体族，\dm{因为你正在阅读的这行文字正属于打字机族——\\
+    Vous êtes en train de lire.}
+\end{enumerate}
+
+需要注意，默认的这三个字体族由其作者（克努特本人）赐名“计算机现代体”（英：Computer Modern），设计的目的是可以在同一文档内呈现得和谐。基于这样的想法，需要始终注意使这三个字体族在视觉上“相容”。\LaTeX 的各发行版通常提供了一些用以在文档中使用PostScript字体的包，其中就有著名\jz{
+    但过时。现在推荐使用包\textsf{mathptmx}。
+}的包\textsf{times}：
+
+\newfontfamily\timesfontfamily{Times}
+\newfontfamily\helveticafontfamily{Helvetica}
+\newfontfamily\courierfontfamily{Courier}
+
+\begin{enumerate}
+    \item \timesfontfamily{对于罗马族，使用Times，正如此处所展现的——\\Times pour la famille roman celle que vous êtes en train de lire.} 
+    \item \helveticafontfamily{对于非衬线族，使用Helvetica，正如此处所展现的——\\Helvetica pour la famille sans sérif que vous êtes également en train de lire à l'instant même.}
+    \item \courierfontfamily{对于打字机族，使用Courier——\\Courrier pour la famille machine à écrire.}
+\end{enumerate}
+
+另外，还有包\textsf{newcent}：
+
+\newfontfamily\newcenturyfontfamily{NewCenturySchoolbook}
+\newfontfamily\avantgardefontfamily{AvantGardeITCbyBT-Book}
+
+\begin{itemize}
+    \item \newcenturyfontfamily{对于罗马族，使用NewCentury，正如此处所展现的——\\NewCentury pour la famille roman celle que vous êtes en train de lire.} 
+    \item \avantgardefontfamily{对于非衬线族，使用AvantGarde，正如此处所展现的——\\AvantGarde pour la famille sans sérif que vous êtes également en train de lire à l'instant même.}
+    \item \courierfontfamily{对于打字机族，使用Courier——\\Courrier pour la famille machine à écrire.}
+\end{itemize}
 
