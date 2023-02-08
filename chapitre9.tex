@@ -636,35 +636,27 @@ de vos documents personnels.
 为了保持\LaTeX 文档中字体外形的一直性，三个字体族被定义：
 
 \begin{enumerate}
-    \item 罗马族，正如此处所展现的——\\La famille roman celle que vous êtes en train de lire.
-    \item \textsf{非衬线族，正如此处所展现的——\\La famille sans sérif que vous êtes également en train de lire à l'instant même.}
-    \item 打字机族，对于使用英文的人，也称\emph{typewriter}族——你无疑没办法避开这个字体族，\dm{因为你正在阅读的这行文字正属于打字机族——\\
-    Vous êtes en train de lire.}
+    \item 罗马族，正如此处所展现的；
+    \item \textsf{非衬线族，正如此处所展现的；}
+    \item \dm{打字机族，对于使用英文的人，也称\emph{typewriter}族——你无疑没办法避开这个字体族，因为你正在阅读的这行文字正属于打字机族。}
 \end{enumerate}
 
 需要注意，默认的这三个字体族由其作者（克努特本人）赐名“计算机现代体”（英：Computer Modern），设计的目的是可以在同一文档内呈现得和谐。基于这样的想法，需要始终注意使这三个字体族在视觉上“相容”。\LaTeX 的各发行版通常提供了一些用以在文档中使用PostScript字体的包，其中就有著名\jz{
     但过时。现在推荐使用包\textsf{mathptmx}。
 }的包\textsf{times}：
 
-\newfontfamily\timesfontfamily{Times}
-\newfontfamily\helveticafontfamily{Helvetica}
-\newfontfamily\courierfontfamily{Courier}
-
 \begin{enumerate}
-    \item \timesfontfamily{对于罗马族，使用Times，正如此处所展现的——\\Times pour la famille roman celle que vous êtes en train de lire.} 
-    \item \helveticafontfamily{对于非衬线族，使用Helvetica，正如此处所展现的——\\Helvetica pour la famille sans sérif que vous êtes également en train de lire à l'instant même.}
-    \item \courierfontfamily{对于打字机族，使用Courier——\\Courrier pour la famille machine à écrire.}
+    \item {\fontencoding{T1} \fontfamily{ptm} \selectfont 对于罗马族，使用Times，正如此处所展现的；} 
+    \item {\fontencoding{T1} \fontfamily{phv} \selectfont 对于非衬线族，使用Helvetica，正如此处所展现的；}
+    \item {\fontencoding{T1} \fontfamily{pcr} \selectfont 对于打字机族，使用Courier。}
 \end{enumerate}
 
 另外，还有包\textsf{newcent}：
 
-\newfontfamily\newcenturyfontfamily{NewCenturySchoolbook}
-\newfontfamily\avantgardefontfamily{AvantGardeITCbyBT-Book}
-
 \begin{itemize}
-    \item \newcenturyfontfamily{对于罗马族，使用NewCentury，正如此处所展现的——\\NewCentury pour la famille roman celle que vous êtes en train de lire.} %TODO 此处暂时用了自定义的字体，需要换回自带的
-    \item \avantgardefontfamily{对于非衬线族，使用AvantGarde，正如此处所展现的——\\AvantGarde pour la famille sans sérif que vous êtes également en train de lire à l'instant même.}
-    \item \courierfontfamily{对于打字机族，使用Courier——\\Courrier pour la famille machine à écrire.}
+    \item {\fontencoding{T1} \fontfamily{pnc} \selectfont 对于罗马族，使用New Century，正如此处所展现的；} 
+    \item {\fontencoding{T1} \fontfamily{pag} \selectfont 对于非衬线族，使用Avant Garde，正如此处所展现的；}
+    \item {\fontencoding{T1} \fontfamily{pcr} \selectfont 对于打字机族，使用Courier。}
 \end{itemize}
 
 \subsection{字体的指定和字体属性}
@@ -694,8 +686,7 @@ de vos documents personnels.
       \multicolumn{3}{c|}{编码方式：#1}\\
       \hline
     }%
-    {\hline%
-    \end{tabular}
+    {\end{tabular}
   \end{center}
 }
 
@@ -806,7 +797,7 @@ de vos documents personnels.
     \descriptionfonte{bch}{b}{n}{加粗}
   \end{decritfonte}
   
-  \begin{decritfonte}{New century（}{pnc}
+  \begin{decritfonte}{New Century（}{pnc}
     \descriptionfonte{pnc}{m}{n}{常规}
     \descriptionfonte{pnc}{m}{it}{意大利}
     \descriptionfonte{pnc}{m}{sl}{倾斜}
@@ -830,7 +821,7 @@ de vos documents personnels.
     \descriptionfonte{phv}{bc}{n}{加粗紧缩}
   \end{decritfonte}
   
-  \begin{decritfonte}{Avantgarde（}{pag}
+  \begin{decritfonte}{Avant Garde（}{pag}
     \descriptionfonte{pag}{m}{n}{常规}
     \descriptionfonte{pag}{m}{sl}{倾斜}
     \descriptionfonte{pag}{m}{sc}{小型大写}

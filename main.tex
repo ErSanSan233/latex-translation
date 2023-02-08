@@ -60,7 +60,7 @@
 %特殊字体
 \usepackage{fontspec}
 
-\def\codereplace#1{%代码中的可替换部分
+\def\codereplace#1{%代码中的<可替换>部分
     \xeCJKsetup{CJKecglue={\hskip 0pt}}
     \textsl{⟨#1⟩}}
 
@@ -83,17 +83,20 @@
     \char"258E \texttt{#1}}
 }
 
-\def\celan#1{%侧栏TODO三角形方向
+%侧栏TODO三角形方向
+\def\celan#1{
 $\blacktriangleright$
 \marginpar{
         $\blacktriangleleft$\textsf{#1}
     }
 }
 
+%bibtex logo
 \def\bib{\textsc{Bib}\TeX }
 
+%原书的圆圈感叹号
 \definecolor{LightPink}{RGB}{230,173,173}
-\newenvironment{exclamation}[1][!]%原书的圆圈感叹号
+\newenvironment{exclamation}[1][!]%
 {
     \begin{mdframed}[backgroundcolor=LightPink,hidealllines=true]
         {\textcircled{\scriptsize #1}} \quad
@@ -103,8 +106,9 @@ $\blacktriangleright$
     \end{mdframed}
 }
 
+%原书的圆圈i
 \definecolor{LightBlue}{RGB}{173,216,230}
-\newenvironment{ii}[1][i]%原书的圆圈i
+\newenvironment{ii}[1][i]
 {
     \begin{mdframed}[backgroundcolor=LightBlue,hidealllines=true]
         {\textcircled{\scriptsize #1}} \quad
@@ -174,8 +178,8 @@ $\blacktriangleright$
 \xeCJKsetup{AutoFallBack=true}
 \setCJKfallbackfamilyfont{\CJKrmdefault}{ArialUnicodeMS}
 
+%带跳转的内容颜色
 \definecolor{MediumBlue}{RGB}{0,0,205}
-%引用颜色
 \hypersetup{
     colorlinks = true,
     linkcolor = MediumBlue
@@ -201,6 +205,7 @@ $\blacktriangleright$
 \fancyhead[RO,LE]{\thepage}
 \fancyfoot{}
 
+%verbatim设置为不特殊打断，会根据代码内容与\verb 和\texttt混用
 \setstretch{1.2}
 \xpretocmd\verbatim{
     \setlength{\topsep}{0pt}
