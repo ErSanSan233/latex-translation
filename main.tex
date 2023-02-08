@@ -62,7 +62,7 @@
 
 \def\codereplace#1{%代码中的<可替换>部分
     \xeCJKsetup{CJKecglue={\hskip 0pt}}
-    \textsl{⟨#1⟩}}
+    ⟨\textsl{#1}⟩}
 
 \def\wz#1{%网址
     {\ttfamily #1}}
@@ -143,28 +143,24 @@ $\blacktriangleright$
 
 %字体
 \setCJKmainfont[
-    BoldFont={NotoSerifCJKsc-Bold},
-    ItalicFont={Kai},
-    SlantedFont={STFangsong},
-    ]
-    {STSongti-SC-Regular}
+    BoldFont={FandolSong-Bold}, % 破产宋 Bold
+    ItalicFont={FandolKai-Regular}, % 破产楷
+    SlantedFont={FandolFang-Regular}, % 破产仿宋
+    ]{FandolSong-Regular}  % 破产宋 Regular
 \setCJKsansfont[
-    ItalicFont={SmileySans-Oblique},
-    SlantedFont={STFangsong}]
-    {NotoSansCJKsc-DemiLight}
+    BoldFont={NotoSansCJKsc-Black}, % 思源黑黑
+    ItalicFont={DingTalk-JinBuTi},% 钉钉进步体
+    SlantedFont={FandolFang-Regular}, % 破产仿宋
+    ]{NotoSansCJKsc-DemiLight} % 思源黑半轻
 \setCJKmonofont[
-    % ItalicFont={SmileySans-Oblique},
-    SlantedFont={STFangsong}]
-    {STYuanti-SC-Regular}
+    BoldFont={PingFangSC-Medium}, % 苹方中黑
+    ItalicFont={HannotateSC-W7},% 手札体常规
+    SlantedFont={FandolFang-Regular}, % 破产仿宋
+    ]{PingFangSC-Light} % 苹方细
 \setmonofont[
-    ItalicFont={LMMono10-Italic},
-    SlantedFont={SFMono-RegularItalic}
-    ]
-    {LMMono10-Regular}
-% \setsansfont[
-%     SmallCapsFont = {NotoSansCJKsc-DemiLight}
-%     ]
-%     {NotoSansCJKsc-DemiLight}
+    BoldFont={Inconsolata-Bold},
+    ItalicFont={LMMono10-Italic}, % Latin Modern Mono 10 Italic
+    ]{Inconsolata-Light}
 
 %特殊字符的字体显示
 \xeCJKDeclareSubCJKBlock{angleBracket}{
