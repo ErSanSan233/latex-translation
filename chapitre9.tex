@@ -486,7 +486,7 @@ de vos documents personnels.
 
 \newcommand{\affsymb}[2]{%
 \framebox{% un cadre
-\parbox[][16pt][b]{1em}{% autour d’une boîte paragraphe 
+\parbox[][16pt][b]{1em}{% autour d'une boîte paragraphe 
 \centering% de 16 pt de hauteur, 1em de large,
 \Pisymbol{#1}{#2}\\% dont le contenu centré 
 \tiny#2}}}
@@ -536,7 +536,7 @@ de vos documents personnels.
          \value{clig}*\value{ccolmax}+\value{ccol}+#1}
 % si sa valeur est inférieure à 256 
 \ifthenelse{\value{csym}<256}{%
-\affsymb{#2}{\thecsym}}{% on l’affiche
+\affsymb{#2}{\thecsym}}{% on l'affiche
 \mbox{}}% sinon on créé un boîte vide 
 \stepcounter{ccol}}% on passe à la colonne suivante
 \stepcounter{clig}% on passe à la ligne suivante
@@ -662,8 +662,279 @@ de vos documents personnels.
 \newfontfamily\avantgardefontfamily{AvantGardeITCbyBT-Book}
 
 \begin{itemize}
-    \item \newcenturyfontfamily{对于罗马族，使用NewCentury，正如此处所展现的——\\NewCentury pour la famille roman celle que vous êtes en train de lire.} 
+    \item \newcenturyfontfamily{对于罗马族，使用NewCentury，正如此处所展现的——\\NewCentury pour la famille roman celle que vous êtes en train de lire.} %TODO 此处暂时用了自定义的字体，需要换回自带的
     \item \avantgardefontfamily{对于非衬线族，使用AvantGarde，正如此处所展现的——\\AvantGarde pour la famille sans sérif que vous êtes également en train de lire à l'instant même.}
     \item \courierfontfamily{对于打字机族，使用Courier——\\Courrier pour la famille machine à écrire.}
 \end{itemize}
+
+\subsection{字体的指定和字体属性}
+
+\LaTeX 中，字符的字体（fonte\jz{
+    fonte这个术语参考了印刷铅字……
+}或police）由多个特性定义，这正是2.1节提到的问题。为了借助接下来会出现的指令来指定字体，需要进行如下约定：
+
+\begin{itemize}
+    \item 除少数特殊情况外，我们使用T1编码；
+    \item 使用一组字符序列来区分字体族，如\dm{cmr}代表\emph{计算机现代体罗马族（Computer Modern roman）}、\dm{ptm}代表\emph{PostScript Times体}，等等；
+    \item 使用一组字符序列来表示字重，如\dm{m}代表“中等”、\dm{b}代表加粗、\dm{bx}代表“加粗伸展”（gras étendu，英：bold extended；即字母加粗且更宽），等等；
+    \item 使用一组字符序列来表示字体样式（allure，\emph{英：shape}），如\dm{n}d代表“常规”、\dm{it}代表“意大利”、\dm{sl}代表“倾斜”（英：slanted），等等。
+\end{itemize}
+
+\subsubsection{“计算机现代”字体系列}
+
+这一套字体由唐纳德·克努特绘制，由\LaTeX 默认使用。使用指令\verb|\emph|、\verb|\textbf|等时，会自动选用其中的字体。
+
+\newlength{\extrarowheight}
+
+\newenvironment{decritfonte}[3][T1]{%
+  \begin{center}
+    \setlength{\extrarowheight}{2pt}
+    \begin{tabular}{|l|c|c|c|}\hline%
+      \multicolumn{1}{|c|}{#2#3）}&
+      \multicolumn{3}{c|}{编码方式：#1}\\
+      \hline
+    }%
+    {\hline%
+    \end{tabular}
+  \end{center}
+}
+
+\newcommand{\testefonte}[4]{%
+    \fontencoding{#1}%
+    \fontfamily{#2}%
+    \fontseries{#3}%
+    \fontshape{#4}%
+    \selectfont}
+
+\newcommand{\phrasetest}{machin Bidule Chouette chose}
+
+\newcommand{\descriptionfonte}[5][T1]{%
+  {\testefonte{#1}{#2}{#3}{#4}\phrasetest}&#3&#4&#5\\
+  \hline}
+
+  \begin{decritfonte}{计算机现代体罗马族（Computer Modern roman，}{cmr}
+    \descriptionfonte{cmr}{m}{n}{常规}
+    \descriptionfonte{cmr}{m}{it}{意大利}
+    \descriptionfonte{cmr}{m}{sl}{倾斜}
+    \descriptionfonte{cmr}{m}{sc}{小型大写}
+    \descriptionfonte{cmr}{bx}{n}{加粗伸展常规}
+    \descriptionfonte{cmr}{bx}{it}{加粗伸展意大利}
+    \descriptionfonte{cmr}{bx}{sl}{加粗伸展倾斜}
+    \descriptionfonte{cmr}{b}{n}{加粗常规}
+  \end{decritfonte}
+  
+  \begin{decritfonte}{计算机现代体非衬线族（Computer Modern sans sérif，}{cmss}
+    \descriptionfonte{cmss}{m}{n}{常规}
+    \descriptionfonte{cmss}{m}{sl}{倾斜}
+    \descriptionfonte{cmss}{bx}{n}{加粗伸展常规}
+    \descriptionfonte{cmss}{sbc}{n}{半加粗紧缩常规}
+  \end{decritfonte}
+  
+  \begin{decritfonte}{计算机现代体打字机族（Computer Modern typewriter，}{cmtt}
+    \descriptionfonte{cmtt}{m}{n}{常规}
+    \descriptionfonte{cmtt}{m}{it}{意大利}
+    \descriptionfonte{cmtt}{m}{sl}{倾斜}
+    \descriptionfonte{cmtt}{m}{sc}{小型大写}
+  \end{decritfonte}
+  
+  \begin{decritfonte}{计算机现代体斐波那契族（Computer Modern fibonacci，}{cmfib}
+    \descriptionfonte{cmfib}{m}{n}{常规}
+  \end{decritfonte}
+  
+  \begin{decritfonte}{计算机现代体滑稽罗马族（Computer Modern funny roman，}{cmfr}
+    \descriptionfonte{cmfr}{m}{n}{常规}
+    \descriptionfonte{cmfr}{m}{it}{意大利}
+  \end{decritfonte}
+  
+  \begin{decritfonte}{计算机现代体登喜路族（Computer Modern dunhil，}{cmdh}
+    \descriptionfonte{cmdh}{m}{n}{常规}
+  \end{decritfonte}
+
+\subsubsection{混凝土体}
+
+{\fontencoding{T1}\fontfamily{ccr}\fontseries{m}\fontshape{n}\selectfont 混凝土体（fontes en béton）是由克努特为其名为《实用数学》（ \emph{Mathématiques concrètes}，英：\emph{Concrete Mathematics}}）的图书而绘制的\yz{
+    英文的concrete一词既有“混凝土”的含义，又有“实用”的含义。
+}。使用包\textsf{beton}可以在文档中切换该字体。
+
+\begin{decritfonte}[T1]{混凝土体（Concrete fonts，}{ccr}
+    \descriptionfonte{ccr}{m}{n}{常规}
+    \descriptionfonte{ccr}{m}{sc}{小型大写}
+    \descriptionfonte{ccr}{m}{sl}{倾斜}
+    \descriptionfonte{ccr}{m}{it}{意大利}
+\end{decritfonte}
+
+\subsubsection{“哥特风格”字体}
+
+{\fontencoding{U}\fontfamily{yswab}\fontseries{m}\fontshape{n}\selectfont 下面的这些字体属于哥特风格字体族（famille gothique），只有在使用目的特别明确的情况下才能使用，否则文字会极难阅读——正如这里所展示的一样。此外，你可能已经放弃读下去了，所以我可以说点脏话：yi tuo dabian……\\
+}
+
+\begin{decritfonte}[U]{哥特体（Gothique，}{ygoth}
+\descriptionfonte[U]{ygoth}{m}{n}{---}
+\end{decritfonte}
+\begin{decritfonte}[U]{德文尖角体（Fraktur，}{yfrak}
+\descriptionfonte[U]{yfrak}{m}{n}{---}
+\end{decritfonte}
+\begin{decritfonte}[U]{施瓦巴赫体（Schwabacher，}{yswab}
+\descriptionfonte[U]{yswab}{m}{n}{---}
+\end{decritfonte}
+
+\subsubsection{PostScript字体}
+
+下面展示的字体通常可以免费获取，而且在大多数情况下打印机都预装了这些字体。
+
+\begin{decritfonte}{Times（}{ptm}
+    \descriptionfonte{ptm}{m}{n}{常规}
+    \descriptionfonte{ptm}{m}{it}{意大利}
+    \descriptionfonte{ptm}{m}{sl}{倾斜}
+    \descriptionfonte{ptm}{m}{sc}{小型大写}
+    \descriptionfonte{ptm}{b}{n}{加粗}
+  \end{decritfonte}
+  
+  \begin{decritfonte}{Palatino（}{ppl}
+    \descriptionfonte{ppl}{m}{n}{常规}
+    \descriptionfonte{ppl}{m}{it}{意大利}
+    \descriptionfonte{ppl}{m}{sl}{倾斜}
+    \descriptionfonte{ppl}{m}{sc}{小型大写}
+    \descriptionfonte{ppl}{b}{n}{加粗}
+  \end{decritfonte}
+  
+  \begin{decritfonte}{Charter（}{bch}
+    \descriptionfonte{bch}{m}{n}{常规}
+    \descriptionfonte{bch}{m}{it}{意大利}
+    \descriptionfonte{bch}{m}{sl}{倾斜}
+    \descriptionfonte{bch}{m}{sc}{小型大写}
+    \descriptionfonte{bch}{b}{n}{加粗}
+  \end{decritfonte}
+  
+  \begin{decritfonte}{New century（}{pnc}
+    \descriptionfonte{pnc}{m}{n}{常规}
+    \descriptionfonte{pnc}{m}{it}{意大利}
+    \descriptionfonte{pnc}{m}{sl}{倾斜}
+    \descriptionfonte{pnc}{m}{sc}{小型大写}
+    \descriptionfonte{pnc}{b}{n}{加粗} 
+  \end{decritfonte}
+  
+  \begin{decritfonte}{Bookman（}{pbk}
+    \descriptionfonte{pbk}{m}{n}{常规}
+    \descriptionfonte{pbk}{m}{it}{意大利}
+    \descriptionfonte{pbk}{m}{sl}{倾斜}
+    \descriptionfonte{pbk}{m}{sc}{小型大写}
+    \descriptionfonte{pbk}{b}{n}{加粗}
+  \end{decritfonte}
+
+  \begin{decritfonte}{Helvetica（}{phv}
+    \descriptionfonte{phv}{m}{n}{常规} 
+    \descriptionfonte{phv}{m}{sl}{倾斜}
+    \descriptionfonte{phv}{m}{sc}{小型大写}
+    \descriptionfonte{phv}{b}{n}{加粗}
+    \descriptionfonte{phv}{bc}{n}{加粗紧缩}
+  \end{decritfonte}
+  
+  \begin{decritfonte}{Avantgarde（}{pag}
+    \descriptionfonte{pag}{m}{n}{常规}
+    \descriptionfonte{pag}{m}{sl}{倾斜}
+    \descriptionfonte{pag}{m}{sc}{小型大写}
+    \descriptionfonte{pag}{b}{n}{加粗}
+  \end{decritfonte}
+  
+  \begin{decritfonte}{Courier（}{pcr}
+    \descriptionfonte{pcr}{m}{n}{常规}
+    \descriptionfonte{pcr}{m}{sl}{倾斜}
+    \descriptionfonte{pcr}{m}{sc}{小型大写}
+    \descriptionfonte{pcr}{b}{n}{加粗}
+  \end{decritfonte}
+  
+  \begin{decritfonte}{Zapf Chancery（}{pzc}
+    \descriptionfonte{pzc}{m}{n}{常规}
+  \end{decritfonte}
+
+  \subsection{切换字体}
+
+  \subsubsection{全局切换字体}
+
+  我们多少可以使用\LaTeX 发行版中的标准包来切换字体：
+
+  \begin{description}
+    \item[\textsf{mathptmx}] 用于“丑陋”的Times New Roman；
+    \item[\textsf{newcent}] 用于New Century；
+    \item[\textsf{mathpazo}] 用于Palatino；
+    \item[……] 一些只在你使用的发行版中的包……
+  \end{description}
+
+  如果我们去查看文件\dm{newcent.sty}的内容，可以轻松地发现以下指令：
+
+  \begin{dmd}
+  \begin{verbatim}
+\renewcommand{\rmdefault}{pnc}
+\renewcommand{\sfdefault}{pag}
+\renewcommand{\ttdefault}{pcr}
+  \end{verbatim}
+  \end{dmd}
+
+正如9.4.1小节所说，这代表着，通过为三个字体族——“罗马”、“非衬线”，以及“打字机”指定\LaTeX 的标准名，我们重新定义了它们。如\dm{pcn}代表PostScript NewCentury、\dm{pag}代表PostScript AvantGarde等。这些标准名在9.4.2小节的表格中已经给出。
+
+\subsubsection{局部切换字体}
+
+在行文中，可以以以突出必要段落的方式来局部切换字体：
+
+\begin{codelist}[9.13]{
+    {\fontencoding{T1} \fontfamily{cmfr}\selectfont  On passe
+    en ``Funny Roman'' et même qu'on peut
+    faire de l'\emph{italique}... c'est
+    dingue !} Et hop nous voila de nouveau
+    en \dm{\backslash rmdefault}
+}\begin{verbatim}
+{\fontfamily{cmfr}\selectfont  On passe
+  en ``Funny Roman'' et même qu'on peut
+  faire de l'\emph{italique}... c'est
+  dingue !} Et hop nous voila de nouveau
+  en \verb+\rmdefault+
+\end{verbatim}
+\end{codelist}
+
+在\verb|\selectfont|前可以使用调用的指令如下：
+
+\begin{itemize}
+    \item \verb|\fontencoding|指定编码方式；
+    \item \verb|\fontfamily|像使用参数一样指定字体族（\dm{cmr}代表Computer Modern、\dm{ptm}代表PostScript Times等）；
+    \item \verb|\fontseries|指定字重（\dm{b}标识加粗、\dm{m}代表中等字重等）；
+    \item \verb|\fontshape|指定样式（\dm{n}表示常规、\dm{sl}表示倾斜等）；
+    \item \verb|\fontsize|带有两个参数，可以指定字号和相邻两行间的距离。
+\end{itemize}
+
+请看以下示例：
+
+\begin{codelist}[9.14]{
+    {\fontencoding{T1} \fontfamily{ppl}\fontseries{b}%
+  \fontsize{1.8cm}{2cm}\selectfont
+  Big!}
+  
+Et nous voila de nouveau en
+\dm{\backslash rmdefault}
+}\begin{verbatim}
+{\fontfamily{ppl}\fontseries{b}%
+  \fontsize{1.8cm}{2cm}\selectfont
+  Big!}
+
+Et nous voila de nouveau en
+\verb+\rmdefault+
+\end{verbatim}
+\end{codelist}
+
+最后，如果我们调用指令时，总是重复使用各种属性都完全相同的字体，则可以借助指令\verb|\DeclareFixedFont|。该指令可以接受六个参数（名称、编码方式、族、自重、风格、字号），以便我们像使用指令一样去在接下来的文本中使用：
+
+\begin{codelist}[9.15]{
+\DeclareFixedFont{\toupiti}
+{T1}{pag}{m}{n}{3pt}
+Avant {\toupiti bon bé là à moins d'avoir
+une bonne loupe vous ne serez pas capable
+de lire ce texte} après.
+}\begin{verbatim}
+\DeclareFixedFont{\toupiti}
+{T1}{pag}{m}{n}{3pt}
+Avant {\toupiti bon bé là à moins d'avoir
+une bonne loupe vous ne serez pas capable
+de lire ce texte} après.
+\end{verbatim}
+\end{codelist}
 
