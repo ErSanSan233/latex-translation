@@ -929,3 +929,101 @@ de lire ce texte} après.
 \end{verbatim}
 \end{codelist}
 
+\section{新环境列表}
+
+在本文档中，我们多次使用可以基于列表原则（编号、描述等）创建环境的环境\dm{list}。在这里，我们会以示例的方式给出使用此环境的基础知识。
+
+\subsection{原则}
+
+为了定义基于列表的环境，可以遵循如下语法：
+
+\begin{dmd}
+\begin{verbatim}
+\newenvironment{自定义列表}% {\begin{list}%
+{……默认项的代码……}
+{……列表的特征……} }%
+{\end{list}}
+\end{verbatim}
+\end{dmd}
+
+环境\dm{list}接收\emph{两个}参数。第一个参数可以定义默认项目标签（或项）的样式，第二个参数可以定义列表本身，尤其是：
+
+\begin{description}
+    \item[几何特征] 边距、构成列表的段间空间、列表与其插入的环境间的空间，等等；
+    \item[项目标签的生成] 即我们实际生成列表各入口标题的方式。
+\end{description}
+
+接下来的列表会尝试阐明我们定义自己的列表是可以修改的不同尺寸。
+
+\newenvironment{listetest}{\begin{list}{}{%
+    \setlength{\labelwidth}{70pt}%
+    \setlength{\labelsep}{30pt}%
+    \setlength{\itemindent}{15pt}%
+    \setlength{\leftmargin}{100pt}%
+    \setlength{\rightmargin}{10pt}%
+    \setlength{\listparindent}{20pt}%
+    \renewcommand{\makelabel}[1]{\textsf{##1}}
+  }
+}
+{\end{list}}
+
+\newcommand{\prout}{%
+  \raisebox{-11pt}[0pt][0pt]{%
+    \makebox[0pt][l]{\dimension{\labelwidth}{（3）}}}\hfill}
+\newcommand{\youpla}{%
+  \makebox[0pt][r]{\dimension{\leftmargin}{（4）}\kern\listparindent}}
+
+\newcommand{\dimension}[2]{%
+  \parbox{#1}{%
+    \mbox{}\hfill{\tiny #2}\hfill\mbox{}\\[-10pt]
+    \rule[-3.5pt]{1pt}{8pt}%
+    \kern-1pt\rule{#1}{1pt}\kern-1pt%
+    \rule[-3.5pt]{1pt}{8pt}}}
+
+\begin{listetest}
+\item[\prout 水平方向：]
+  \makebox[0pt][r]{\dimension{\itemindent}{（1）}}尺寸\verb+\itemindent+［如序号（1）所示］用于为列表中各个入口的首个段落引入缩进。
+
+  \youpla 尺寸\verb+\leftmargin+［如序号（4）所示］定义了左侧的边距。若要定义右侧的边距，则需要使用尺寸\verb+\rightmargin+。
+\item[\prout 项目标签：]\makebox[0pt][r]{\dimension{\labelsep}{（2）}}尺寸\verb+\labelsep+［如序号（2）所示］定义了项目标签和段首的间隔。\verb+\labelwidth+［如序号（3）所示］定义了包含项目标签的字盒的宽度。
+
+  \makebox[0pt][r]{\dimension{\listparindent}{（5）}}如果我们在列表的一个入口中切换了段落，那么新的段落会依照尺寸\verb+\listparindent+［如序号（5）所示］缩进，默认为0。
+\item[“足够”重要的注意事项：]
+  \makebox[0pt][r]{\dimension{\labelsep}{（2）}}如果项目标签的宽度小于\verb+\labelwidth+，那么文本会插入宽度为\verb+\labelwidth+的字盒中。对于相反的情况，正如此处展示的那样，项目标签的文本会插入带有足够宽度的字盒中，文本也会因此缩进。
+\end{listetest}
+
+\begin{exclamation}
+\verb+\makelabel+会等待参数，从而生成项目标签。这样，我们输入\verb|\item[|\codereplace{项目标签文本}\dm{]}时，就可以调用指令\verb|\makelabel{|\codereplace{项目标签文本}\dm{\}}。
+\end{exclamation}
+
+\subsection{调节项目标签}
+
+为了了解环境\dm{list}的功能，尤其是为项目标签和相邻段落确定相对位置的原则，我们可以想想这些元素按如下顺序一一摆放：
+
+\begin{enumerate}
+    \item 根据长度\verb|\leftmargin|确定的左边距确定段落的整体摆放位置；
+    \item 根据长度\verb|\itemindent|缩进段落首行；
+    \item \emph{相对于}段落的起始位置，同时借助长度\verb|\labelsep|确定项目标签的摆放位置。
+\end{enumerate}
+
+这样操作可以让列表的入口（或项目标签）能够位于左边距以内。图\ref{fig:9.1}表明了相对于段落为列表入口确定位置的两种情况。
+
+\begin{itemize}
+    \item 第一种情况如图\ref{fig:9.1a}所示，列表入口的宽度小于尺寸\verb|\labelwidth|。这种情况下，列表入口可以距离段落\verb|\labelsep|放置。段落缩进\verb|\itemindent|，\verb|\leftmargin|确定左边距。
+    \item 第二中情况如图\ref{fig:9.1b}所示，列表入口的宽度大于尺寸\verb|\labelwidth|。这种情况下，列表入口依然会距离段落\verb|\labelsep|放置，但段落的缩进会大于\verb|\itemindent|。
+\end{itemize}
+
+\begin{figure}[ht]
+    \begin{center}
+        \leavevmode \subfloat[标准]{%
+          \label{fig:9.1a}
+          \includegraphics[width=0.4\linewidth]{img/liste-1}}
+        \hspace{2cm}
+        \subfloat[宽度大于\dm{\backslash labelwidth}]{%
+          \label{fig:9.1b}
+          \includegraphics[width=0.4\linewidth]{img/liste-2}}
+      \caption{列表入口的放置}
+      \label{fig:9.1}
+    \end{center}
+\end{figure}
+

@@ -62,7 +62,7 @@
 
 \def\codereplace#1{%代码中的<可替换>部分
     \xeCJKsetup{CJKecglue={\hskip 0pt}}
-    ⟨\textsl{#1}⟩}
+    {\rm ⟨}\textsl{#1}{\rm ⟩}}
 
 \def\wz#1{%网址
     {\ttfamily #1}}
@@ -92,7 +92,7 @@ $\blacktriangleright$
 }
 
 %bibtex logo
-\def\bib{\textsc{Bib}\TeX }
+\def\bib{B{\scriptsize IB}\TeX}
 
 %原书的圆圈感叹号
 \definecolor{LightPink}{RGB}{230,173,173}
@@ -146,21 +146,21 @@ $\blacktriangleright$
     BoldFont={FandolSong-Bold}, % 破产宋 Bold
     ItalicFont={FandolKai-Regular}, % 破产楷
     SlantedFont={FandolFang-Regular}, % 破产仿宋
-    ]{FandolSong-Regular}  % 破产宋 Regular
+    ]{STSongti-SC-Regular}  % 破产宋 Regular
 \setCJKsansfont[
-    BoldFont={NotoSansCJKsc-Black}, % 思源黑黑
+    BoldFont={NotoSansCJKsc-Bold}, % 思源黑
     ItalicFont={DingTalk-JinBuTi},% 钉钉进步体
     SlantedFont={FandolFang-Regular}, % 破产仿宋
     ]{NotoSansCJKsc-DemiLight} % 思源黑半轻
 \setCJKmonofont[
-    BoldFont={PingFangSC-Medium}, % 苹方中黑
+    BoldFont={PingFangSC-Semibold}, % 苹方中黑
     ItalicFont={HannotateSC-W7},% 手札体常规
     SlantedFont={FandolFang-Regular}, % 破产仿宋
-    ]{PingFangSC-Light} % 苹方细
+    ]{PingFangSC-Regular} % 苹方细
 \setmonofont[
-    BoldFont={Inconsolata-Bold},
-    ItalicFont={LMMono10-Italic}, % Latin Modern Mono 10 Italic
-    ]{Inconsolata-Light}
+    BoldFont={FiraCodeRoman-SemiBold},
+    ItalicFont={JetBrainsMonoNL-Italic}, 
+    ]{FiraCodeRoman-Regular}
 
 %特殊字符的字体显示
 \xeCJKDeclareSubCJKBlock{angleBracket}{
