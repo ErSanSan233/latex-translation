@@ -61,35 +61,29 @@
 \usepackage{fontspec}
 
 \def\codereplace#1{%代码中的<可替换>部分
-    \xeCJKsetup{CJKecglue={\hskip 0pt}}
-    {\rm ⟨}\textsl{#1}{\rm ⟩}}
+    {\xeCJKsetup{CJKecglue={\hskip 0pt}}%
+    {\rm ⟨}\textsl{#1}{\rm ⟩}}}
 
 \def\wz#1{%网址
     {\ttfamily #1}}
 
 \def\jz#1{%原书脚注
-    \footnote{#1}
-}
+    \footnote{#1}}
 
 \def\yz#1{%译注
-    \footnote{\textsl{译注：}#1}
-}
+    \footnote{\textsl{译注：}#1}}
 
 \def\dm#1{%代码
     \texttt{#1}}
 
 \def\dmh#1{%代码行
-    {\xeCJKsetup{CJKecglue={\hskip 0pt}}
-    \char"258E \texttt{#1}}
-}
+    {\xeCJKsetup{CJKecglue={\hskip 0pt}}%
+    \char"258E \texttt{#1}}}
 
-%侧栏TODO三角形方向
-\def\celan#1{
-$\blacktriangleright$
-\marginpar{
-        $\blacktriangleleft$\textsf{#1}
-    }
-}
+\def\celan#1{%侧栏TODO三角形方向
+    $\blacktriangleright$%
+    \marginpar{%
+        $\blacktriangleleft$\textsf{#1}}}
 
 %bibtex logo
 \def\bib{B{\scriptsize IB}\TeX}
@@ -156,11 +150,11 @@ $\blacktriangleright$
     BoldFont={PingFangSC-Semibold}, % 苹方中黑
     ItalicFont={HannotateSC-W7},% 手札体常规
     SlantedFont={FandolFang-Regular}, % 破产仿宋
-    ]{PingFangSC-Regular} % 苹方细
-\setmonofont[
-    BoldFont={FiraCodeRoman-SemiBold},
-    ItalicFont={JetBrainsMonoNL-Italic}, 
-    ]{FiraCodeRoman-Regular}
+    ]{HYZhengYuan-EEW} % 汉仪正圆
+% \setmonofont[
+%     BoldFont={FiraCodeRoman-SemiBold},
+%     ItalicFont={JetBrainsMonoNL-Italic}, 
+%     ]{FiraCodeRoman-Regular}
 
 %特殊字符的字体显示
 \xeCJKDeclareSubCJKBlock{angleBracket}{

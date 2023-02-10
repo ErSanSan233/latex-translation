@@ -352,8 +352,8 @@ de vos documents personnels.
 
 \begin{dmd}
 \verb+\ifthenelse{+\codereplace{布尔表达式}\}\\
-\{ ……若真，\LaTeX 代码……\}\\
-\{ ……若假，\LaTeX 代码……\}
+\{……若真，\LaTeX 代码……\}\\
+\{……若假，\LaTeX 代码……\}
 \end{dmd}
 
 以及
@@ -1027,3 +1027,251 @@ de lire ce texte} après.
     \end{center}
 \end{figure}
 
+\subsection{纵向调整}
+
+同样，我们也可以调整环境\dm{list}中的纵向空白，尤其是借助以下参数可以定义构成列表入口的段落间的距离，也可以定义我们想在列表前后插入的空白。
+
+\begin{itemize}
+  \item \verb|\itemsep|：列表各入口间的距离。
+  \item \verb|\parsep|：列表入口内部的段落间距。
+  \item \verb|\topsep|：所创建的环境前后插入的空白。如果新环境创建了新段落，距离还会再加上\verb|\partopsep|。
+\end{itemize}
+
+\subsection{默认值}
+
+环境\dm{list}的所有参数都带有默认值。在鄙人的系统中用于在水平调整的长度默认值如下：
+
+\begin{center}
+  \begin{tabular}{|l|c|}
+    \hline
+    尺寸 & 默认值\\
+    \hline
+    \verb+\itemindent+    &0pt\\
+    \verb+\listparindent+ &0pt\\
+    \verb+\rightmargin+   &0pt\\
+    \verb+\leftmargin+    &25pt\\
+    \verb+\labelwidth+    &20pt\\
+    \verb+\labelsep+      &5pt\\
+    \hline
+  \end{tabular}
+\end{center}
+
+用于纵向调整的长度的默认值如下：
+
+\begin{center}
+  \begin{tabular}{|l|c|}
+    \hline
+    尺寸 & 默认值\\
+    \hline 
+    \verb+\itemsep+       &4.0pt plus 2.0pt minus 1.0pt\\
+    \verb+\parsep+        &4.0pt plus 2.0pt minus 1.0pt\\
+    \verb+\topsep+        &8.0pt plus 2.0pt minus 4.0pt\\
+    \verb+\partopsep+     &2.0pt plus 1.0pt minus 1.0pt\\
+    \hline
+  \end{tabular}
+\end{center}
+
+指令\verb|\makelabel|定义为：
+
+\begin{dmd}
+\verb+\hfil #1+
+\end{dmd}
+
+因此，在宽度为\verb|\labelwidth|的字盒中，项目标签的内容会被推向右侧。这样一来，如果我们使用以下方式定义一个简单列表：
+
+\begin{dmd}
+\begin{verbatim}
+\newenvironment{listebasique}
+{\begin{list}{}{}}
+{\end{list}}
+\end{verbatim}
+\end{dmd}
+
+那么对于带有项目标签的列表，可以这样使用它：
+
+\newenvironment{listebasique}
+{\begin{list}{}{}}
+{\end{list}}
+
+\begin{codelist}[9.16]{
+    前文前文前文前文前文前文前文前文前文前文前文
+    前文前文
+    \begin{listebasique}
+        \item[X]  o o o o o o o o o o o o o o
+            o o o o o o o o o o o o o o o o o
+          
+            u u u u u u u u u u u u u u u u u
+        \item[一个东西] v v v v v v v v v v v
+    \end{listebasique}
+    后文后文后文后文后文后文后文后文后文后文后文
+    后文后文后文
+}\begin{verbatim}
+前文前文前文前文前文前文前文前文前文前文前文
+前文前文
+\begin{listebasique}
+    \item[X]  o o o o o o o o o o o o o o
+        o o o o o o o o o o o o o o o o o
+      
+        u u u u u u u u u u u u u u u u u
+    \item[一个东西] v v v v v v v v v v v
+\end{listebasique}
+后文后文后文后文后文后文后文后文后文后文后文
+后文后文后文
+\end{verbatim}
+\end{codelist}
+
+对于没有列表标签的情况，则可以这样使用：
+
+\begin{codelist}[9.17]{
+    前文前文前文前文前文前文前文前文前文前文前文
+    前文前文
+    \begin{listebasique}
+        \item[] e e e e e e e e e e e e e e e e
+            e e e e e e e e e e e e e e e e e e
+    \end{listebasique}
+    后文后文后文后文后文后文后文后文后文后文后文
+    后文后文后文
+}\begin{verbatim}
+前文前文前文前文前文前文前文前文前文前文前文
+前文前文
+\begin{listebasique}
+    \item[] e e e e e e e e e e e e e e e e
+        e e e e e e e e e e e e e e e e e e
+\end{listebasique}
+后文后文后文后文后文后文后文后文后文后文后文
+后文后文后文
+\end{verbatim}
+\end{codelist}
+
+\subsection{示例}
+
+B.2节中，描述\LaTeX 辅助文件的列表是使用如下代码生成的：
+
+\newenvironment{ficaux}{% 
+\begin{list}{}{%
+    % largeur de la boîte englobant le label :
+          \setlength{\labelwidth}{1cm}
+    % espace entre paragraphe et l ’ étiquette :
+          \setlength{\labelsep}{8pt}
+    % marge de gauche :
+    \setlength{\leftmargin}{\labelwidth+\labelsep} \renewcommand{\makelabel}[1]{% production de l’étiquette : 
+    \framebox[\labelwidth]{\texttt{##1}}}}}{\end{list}}
+
+\begin{codelist}[9.18]{
+    \begin{ficaux}
+        \item[tex] \LaTeX{} 源文件，吧啦
+        吧啦吧啦……
+        \item[aux] 辅助文件……
+        \item[log] 跟踪……
+        \item[dvi] \emph{独立于设备}的文
+        件……
+    \end{ficaux}
+}\begin{verbatim}
+\begin{ficaux}
+    \item[tex] \LaTeX{} 源文件，吧啦
+    吧啦吧啦……
+    \item[aux] 辅助文件……
+    \item[log] 跟踪……
+    \item[dvi] \emph{独立于设备}的文
+    件……
+\end{ficaux}
+\end{verbatim}
+\end{codelist}
+
+环境\dm{ficaux}按如下方式定义：
+
+\begin{dmd}
+\begin{verbatim}
+\newenvironment{ficaux}{% 
+    \begin{list}{}{%
+        % 包含整个标签的字盒宽度：
+        \setlength{\labelwidth}{1cm}
+        % 段落和项目标签的间距：
+        \setlength{\labelsep}{8pt}
+        % 左边距：
+        \setlength{\leftmargin}{\labelwidth+\labelsep} 
+        \renewcommand{\makelabel}[1]{% 生成项目标签：
+            \framebox[\labelwidth]{\texttt{##1}}}}}{\end{list}}
+\end{verbatim}
+\end{dmd}
+
+在这个例子中，以下关系使得列表入口的位置按图\ref{fig:9.2a}所示的方式确定：
+
+\begin{dmd}
+\verb|\leftmargin=\labelwidth+\labelsep|
+\end{dmd}
+
+%TODO 与附录统一
+
+\begin{figure}[ht]
+    \begin{center}
+        \leavevmode \subfloat[\dm{ficaux}列表]{%
+          \label{fig:9.2a}
+          \includegraphics[width=0.4\linewidth]{img/liste-ficaux}}
+        \hspace{2cm}
+        \subfloat[\dm{question}列表]{%
+          \label{fig:9.2b}
+          \includegraphics[width=0.4\linewidth]{img/liste-question.eps}}
+      \caption{示例列表的项目标签位置}
+      \label{fig:9.2}
+    \end{center}
+\end{figure}
+
+再看一个例子：创建一个带编号的列表环境，为实验课或课堂测验生成试卷题目……
+
+\newcounter{cptquestion}
+
+\newcommand{\etiquettequestion}[1]{% 
+\makebox[\labelwidth]{%
+     \Pisymbol{pzd}{47}$_\thecptquestion$}}
+
+\newenvironment{question}{\begin{list}{}{%
+    \usecounter{cptquestion}% 
+    \setlength{\labelwidth}{2em}% 
+    \setlength{\labelsep}{1em} 
+    \setlength{\itemindent}{15pt}% 
+    \setlength{\leftmargin}{.8cm} 
+    \setlength{\rightmargin}{10pt} 
+    \renewcommand{\makelabel}[1]{%
+        \etiquettequestion{##1}}}}
+{\end{list}}
+
+\begin{codelist}[9.19]{
+    \begin{question}
+        \item o o o o o o o o o o o o o o o o
+            o o o o o o o o o o o o o o o o o
+        \item o o o o o o o o o o o o o o o o
+            o o o o o o o o o o o o o o o o o
+            o o o o o o o o o o o o o o o o o
+        \item o o o o o o o o o o o o o o o o
+            o o o o o o o o o o o o o o o o o
+    \end{question}
+}\begin{verbatim}
+\begin{question}
+    \item o o o o o o o o o o o o o o o o
+        o o o o o o o o o o o o o o o o o
+    \item o o o o o o o o o o o o o o o o
+        o o o o o o o o o o o o o o o o o
+        o o o o o o o o o o o o o o o o o
+    \item o o o o o o o o o o o o o o o o
+        o o o o o o o o o o o o o o o o o
+\end{question}
+\end{verbatim}
+\end{codelist}
+
+该环境可以由以下代码生成：
+
+\begin{dmd}
+\begin{verbatim}
+    \newenvironment{question}{\begin{list}{}{% 
+        \usecounter{cptquestion}% 
+        \setlength{\labelwidth}{2em}% 
+        \setlength{\labelsep}{1em} 
+        \setlength{\itemindent}{15pt}% 
+        \setlength{\leftmargin}{.8cm} 
+        \setlength{\rightmargin}{10pt} 
+        \renewcommand{\makelabel}[1]{%
+            \etiquettequestion{##1}}}}
+   {\end{list}}
+\end{verbatim}
+\end{dmd}
