@@ -1275,3 +1275,125 @@ B.2节中，描述\LaTeX 辅助文件的列表是使用如下代码生成的：
    {\end{list}}
 \end{verbatim}
 \end{dmd}
+
+对应的位置确定过程如图\ref{fig:9.2b}所示。注意到，在列表的定义中，指令\verb|\usecounter|用来创建编号，并且指明了会用到的计数器。因此，需要声明所涉及的计数器：
+
+\begin{dmd}
+\verb+\newcounter{cptquestion}+
+\end{dmd}
+
+接下来，每个列表入口由题号和一个“美观”的铅笔图标构成，可以借助以下指令来达到我们的目的：
+
+\begin{dmd}
+\begin{verbatim}
+\newcommand{\etiquettequestion}[1]{% 
+    \makebox[\labelwidth]{%
+        \Pisymbol{pzd}{47}$_\thecptquestion$}}
+\end{verbatim}
+\end{dmd}
+
+最后，以下指令重定义了指令\verb|\makelabel|：
+
+\begin{dmd}
+\verb|\renewcommand{\makelabel}[1]{\etiquettequestion{##1}}}}|
+\end{dmd}
+
+这样的重定义使其调用我们“美观”的铅笔图标。指令\verb|\etiquettequestion|的第一个也是唯一一个参数由表达式\verb+##1+传入。实际上，在定义环境\dm{question}的语境中，\verb|#1|就成为了该语境的第一个参数。
+
+本书附录B中可以找到包的列表。生成这个列表的代码如下：
+
+\begin{dmd}
+\begin{verbatim}
+\newenvironment{packages}{\begin{list}{}{%
+    \setlength{\labelwidth}{2.5cm}%
+    \setlength{\itemindent}{0pt}% 
+    \setlength{\leftmargin}{\labelwidth+\labelsep}% 
+    \renewcommand{\makelabel}[1]{%
+        $\blacktriangle$ \ltxpack{##1} \hfil:}}}
+    {\end{list}}
+\end{verbatim}
+\end{dmd}
+
+\newenvironment{packages}{\begin{list}{}{%
+    \setlength{\labelwidth}{2.5cm}%
+    \setlength{\itemindent}{0pt}% 
+    \setlength{\leftmargin}{\labelwidth+\labelsep}% 
+    \renewcommand{\makelabel}[1]{%
+        % $\blacktriangle$ \textsf{##1} \hfil:}}}
+        \textsf{##1} \hfil:}}}
+    {\end{list}}
+%FIXME ▲不显示
+
+其中，指令\verb|\ltxpack|的定义见11.1.2小节。为了给你提供更多信息，该环境的效果如下：
+
+\begin{codelist}[9.20]{
+    \begin{packages}
+        \item[▴\ 某东西] 该包可以用于在文档中插入
+        某东西，而不需要这个玩意和那个物件……
+    \end{packages}
+}\begin{verbatim}
+\begin{packages}
+    \item[某东西] 该包可以用于在文档中插入
+    某东西，而不需要这个玩意和那个物件……
+\end{packages}
+\end{verbatim}
+\end{codelist}
+
+\subsection{略微变形的示例}
+
+我们接下来围绕本书术语词典的组成方法来讨论细节。这个例子中的列表风格展示在接下来说明两个思路的列表中：
+
+\newcommand{\boiteentreeglossaire}[1]{% 
+\parbox[b]{\labelwidth}{%
+\setlength{\fboxsep}{3pt}% 
+\setlength{\fboxrule}{.4pt}% 
+\shadowbox{\sffamily#1}\\\hfill\mbox{}}}
+
+\newenvironment{glossaire}{\begin{list}{}{%
+     \setlength{\labelwidth}{.5\textwidth}% 
+     \setlength{\labelsep}{-.8\labelwidth}% 
+     \setlength{\itemindent}{\parindent}% 
+     \setlength{\leftmargin}{25pt}% 
+     \setlength{\rightmargin}{0pt}%
+     \setlength{\itemsep}{.8\baselineskip}% 
+     \renewcommand{\makelabel}[1]{%
+       \boiteentreeglossaire{##1}}}}
+{\end{list}}
+
+\begin{glossaire}
+    \item[思路1] 长度\verb|\labelsep|可以是负值，这样可以使列表入口和段落重合，如图\ref{fig:9.3a}所示。
+    \item[思路2] 我们可以创建一个段落字盒，用于创建项目标签。这样创建的字盒可以由两行文字构成，上面的一行是构成项目标签文本的文字，下面的一行置空并与段落重合，如图\ref{fig:9.3b}所示。
+\end{glossaire}
+
+\begin{figure}[ht]
+    \begin{center}
+        \leavevmode \subfloat[\dm{\backslash labelsep}使用负值]{%
+          \label{fig:9.3a}
+          \includegraphics[width=0.4\linewidth]{img/liste-glo-1}}
+        \hspace{2cm}
+        \subfloat[创建段落字盒使项目标签和段落重叠]{%
+          \label{fig:9.3b}
+          \includegraphics[width=0.4\linewidth]{img/liste-glo-2}}
+      \caption{列表“术语字典”中项目标签的位置确定}
+      \label{fig:9.3}
+    \end{center}
+\end{figure}
+
+本书使用的生成如上形式的列表和其中项目标签的代码如下：
+
+\begin{dmd}
+\begin{verbatim}
+\newenvironment{glossaire}{\begin{list}{}{%
+    \setlength{\labelwidth}{.5\textwidth}% 
+    \setlength{\labelsep}{-.8\labelwidth}% 
+    \setlength{\itemindent}{\parindent}% 
+    \setlength{\leftmargin}{25pt}% 
+    \setlength{\rightmargin}{0pt}%
+    \setlength{\itemsep}{.8\baselineskip}% 
+    \renewcommand{\makelabel}[1]{%
+        \boiteentreeglossaire{##1}}}}
+{\end{list}}
+\end{verbatim}
+\end{dmd}
+
+\verb|\itemsep|的值\verb|.8\baselineskip|针对每个列表入口插入了空白，可以项目标签“透透气”。
