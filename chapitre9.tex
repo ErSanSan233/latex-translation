@@ -1396,4 +1396,198 @@ B.2节中，描述\LaTeX 辅助文件的列表是使用如下代码生成的：
 \end{verbatim}
 \end{dmd}
 
-\verb|\itemsep|的值\verb|.8\baselineskip|针对每个列表入口插入了空白，可以项目标签“透透气”。
+\verb|\itemsep|的值\verb|.8\baselineskip|针对每个列表入口插入了空白，可以项目标签“透透气”。以下指令用于生成包含列表入口的字盒，可以使段落重叠在上面：
+
+\begin{dmd}
+\begin{verbatim}
+\newcommand{\boiteentreeglossaire}[1]{% 
+    \parbox[b]{\labelwidth}{%
+        \setlength{\fboxsep}{3pt}% 
+        \setlength{\fboxrule}{.4pt}% 
+        \shadowbox{\sffamily#1}\\\hfill\mbox{}}}
+\end{verbatim}
+\end{dmd}
+
+为了了解该字盒是如何放置的，我们对上述指令做出了一些调整，来绘制字盒的轮廓：
+
+\renewcommand{\boiteentreeglossaire}[1]{% 
+    \parbox[b]{\labelwidth}{%
+        \setlength{\fboxsep}{3pt}% 
+        \setlength{\fboxrule}{.4pt}% 
+        \shadowbox{\sffamily#1}\\\hfill\mbox{}}}
+
+        \newenvironment{leglossaire}{%
+        \begin{list}{}{%
+            \setlength{\labelwidth}{.5\textwidth}%
+            \setlength{\labelsep}{-.8\labelwidth}%
+            \setlength{\itemindent}{\parindent}%
+            \setlength{\leftmargin}{25pt}%
+            \setlength{\rightmargin}{0pt}%
+            \setlength{\itemsep}{.8\baselineskip}%
+            \renewcommand{\makelabel}[1]{\boiteentreeglossaire{##1}}
+          }
+        }
+      {\end{list}}
+
+\newcommand{\fboiteentreeglossaire}[1]{%
+      \setlength{\fboxsep}{-1pt}%
+      \setlength{\fboxrule}{1pt}%
+      \fbox{\parbox[b]{\labelwidth}{%
+        \setlength{\fboxsep}{3pt}%
+        \setlength{\fboxrule}{.4pt}%
+        \shadowbox{\sffamily#1}\\\hfill\mbox{}%
+      }}%
+    }
+
+\begin{codelist}[]{
+    \begin{leglossaire}
+        \renewcommand{\boiteentreeglossaire}{%
+        \fboiteentreeglossaire}% 
+        \item[Bidule] o o o o o o o o o o o o
+          o o o o o o o o o o o o o o o o o o
+          o o o o o o o o o o o o o o o o o o
+        \item[Truc muche] o o o o o o o o o o
+          o o o o o o o o o o o o o o o o o o
+          o o o o o o o o o o o o o o o o o o
+    \end{leglossaire}
+}\begin{verbatim}
+\begin{leglossaire}
+    \renewcommand{\boiteentreeglossaire}{%
+    \fboiteentreeglossaire}% 
+    \item[Bidule] o o o o o o o o o o o o
+      o o o o o o o o o o o o o o o o o o
+      o o o o o o o o o o o o o o o o o o
+    \item[Truc muche] o o o o o o o o o o
+      o o o o o o o o o o o o o o o o o o
+      o o o o o o o o o o o o o o o o o o
+\end{leglossaire}
+\end{verbatim}
+\end{codelist}
+
+\section{被“打包成盒”的环境}
+
+本章讨论环境\dm{lrbox}。它可以将一个环境中的“内容”存入字盒中，经常适用于解决将对象打包为字盒的日常问题。接下来的例子中，我们会看到如何使用这种结构。
+
+\subsection{原则}
+
+使用4.4.5小节展示的方法声明字盒：
+
+\begin{dmd}
+\backslash newsavebox\{\codereplace{自定义字盒}\}
+\end{dmd}
+
+接下来，编写如下方法：
+
+\begin{dmd}
+\verb|\begin{lrbox}{|\codereplace{自定义字盒}\}……内容……\verb|\end{lrbox}|
+\end{dmd}
+
+其完全等价于以下指令：
+
+\begin{dmd}
+\backslash savebox\{\codereplace{自定义字盒}\verb|}{……内容……}|
+\end{dmd}
+
+好吧，既然它们两个是完全相同的，那何必费二遍工夫呢？实际上，这里的要点在于去\emph{定义环境}。
+
+\subsection{示例}
+
+例如，假设存在以下环境：
+
+\begin{dmd}
+\begin{verbatim}
+\newenvironment{remarque}{%
+    % begin条文 
+    \begin{center}\begin{minipage}{.8\textwidth}}{% 
+    % end条文
+    \end{minipage}\end{center}}
+\end{verbatim}
+\end{dmd}
+
+环境带有这样的使用场景：
+
+\newenvironment{remarque}{%
+    % begin条文 
+    \begin{center}\begin{minipage}{.8\textwidth}}{% 
+    % end条文
+    \end{minipage}\end{center}}
+
+\begin{codelist}[9.22]{
+我们可以（启发性地）突出显示如下内容：
+\begin{remarque}
+    爵士未死，只是闻起来显得滑稽。
+    \hfill 弗兰克·扎帕 （Frank Zappa）
+\end{remarque}
+接下来继续我们的正文……
+}\begin{verbatim}
+我们可以（启发性地）突出显示如下内容：
+\begin{remarque}
+    爵士未死，只是闻起来显得滑稽。
+    \hfill 弗兰克·扎帕 （Frank Zappa）
+\end{remarque}
+接下来继续我们的正文……
+\end{verbatim}
+\end{codelist}
+
+问题来了：\emph{该如何将这个突出显示的内容框起来？}不带一丝犹豫，我们就可以回答：\emph{借助环境}\dm{lrbox}\emph{。}考虑到\LaTeX 没有方法来在\dm{begin}条文中开启一个\verb|\fbox|并在\dm{end}条文中结束它，我们可以利用如下原则：
+
+\begin{enumerate}
+    \item 借助环境\dm{lrbox}将内容存储起来等待框起；
+    \item 复用这样构建的字盒，将其框起来。
+\end{enumerate}
+
+因此，我们有：
+
+\begin{dmd}
+\begin{verbatim}
+\newsavebox{\boiteremarque} 
+\newenvironment{remarque}{%
+    % begin条文
+    \begin{lrbox}{\boiteremarque}% 开始“打包成盒”
+    \begin{minipage}{.8\textwidth}}{%
+    % end条文
+    \end{minipage}
+    \end{lrbox}% 结束“打包成盒”
+    % 生成带框的字盒
+    \begin{center}
+        \fbox{\usebox{\boiteremarque}}
+    \end{center}}
+\end{verbatim}
+\end{dmd}
+
+\newsavebox{\boiteremarque} 
+\renewenvironment{remarque}{%
+    % begin条文
+    \begin{lrbox}{\boiteremarque}% 开始“打包成盒”
+    \begin{minipage}{.8\textwidth}}{%
+    % end条文
+    \end{minipage}
+    \end{lrbox}% 结束“打包成盒”
+    % 生成带框的字盒
+    \begin{center}
+        \fbox{\usebox{\boiteremarque}}
+    \end{center}}
+
+\begin{codelist}[9.23]{
+我们可以（启发性地）突出显示如下内容：
+\begin{remarque}
+    爵士未死，只是闻起来显得滑稽。
+    \hfill 弗兰克·扎帕 （Frank Zappa）
+\end{remarque}
+接下来继续我们的正文……
+}\begin{verbatim}
+我们可以（启发性地）突出显示如下内容：
+\begin{remarque}
+    爵士未死，只是闻起来显得滑稽。
+    \hfill 弗兰克·扎帕 （Frank Zappa）
+\end{remarque}
+接下来继续我们的正文……
+\end{verbatim}
+\end{codelist}
+
+这个思路在接下来的几章中会反复使用。
+
+\begin{exclamation}
+需要注意，环境\dm{lrbox}定义的字盒是简单字盒（\S 4.4.1）%TODO celan
+，正如使用\verb|\mbox|一类的指令创建的字盒一样。因此，字盒中无法切换段落。
+\end{exclamation}
