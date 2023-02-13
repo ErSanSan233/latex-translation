@@ -6,4 +6,111 @@
     \hfill《圣经·雅歌》7:10
 \end{quote}
 
-那本章的主要思路是介绍，介绍那些为生成文档中个别部分而被个性化修改的\LaTeX 的标准工具，间或可以从中看到些用于“调香”的宏。
+那本章的主要思路是介绍，介绍那些为生成文档中个别部分而被个性化修改的\LaTeX 的标准工具，间或可以从中看到些用于“调香”的宏。这些个性化设置可以应用于各个层级：使用包的选项，如设置页眉；偶尔涉足宏定义，如设置章节的展现风格；更深入地处理宏，如处理内容的表格。本章的一部分聚焦于我们可以从包\textsf{fancyvrb}中调用的工具。作为本章的末尾，我们会去抨击一下法文的引号。
+
+\section{索引的外观} % 这节翻译得是什么破玩意
+
+为了修改索引的外观，需要明白，当我们大手一挥噼里啪啦地写下如下指令的时候，我们实际上就生成了一个文件\codereplace{文档}\dm{.ind}：
+
+\dmh{makeindex }\codereplace{文档}
+
+该文件包含了类似下面列出的内容：
+
+\begin{dmd}
+\verb|\begin{theindex}| \quad$\leftarrow$\textsf{文前部分}\\
+~\\
+\verb|\item Cosmic debris, 12,34|\\
+~\\
+\verb|\indexspace| \quad$\leftarrow$\textsf{分组间的空间}\\
+~\\
+\verb|\item Debra kadabra, 23| \quad$\leftarrow$\textsf{入口，分割符，页码}\\
+~\\
+\verb|\end{theindex}| \quad$\leftarrow$\textsf{文后部分}
+\end{dmd}
+
+实际上，该代码会从带有预定义值且可被修改的一般性实体中生成。为了证明这个观点，只需要知道，程序\textsf{makeindex}可以生成一个包含\LaTeX 代码外内容的\dm{.ind}文件。为了理解一般性实体的职责，可以用如下方式描述\textsf{makeindex}的工作。
+
+\begin{enumerate}
+    \item 根据实体\dm{preamble}的值来写入文前部分。
+    \item 对于每个\dm{.idm}文件：
+    \begin{enumerate}
+        \item 写入实体\dm{item\_0}的内容；
+        \item 写入入口（本例中为“Cosmic debris”）；
+        \item 写入分割符（实体\dm{delin\_0}的值）；
+        \item 写入页码。
+    \end{enumerate}
+    \item 在每个分组的结尾（即首字母切换时），写入实体\dm{group\_skip}的内容；
+    \item 根据\dm{postamble}的值写入文后部分。
+\end{enumerate}
+
+上述实体的默认值如下：
+
+\begin{center}
+    \begin{dmd}
+        \begin{tabular}{|l|l|}
+            \hline
+            preamble & \verb+"\\begin{theindex}\n"+\\
+            item\_0 &\verb+"\n \\item"+\\
+            delim\_0 & ", "\\
+            group\_skip & \verb+"\n\n \\indexspace\n"+\\
+            postamble & \verb+"\n\n\\end{theindex}\n"+\\
+            \hline
+        \end{tabular}
+    \end{dmd}
+\end{center}
+
+这些值可以使用通常带有后缀名\dm{.ist}的风格文件作为媒介来修改。可以通过以下方式在调用\textsf{makeindex}时使用：
+
+\dmh{makeindex -s \codereplace{风格}.ist \codereplace{文件}}
+
+如此一来，为了生成文档的标题，我们可以一开始就重新定义一二级间的分隔符：
+
+\begin{dmd}
+\begin{verbatim}
+delim_0 " \\dotfill \ "
+delim_1 " \\dotfill \ "
+\end{verbatim}
+\end{dmd}
+
+我们将默认用于分隔索引入口和页码的逗号替换成了省略号。接下来，通过严谨地阅读\textsf{makeindex}的文档\jz{
+    可参见参考文献的实用引用后的提醒。
+}，可以注意到要求\textsf{makeindex}为入口组和代表分组的字母间生成空间的礼貌方式如下：
+
+\begin{dmd}
+headings\_flag 1
+\end{dmd}
+
+这里，代表分组的字母会表示为大写，并且借助实体\dm{heading\_prefix}和\dm{heading\_suffix}的内容框起。无所谓——为了生成我们美丽的带阴影的字盒，我们可以在风格文件中这样写：
+
+\begin{dmd}
+\begin{verbatim}
+heading_prefix "{\\large\\sffamily\\bfseries\\shadowbox{"
+heading_suffix "}\\hfill}\\nopagebreak\n"
+\end{verbatim}
+\end{dmd}
+
+这段你已经可以看懂的示例内容，就会生成我们需要的字盒。例如对于字母C：
+
+\begin{codelist}[10.1]{
+    {\large\sffamily\bfseries%
+    \shadowbox{C}\hfil}\nopagebreak
+}\begin{verbatim}
+{\large\sffamily\bfseries%
+    \shadowbox{C}\hfil}\nopagebreak
+\end{verbatim}
+\end{codelist}
+
+这段指令会被\dm{group\_skip}的内容覆盖掉。而我们稍早前说过，\dm{group\_skip}的默认值是\verb|\indexspace|。在研究了几个月之后\jz{
+    开玩笑的。我是想说，只花了几秒……好吧，几分钟。
+}，我们成功地在\dm{book.cls}中发现了该指令的定义，并且将分组间空间略微扩大了些：
+
+\begin{dmd}
+\renewcommand\indexspace{%
+    \par \vskip 20pt plus5pt minus3pt\relax}
+\end{dmd}
+
+\begin{ii}
+本小节中，我们只是非常简单地看了看makeindex提供的功能。除了在《\LaTeX 伴侣》中能找到的信息，Debian环境下关于此工具的说明书中提供了我们可以定义的一半入口的详尽列表。由P.陈（P. Chen；音译）和M.A.哈林森（M. A. Harrinson）编写的文件\dm{ind.dvi}同样是初学索引自定义的良好开端。
+\end{ii}
+
+\section{标题的外观}
