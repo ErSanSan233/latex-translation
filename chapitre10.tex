@@ -114,3 +114,142 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 \end{ii}
 
 \section{标题的外观}
+
+在本节，我们会介绍我们修改\LaTeX 标准（篇、章、节等）标题外观的方式。
+
+\subsection{目录中的编号}
+
+作为开始操作目录的前提条件，需要掌握两个计数器：
+
+\begin{enumerate}
+    \item \dm{secnumdepth}（英：\emph{section numbering depth}），可以明确文档中标题编号的层级；
+    \item \dm{tocdepth}（英：\emph{table of contents depth}），可以定义目录标题的最大层级（或称最大深度）。
+\end{enumerate}
+
+为了使用这两个计数器，还需要了解\LaTeX 为各标题连接层级的方法。以下是各标题的层级：
+
+\begin{center}
+    \begin{tabular}{|c|r||c|r|}
+        \hline
+        标题 & 层级 & 标题 & 层级\\
+        \hline
+        \dm{part} & -1 & & \\
+        \dm{chapter}    & 0 & \dm{subsubsection} & 3\\
+        \dm{section}    & 1 & \dm{paragraph}     & 4\\
+        \dm{subsection} & 2 & \dm{subparagraph}  & 5\\
+        \hline
+    \end{tabular}
+\end{center}
+
+如此一来，将\verb|secnumdepth|赋值为1、将\verb|tocdepth|赋值为2，则可以让标题编号至各\verb|\section|，同时将层级少于\verb|\subsection|的标题插入目录。
+
+\subsection{节和更少的层级}
+
+在\TeX 系统的文件\dm{book.cls}中，我们可以找到如下代码\jz{
+    稍微简化了一些……
+}：
+
+\begin{dmd}
+\begin{verbatim}
+\newcommand{\section}{%
+    \@startsection%
+    {section} % 标题名称
+    {1} % 标题层级
+    {0pt} % 缩进
+    {-3.5ex plus -1ex minus -.2ex}% 段前纵向空间
+    {2.3ex plus.2ex}% 段后纵向空间{\normalfont\Large\bfseries}} % 标题外观
+\end{verbatim}
+\end{dmd}
+
+该段代码定义了节标题的生成方式。可以观察到，指令\verb|\section|调用了指令\verb|\@startsection|，而后者需要6各参数：
+
+\begin{itemize}
+    \item 标题名称，如\dm{section}、\dm{subsection}等；
+    \item 标题层级，1对应\dm{section}，2对应\dm{subsection}，3对应\dm{subsubsection}，等等；
+    \item 缩进；
+    \item 标题前的纵向空白；
+    \item 标题后的纵向空白；
+    \item 用于确定标题本身格式的一系列\emph{声明}。
+\end{itemize}
+
+因此，我们可以注意到\LaTeX 默认为类型\dm{book}设定的版式如下。
+
+\begin{itemize}
+    \item 无缩进（\dm{0pt}）。
+    \item 标题前的纵向空间为\dm{3.5ex}，带有正向\dm{-1ex}和负向\dm{-.2ex}的允差。
+    \item 标题后的纵向空间为\dm{2.3ex}，带有正向\dm{.2ex}的允差。可以注意到，如果空间为负，则段落开头会紧接标题，而不会重起一段。
+    \item 标题加粗加大，使用“常规”（normal）字体。
+\end{itemize}
+
+为了定义本文档使用的标题样式，我们引入三个长度，分别用于\dm{section}、\dm{subsection}、\dm{subsubsection}的缩进：
+
+\begin{dmd}
+\begin{verbatim}
+\newlength{\sectiontitleindent}
+\newlength{\subsectiontitleindent}
+\newlength{\subsubsectiontitleindent}
+\end{verbatim}
+\end{dmd}
+
+长度值如下：
+
+\begin{dmd}
+\begin{verbatim}
+\setlength{\sectiontitleindent}{-1cm}
+\setlength{\subsectiontitleindent}{-.5cm}
+\setlength{\subsubsectiontitleindent}{-.25cm}
+\end{verbatim}
+\end{dmd}
+
+此外，我们为标题还定义了特殊的字体，具体如下：
+
+\begin{dmd}
+\begin{verbatim}
+\newcommand{\sectionfont}{% 
+    \fontencoding{\encodingdefault}% 
+    \fontfamily{pag}% \fontseries{bc}%
+    \fontshape{n}% \selectfont}
+\end{verbatim}
+\end{dmd}
+
+该指令可以选用PostScript字体AvantGarde的加粗紧缩版本（参阅9.4节）%TODO 解释中文的使用
+。最终，我们使用了以下指令来定义节标题外观：
+
+\begin{dmd}
+\begin{verbatim}
+\renewcommand{\section}{% 
+    \@startsection%
+    {section}%
+    {1}%
+    {\sectiontitleindent}%
+    {-3.5ex plus -1ex minus -.2ex}% 
+    {2.3ex plus.2ex}% {\sectionfont\Large}}
+\end{verbatim}
+\end{dmd}
+
+对于更少层级的标题，我们也编写了等价的指令。
+
+\subsection{章}
+
+通过深入研究文件\dm{book.cls}，我们可以找到有关\LaTeX 生成章首内容的信息。
+
+\subsubsection{原则}
+
+在文件\dm{book.cls}中，我们可以找到以下指令：
+
+\begin{dmd}
+\begin{verbatim}
+\newcommand{\chapter}{% 
+    ...
+    \thispagestyle{plain}%
+    ...
+    \secdef\@chapter\@schapter} % 我们感兴趣的行
+\end{verbatim}
+\end{dmd}
+
+指令\verb|\chapter|本身会调用两个不同的指令：
+
+\begin{enumerate}
+    \item \verb|\@chapter|，用于被编号的章标题；
+    \item \verb|\@schapter|，用于不被编号的章标题（\dmh{s}代表\emph{star}，即“星号”，对应指令\verb|\chapter*|）。
+\end{enumerate}
