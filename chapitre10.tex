@@ -253,3 +253,137 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
     \item \verb|\@chapter|，用于被编号的章标题；
     \item \verb|\@schapter|，用于不被编号的章标题（\dmh{s}代表\emph{star}，即“星号”，对应指令\verb|\chapter*|）。
 \end{enumerate}
+
+在英勇地（同样在文件\dm{book.cls}中）查找这两条指令的定义之后，我们找到了下面这类东西：
+
+\begin{dmd}
+\begin{verbatim}
+\def\@chapter[#1]#2{% ...
+    \refstepcounter{chapter}%
+    % 终端上的消息：
+    \typeout{\@chapapp\space\thechapter.} 
+    \addcontentsline{toc}{chapter}% 在目录中添加标题
+    ...
+    \if@twocolumn
+    ...
+    \else% 针对不分栏的文档
+    \@makechapterhead{#2}% 我们感兴趣的代码行
+    \fi}
+\end{verbatim}
+\end{dmd}
+
+这段代码把我们领上道了……实际上，\verb+\@makechapterhead+（可以按字面翻译为“制作章首装饰”）正是我们更改图案所需要重定义的指令。经过进一步的搜索，我们可以发现指令\verb|\@makeschapterhead|能够生成未编号的章首装饰。这两条指令接受章名作为其参数。
+
+\subsubsection{必要的小工具}
+
+我们定义了环境\dm{cadrechap}，用于简单地讲右边距加宽2厘米：
+
+\begin{dmd}
+\begin{verbatim}
+\newenvironment{cadrechap}% 
+    {\begin{list}{}{%
+        \setlength{\leftmargin}{0pt}% 
+        \setlength{\rightmargin}{-2cm}% 宽敞些
+        \setlength{\itemindent}{0pt}% 
+        \setlength{\labelsep}{0pt}%
+    }\item}% 
+{\end{list}}
+\end{verbatim}
+\end{dmd}
+
+同时，可以使用布尔值\dm{@mainmatter}来获取我们目前是否处于文档的“中心”——这是针对指令\verb|\mainmatter|被调用的情况。
+
+\subsubsection{严格的章首装饰}
+
+本文档中，生成章首装饰的指令可以看作两个微型页面的组合。%TODO minipage
+
+\begin{enumerate}
+    \item 在左侧的是微型页面字盒。我们指定了它的高度，以便放置微型摘要（参见\S 10.7）。
+    \item 在右侧的是包含“章”一词和章号的字盒。
+\end{enumerate}
+
+\newcommand{\boite}[1]{%
+  {\setlength{\fboxrule}{.2pt}%
+    \setlength{\fboxsep}{-\fboxrule}%
+    \fbox{#1}}}
+\DeclareFixedFont{\fnumfont}{T1}{phv}{b}{n}{32pt}
+\DeclareFixedFont{\fnomfont}{T1}{phv}{b}{n}{12pt}
+\DeclareFixedFont{\ftitrefont}{T1}{phv}{b}{n}{16pt}
+
+\newcommand{\fairechapitre}[1]{%
+  \noindent\begin{minipage}{\linewidth}%
+      \boite{\begin{minipage}[t][3cm][c]{.75\textwidth}%
+          \centering%
+          为\\微型摘要\\准备的\\微型页面
+        \end{minipage}}%
+      \boite{\begin{minipage}[t]{.25\textwidth}
+          \begin{flushright}
+            {\fnomfont\chaptername}\\[.5cm]
+            {\fnumfont\thechapter}
+          \end{flushright}
+        \end{minipage}}
+    \end{minipage}\par
+  \begin{flushright}\ftitrefont#1\end{flushright}}
+
+\fairechapitre{Zhang biaoti}%TODO  font
+
+实现此类字盒组合的框架如下：
+
+\begin{dmd}
+\begin{verbatim}
+\begin{cadrechap}
+    \begin{minipage}[t][6cm][t]{0.75\linewidth}
+        % 这里插入微型摘要 
+    \end{minipage} 
+    \begin{minipage}[t]{0.25\linewidth}
+        % 这里插入章号
+    \end{minipage}
+    \begin{flushright}
+        % 这里插入章标题
+    \end{flushright}
+\end{cadrechap}
+\end{verbatim}
+\end{dmd}
+
+此处无疑需要注意到，左侧的字盒（即接收微型目录的字盒）带有可指定的高度，用于以一致的方法来生成章首装饰而无须关注章中的节数（即无须关注微型目录的高度）。接下来，为不同元素定义不同的字体，就可以完成章首装饰的定义。在本文档中，我们的定义如下：
+
+\begin{dmd}
+\begin{verbatim}
+% 章号
+\DeclareFixedFont{\chapnumfont}{T1}{phv}{b}{n}{80pt}
+% “章”一词
+\DeclareFixedFont{\chapchapfont}{T1}{phv}{b}{n}{16pt}
+% 章标题
+\DeclareFixedFont{\chaptitfont}{T1}{phv}{b}{n}{24.88pt}
+\end{verbatim}
+\end{dmd}
+
+\DeclareFixedFont{\chapnumfont}{T1}{phv}{b}{n}{80pt}
+\DeclareFixedFont{\chaptitfont}{T1}{phv}{b}{n}{24.88pt}
+
+因此，有如下指令：
+
+\begin{codelist}[10.2]{
+    {\chapnumfont 8}
+    {\chaptitfont Oula !}
+}\begin{verbatim}
+{\chapnumfont 8}
+{\chaptitfont Oula !}
+\end{verbatim}
+\end{codelist}
+
+\subsection{部分}
+
+在文件\dm{book.cls}中，我们可以找到指令\verb|\part|的定义：
+
+\begin{dmd}
+\begin{verbatim}
+\newcommand\part{% 
+    \cleardoublepage
+    \thispagestyle{plain}
+    [...]
+    \null\vfil
+    \secdef\@part\@spart}
+\end{verbatim}
+\end{dmd}
+
