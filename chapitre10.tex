@@ -387,3 +387,138 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 \end{verbatim}
 \end{dmd}
 
+该定义告诉我们，正如各章一样，指令\verb|\part|会调用两条独立的指令，用于生成编号和不编号的部分（分别借助指令\verb|\@part|和\verb|\@spart|）。在之前的实践中，我们指定了页面的风格，使得各部分的开头为空（即没有页码和部分开头的装饰等），指令如下：
+
+\begin{dmd}
+\begin{verbatim}
+\newcommand\part{%
+    \cleardoublepage
+    \thispagestyle{empty}% 代替默认的plain
+    [...]
+    \null\vfil% 空字盒和竖直方向的弹性空间
+    \secdef\@part\@spart}
+\end{verbatim}
+\end{dmd}
+
+接下来，我们可以查看指令\verb|\@part|的定义。该指令用于生成展示文档部分的页：
+
+\begin{dmd}
+\begin{verbatim}
+\def\@part[#1]#2{%
+    [...]
+    {\centering % 居中
+     [...]
+     \huge\bfseries \partname\nobreakspace\thepart
+        \par
+        \vskip 20\pt
+     [...]
+     \Huge \bfseries #2\par}% 
+\@endpart}
+\end{verbatim}
+\end{dmd}
+
+通过查看这段代码，我们了解到，展现部分的页面由一行加粗加大的“部分”字样和部分的序号构成\jz{
+    实际上，在联动了包\textsf{babel}和选项\dm{french}后，这两个指令会被重定义，以生成形如“Première partie”（第一部分）的内容。
+}：
+
+\begin{dmd}
+\verb|\huge\bfseries \partname\nobreakspace\thepart|
+\end{dmd}
+
+在距离20点的下方，是部分的标题（存储在参数\verb|#2|中）。对于此文档，我们以如下方式重定义了指令\verb|\@part|：
+
+\begin{dmd}
+\begin{verbatim}
+\def\@part[#1]#2{% 
+    [...]
+    {\centering
+     \interlinepenalty \@M
+     \normalfont
+     [...]
+     \partnumfont \thepart % 只显示部分的序号
+     \par
+     \vskip 50\p@% 将20点改为50点
+     \partfont #2\par}% 使用自定义字体的标题
+    \@endpart}
+\end{verbatim}
+\end{dmd}
+
+为了与章首装饰保持一致，我们定义指定字体的指令如下：
+
+\begin{dmd}
+\begin{verbatim}
+\newcommand{\partfont}{% 
+    \fontencoding{\encodingdefault}\fontfamily{phv}% 
+    \fontseries{bc}\fontshape{n}% \fontsize{32}{34}%
+    \selectfont}
+\DeclareFixedFont{\partnumfont}{T1}{phv}{bc}{n}{80}%
+\end{verbatim}
+\end{dmd}
+
+\begin{exclamation}
+我们也应注意到，指令\verb+\@part+依靠调用另一条指令作为结尾：\verb|\@endpart|。通过查看文件\dm{book.cls}可以看到，这样的结尾可以阻止来自指令\verb|\part|的纵向弹性空间，并跳过一个空白页……
+\end{exclamation}
+
+\section{几何}
+
+本文档中，各页面中的不同尺寸借助包\textsf{geometry}使用如下指令定义：
+
+\begin{dmd}
+\begin{verbatim}
+\geometry{%
+    a4paper, 
+    body={150mm,250mm}, 
+    left=25mm,top=25mm, 
+    headheight=7mm,headsep=4mm, marginparsep=4mm, 
+    marginparwidth=27mm}
+\end{verbatim}
+\end{dmd}
+
+这会分别定义如下元素（如图\ref{fig:10.1}所示）：
+
+\begin{itemize}
+    \item 版心宽150 mm，高250 mm；
+    \item 版心在页面上的位置为左边距25 mm、上边距25 mm；
+    \item 页眉高7 mm，页眉与正文的间距为4 mm；
+    \item 页面尺寸为标准A4；
+    \item 用于页边注释的页边距为2.7 cm。
+\end{itemize}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics{img/geometry}
+    \caption{定义文档几何样式的部分尺寸}
+    \label{fig:10.1}
+\end{figure}
+
+以通常的方式来讲，正如图\ref{fig:10.1}展现的，包\textsf{geometry}可以定义一定数量的尺寸。我们可以以选项的方式将这些尺寸传递给\verb|\usepackage|，也可以借助指令\verb|\geometry|。
+
+\begin{description}
+    \item[页面尺寸]%TODO 此处如何换行，下同
+    
+\begin{itemize}
+    \item 若使用预定义中的格式，可以使用\dm{a4paper}、\dm{a5paper}等。
+    \item 若要自由地指定纸张尺寸，例如针对会使用碎纸机销毁的文档的尺寸，可以使用\dm{paperwidth=}\codereplace{尺寸}和\dm{paperheight=}\codereplace{尺寸}。
+\end{itemize}
+
+\item[文本]
+
+\begin{itemize}
+    \item 可以使用\dm{body=\{\codereplace{宽度},\codereplace{高度}\}}；
+    \item 也可以使用\dm{width=}\codereplace{宽度}和\dm{height=}\codereplace{高度}；
+    \item 文本在页面内的位置由参考点确定，可以使用\dm{top=}\codereplace{纵向位置}和\dm{left=}\codereplace{水平位置}确定参考点位置。
+\end{itemize}
+
+\item[页面顶端和底部]
+
+\begin{itemize}
+    \item 页面中为页面预留的高度可以借助神奇的表达式\dm{headheight=}\codereplace{高度}定义，页眉相对于版心的位置可以借助指令\dm{headsep=}\codereplace{空间}指定；
+    \item 页脚的位置可以通过长度\dm{footskipp=}\codereplace{空间}指定，该长度可以定义版心底部和页脚第一行间的空间。
+\end{itemize}
+
+\item[页边注释] 秉承着同样的精神，页面中为边注预留的空间的宽度和位置可以借助两个长度定义：\dm{marginparwidth=}\codereplace{宽度}和\dm{marginparsep=}\codereplace{空间}
+\end{description}
+
+\begin{exclamation}
+包geometry中，涉及页眉、页脚、边注的尺寸默认算作版心\emph{外}的部分。有一些指令可以将这些尺寸中的一个或多个包含到版心内部来完成计算。例如，我们可以说“我希望版心宽度为10厘米，包含边注”。关于更多相关细节，请参阅包文档。
+\end{exclamation}
