@@ -522,3 +522,53 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 \begin{exclamation}
 包geometry中，涉及页眉、页脚、边注的尺寸默认算作版心\emph{外}的部分。有一些指令可以将这些尺寸中的一个或多个包含到版心内部来完成计算。例如，我们可以说“我希望版心宽度为10厘米，包含边注”。关于更多相关细节，请参阅包文档。
 \end{exclamation}
+
+\section{页眉和页脚}
+
+版心上下的空间分别成为页眉和页脚，可以借助包\textsf{fancyhdr}来定制。定制的基本原则很简单\jz{
+    在读完接下来的内容后，你无疑会开始质疑这里说的“简单”一词……
+}，只需要使用以下指令来指明我们想要使用借助包\textsf{fancyhdr}定义的页眉和页脚。该包默认会在页面下方和页脚上方生成一条水平线段，线段粗细分别由\verb|\footrulewidth|和\verb|\headrulewidth|定义。接下来，我们使用以下指令：
+
+\begin{itemize}
+    \item \verb|\fancyhead|，来定义页眉；
+    \item \verb|\fancyfoot|，来定义页脚。
+\end{itemize}
+
+这两条指令都可以接收由一个或两个以下字符组成的序列构成的参数：
+
+\begin{itemize}
+    \item \dm{E}或\dm{O}，用于指明页码的奇偶性（偶数即\emph{even}，奇数即\emph{odd}）；
+    \item \dm{R}、\dm{L}或\dm{C}，用于指明我们想在哪个位置生成信息，分别指代右侧、左侧或居中。
+\end{itemize}
+
+示例如下：
+
+\begin{dmd}
+\begin{verbatim}
+\fancyhf{} % 清除页面并开始
+% 【页眉】
+% 作者姓名首字母偶数页靠右，奇数页靠左：
+\fancyhead[RE,LO]{VL}
+% 页码居中：
+\fancyhead[C]{\thepage}
+% 节号奇数页靠右，
+% 偶数页靠左：
+\fancyhead[LE,RO]{\thesection}
+% 【页脚】
+% 图片奇数页靠右，偶数页靠左：
+\fancyfoot[RO,LE]{\includegraphics[height=4ex]{punch}}
+% 标题奇数页靠右，偶数页靠左：
+\fancyfoot[LO,RE]{%
+    关于\LaTeX{}的那些你想知道的问题}
+% 线条粗细
+\renewcommand{\footrulewidth}{3pt}
+\end{verbatim}
+\end{dmd}
+
+\fancyhf{} 
+\fancyhead[RE,LO]{VL}
+\fancyhead[C]{\thepage}
+\fancyhead[LE,RO]{\thesection}
+\fancyfoot[RO,LE]{\includegraphics[height=4ex]{punch}}
+\fancyfoot[LO,RE]{关于\LaTeX{}的那些你想知道的问题}
+\renewcommand{\footrulewidth}{3pt}
