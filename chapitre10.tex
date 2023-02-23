@@ -572,3 +572,86 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 \fancyfoot[RO,LE]{\includegraphics[height=4ex]{punch}}
 \fancyfoot[LO,RE]{关于\LaTeX{}的那些你想知道的问题}
 \renewcommand{\footrulewidth}{3pt}
+
+\subsection{章首页的情况}
+
+在类型\dm{book}中，\LaTeX 会自动为每章的第一页调用风格\dm{plain}。为了使包\textsf{fancyhdr}为这些页面定义新风格，可以使用如下指令：
+
+\begin{dmd}
+\begin{verbatim}
+% 章首页的情况 
+\fancypagestyle{plain}{%
+    \fancyhf{}% 全部清空 
+    \fancyfoot[C]{\thepage}% 页面底部的页码
+    % 清空所有线条
+    \renewcommand{\headrulewidth}{0pt}% 
+    \renewcommand{\footrulewidth}{0pt}}
+\end{verbatim}
+\end{dmd}
+
+可以注意到，本书各章的章首正是采用了这种风格……
+
+\subsection{章首前的空白页}
+
+在类型\dm{book}的双面模式下（正是本文档对应的情况），\LaTeX 会默认在奇数页——这在排版术语中称作“单面”（belle page）——开始新的一章。为了实现这一点，\LaTeX 在不同的内部指令中调用了指令\verb+\cleardoublepage+。这样可以在必要时在章的首页前插入一个空白页。默认情况下，该空白页会带有目前使用的页眉和页脚。在本文档中，我们针对这些页面修改了文件\dm{latex.ltx}中的指令\verb|\cleardoublepage|，指定了一种“空白”的风格：%TODO 还没搞
+
+\begin{dmd}
+\begin{verbatim}
+\renewcommand{\cleardoublepage}{% 重定义该指令
+    \clearpage\ifodd\c@page\else
+    \hbox{}
+    \vspace*{\fill}
+    \thispagestyle{empty}% 添加此行 
+    \newpage
+    \fi}
+\end{verbatim}
+\end{dmd}
+
+你可以翻阅本书，看看章首前的页面是否是空白的……
+
+\subsection{标记的机制}
+
+你无疑已经注意到了，本书的页眉带有一些与文本相关的内容。实际上，针对偶数页（出现在左侧的页面），我们插入了章标题；针对奇数页（出现在右侧的页面），我们插入了该页出现的最后一节的节标题。\LaTeX 部署了一种\emph{标记}机制，使得我们可以实现这一点。这里将尝试解释这种机制。
+
+\begin{exclamation}
+这里不妨解释一下：\LaTeX 和\TeX 生成一个页面是，它们会根据从所涉页面收集来的信息来制备页眉和页脚。因此，生成页眉和页脚是编译页面的后置步骤。
+\end{exclamation}
+
+\subsubsection{指令\dm{\backslash markboth}和\dm{\backslash markright}}
+
+设有以下指令：
+
+\begin{dmd}
+\backslash markboth\{\codereplace{文本$_{\mbox{左}}$}\}\{\codereplace{文本$_{\mbox{右}}$}\}
+\end{dmd}
+
+或：
+
+\begin{dmd}
+\backslash markright\{\codereplace{文本}\}
+\end{dmd}
+
+想象参数\codereplace{文本$_{x}$}存储在栈和队列中。根据这种想法，有：
+
+\begin{itemize}
+    \item \verb|\markboth|将\codereplace{文本$_{\mbox{左}}$}入栈，将\codereplace{文本$_{\mbox{右}}$}存入队列；
+    \item \verb|\markright|将\codereplace{文本}存入队列。
+\end{itemize}
+
+在一个页面中，这两个“标记”指令可以调用多次，也可以一次都不调用。在\TeX 结束版心的排版，在生成页眉和页脚时，会探索栈和队列的参数。这借助了以下指令：
+
+\begin{itemize}
+    \item \verb|\leftmark|返回栈顶，即\emph{上一次调用}\verb|\markboth|时的\codereplace{文本$_{\mbox{左}}$}；
+    \item \verb|\rightmark|返回队列头，即\emph{第一次调用}\verb|\markboth|时的\codereplace{文本$_{\mbox{右}}$}，或\emph{第一次调用}\verb|\markbot|时的\codereplace{文本}。
+\end{itemize}
+
+\begin{ii}
+供你参考的是，作者使用了这些指令来生成了带有几十个名称和照片的相册。这里的思路是去探索通过页眉显示页面上第一个和最后一个名称的机制——这种页眉跟字典很像。为了实现这个目的，只需要为每个人（包含名称和照片）调用以下指令：
+
+\begin{dmd}
+\backslash markboth\{\codereplace{老铁的名称}\}\{\codereplace{老铁的名称}\}
+\end{dmd}
+
+接下来，在左侧页眉中插入指令\verb|\rightmark|
+
+\end{ii}

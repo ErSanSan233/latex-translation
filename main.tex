@@ -194,6 +194,23 @@
 \fancyhead[RO,LE]{\thepage}
 \fancyfoot{}
 
+% TODO
+% \renewcommand{\cleardoublepage}{% 重定义该指令
+%     \clearpage\ifodd\c@page\else
+%     \hbox{}
+%     \vspace*{\fill}
+%     \thispagestyle{empty}% 添加此行 
+%     \newpage
+%     \fi}
+
+%章首版式
+\fancypagestyle{plain}{%
+    \fancyhf{}% 全部清空 
+    \fancyfoot[C]{\thepage}% 页面底部的页码
+    % 清空所有线条
+    \renewcommand{\headrulewidth}{0pt}% 
+    \renewcommand{\footrulewidth}{0pt}}
+
 %verbatim设置为不特殊打断，会根据代码内容与\verb 和\texttt混用
 \setstretch{1.2}
 \xpretocmd\verbatim{
