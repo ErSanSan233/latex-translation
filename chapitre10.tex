@@ -645,13 +645,93 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
     \item \verb|\rightmark|返回队列头，即\emph{第一次调用}\verb|\markboth|时的\codereplace{文本$_{\mbox{右}}$}，或\emph{第一次调用}\verb|\markbot|时的\codereplace{文本}。
 \end{itemize}
 
+\begin{exclamation}
+我们这里介绍的“队列”有一个小巧思：只要页面中没有“标记”指令添加数据，那么队列就会保持此前的页面中\emph{最后插入的信息}。指令\verb|\markboth|和\verb|\markright|一出现，“队列”就被清空。
+\end{exclamation}
+
+另一个理解这种标记机制的方法可以描述如下：
+
+\begin{itemize}
+    \item \verb|\leftmark|包含入栈的最后一条信息（借助\verb|\markboth|的第一个参数）；
+    \item 如果我们在页面上放置了一词\verb|\rightmark|，则它包含“队列”的第一条信息，否则它包含队列中的最后一条信息（借助\verb|\markboth|的第二个参数或\verb|\markright|的参数）。
+\end{itemize}
+
 \begin{ii}
-供你参考的是，作者使用了这些指令来生成了带有几十个名称和照片的相册。这里的思路是去探索通过页眉显示页面上第一个和最后一个名称的机制——这种页眉跟字典很像。为了实现这个目的，只需要为每个人（包含名称和照片）调用以下指令：
+    供你参考的是，作者使用了这些指令来生成了带有几十个名称和照片的相册。这里的思路是去探索通过页眉显示页面上第一个和最后一个名称的机制——这种页眉跟字典很像。为了实现这个目的，只需要为每个人（包含名称和照片）调用以下指令：
+    
+    \begin{dmd}
+    \backslash markboth\{\codereplace{老铁的名称}\}\{\codereplace{老铁的名称}\}
+    \end{dmd}
+    
+    接下来，在左侧页面页眉中插入指令\verb|\rightmark|，在右侧插入\verb|\leftmark|……
+\end{ii}
+
+\subsubsection{与段落指令的互动}
+
+在各章、节、小节等结构的开头，\LaTeX 的一条内部指令会调用前文介绍过的标记指令，以将疑似可以丰富页眉和页脚内容的信息存储起来。这些指令的名称如下：
+
+\begin{itemize}
+    \item \verb|\chaptermark|，适用于章；
+    \item \verb|\sectionmark|，适用于节；
+    \item ……
+\end{itemize}
+
+这些指令会等待包含章或段落标题的参数。对于本书，前面列出的两条指令采用如下方式定义：
 
 \begin{dmd}
-\backslash markboth\{\codereplace{老铁的名称}\}\{\codereplace{老铁的名称}\}
+\begin{verbatim}
+% #1包含节标题
+\renewcommand{\sectionmark}[1]{%
+    \markright{\sectionfont\thesection\ #1}}
+% #2 包含章标题
+\renewcommand{\chaptermark}[1]{%
+    \markboth{\sectionfont#1}{}}
+\end{verbatim}
 \end{dmd}
 
-接下来，在左侧页眉中插入指令\verb|\rightmark|
+接下来有：
 
-\end{ii}
+\begin{dmd}
+\begin{verbatim}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[LO]{\rightmark}
+\fancyhead[RE]{\leftmark}
+\end{verbatim}
+\end{dmd}
+
+这样一来：
+
+\begin{itemize}
+    \item 在偶数页的右侧，我们可以找到上一个章标题（\verb|\leftmark|）；
+    \item 在奇数页的左侧，我们可以找到当前页的第一个\verb|\section|，包含序号和标题，或是上一个\verb|\section|的序号和标题（\verb|\rightmark|）……
+\end{itemize}
+
+%TODO 对于前置页面的单章双节？
+
+\fancyhf{}
+\fancyhead[LE]{\bfseries\thepage}
+\fancyhead[RO]{\bfseries\thepage}
+\fancyhead[LO]{\texttt{\backslash rightmark}的值为“\rightmark{}”，\texttt{\backslash leftmark}的值为“\leftmark”}
+\fancyhead[RE]{\texttt{\backslash rightmark}的值为“\rightmark{}”，\texttt{\backslash leftmark}的值为“\leftmark”}
+\renewcommand{\footrulewidth}{0pt}
+
+如果你不相信，可以亲自看看本章的页眉。
+
+\subsection{文档的组织}
+
+需要知道，对于形如本书的文档，\LaTeX 可以识别出三大部分，在英文中分别称作\emph{front matter}、\emph{main matter}和\emph{back matter}，分别代表文章的开头（通常带有前言和摘要）、作为主体的部分、用于收尾的部分（通常带有目录、附录、参考文献、术语字典等）。因此，我们应该明确，\LaTeX 文档的书写形式如下：
+
+\begin{dmd}
+\backslash documentclass\{\codereplace{文档类型}\}
+\begin{verbatim}
+\begin{document}
+\frontmatter % 前言
+[...]
+\mainmatter % 主体部分
+[...]
+\backmatter % 用于收尾
+[...]
+\end{document}
+\end{verbatim}
+\end{dmd}
+
