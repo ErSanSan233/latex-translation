@@ -907,4 +907,111 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 
 在这里我想先说说\TeX 如何“消化吸收”我们喂给它的字符——我相信这题没有白偏\jz{
     在做事低调这件事上，法国人似乎是专家，但我们不要偏太远了……
-}。需要明白，符号可以被划分为16中类别，每个符号只能同时属于其中的一种。这些类别
+}。需要明白，符号可以被划分为16中类别，每个符号只能同时属于其中的一种。每种类别都可以由\TeX 特殊处理。例如，遇到符号\dm{\backslash}时，\TeX 会读取其后面的字符组，来识别指令（或\emph{控制序列}）的名称；遇到符号\dm{\{}时，\TeX 会开启新的组；读取到符号\dm{\%}时，\TeX 会一路忽略接下来符号，直到当前行结束，也就是遇到标记“行末”的符号，等等。\TeX 可以识别的类别举例如下：
+
+\begin{description}
+    \item[类0]控制符号（\LaTeX 中的\dm{\backslash}）；
+    \item[类1]组起始符号（\LaTeX 中的\dm{\{}）；
+    \item[类2]组结束符号（\LaTeX 中的\dm{\}}）；
+    \item[类11]字母；
+    \item[类14]注释（\LaTeX 中的\dm{\%}）。
+\end{description}
+
+我们可以来找找乐子——虽然这样做挺“危险”——来修改各类别的内容。在下面的示例中，我们将\verb|\|、\dm{\{}、\dm{\}}转为字母，并且决定分别让\dm{/}、\dm{(}、\dm{)}出现在控制符号、组起始、组结束类别中。字符\verb+#+同样被修改了类别，现在它属于注释：
+
+\begin{codelist}[10.3]{
+\backslash bidule\{一些东西\} \textbf{加粗}\par
+现在回到\LaTeX{}模式……
+}\begin{verbatim}
+{ \catcode`\/=0 \catcode`\(=1 
+  \catcode`\)=2 \catcode`\#=14
+  \catcode`\{=11 \catcode`\}=11 
+  \catcode`\\=11
+  # 这行应该看不到……
+  \bidule{一些东西} /textbf(加粗)
+  )\par
+  现在回到\LaTeX{}模式……
+\end{verbatim}
+\end{codelist}
+
+此外，有趣的是，\TeX 可以让某些符号活跃起来（将其归入类13）。这样，这些符号就可以被定义为指令。以下是一个有些蠢的示例：
+
+\begin{codelist}[10.4]{
+3 加 4 = 7
+}\begin{verbatim}
+\catcode`\+=13
+\newcommand{+}{加}
+3 + 4 = 7
+\end{verbatim}
+\end{codelist}
+
+这个示例中，我们让字符\dm{+}“活跃”了起来，并像定义指令那样定义了它。可以注意到，这里，我们曾可以不调用符号\dm{\backslash}就创建一个可用的指令。
+
+\begin{ii}
+需要知道，我们使用了包babel和法文扩展。一些双标点同样被设置为活跃，目的是防止在它们前面出现断字。此外，符号\dm{~}在\LaTeX 被视为活跃，你可以在交互式\LaTeX 绘画中看到其定义：
+
+\begin{dmd}
+\begin{verbatim}
+*\show~
+> ~=macro:
+->\nobreakspace {}.
+<*> \show~
+\end{verbatim}
+\end{dmd}
+\end{ii}
+
+\subsection{基于包\textsf{fancyvrb}的上层建筑环境}
+
+\dm{verbatim}之类的环境的目的是将字符的归属分别转化到对应的类中。此外，借助包\textsf{fancyvrb}，可以定义哪些字符可以传递控制指令给\LaTeX 。在本文档中，环境\dm{unixcom}的定义如下：
+
+\begin{dmd}
+\begin{verbatim}
+\DefineVerbatimEnvironment{unixcom}{Verbatim}{% 
+    commandchars=¢« »,
+    frame=single, framerule=.4pt, framesep=1.5mm, gobble=2,
+    xleftmargin=15pt}
+\end{verbatim}
+\end{dmd}
+
+这个环境属于一种\dm{verbatim}，但我们可以在其中“执行”\LaTeX 指令。这需要借助属于类0的符号\dm{¢}、属于类1的符号\dm{«}，以及属于类2的符号\dm{»}——很显然，我们可以随意选择字符来实现这一点。然而，这样做需要秉持着符号应当易读且其用途几乎仅为向\LaTeX 传递控制指令的精神。
+
+\begin{codelist}[10.5]{%这个序号原书没有显示出来，但确实占了一个号
+为了显示变量的内容：\\
+\dmh{echo \$\{}\codereplace{我的变量}\dm{\}}
+}\begin{verbatim}
+为了显示变量的内容：
+\begin{unixcom}
+    echo ${¢marg«我的变量»} 
+\end{unixcom}
+\end{verbatim}
+\end{codelist}
+
+%TODO 左边距根据原文修改
+
+指令\celan{\S 11.1.1}\verb|\marg|可以将其变量放入尖括号并以倾斜形式显示。指令\verb|\DefineVerbatimEnvironment|的其他变量可以详细说明边框风格（参数\dm{frame}等）、左边距（参数\dm{xleftmargin}），以及指定每行第一组字符被系统地忽略（\dm{gobble}）。正如包\textsf{fancyvrb}的文档中提到的，有很多其他选项可供使用。
+
+我们创建的另一个此类环境用于在Auc\TeX 认可的附录中插入\textsf{Emacs}指令。此处涉及的环境（赐名为\dm{emacscom}）的创建方式如下：
+
+\begin{dmd}
+\begin{verbatim}
+\DefineVerbatimEnvironment{emacscom}{Verbatim}{%
+    commandchars=¢« »,
+    frame=leftline, framerule=1mm, framesep=2mm, 
+    gobble=2, xleftmargin=15pt}
+\end{verbatim}
+\end{dmd}
+
+使用如下：
+
+\begin{codelist}[10.6]{
+在\textsf{Emacs}中玩俄罗斯方块：\\
+\dmh{}{\fontencoding{T1} \fontfamily{phv} \selectfont M-x tetris}
+}\begin{verbatim}
+在\soft{Emacs}中玩俄罗斯方块：
+\begin{emacscom}
+    M-x tetris
+\end{emacscom}
+\end{verbatim}
+\end{codelist}
+
+\subsection{用于编程语言的环境}
