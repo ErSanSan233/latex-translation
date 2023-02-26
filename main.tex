@@ -190,9 +190,17 @@
     % includeheadfoot
 }
 \pagestyle{fancy}
-\fancyhead{} 
-\fancyhead[RO,LE]{\thepage}
-\fancyfoot{}
+
+%原书页眉定义
+\fancyhf{}
+\fancyhead[LE]{\bfseries\thepage}
+\fancyhead[RO]{\bfseries\thepage}
+\fancyhead[LO]{\bfseries\rightmark}
+\fancyhead[RE]{\bfseries\leftmark}
+\renewcommand{\footrulewidth}{0pt}
+% \fancyhead{} 
+% \fancyhead[RO,LE]{\thepage}
+% \fancyfoot{}
 
 % TODO
 % \renewcommand{\cleardoublepage}{% 重定义该指令

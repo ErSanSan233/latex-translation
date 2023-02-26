@@ -735,3 +735,176 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 \end{verbatim}
 \end{dmd}
 
+接下来，我们将会着手逐一修改这三个指令。目前你需要知道的是，类型\dm{book}种定义了一个布尔值：
+
+\begin{dmd}
+\verb|\newif\if@mainmatter|
+\end{dmd}
+
+\LaTeX 默认使用该值来获取当前我们是否处于“main matter”中。此外，我们的文档中还有另一个布尔值：
+
+\begin{dmd}
+\verb+\newif\if@frontmatter+
+\end{dmd}
+
+该值可以使我们为文档中介绍性的部分进行特殊处理。界定三大部分的三个指令定义如下：
+
+\begin{dmd}
+\begin{verbatim}
+\renewcommand\frontmatter{%
+    \cleardoublepage
+    \@frontmattertrue
+    \@mainmatterfalse
+    \pagenumbering{roman}% 以罗马数字编号
+}
+\renewcommand\mainmatter{%
+    \cleardoublepage
+    \@mainmattertrue
+    \@frontmatterfalse
+    \pagenumbering{arabic}% 以阿拉伯数字编号
+}
+\renewcommand\backmatter{%
+    \cleardoublepage
+    \@frontmatterfalse
+    \@mainmatterfalse
+}
+\end{verbatim}
+\end{dmd}
+
+在\LaTeX 源代码中一番翻找后，我们就可以明白，指令\verb|\pagenumbering|能够修改编号方式，并且将页码计数器重置为1。
+
+%
+% TODO on remet tous commme c'�tait avant
+%
+\fancyhf{}
+\fancyhead[LE]{\bfseries\thepage}
+\fancyhead[RO]{\bfseries\thepage}
+\fancyhead[LO]{\bfseries\rightmark}
+\fancyhead[RE]{\bfseries\leftmark}
+\renewcommand{\footrulewidth}{0pt}
+
+\subsection{以“小型大写”罗马数字为前言编号}
+
+鄙人坚持认为，前言部分的页码应当以小型大写罗马数字标示。很不幸，我们不能写成这样：
+
+\begin{dmd}
+\verb|\renewcommand{\thepage}{\textsc{\roman{page}}}|
+\end{dmd}
+
+这是因为，这样的写法会导致索引的不兼容。这里的思路是按如下步骤处理：
+
+\begin{enumerate}
+    \item 使用小写罗马数字编号；
+    \item 在页脚显示\verb|\textsc{\thepage}|；
+    \item 修改指令\verb|\index|来使页码显示为小型大写。
+\end{enumerate}
+
+这样一来，我们需要在\verb|\frontmatter|的定义中添加如下内容：
+
+\begin{dmd}
+\begin{verbatim}
+\let\indexORI\index% 保存初始的定义
+\renewcommand{\index}[1]{\indexORI{##1|textsc}} 
+\fancyfoot{}
+\fancyhead[LE,RO]{\textsc{\thepage}}
+\end{verbatim}
+\end{dmd}
+
+在\verb|\mainmatter|的定义中添加如下内容：
+
+\begin{dmd}
+\begin{verbatim}
+\let\index\indexORI% 以回到初始的定义
+\end{verbatim}
+\end{dmd}
+
+为了完美地达到我们的严格标准，我们也会修改章首页的风格：
+
+\begin{dmd}
+\begin{verbatim}
+\fancypagestyle{plain}{% 
+    \fancyhf{}
+    \if@frontmatter% 前言
+        \fancyfoot[C]{\textsc{\thepage}}
+    \else
+        \fancyfoot[C]{\thepage}
+    \fi
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0pt}}
+\makeatother
+\end{verbatim}
+\end{dmd}
+
+\subsection{索引、参考文献和目录}
+
+在类型\dm{book}中，定义了两种环境：
+
+\begin{itemize}
+    \item \dm{thebibliography}，用于生成参考文献；
+    \item \dm{theindex}，用于生成索引。
+\end{itemize}
+
+此外，还定义了一个指令：
+
+\begin{itemize}
+    \item \verb|\tableofcontents|，用于生成目录。
+\end{itemize}
+
+这些环境或指令被设计为可以生成带有页码和大写标题的页眉，即\verb|\bibname|、\verb|\indexname|和\verb|\contentsname|。例如，以下是\verb|\tableofcontents|的节选：
+
+\begin{dmd}
+\begin{verbatim}
+\newcommand\tableofcontents{% 
+    [...]
+    \chapter*{\contentsname 
+        \@mkboth{%
+            \MakeUppercase\contentsname}% 
+           {\MakeUppercase\contentsname}}%
+    \@starttoc{toc}% 
+    [...]
+}
+\end{verbatim}
+\end{dmd}
+
+我希望本文档的页眉不采用大写形式。有采用两种解决方式。
+
+\begin{itemize}
+    \item 使用包\textsf{fancyhdr}的指令\verb|\nouppercase|，并在\verb|\backmatter|的定义中编写如下内容：
+    \begin{dmd}
+    \begin{verbatim}
+% 大写页眉: 
+\fancyhead[LO]{\nouppercase\rightmark} 
+\fancyhead[RE]{\nouppercase\leftmark}%
+    \end{verbatim}
+    \end{dmd}
+    
+    \item  重新复制并修改源于\dm{book.cls}的宏\verb|\tableofcontents|，将其中多次出现的指令\verb|\MakeUppercase|全部删除。对于索引和参考文献进行相同的操作。
+\end{itemize}
+
+本文档采用了第二种方式。我们同样在目录中插入索引和参考文献时，也同样可以感受到这种方式带来的优势——默认情况下，\LaTeX 和类型\dm{book}对此不兼容。因此，我们有了如下形式的环境\dm{theindex}：
+
+\begin{dmd}
+\begin{verbatim}
+\renewenvironment{theindex} {%
+    [...]
+    % 插入至目录
+    \addcontentsline{toc}{chapter}{\indexname}
+    % 删除\MakeUppercase
+    \@mkboth{\indexname}{\indexname}
+    \thispagestyle{plain}
+    [...]
+{\if@restonecol\onecolumn\else\clearpage\fi}
+\end{verbatim}
+\end{dmd}
+
+\section{“照抄”环境}
+
+包\textsf{fancyvrb}和\textsf{listings}都包含可以生成带特殊符号文本的特性。其中，前者更加灵活，可以生成\dm{verbatim}种类的环境，特别是可以定制必要的边框和边距。最重要的是，它允许你从环境的正中央“逃回\LaTeX ”，或者按英语国家的人所说的：\emph{to escape to \LaTeX }。换句话说，尽管是在符号\verb|\|、\dm{\{}、\dm{\}}都不起作用的环境中，我们仍然可以调用\LaTeX 的指令。
+
+后者（\textsf{listings}）致力于生成代码片段。它提供的大量功能中，同样包含可以逃回\LaTeX 的方法。这里我们推荐你借助本章使用的“真实复刻”示例探索一下这两个环境。
+
+\subsection{跑个题，说说符号……}
+
+在这里我想先说说\TeX 如何“消化吸收”我们喂给它的字符——我相信这题没有白偏\jz{
+    在做事低调这件事上，法国人似乎是专家，但我们不要偏太远了……
+}。需要明白，符号可以被划分为16中类别，每个符号只能同时属于其中的一种。这些类别
