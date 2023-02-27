@@ -1,0 +1,19 @@
+%!TEX program = xelatex
+\documentclass{standalone}
+
+
+\usepackage[UTF8]{ctex}
+\usepackage{listings}
+
+\begin{document}
+
+\lstnewenvironment{C}{\lstset{language=C}}{}
+\begin{C}
+/* 用C写成的hello world */
+int main()
+{
+    printf("Hello !\n");
+    return 0;
+}
+\end{C}
+\end{document}

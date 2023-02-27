@@ -29,6 +29,9 @@
 \usepackage{bm}
 \usepackage{bbm}
 
+%代码抄录
+\usepackage{listings}
+
 % 设置图书版式
 \usepackage{marginnote}%侧栏
 \usepackage{fancyhdr}%页眉页脚页码
@@ -89,6 +92,18 @@
 %原书的圆圈感叹号
 \definecolor{LightPink}{RGB}{230,173,173}
 \newenvironment{exclamation}[1][!]%
+{
+    \begin{mdframed}[backgroundcolor=LightPink,hidealllines=true]
+        {\textcircled{\scriptsize #1}} \quad
+        \sffamily
+}{      
+    \rmfamily
+    \end{mdframed}
+}
+
+%原书的圆圈问号
+% \definecolor{LightPink}{RGB}{230,173,173}
+\newenvironment{qquestion}[1][?]%
 {
     \begin{mdframed}[backgroundcolor=LightPink,hidealllines=true]
         {\textcircled{\scriptsize #1}} \quad

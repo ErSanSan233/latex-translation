@@ -1015,3 +1015,150 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 \end{codelist}
 
 \subsection{用于编程语言的环境}
+
+包\textsf{listing}可以识别大量编程语言的语法。该包的一种简单的使用方式是借助一种很像\verb|\newenvironment|的指令创建它自带的环境：
+
+\begin{dmd}
+\begin{verbatim}
+\lstnewenvironment{C}{\lstset{language=C}}{}
+\end{verbatim}
+\end{dmd}
+
+接下来，可以简单地编写代码：
+
+\lstnewenvironment{C}{\lstset{language=C}}{}
+
+\begin{codelist}[10.7]{
+\includegraphics{texs/chelloworld1}
+}\begin{verbatim}
+\begin{C}
+    /* 用C写成的hello world */
+    int main()
+    {
+        printf("Hello !\n");
+        return 0;
+    }
+\end{C}
+\end{verbatim}
+\end{codelist}
+
+显然，有大量配置选项让你可以根据需要来调整该环境。想要了解它们，阅读包的文档无疑是最简单有效的。例如，我们可以修改相关编程语言中保留字和注释的版式。如此一来，我们就可以通过如下代码来实现不同的字体效果：
+
+\begin{dmd}
+\begin{verbatim}
+\lstnewenvironment{Cbis}{% 
+    \lstset{language=C,
+        basicstyle=\rmfamily\slshape,
+        commentstyle=\rmfamily\upshape,}}{}
+\end{verbatim}
+\end{dmd}
+
+\begin{codelist}[10.8]{
+    \includegraphics{texs/chelloworld2}
+}\begin{verbatim}
+\begin{C}
+    /* 用C写成的hello world */
+    int main()
+    {
+        printf("Hello !\n");
+        return 0;
+    }
+\end{C}
+\end{verbatim}
+\end{codelist}
+
+此外，因为还要考虑用于\emph{逃回\LaTeX }的特殊字符，你需要知道，正如\textsf{fancyvrb}，包\textsf{listings}也允许你指定一个用于逃跑的字符：
+
+\begin{dmd}
+\begin{verbatim}
+\lstnewenvironment{Cter}{% 
+    \lstset{language=C, escapechar=@}}{}
+\end{verbatim}
+\end{dmd}
+
+以上代码在代码清单中插入\LaTeX 指令的效果如下：
+
+\begin{codelist}[10.9]{
+    \includegraphics{texs/chelloworld3}
+}\begin{verbatim}
+\begin{Cter}
+    int main()
+    {
+        printf("Hi !\n");
+        return @\fbox{返回代码}@;
+    } 
+\end{Cter}
+\end{verbatim}
+\end{codelist}
+
+\section{关于那个叫做“法文引号”的玩意儿}
+
+法文排版的乐趣之一不容置疑地归属于卓越的“法国特色”引号的使用方式\jz{
+    此外，我们注意到，现在很流行伸出食指和中指勾动来表示引号，但我们仍在使用代表法文引号“«”和“»”的guillet一词来表示引号。这种兔耳朵一样的手势无疑是从美国人那里传来的。因此，我公开呼吁，我们要使用拇指和食指来表示引号。然而，为了形象地模仿出法文引号这种双层尖角的特征，也许需要再长出两只胳膊，或习惯于扭动一只手的四根手指才行。
+}……然而，我们在文档中输入法文引号时，包\textsf{babel}没法正确处理断字：
+
+\begin{dmd}
+\begin{verbatim}
+\begin{minipage}{3.7cm}
+    字盒中的这句话仅仅是为了去证明此处出现的法文引号处理得不够 « 优雅 »。
+\end{minipage}
+\end{verbatim}
+\end{dmd}
+
+这个字盒的显示效果为：
+\begin{minipage}{3.7cm}
+    字盒中的这句话仅仅是为了去证明此处出现的法文引号处理得不够 « 优雅 »。
+\end{minipage}
+
+至少这种处理方式让人很不舒服……当然，可以借助包\textsf{babel}中的指令\verb|\og|和\verb|\fg|来插入法文引号，但依鄙人的品味，这种输入方式显得束手束脚，尤其是考虑到法文引号可以在法文键盘上直接输入\jz{
+    分别使用\ovalbox{Alt Gr}+\ovalbox{Z}和\ovalbox{Alt Gr}+\ovalbox{X}快捷键。
+}。一种曾经由包\textsf{french}适配的解决方案通过将字符“«”和“»”设为活跃\celan{\S 10.5.1}来缓解了断字的问题。因此，我们可以这样编写：
+
+\begin{dmd}
+\begin{verbatim}
+\catcode`\«=13
+\catcode`\»=13
+\end{verbatim}
+\end{dmd}
+
+然后定义以下两个指令：
+
+\begin{dmd}
+\begin{verbatim}
+\newcommand{\fermerguillemets}{% 
+\unskip\kern.15em\symbol{20}} 
+\newcommand{\ouvrerguillemets}{%
+\symbol{19}\ignorespaces\kern.15em}
+\end{verbatim}
+\end{dmd}
+
+注意到，此处使用了可以根据指定长度插入一段不可打断的空白的指令\TeX 指令\verb|\kern|，使用了指令\verb|\unskip|\celan{\S 9.2.1}，还使用了指令\verb|\symbol|来插入当前字体中的第19和第20个字符：
+
+\begin{codelist}[10.10]{
+\newcounter{car}
+\setcounter{car}{1}
+\fontencoding{T1} \selectfont
+\whiledo{\value{car}<64}{%
+  \symbol{\value{car}}$_{\thecar}$
+  \stepcounter{car}}
+}\begin{verbatim}
+\setcounter{car}{1}
+\whiledo{\value{car}<64}{%
+  \symbol{\value{car}}$_{\thecar}$
+  \stepcounter{car}}
+\end{verbatim}
+\end{codelist}
+
+最终，我们为这两个符号分配了前面的指令：
+
+\begin{dmd}
+\begin{verbatim}
+\let»=\fermerguillemets
+\let«=\ouvrerguillemets
+\end{verbatim}
+\end{dmd}
+
+\begin{qquestion}
+这种操作方式有三个我仍然没法解决的小问题。首先，目前没有广泛流传的既能操作编码UTF-8，又能允许\TeX 将符号<<（编码为2字节）设置为活跃的引擎，我必须得谦卑地承认，我还没有测试它们。因此，这里提到的操作仅限于将每个字符编码为1字节的编码方式。其次，我们不能在标题中使用这些引号，因为可能有被识别为“书签”（signet；英：\emph{bookmark}）的可能。最后，这些引号在第11章%TODO
+末尾的环境\dm{ltxexemple}中无法使用。悲剧了！
+\end{qquestion}

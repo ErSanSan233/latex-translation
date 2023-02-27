@@ -1,0 +1,18 @@
+%!TEX program = xelatex
+\documentclass{standalone}
+
+
+\usepackage[UTF8]{ctex}
+\usepackage{listings}
+
+\begin{document}
+\lstnewenvironment{Cter}{% 
+    \lstset{language=C, escapechar=@}}{}
+\begin{Cter}
+int main()
+{
+    printf("Hi !\n");
+    return @\fbox{返回代码}@;
+} 
+\end{Cter}
+\end{document}
