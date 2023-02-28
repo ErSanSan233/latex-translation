@@ -1162,3 +1162,233 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 这种操作方式有三个我仍然没法解决的小问题。首先，目前没有广泛流传的既能操作编码UTF-8，又能允许\TeX 将符号<<（编码为2字节）设置为活跃的引擎，我必须得谦卑地承认，我还没有测试它们。因此，这里提到的操作仅限于将每个字符编码为1字节的编码方式。其次，我们不能在标题中使用这些引号，因为可能有被识别为“书签”（signet；英：\emph{bookmark}）的可能。最后，这些引号在第11章%TODO
 末尾的环境\dm{ltxexemple}中无法使用。悲剧了！
 \end{qquestion}
+
+\section{用于微型摘要的字盒}
+
+包\textsf{mini-toc}可以生成“微型目录”（正如其名），以便我们在文档的指定位置插入。一般来说，我们会将微型摘要插在章首。在文前部分使用命令\verb|\dominitoc|之后，我们可以调用指令\verb|\minitoc|来在想要的位置插入这个微型目录。包的文档详细解释了相关信息，还介绍了我们可以使用的不同风格。对于本书，我为章首构思了一种十分漂亮的目录，但该包不支持其中涉及的风格。实际上，我曾希望以如下的方式将各节标题展示在一个方框中：
+
+\newsavebox{\boitetitre}
+\newlength{\tempdim}
+\newlength{\largeurboitetitre}
+\newlength{\hauteurboitetitre}
+\newlength{\largeurtitre}
+
+\newcommand{\espacetitre}{0.6}
+\newcommand{\decalagetitreg}{1}
+\newcommand{\decalagetitred}{5}
+
+\newcommand{\traitressort}[2][1]{%
+  \leaders\hrule height#2\hskip0pt plus #1fill\relax}
+
+\newcommand{\titlebox}[3][-0.5ex]{%
+  \begin{lrbox}{\boitetitre}\kern\fboxsep#3\kern\fboxsep\end{lrbox}%
+  \settowidth{\largeurboitetitre}{\usebox{\boitetitre}}%
+  \settowidth{\largeurtitre}{#2}%
+  \settoheight{\hauteurboitetitre}{\usebox{\boitetitre}}%
+  \settodepth{\tempdim}{\usebox{\boitetitre}}%
+  \addtolength{\hauteurboitetitre}{\tempdim+2\fboxrule+2\fboxsep}%
+  \parbox{\fboxrule}{%
+    \rule{\fboxrule}{\hauteurboitetitre}}%
+  \parbox{\largeurboitetitre}{%
+    \begin{flushleft}
+      \makebox[\largeurboitetitre]{%
+        \traitressort[\decalagetitreg]{\fboxrule}%
+        \raisebox{#1}[0pt][0pt]{%
+          \kern\espacetitre\fboxsep#2\kern\espacetitre\fboxsep}%
+        \traitressort[\decalagetitred]{\fboxrule}}\\[\fboxsep]\nointerlineskip
+      \usebox{\boitetitre}\\[\fboxsep]\nointerlineskip%
+      \rule{\largeurboitetitre}{\fboxrule}
+    \end{flushleft}}%
+  \parbox{\fboxrule}{%
+    \rule{\fboxrule}{\hauteurboitetitre}}}
+
+\begin{center}
+    \titlebox{摘要}{%
+        \begin{minipage}{0.5\linewidth}
+            \begin{flushleft}
+            \bfseries
+            $\times $.1 标题一\\
+            $\times $.2 标题二\\
+            $\times $.3 等等
+            \end{flushleft}
+        \end{minipage}}
+\end{center}
+
+详细来说，这是一个带有标题的字盒，此处的标题是“摘要”。据我所知，\LaTeX 不提供这种字盒。我在论坛上提出这个问题后，一位好心人——邦雅曼·巴亚尔——为我提供了一段符合需求的代码。在本节，我会为你们提供一段用于生成带标题的字盒的\LaTeX 代码\jz{
+    毫无疑问，这段代码值得商榷，且功能有限，就像哪些诞生于小作坊的“软件”一样……
+}
+
+\subsection{指令界面}
+
+有多种方式可以创建此类指令。受\LaTeX 中字盒界面的灵感启发，我们可以使用这种语法来创建宏：
+
+\begin{codelist}[10.11]{
+    \titlebox{\footnotesize 标题}{%
+  字盒中的内容}
+}\begin{verbatim}
+\titlebox{\footnotesize 标题}{%
+  字盒中的内容}
+\end{verbatim}
+\end{codelist}
+
+以及：
+
+\begin{codelist}[10.12]{
+    \setlength{\fboxsep}{5pt}
+\setlength{\fboxrule}{2pt}
+\titlebox{另一个标题}{%
+\begin{minipage}{3cm}\begin{center} 
+    一些东西\\ 一些玩意
+\end{center}\end{minipage}}
+}\begin{verbatim}
+\setlength{\fboxsep}{5pt}
+\setlength{\fboxrule}{2pt}
+\titlebox{另一个标题}{%
+\begin{minipage}{3cm}\begin{center} 
+    一些东西\\ 一些玩意
+\end{center}\end{minipage}}
+\end{verbatim}
+\end{codelist}
+
+\subsection{还是得来点\TeX}
+
+\TeX 原语\verb|\leaders|可以使用你想到的任何内容来填充一个弹性空间，语法如下：
+
+\begin{dmd}
+\verb|\leaders|\codereplace{随你喜欢}\codereplace{空间}
+\end{dmd}
+
+这样可以使用\codereplace{随你喜欢}来填满\codereplace{空间}。例如：
+
+\begin{codelist}[10.13]{
+\framebox[3cm]{%
+  \leaders\hbox{o}\hfill}
+}\begin{verbatim}
+\framebox[3cm]{%
+    \leaders\hbox{o}\hfill}
+\end{verbatim}
+\end{codelist}
+
+\TeX 原语\verb|\hbox|（由\verb|\mbox|和\verb|\makebox|使用）可以创建水平字盒：
+
+\begin{codelist}[10.14]{
+\framebox[3cm]{%
+    \leaders\hbox to 3pt{o}\hfill}
+}\begin{verbatim}
+\framebox[3cm]{%
+    \leaders\hbox to 3pt{o}\hfill}
+\end{verbatim}
+\end{codelist}
+
+\verb|\leaders|同样可以与\TeX 原语\verb|\hrule|结合，用来画线：
+
+\begin{codelist}[10.15]{
+\framebox[3cm]{%
+    \leaders\hrule height 4pt\hfill}
+}\begin{verbatim}
+\framebox[3cm]{%
+    \leaders\hrule height 4pt\hfill}
+\end{verbatim}
+\end{codelist}
+
+这里，弹性长度\verb|\hfill|延展为\verb|\framebox|的3 cm，并由线宽为4 pt的线段填充。
+
+\begin{codelist}[10.16]{
+    \framebox[3cm]{%
+    \leaders\hbox to5pt{%
+      \leaders\hrule width1pt\hfill%
+      \kern2pt}\hfill}
+}\begin{verbatim}
+\framebox[3cm]{%
+    \leaders\hbox to5pt{%
+        \leaders\hrule width1pt\hfill%
+        \kern2pt}\hfill}
+\end{verbatim}
+\end{codelist}
+
+在上述示例中，3 cm的空间被宽度为5 pt的字盒填充，每个字盒中包含如前展示的\verb|\leaders|，以及宽度为2 pt的空白。借助\TeX ，我们可以使用以下方式规范弹性长度的“僵硬”程度\celan{\S 4.2.4}：
+
+\begin{codelist}[10.17]{
+    \framebox[4cm]{%
+    \hskip0pt plus 2fill X%
+    \hskip0pt plus 3fill}
+}\begin{verbatim}
+\framebox[4cm]{%
+    \hskip0pt plus 2fill X%
+    \hskip0pt plus 3fill}
+\end{verbatim}
+\end{codelist}
+
+其中，以下尺寸可以定义相对“僵硬”程度为$n$的弹性长度：
+
+\begin{dmd}
+\verb|\hskip 0pt plus |\codereplace{n}fill
+\end{dmd}
+
+\newcommand{\mafraction}[2]{%
+\raisebox{0.5ex}{#1}%
+\slash\raisebox{-0.5ex}{#2}}
+
+因此，在上面的示例中，字母“X”出现在字盒中\mafraction{2}{5}的位置……使用此类的弹性空白和\verb|\leaders|，我们可以定义出如下的内容并在以下示例中使用：
+
+\begin{dmd}
+\begin{verbatim}
+\newcommand{\traitressort}[2][1]{%
+    \leaders\hrule height#2\hskip0pt plus #1fill\relax}
+\end{verbatim}
+\end{dmd}
+
+\begin{codelist}[10.18]{
+    \framebox[4cm]{%
+    \traitressort[2]{2ex}X%
+    \traitressort{2pt}}
+}\begin{verbatim}
+\framebox[4cm]{%
+    \traitressort[2]{2ex}X%
+    \traitressort{2pt}}
+\end{verbatim}
+\end{codelist}
+
+在该5 cm宽的字盒中，我们有：
+
+\begin{itemize}
+    \item “僵硬”程度为2的弹性空白，由线宽为4 pt的线段填充；
+    \item 字母X；
+    \item “僵硬”程度为1的弹性空白，由线宽为2 pt的线段填充；
+\end{itemize}
+
+接下来，我们将很快得到该指令为我们服务的消息……
+
+\subsection{字盒的概念}
+
+为了构建我们需要的那种字盒，我们将要按如下方式创建三个字盒：
+
+\begin{center}
+    \fbox{\parbox{3pt}{%
+        \rule{0pt}{1.215cm}%
+        \rule{3pt}{1.025cm}}}%
+    \parbox[][1.5cm][c]{4cm}{%
+        \begin{flushleft}
+          \framebox[4cm]{%
+            \traitressort{3pt}
+            \raisebox{-.23ex}{标题}
+            \traitressort[4]{3pt}}\\\nointerlineskip
+          \framebox[4cm]{内容}\\\nointerlineskip
+          \framebox[4cm]{\traitressort{3pt}}
+        \end{flushleft}}%
+    \fbox{\parbox{3pt}{%
+        \rule{0pt}{1.215cm}%
+        \rule{3pt}{1.025cm}}}
+\end{center}
+
+其中包含：
+
+\begin{itemize}
+    \item 两个\verb|\parbox|，用于包含左右两侧的竖线；
+    \item 中央的一个\verb|\parbox|，包含响应标题变化的横线、内容，以及底部的水平线。
+\end{itemize}
+
+很快，我们就会看到如何构建这三个字盒，并且一个参考一个地放置它们。
+
+\subsection{代码}
+
