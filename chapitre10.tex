@@ -251,7 +251,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 
 \begin{enumerate}
     \item \verb|\@chapter|，用于被编号的章标题；
-    \item \verb|\@schapter|，用于不被编号的章标题（\dmh{s}代表\emph{star}，即“星号”，对应指令\verb|\chapter*|）。
+    \item \verb|\@schapter|，用于不被编号的章标题（\dm{s}代表\emph{star}，即“星号”，对应指令\verb|\chapter*|）。
 \end{enumerate}
 
 在英勇地（同样在文件\dm{book.cls}中）查找这两条指令的定义之后，我们找到了下面这类东西：
@@ -1391,4 +1391,297 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 很快，我们就会看到如何构建这三个字盒，并且一个参考一个地放置它们。
 
 \subsection{代码}
+
+我们需要一个字盒来存储位于中央的\verb|\parbox|：
+
+\begin{dmd}
+\verb|\newsavebox{\boitetitre}|
+\end{dmd}
+
+还需要两个尺寸：
+
+\begin{dmd}
+\begin{verbatim}
+\newlength{\largeurboitetitre}
+\newlength{\hauteurboitetitre}
+\end{verbatim}
+\end{dmd}
+
+尺寸的名称十分具体\yz{
+    分别指标题字盒（boîte titre）的宽度（largeur）和高度（hauteur）。
+}，因此，我不必去组织那些晦涩的句子来解释这个或那个变量的含义。我们要求指令\verb|\titlebox|做的第一个任务是存储并测量其内容的尺寸：
+
+\begin{dmd}
+\begin{verbatim}
+\newcommand{\titlebox}[2]{% 
+    \begin{lrbox}{\boitetitre}% 存储内容
+        \kern\fboxsep#2\kern\fboxsep
+    \end{lrbox}
+    % 测量该中央段落字盒的宽度 
+    \settowidth{\largeurboitetitre}{\usebox{\boitetitre}}% 
+    % 测量该中央段落字盒的高度
+    \settoheight{\hauteurboitetitre}{\usebox{\boitetitre}}% 
+    \settodepth{\tempdim}{\usebox{\boitetitre}}% 
+    \addtolength{\hauteurboitetitre}{%
+        \tempdim+2\fboxrule+2\fboxsep}%
+    ... }
+\end{verbatim}
+\end{dmd}
+
+\verb|\kern|是\TeX 指令，用于插入可插入的空白，此处为宽度\verb|\fboxsep|。注意，为了测量总高度，我们借助了一个求高度（\emph{英：height}）和深度（\emph{英：depth}）之和的临时长度。接下来，我们在该总高度的基础上添加了两倍的线宽和两倍的空间\verb|\fboxsep|。回忆一下，尺寸\verb|\fboxrule|和\verb|\fboxsep|分别定义了线宽和简单字盒\celan{\S 4.4.1}内容和边框间的空间。因此，我们有：
+
+\begin{itemize}
+    \item \verb|\largeurboitetitre|代表了中央\verb|\parbox|的宽度和二倍\verb|\fboxsep|的和；
+    \item \verb|\hauteurboitetitre|代表了计入两条水平线线宽后的总高度\verb|2(\fboxsep+\fboxrule)|。
+\end{itemize}
+
+因此，我们可以搭建第一版指令：
+
+\begin{dmd}
+\begin{verbatim}
+\newcommand{\titleboxI}[2]{% 
+    ...
+    \parbox{\fboxrule}{% 左侧线段
+        \rule{\fboxrule}{\hauteurboitetitre}}%
+    \parbox{\largeurboitetitre}{% 中央字盒
+        \begin{flushleft}
+            \usebox{\boitetitre} 
+        \end{flushleft}}%
+    \parbox{\fboxrule}{% 右侧线段
+        \rule{\fboxrule}{\hauteurboitetitre}}}}
+\end{verbatim}
+\end{dmd}
+
+\newcommand{\titleboxI}[2]{%
+  \begin{lrbox}{\boitetitre}% stockage du contenu
+    \kern\fboxsep#2\kern\fboxsep
+  \end{lrbox}
+  % mesure de la largeur de la parbox centrale
+  \settowidth{\largeurboitetitre}{\usebox{\boitetitre}}%
+  % mesure de la hauteur de la parbox centrale
+  \settoheight{\hauteurboitetitre}{\usebox{\boitetitre}}%
+  \settodepth{\tempdim}{\usebox{\boitetitre}}%
+  \addtolength{\hauteurboitetitre}{\tempdim+2\fboxrule+2\fboxsep}%
+  \parbox{\fboxrule}{%
+    \rule{\fboxrule}{\hauteurboitetitre}}%
+  \parbox{\largeurboitetitre}{%
+    \begin{flushleft}
+      \usebox{\boitetitre}
+    \end{flushleft}}%
+  \parbox{\fboxrule}{%
+    \rule{\fboxrule}{\hauteurboitetitre}}}
+
+目前，其效果为：
+
+\begin{codelist}[10.19]{
+    \titleboxI{titre}{一些东西二些东西}
+
+\titleboxI{encore}{%
+  \parbox{4cm}{东西\\玩意\\零七八碎}}
+}\begin{verbatim}
+\titleboxI{titre}{一些东西二些东西}
+
+\titleboxI{encore}{%
+  \parbox{4cm}{东西\\玩意\\零七八碎}}
+\end{verbatim}
+\end{codelist}
+
+接下来要做的是修改中央\verb|\parbox|的内容，以加入两条水平线——下方的线段和上方被标题打断的线段。这里的思路是堆叠三个字盒：
+
+\begin{enumerate}
+    \item 包含标题和“弹性线段”的字盒；
+    \item 存储内容（\verb|\boitetitre|）的字盒；
+    \item 宽度为\verb|\largeurboitetitre|的线段。
+\end{enumerate}
+
+我们的第一次尝试如下：
+
+\begin{dmd}
+\begin{verbatim}
+\newcommand{\titleboxII}[2]{% 
+    ...
+    \parbox{\largeurboitetitre}{% 中央字盒
+        \begin{flushleft}
+            \makebox[\largeurboitetitre]{% 
+                \traitressort{\fboxrule}#1% 
+                \traitressort[5]{\fboxrule}}\\
+            \usebox{\boitetitre}\\
+            \rule{\largeurboitetitre}{\fboxrule}
+        \end{flushleft}}
+    ...}
+\end{verbatim}
+\end{dmd}
+
+\newcommand{\titleboxII}[2]{%
+  \begin{lrbox}{\boitetitre}% stockage du contenu
+    \kern\fboxsep#2\kern\fboxsep
+  \end{lrbox}
+  % mesure de la largeur de la parbox centrale
+  \settowidth{\largeurboitetitre}{\usebox{\boitetitre}}%
+  % mesure de la hauteur de la parbox centrale
+  \settoheight{\hauteurboitetitre}{\usebox{\boitetitre}}%
+  \settodepth{\tempdim}{\usebox{\boitetitre}}%
+  \addtolength{\hauteurboitetitre}{\tempdim+2\fboxrule+2\fboxsep}%
+  \parbox{\fboxrule}{%
+    \rule{\fboxrule}{\hauteurboitetitre}}%
+  \parbox{\largeurboitetitre}{%
+    \begin{flushleft}
+      \makebox[\largeurboitetitre]{%
+        \traitressort{\fboxrule}#1\traitressort[5]{\fboxrule}}\\
+      \usebox{\boitetitre}\\
+      \rule{\largeurboitetitre}{\fboxrule}
+    \end{flushleft}}%
+  \parbox{\fboxrule}{%
+    \rule{\fboxrule}{\hauteurboitetitre}}}
+
+效果如下：
+
+\begin{codelist}[10.20]{
+    \titleboxII{标题}{一些东西二些东西}
+
+    \titleboxII{再来一个}{%
+        \parbox{4cm}{零七\\八碎}}
+}\begin{verbatim}
+\titleboxII{标题}{一些东西二些东西}
+
+\titleboxII{再来一个}{%
+    \parbox{4cm}{零七\\八碎}}
+\end{verbatim}
+\end{codelist}
+
+可以说，这“不完全”是我们想要的。接下来需要考虑的是尽量让指令\verb|\\|实现竖直方向上与尺寸\verb|\fboxsep|相同的换行。我们可以顺便让标题竖直向下移动，来实现这一点：
+
+\begin{dmd}
+\begin{verbatim}
+\newcommand{\titleboxIII}[2]{%
+    ...
+    \parbox{\largeurboitetitre}{% 中央字盒
+        \begin{flushleft}
+        \makebox[\largeurboitetitre]{%
+            \traitressort{\fboxrule}%
+            \raisebox{-.5ex}[0pt][0pt]{#1}%
+            \traitressort[5]{\fboxrule}}\\[\fboxsep]
+        \usebox{\boitetitre}\\[\fboxsep]
+        \rule{\largeurboitetitre}{\fboxrule}
+        \end{flushleft}}  
+    ...}
+\end{verbatim}
+\end{dmd}
+
+\newcommand{\titleboxIII}[2]{%
+  \begin{lrbox}{\boitetitre}% stockage du contenu
+    \kern\fboxsep#2\kern\fboxsep
+  \end{lrbox}
+  % mesure de la largeur de la parbox centrale
+  \settowidth{\largeurboitetitre}{\usebox{\boitetitre}}%
+  % mesure de la hauteur de la parbox centrale
+  \settoheight{\hauteurboitetitre}{\usebox{\boitetitre}}%
+  \settodepth{\tempdim}{\usebox{\boitetitre}}%
+  \addtolength{\hauteurboitetitre}{\tempdim+2\fboxrule+2\fboxsep}%
+  \parbox{\fboxrule}{%
+    \rule{\fboxrule}{\hauteurboitetitre}}%
+  \parbox{\largeurboitetitre}{%
+    \begin{flushleft}
+      \makebox[\largeurboitetitre]{%
+        \traitressort{\fboxrule}%
+        \raisebox{-.5ex}[0pt][0pt]{#1}%
+        \traitressort[5]{\fboxrule}}\\[\fboxsep]
+      \usebox{\boitetitre}\\[\fboxsep]
+      \rule{\largeurboitetitre}{\fboxrule}
+    \end{flushleft}}%
+  \parbox{\fboxrule}{%
+    \rule{\fboxrule}{\hauteurboitetitre}}}
+
+效果为：
+
+\begin{codelist}[10.21]{
+    \titleboxIII{标题}{一些东西二些东西}
+
+\titleboxIII{再来一个}{%
+    \parbox{4cm}{零七\\八碎}}
+}\begin{verbatim}
+\titleboxIII{标题}{一些东西二些东西}
+
+\titleboxIII{再来一个}{%
+    \parbox{4cm}{零七\\八碎}}
+\end{verbatim}
+\end{codelist}
+
+可以说规整得没什么效果……需要知道，当\TeX 在纵向模式下堆叠字盒是，它本身就会在字盒间插入空间，来保证行间距为长度\verb|\baselineskip|。在\TeX Book的79页有关处理\emph{glue}的章节中，我们可以找到：
+
+\begin{quote}
+    例外情况：线段字盒的前后不会插入用于跨行分隔的垫胶。你也可以通过在两个字盒间插入\verb|\nointerlineskip|来禁用垫胶。
+
+    \hfill 唐纳德·克努特，\TeX Book[9]
+\end{quote}
+
+因此，命令\verb|\nointerlineskip|可以解决这个问题：
+
+\begin{dmd}
+\begin{verbatim}
+\newcommand{\titleboxIV}[2]{%
+    ...
+    \parbox{\largeurboitetitre}{% 中央字盒
+        \begin{flushleft}
+        \makebox[\largeurboitetitre]{%
+            \traitressort{\fboxrule}%
+            \raisebox{-.5ex}[0pt][0pt]{#1}%
+            \traitressort[5]{\fboxrule}}\\[\fboxsep]
+        \nointerlineskip
+        \usebox{\boitetitre}\\[\fboxsep]\nointerlineskip
+        \rule{\largeurboitetitre}{\fboxrule}
+        \end{flushleft}}  
+    ...}
+\end{verbatim}
+\end{dmd}
+
+\newcommand{\titleboxIV}[2]{%
+  \begin{lrbox}{\boitetitre}% stockage du contenu
+    \kern\fboxsep#2\kern\fboxsep
+  \end{lrbox}
+  % mesure de la largeur de la parbox centrale
+  \settowidth{\largeurboitetitre}{\usebox{\boitetitre}}%
+  % mesure de la hauteur de la parbox centrale
+  \settoheight{\hauteurboitetitre}{\usebox{\boitetitre}}%
+  \settodepth{\tempdim}{\usebox{\boitetitre}}%
+  \addtolength{\hauteurboitetitre}{\tempdim+2\fboxrule+2\fboxsep}%
+  \parbox{\fboxrule}{%
+    \rule{\fboxrule}{\hauteurboitetitre}}%
+  \parbox{\largeurboitetitre}{%
+    \begin{flushleft}
+      \makebox[\largeurboitetitre]{%
+        \traitressort{\fboxrule}%
+        \raisebox{-.5ex}[0pt][0pt]{#1}%
+        \traitressort[5]{\fboxrule}}\\[\fboxsep]\nointerlineskip
+      \usebox{\boitetitre}\\[\fboxsep]\nointerlineskip
+      \rule{\largeurboitetitre}{\fboxrule}
+    \end{flushleft}}%
+  \parbox{\fboxrule}{%
+    \rule{\fboxrule}{\hauteurboitetitre}}}
+\enlargethispage{2cm}
+
+效果为：
+
+\begin{codelist}[10.22]{
+\titleboxIV{标题}{一些东西二些东西}
+
+\titleboxIV{再来一个}{%
+    \parbox{4cm}{零七\\八碎}}
+}\begin{verbatim}
+\titleboxIV{标题}{一些东西二些东西}
+
+\titleboxIV{再来一个}{%
+    \parbox{4cm}{零七\\八碎}}
+\end{verbatim}
+\end{codelist}
+
+这样就满足了我们的需求。
+
+\begin{ii}
+这个指令还有很多可以完善的地方，我把它们留作练习。例如，我们可以定义一个可选的参数，来规定标题下沉的程度（目前我们强制其为\dm{-0.5ex}）。同样，也可以规定标题周围线段的比例。最后，也当然可以考虑规定标题周围的空间（此处没有留空间）。
+\end{ii}
+
+\subsection{借助包\textsf{minitoc}的应用}
+
+使用前文中定义的指令\verb|\titlebox|，包\textsf{minitoc}中发生的事情只是简单地戴上波洛先生的帽子。通过仔细检查风格文件，我们找到了一个叫做\verb|\minitoc@|的指令的定义。我只是简单地将这个宏的代码照抄了下来，并且在卓越的指令\verb|\titlebox|中加入了一次调用。
 
