@@ -10,3 +10,196 @@
 
 \section{一些小手工}
 
+\subsection{参数和排版转换}
+
+在涉及信息语言的文档中，需要突出显示参数、指令，以及函数。例如，我们需要这类效果：
+
+\begin{codelist}[11.1]{
+    为了编译文件\codereplace{文件}：
+\begin{flushleft}
+    \ttfamily latex \codereplace{文件}
+\end{flushleft}
+}\begin{verbatim}
+为了编译文件\bwarg{文件}：
+\begin{flushleft}
+    \ttfamily latex \bwarg{文件}
+\end{flushleft}
+\end{verbatim}
+\end{codelist}
+
+指令\verb|\bwmarg|可以以\textsl{倾斜字体}来输出其参数，并且置于“⟨”和“⟩”之间。这种括号可以在数学模式下分别由指令\verb|\langle|、\verb|\rangle|生成。此外，你无疑注意到了，我们可以使用下标符号，就像这样：
+
+\begin{codelist}[11.2]{
+复制文件：
+\begin{flushleft}\ttfamily
+    cp \codereplace{文件$_1$} ...
+    \codereplace{文件$_n$}
+    \codereplace{文件$_{dst}$}
+\end{flushleft} 
+}\begin{verbatim}
+复制文件：
+\begin{flushleft}\ttfamily
+    cp \bwarg[1]{文件} ...
+    \bwarg[n]{文件}
+    \bwarg[dst]{文件}
+\end{flushleft}
+\end{verbatim}
+\end{codelist}
+
+指令\verb|\bwarg|\jz{
+    这个名称代表“黑白”参数（« black \& white » argument）……
+}的定义如下：
+
+\begin{dmd}
+\begin{verbatim}
+\newcommand{\marg}[2][]{% 
+    {\normalfont%
+        \textsl{$\langle$#2%
+            % 如果选用了可选参数 
+            \ifthenelse{\equal{#1}{}}{} 
+            {$_\mathit{#1}$}% 显示下标
+            $\rangle$}}}%
+\end{verbatim}
+\end{dmd}
+
+指令\verb|\normalfont|的效果是回到文档的默认字体。这解释了为什么示例11.1中的“\codereplace{文件}”没有使用打字机字体显示。
+
+在本文档的电子版（也就是需要通过屏幕阅读的版本）中，我们决定使用\emph{颜色}而不是字符“⟨”和“⟩”。这样一来，可以定义指令\verb|\colarg|：
+
+\begin{dmd}
+\begin{verbatim}
+\newcommand{\colarg}[2][]{{% 
+    \normalfont\color{blue!90}#2% 蓝色 
+    \ifthenelse{\equal{#1}{}}{}{$_\mathit{#1}$}}}
+\end{verbatim}
+\end{dmd}
+
+接下来，借助一个巧妙放置的布尔值\celan{\S 9.3.1}，我们可以定义一个通用的指令\verb|\marg|，以调用其中的一个版本（黑白版本或彩色版本）：
+
+\begin{dmd}
+\begin{verbatim}
+\ifversionenligne
+    \let\marg\colarg
+\else
+    \let\marg\bwarg
+\fi
+\end{verbatim}
+\end{dmd}
+
+这个结构调用了\TeX 的指令\verb|\let|，在9.2.3小节有明确的介绍。
+
+\subsection{关于索引的生成}
+
+本书中，凡是行文中提到指令、环境、包、文档类型等时，都会调用对应的特殊指令，来自动在索引中插入一条入口\yz{
+    妈的怎么不早说。算了先不做索引了，全书翻译完之后再调整吧。
+}。举例来说，这样一来的效果为：
+
+\begin{codelist}[11.3]{
+借助包\textsf{varioref}，可以
+使用指令\dm{\backslash vref}……
+}\begin{verbatim}
+借助包\ltxpack{varioref}，可以
+使用指令\ltxcom{vref}……
+\end{verbatim}
+\end{codelist}
+
+指令\verb|\ltxpack|的定义如下。首先，以下内容定义的指令\verb|\ltx@pack|可以以非衬线字体展示包名：
+
+\begin{dmd}
+\begin{verbatim}
+\newcommand{\ltx@pack}[1]{%
+    \upshape\textsf{#1}}
+\end{verbatim}
+\end{dmd}
+
+接下来，我们像这样定义：
+
+\begin{dmd}
+\begin{verbatim}
+\newcommand{\ltxpack}[1]{%
+    \ltx@pack{#1}% 
+    \protect\index{扩展们！\protect\texttt{#1}}% 
+    \protect\index{#1@\protect\textsf{#1 扩展}}}
+\end{verbatim}
+\end{dmd}
+
+其中调用了前面定义的指令，并在索引中插入了两个入口，一个遵循“\codereplace{包名}扩展”的格式，另一个作为“扩展们”的\celan{\S 6.3}子入口。这里，指令\verb|\protect|的作用是避免指令\verb|\ltxpack|本身作为作为另一条指令的参数时带来的麻烦。遵循同样的思路，我们可以定义指令\verb|\ltxcom|。首先：
+
+\begin{dmd}
+\begin{verbatim}
+\newcommand{\ltx@com}[1]{%
+    \texttt{\symbol{92}#1}}
+\end{verbatim}
+\end{dmd}
+
+以上指令可以以打字机字体生成指令名，并在前面加上字符\dm{\backslash}。\verb|\symbol|是\LaTeX 指令，此处用于插入所选字体下的第92个字符（恰好为反斜杠）。因此，我们最终有如下定义：
+
+\begin{dmd}
+\begin{verbatim}
+\newcommand{\ltxcom}[1]{%
+    \ltx@com{#1}% 
+    \index{#1@\protect\texttt{\symbol{92}#1}}}
+\end{verbatim}
+\end{dmd}
+
+该指令调用了上一条指令，在索引中插入一个入口。此处需要提炼出的思想是，定义可以自动在索引中插入入口的指令可能很有帮助。举例来说，我们也许可以定义这样一条指令：
+
+\begin{dmd}
+\begin{verbatim}
+\newcommand{\jargonanglais}[1]{% 
+    \emph{#1}%
+    \index{#1}}
+\end{verbatim}
+\end{dmd}
+
+该指令可以在设置英文术语格式的同时将其插入索引——比如某个特殊的索引。同样，如果在文档中经常出现，我们就可以定义一条指令，将其插到索引中。例如，在本书中，我们有这样的定义：
+
+\begin{dmd}
+\begin{verbatim}
+\newcommand{\postscript}{% 
+    PostScript% 
+    \protect\index{PostScript}}
+\end{verbatim}
+\end{dmd}
+
+\subsection{跳转提示}
+
+本书的纸质版中四处分散着跳转阅读的提示，例如这个提醒你去看\celan{\S D.3.5}术语字典（glossaire）的提示——幸亏我们这里在说跳转阅读，否则这个术语字典就这里的内容毫无关联了\jz{
+    如果你没完全跟上的话，我是想说，这里其实没有术语字典的什么事……
+}。实现跳转提示符号的指令被赐名为\verb|\voir|，接收两个参数：
+
+\begin{dmd}
+\backslash voir\{\codereplace{目标标签}\}\{\codereplace{跳转对象文本}\}
+\end{dmd}
+
+例如，前面的跳转是这样生成的：
+
+\begin{dmd}
+\verb|\voir{chap-glossaire}{glossaire}|
+\end{dmd}
+
+这个指令的设计过程中，全部的“难点”在于怎样让三角形根据页面奇偶性来改变朝向。借助包\textsf{chngpage}，这一难点得以功课。请参阅9.3.3小节。
+
+余下的工作就是展示三角形。为了达成这一目的，我们定义了两个指令，分别生成侧栏的跳转提示和正文中的标记。由此，\verb|\voir|的格式如下：
+
+\begin{dmd}
+\begin{verbatim}
+\newcommand{\voir}[3][\S]{% 
+    \checkoddpage% 
+    \ifcpoddpage
+        \v@irpageimpaire{#1}{#2}{#3}}{% 奇数页的跳转提示
+    \else
+        \v@irpagepaire{#1}{#2}{#3}}} % 偶数页的跳转提示
+    \fi
+\end{verbatim}
+\end{dmd}%TODO 此处括号似乎不配对
+
+我们注意到，除了两个必需的参数外，该指令还可以接收一个可选参数，它默认定义为段落标记（\S）。指令\verb|\v@irpageimpaire|和\verb|\v@irpagepaire|是对称的，作用如下：
+
+\begin{enumerate}
+    \item 将“朝向正确”的三角形放置在文本中，作为跳转提示对象；
+    \item 在侧栏生成带有跳转目标的注解。
+\end{enumerate}
+
+三角形
+
