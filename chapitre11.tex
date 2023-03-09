@@ -201,5 +201,173 @@
     \item 在侧栏生成带有跳转目标的注解。
 \end{enumerate}
 
-三角形
+三角形可以从包\textsf{amssymb}中包含的符号中获取：
 
+\begin{codelist}[11.4]{
+    天啊，那些“美观”的三角形：
+$\blacktriangleleft$和
+$\blacktriangleright$！
+}\begin{verbatim}
+天啊，那些“蟀爆了”的三角形：
+$\blacktriangleleft$和
+$\blacktriangleright$！
+\end{verbatim}
+\end{codelist}
+
+如下所示，是针对在偶数页实现跳转提示的指令的最终版本：
+
+\begin{dmd}
+\begin{verbatim}
+\newcommand{\v@irpageimpaire}[3]{% 
+    {\tiny$\blacktriangleright$}#3% 文本中的跳转提示
+    \marginpar{%
+        \parbox[t]{.9\marginparwidth}{% 
+            {\footnotesize\sffamily%
+                \hfill#1~\ref{#2}}~{\small$\blacktriangleleft$}\\
+            {\footnotesize\sffamily%
+                \mbox{}\hfill p.~\pageref{#2}\hfill\mbox{}}}}
+\end{verbatim}
+\end{dmd}% TODO 括号配对
+
+注意到，在侧栏的跳转内容包含于一个\verb|\parbox|\celan{\S 4.4.3}，其中分两行展示章节编号和页码\yz{
+    中文版暂时没做页码。%TODO 页码
+}。对于奇数页，需要做与偶数页相同的事情，只不过需要考虑到它是奇数页\dm{:-)}
+
+在“在线”版本中，跳转提示可以像超文本链接（lien hypertexte）那样呈现。这可以简单地通过指令\verb|\hyperref|（对应包同名）来实现。因此，我们可以编写出这类指令：
+
+\begin{dmd}
+\begin{verbatim}
+\newcommand{\voir}[3][\S]{% 
+    \hyperref[#2]{#3}}
+\end{verbatim}
+\end{dmd}
+
+其中的可选参数没有过多的用处，只是为了与“纸质”版本中的指令\verb+\voir+兼容。
+
+\subsection{更改侧栏}
+
+在本文中，我多次临时改变了侧栏的样子，尤其是针对用于并列展示\LaTeX 代码和其效果，或需要展示题记等内容%TODO 是题记吗？
+的情况。为了实现这种效果，维护\LaTeX 法文问答社区的玛丽-保罗·克卢特（Marie-Paul Kluth）\jz{
+    这位似乎有个命中注定的姓［lom prédestilé；译注：将nom prédestiné中的n替换为了l。此处是在调侃此人的姓（Kluth）与发明\TeX 的克努特（Knuth）仅有一个字母的区别］……
+}提议使用一种集成环境，如下所示：
+
+\begin{dmd}
+\begin{verbatim}
+\newenvironment{changemargin}[2]% 
+    {\begin{list}{}{%
+        \setlength{\listparindent}{\parindent}% 
+        \setlength{\itemindent}{\parindent}% 
+        \setlength{\leftmargin}{#1}% 
+        \setlength{\rightmargin}{#2}%
+    }\item }% 
+    {\end{list}}
+\end{verbatim}
+\end{dmd}
+
+其中的思路是定义一个列表，而我们修改其中的侧栏。该环境接收的两个参数分别代表左侧和右侧的边距尺寸。这样的思路可以让环境产生很有趣的结果：边距会根据页面的奇偶性而实用不同的尺寸。这样的环境可以定义如下：
+
+\begin{dmd}
+\begin{verbatim}
+\newenvironment{agrandirmarges}[2]{% 
+    \begin{list}{}{%
+        \setlength{\topsep}{0pt}% 
+        \setlength{\listparindent}{\parindent}% 
+        \setlength{\itemindent}{\parindent}% 
+        \setlength{\parsep}{0pt plus 1pt}% 
+        \checkoddpage%
+        \ifcpoddpage
+            \setlength{\leftmargin}{-#1}
+            \setlength{\rightmargin}{-#2}
+        \else
+            \setlength{\leftmargin}{-#2}
+            \setlength{\rightmargin}{-#1}
+        \fi}\item }% 
+    {\end{list}}
+\end{verbatim}
+\end{dmd}
+
+\newenvironment{agrandirmarges}[2]{% 
+    \begin{list}{}{%
+        \setlength{\topsep}{0pt}% 
+        \setlength{\listparindent}{\parindent}% 
+        \setlength{\itemindent}{\parindent}% 
+        \setlength{\parsep}{0pt plus 1pt}% 
+        \checkoddpage%
+        \ifcpoddpage
+            \setlength{\leftmargin}{-#1}
+            \setlength{\rightmargin}{-#2}
+        \else
+            \setlength{\leftmargin}{-#2}
+            \setlength{\rightmargin}{-#1}
+        \fi}\item }% 
+    {\end{list}}
+
+注意，这里我们使用了指令\verb|\isodd|来测试页面的奇偶性。图\ref{fig:11.1}展示了使用这种环境的示例，其代码如下：
+
+\begin{figure}[bt]
+    \centering
+    \newcommand{\graphtex}{%
+      \includegraphics[height=2cm]{img/knuth-tex}}
+    \begin{agrandirmarges}{1cm}{2cm}
+      \begin{center}
+        \graphtex\graphtex\graphtex\graphtex\graphtex%
+        \graphtex\graphtex\graphtex\graphtex\graphtex%
+        \graphtex\graphtex\graphtex\graphtex\graphtex%
+        \graphtex\graphtex\graphtex\graphtex%
+      \end{center}
+    \caption{一幅内容完全不重要的图。它的出现只是为了说明我们可以在需要额外空间的时候临时修改左边距和右边距……}
+    \label{fig:11.1}
+    \end{agrandirmarges}
+\end{figure}
+
+\begin{dmd}
+\begin{verbatim}
+    \begin{figure}[tb]
+        \begin{agrandirmarges}{1cm}{2cm}
+            % 这里1cm针对“订口”侧
+            %     2cm针对“切口”侧
+        ...
+        \caption{一幅内容完全不重要的……}
+        \end{agrandirmarges}
+      \end{figure}
+\end{verbatim}
+\end{dmd}
+
+\section{各种提示}
+
+提示中可以见到的符号来源于“剪贴画”（……）。在图\ref{fig:11.2}中以3 cm的宽度展示了这些符号。在文档对应位置插入这些符号的“提示”由鄙人定义的环境生成。环境基于\TeX 层面的一项功能，而这项功能正是我勤勉地阅读\TeX Book是发现的，那就是指令\verb|\parshape|。该指令可以为段落指定任意形状：
+
+\begin{codelist}[11.5]{
+\parshape=5
+1.5cm 2.5cm
+1.5cm 2.5cm
+1cm 2cm
+1cm 2cm
+0pt \textwidth 
+a a a a a a a a a a a a a a a a a a a 
+a a a a a a a a a a a a a a a a a a a 
+a a a a a a a a a a a a a a a a a a a 
+}\begin{verbatim}
+\parshape=5
+1.5cm 2.5cm
+1.5cm 2.5cm
+1cm 2cm
+1cm 2cm
+0pt \textwidth 
+a a a a a a a a a a a a a a a a a a a 
+a a a a a a a a a a a a a a a a a a a 
+a a a a a a a a a a a a a a a a a a a 
+\end{verbatim}
+\end{codelist}
+
+\begin{figure}[htb]
+    \begin{center}
+      \includegraphics[width=3cm]{img/fmb-important}\quad%
+      \includegraphics[width=3cm]{img/fmb-note}\quad%
+      \includegraphics[width=3cm]{img/fmb-question}
+    \end{center}
+    \caption{手册中使用的符号}
+    \label{fig:11.2}
+\end{figure}
+
+符号“=”后面的数字

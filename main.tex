@@ -61,6 +61,10 @@
 %特殊字体
 \usepackage{fontspec}
 
+%页面奇偶性判断
+\usepackage{ifthen}
+\usepackage{chngpage}
+
 \def\codereplace#1{%代码中的<可替换>部分
     {\xeCJKsetup{CJKecglue={\hskip 0pt}}%
     {\rm ⟨}\textsl{#1}{\rm ⟩}}}
