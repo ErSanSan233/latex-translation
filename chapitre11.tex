@@ -370,4 +370,274 @@ a a a a a a a a a a a a a a a a a a a
     \label{fig:11.2}
 \end{figure}
 
-符号“=”后面的数字
+符号“=”后面的数字用于指明我们想要变形的行数。接下来，成对出现的数字用于指明缩进和该行变形后的长度。对于上述示例，有：
+
+\begin{itemize}
+    \item 最先出现的两行缩进1.5 cm，并且每行长2.5 cm；
+    \item 接下来的两行缩进1 cm，并且每行长2 cm；
+    \item 第五行（也是最后一次指明内容）可以决定接下来所有行的风格，即缩进0 cm且行长等于事先定义的长度\verb|\textwidth|。
+\end{itemize}
+
+因此，想要在段落中插入提示，我们可以借助该指令将前两行错位：
+
+\newlength{\larnota}
+\newlength{\largligne}
+
+\begin{codelist}[11.6]{
+\setlength{\larnota}{.9cm}
+\setlength{\largligne}{%
+    \textwidth-\larnota}
+\parshape=3
+\larnota\largligne
+\larnota\largligne
+0pt\textwidth
+\noindent 注意，这个段落唯一的
+作用，就是用来证明我们确实可以
+将段落中的两行内容错后一些，并
+让随后的内容如同什么都没有发生
+一样继续……
+}\begin{verbatim}
+\setlength{\larnota}{.9cm}
+\setlength{\largligne}{%
+    \textwidth-\larnota}
+\parshape=3
+\larnota\largligne
+\larnota\largligne
+0pt\textwidth
+\noindent 注意，这个段落唯一的
+作用，就是用来证明我们确实可以
+将段落中的两行内容错后一些，并
+让随后的内容如同什么都没有发生
+一样继续……
+\end{verbatim}
+\end{codelist}
+
+好了，接下来要做的事情就是在指令\verb|\parshape|留下的“洞口”中放上图片，让我们来简单地尝试一下：
+
+\begin{codelist}[11.7]{
+\setlength{\larnota}{.9cm}
+\setlength{\largligne}{%
+    \textwidth-\larnota}
+\parshape=3
+\larnota\largligne\larnota\largligne
+0pt\textwidth\noindent%
+\includegraphics[width=\larnota]{%
+img/fmb-important}
+注意，这个段落唯一的作用，就是
+用来证明我们确实可以将段落中的
+两行内容错后一些，并让随后的内
+容如同什么都没有发生一样继续……
+}\begin{verbatim}
+\setlength{\larnota}{.9cm}
+\setlength{\largligne}{%
+    \textwidth-\larnota}
+\parshape=3
+\larnota\largligne\larnota\largligne
+0pt\textwidth\noindent%
+\includegraphics[width=\larnota]{%
+    \ficnota}
+注意，这个段落唯一的作用，就是
+用来证明我们确实可以将段落中的
+两行内容错后一些，并让随后的内
+容如同什么都没有发生一样继续……
+\end{verbatim}
+\end{codelist}
+
+显然，这里的图像像其他字符一样放置在行上。我们将其放入宽度为零的字盒中，这样可以让字盒的内容右对齐：
+
+\begin{codelist}[11.7]{
+\setlength{\larnota}{.9cm}
+\setlength{\largligne}{%
+    \textwidth-\larnota}%
+\parshape=3
+\larnota\largligne\larnota\largligne%
+0pt\textwidth\noindent%
+\makebox[0pt][r]{%
+    \includegraphics[width=\larnota]{%
+    img/fmb-important}}%
+注意，这个美观的段落唯一的作用
+，就是用来证明我们确实可以将段
+落中的两行内容错后一些 [...]
+}\begin{verbatim}
+\setlength{\larnota}{.9cm}
+\setlength{\largligne}{%
+    \textwidth-\larnota}%
+\parshape=3
+\larnota\largligne\larnota\largligne%
+0pt\textwidth\noindent%
+\makebox[0pt][r]{%
+    \includegraphics[width=\larnota]{%
+        \ficnota}}%
+注意，这个美观的段落唯一的作用
+，就是用来证明我们确实可以将段
+落中的两行内容错后一些 [...]
+\end{verbatim}
+\end{codelist}
+
+接下来要做的是为这个图标施加竖直方向的位移（实际上，这个图标是正方形的，因此我们可以使用尺寸\verb|\indnota|）：
+
+\begin{codelist}[11.9]{
+\setlength{\larnota}{.9cm}
+\setlength{\largligne}{%
+    \textwidth-\larnota}
+\parshape=3
+\larnota\largligne\larnota\largligne
+0pt\textwidth\noindent%
+\raisebox{-\larnota}{%
+    \makebox[0pt][r]{%
+        \includegraphics[width=\larnota]{%
+        img/fmb-important}}}%
+注意，这个美观的段落唯一的作用
+，就是用来证明我们确实可以将段
+落中的两行内容错后一些 [...]
+}\begin{verbatim}
+\setlength{\larnota}{.9cm}
+\setlength{\largligne}{%
+    \textwidth-\larnota}
+\parshape=3
+\larnota\largligne\larnota\largligne
+0pt\textwidth\noindent%
+\raisebox{-\larnota}{%
+    \makebox[0pt][r]{%
+        \includegraphics[width=\larnota]{%
+            \ficnota}}}%
+注意，这个美观的段落唯一的作用
+，就是用来证明我们确实可以将段
+落中的两行内容错后一些 [...]
+\end{verbatim}
+\end{codelist}
+
+得，还是不行。需要让\LaTeX 相信我们所移动的字盒的尺寸为零：
+
+\begin{codelist}[11.10]{
+\setlength{\larnota}{.9cm}
+\setlength{\largligne}{%
+    \textwidth-\larnota}
+\parshape=3
+\larnota\largligne\larnota\largligne
+0pt\textwidth\noindent%
+\raisebox{-\larnota}[0pt][0pt]{%
+    \makebox[0pt][r]{%
+        \includegraphics[width=\larnota]{%
+        img/fmb-important}}}%
+注意，这个美观的段落唯一的作用
+，就是用来证明我们确实可以将段
+落中的两行内容错后一些 [...]
+}\begin{verbatim}
+\setlength{\larnota}{.9cm}
+\setlength{\largligne}{%
+    \textwidth-\larnota}
+\parshape=3
+\larnota\largligne\larnota\largligne
+0pt\textwidth\noindent%
+\raisebox{-\larnota}[0pt][0pt]{%
+    \makebox[0pt][r]{%
+        \includegraphics[width=\larnota]{%
+            \ficnota}}}%
+注意，这个美观的段落唯一的作用
+，就是用来证明我们确实可以将段
+落中的两行内容错后一些 [...]
+\end{verbatim}
+\end{codelist}
+
+我们就快要达到目的了。接下来需要做两处调整。
+
+\begin{itemize}
+    \item 字盒太低了些，这是因为参考线是文本行的底端。因此，我们可以在位移时抬升\dm{1ex}（字符的高度）。
+    \item 在图标和文档之间添加一些空间是个不错的想法。为此，我们定义一个长度\verb|\padnota|。
+\end{itemize}
+
+\newlength{\padnota}
+\newlength{\indnota}
+
+\begin{codelist}[11.11]{
+\setlength{\padnota}{5pt}
+\setlength{\larnota}{.9cm}
+\setlength{\indnota}{\larnota+\padnota}
+\setlength{\largligne}{%
+    \textwidth-\indnota}
+\parshape=3
+\indnota\largligne\indnota\largligne
+0pt\textwidth\noindent%
+\raisebox{-\larnota+2.2ex}[0pt][0pt]{%
+    \makebox[0pt][r]{%
+    \includegraphics[width=\larnota]{%
+    img/fmb-important}%
+    \hspace*{\padnota}}}%
+注意，这个美观的段落唯一的作用
+，就是用来证明我们确实可以将段
+落中的两行内容错后一些 [...]
+}\begin{verbatim}
+\setlength{\padnota}{5pt}
+\setlength{\larnota}{.9cm}
+\setlength{\indnota}{\larnota+\padnota}
+\setlength{\largligne}{%
+    \textwidth-\indnota}
+\parshape=3
+\indnota\largligne\indnota\largligne
+0pt\textwidth\noindent%
+\raisebox{-\larnota+2.2ex}[0pt][0pt]{%
+    \makebox[0pt][r]{%
+    \includegraphics[width=\larnota]{%
+        \ficnota}%
+    \hspace*{\padnota}}}%
+注意，这个美观的段落唯一的作用
+，就是用来证明我们确实可以将段
+落中的两行内容错后一些 [...]
+\end{verbatim}
+\end{codelist}
+
+当当当当！接下来将这些代码修改成可以创建新环境的样子就可以了。这里使用的技巧基于9.5节介绍的环境\dm{list}。环境的完整代码如下：
+
+\begin{dmd}
+\begin{verbatim}
+% 为参数传入文件名
+\newenvironment{pictonote}[1]{% 
+    \begin{list}{}{%
+        \setlength{\labelsep}{0pt}%
+        \setlength{\rightmargin}{15pt}} 
+    \item%
+        \setlength{\indentationnota}{% 
+            \@totalleftmargin+\largeurnota+\paddingnota}%
+        \setlength{\largeurlignenota}{% 
+            \linewidth-\largeurnota-\paddingnota}%
+        \parshape=3% 
+        \indentationnota\largeurlignenota% 
+        \indentationnota\largeurlignenota% 
+        \@totalleftmargin\linewidth% 
+        \raisebox{-\largeurnota+2.2ex}[0pt][0pt]{%
+            \makebox[0pt][r]{% 
+                \includegraphics[width=\largeurnota]{#1}%
+                 \hspace{\paddingnota}}}%
+        \ignorespaces}{% 
+    \end{list}}
+\end{verbatim}
+\end{dmd}
+
+\begin{exclamation}
+注意，使用尺寸\verb|\@totalleftmargin|可以获取列表左侧边距的宽度，并将可能出现的嵌套纳入考虑。实际上，列表中的尺寸\verb|\leftmargin|代表了\emph{相对于}包含该列表的环境的做边距。
+\end{exclamation}
+
+接下来，我们可以使用此环境，并为其传入特殊的文件作为参数。更好的方案是，我们可以去定义新的环境，例如：
+
+\begin{dmd}
+\verb+\newenvironment{nota}{%+
+\verb+    \begin{pictonote}{+\codereplace{你的文件}\verb+}}{\end{pictnote}}+
+\end{dmd}
+
+\begin{qquestion}
+作为本节的结尾，需要知道，这个环境有些问题：如果提示中包含新的段落，那么会多出一块为图标预留的空白。%TODO
+
+没错，没错，就像这里展示的一样。你也看到了，段首为图标留出了一块空白，但这里我们并不需要，对吧？为了避免这种麻烦，需要借助下面的咒语，在\TeX 的层面重新初始化缩进：
+
+\begin{dmd}
+\verb|\par\parshape=1\@totalleftmargin\linewidth|
+\end{dmd}
+
+这段内容可以作为一个指令的对象，在各个新段落的段首手动插入，就像我刚刚做的那样\dm{:-)}
+\end{qquestion}
+
+\section{引文}
+
+\subsection{题记}
+
