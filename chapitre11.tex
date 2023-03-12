@@ -641,3 +641,156 @@ img/fmb-important}
 
 \subsection{题记}
 
+本书中，我将生成各章首那些有煽动性的题记的环境命名为\dm{epigraphe}。例如，在第2章的\LaTeX 原代码中，我们可以找到：
+
+\begin{dmd}
+\begin{verbatim}
+\chapter{需要了解的知识}
+\label{chap-savoir}
+\begin{epigraphe}{《圣经·箴言》\textbf{21} 11}
+    亵慢的人受刑罚，愚蒙的人就得智慧。
+    智慧人受训诲，便得知识。
+\end{epigraphe}
+\end{verbatim}
+\end{dmd}
+
+环境\dm{epigraphe}的定义如下：
+
+\begin{dmd}
+\begin{verbatim}
+\newenvironment{epigraphe}[1] 
+{% begin条目
+    \vspace*{-1.5cm}%
+    \small\sffamily% 突出显示
+    \savebox{\nomepigraphe}{#1}% 存储引文来源
+                               % 的字盒
+    \slshape% 将内容设为倾斜
+    \begin{changemargin}{0pt}{-2cm}% 设置宽度
+        \begin{flushright}}% 将文字推到右侧
+        {% end文牧
+            \\[4pt]\usebox{\nomepigraphe}.% 插入来源
+        \end{flushright}%
+    \end{changemargin}\par\vspace*{0.6cm}}
+\end{verbatim}
+\end{dmd}
+
+其中，需要\celan{\S 4.4.5}声明用于储存引文来源的字盒：
+
+\begin{dmd}
+\verb|\newsavebox{\nomepigraphe}|
+\end{dmd}
+
+该环境首尾插入的竖直方向的空白（\verb|\vspace|）可以使题记正确地固定在章首和微型目录中间。
+
+\subsection{引用内容}
+
+本书各处散步着各式各样的引用内容（citation），它们由手工制作的环境生成：
+
+\begin{codelist}[11.12]{
+}\begin{verbatim}
+xxxxxxxxxxxxx
+\begin{unecitation}[乔治·巴塔伊
+    （Georges \textsc{Bataille}）]
+    老去的恐惧无穷无尽地延续着。
+    衰老将未完成的存在重置为开端。
+    我隐约在坟墓的边缘看见的开端是
+    死亡和侮辱都不能杀死的心中的
+    \emph{猪肉}。坟墓边缘的恐惧是
+    神授予的，我堕落于作为孩子的恐
+    惧之中。
+\end{unecitation}
+xxxxxxxxxxxxxxx
+\end{verbatim}
+\end{codelist}
+
+我们将会一步一步地创建这个环境。在创建过程中，可以预见\LaTeX 会抛给我们一些经典的问题。我们会基于9.6节和4.5.2小节的环境来定义可以生成引文和作者的引文环境：
+
+\begin{dmd}
+\begin{verbatim}
+% 为引文的作者准备字盒
+\newsavebox{\auteurcitation} 
+\newsavebox{\boitecitation}
+\newenvironment{citationi}[1]{% begin条目
+    % 存储带有作者信息的参数1
+    \savebox{\auteurcitation}{#1}% 
+    \begin{lrbox}{\boitecitation}
+        \begin{minipage}{.8\linewidth} 
+            \small\slshape}% 设为小字号斜体
+    {% end条目：将引文作者推至右侧
+        \par\mbox{}\hfill\usebox{\auteurcitation} 
+        \end{minipage}
+    \end{lrbox}
+    \begin{center}
+        \usebox{\boitecitation}
+    \end{center}
+\end{verbatim}
+\end{dmd}
+
+这样的效果是：
+
+\newsavebox{\auteurcitation} 
+\newsavebox{\boitecitation}
+\newenvironment{citationi}[1]{% begin条目
+    % 存储带有作者信息的参数1
+    \savebox{\auteurcitation}{#1}% 
+    \begin{lrbox}{\boitecitation}
+        \begin{minipage}{.8\linewidth} 
+            \small\slshape}% 设为小字号斜体
+    {% end条目：将引文作者推至右侧
+        \par\mbox{}\hfill\usebox{\auteurcitation} 
+        \end{minipage}
+    \end{lrbox}
+    \begin{center}
+        \usebox{\boitecitation}
+    \end{center}}
+
+\begin{codelist}[11.13]{
+前文 前文 前文 前文 前文 前文 前文
+前文 前文 前文 前文 前文 前文 前文
+\begin{citationi}{米歇尔·巴库尼%
+    （Michel \textsc{Bakounine}）, 1845}
+    在几乎所有的国家，女性都是奴隶。
+    只要她们没有完全得到解放，我们
+    自身的自由就不可能实现。
+\end{citationi}
+后文 后文 后文 后文 后文 后文 后文
+后文 后文 后文 后文 后文 后文 后文
+
+}\begin{verbatim}
+前文 前文 前文 前文 前文 前文 前文
+前文 前文 前文 前文 前文 前文 前文
+\begin{citationi}{米歇尔·巴库尼%
+（Michel \textsc{Bakounine}）, 1845}
+    在几乎所有的国家，女性都是奴隶。
+    只要她们没有完全得到解放，我们
+    自身的自由就不可能实现。
+\end{citationi}
+后文 后文 后文 后文 后文 后文 后文
+后文 后文 后文 后文 后文 后文 后文
+\end{verbatim}
+\end{codelist}
+
+我们也可以在环境中修改程度\verb|\parindent|的值，来修改微型页面中段落的缩进（在该环境中，默认为\dm{0pt}）：
+
+\begin{dmd}
+...\\
+\verb|\begin{lrbox}{\boitecitation}|\\
+\verb|    \begin{minipage}{.8\linewidth}%|\\
+\verb|        \setlength{\parindent}{10pt}%|\quad $\leftarrow$\textsf{缩进第1行}\\
+...
+\end{dmd}
+
+接下来，可以插入引言首尾的引号，代码如下：
+
+\begin{dmd}
+\begin{verbatim}
+... 
+\begin{minipage}{.8\linewidth}%
+    \setlength{\parindent}{10pt}%
+    \small\slshape« \ignorspaces}% 设为小字号斜体
+    {\unskip »
+        \par\mbox{}\hfill\usebox{\auteurcitation}
+...
+\end{verbatim}
+\end{dmd}
+
