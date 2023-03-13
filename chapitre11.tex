@@ -794,3 +794,206 @@ xxxxxxxxxxxxxxx
 \end{verbatim}
 \end{dmd}
 
+对于指令\verb|\ignorespaces|和\verb|\unskip|的含义，可以参考9.2.1小节。目前的效果如下：
+
+\newenvironment{citationiii}[1]{%
+    % on sauve l'argument 1 pour l'auteur
+    \savebox{\auteurcitation}{#1}%
+    \begin{lrbox}{\boitecitation}
+      \begin{minipage}{.8\linewidth}%
+        \setlength{\parindent}{10pt}%
+        \small\slshape«\ignorespaces}% on passe en petit et pench�
+    {\unskip»
+      % on saute un paragraphe et on pousse l'auteur de la citation � droite
+      \par\mbox{}\hfill\usebox{\auteurcitation}
+      \end{minipage}
+    \end{lrbox}
+    \begin{center}
+      \usebox{\boitecitation}
+    \end{center}}
+
+\begin{codelist}[11.14]{
+前文 前文 前文 前文 前文 前文 前文
+前文 前文 前文 前文 前文 前文 前文
+\begin{citationiii}{
+    米歇尔·巴库尼, 1845}
+    在几乎所有的国家，女性都是奴隶。
+    只要她们没有完全得到解放，我们
+    自身的自由就不可能实现。
+\end{citationiii}
+后文 后文 后文 后文 后文 后文 后文
+后文 后文 后文 后文 后文 后文 后文
+}\begin{verbatim}
+前文 前文 前文 前文 前文 前文 前文
+前文 前文 前文 前文 前文 前文 前文
+\begin{citationiii}{
+    米歇尔·巴库尼, 1845}
+    在几乎所有的国家，女性都是奴隶。
+    只要她们没有完全得到解放，我们
+    自身的自由就不可能实现。
+\end{citationiii}
+后文 后文 后文 后文 后文 后文 后文
+后文 后文 后文 后文 后文 后文 后文
+\end{verbatim}
+\end{codelist}
+
+我们快要达到目的了。接下来，我们将代表“引言作者”的参数设置为可省略项，从而达到在需要时不显示作者的效果。实现的思路是声明一个布尔值来表明引言（citation）的作者（auteur）是否出现（présent）：
+
+\begin{dmd}
+\verb|\newboolean{auteurcitationpresent}|
+\end{dmd}
+
+接下来，修改环境定义如下：
+
+\begin{dmd}
+\begin{verbatim}
+% 参数默认为空：
+\newenvironment{unecitation}[1][] {%
+    % begin条目：
+    % 记录是否出现了引言作者
+    \ifthenelse{\equal{#1}{}}{%
+        \setboolean{auteurcitationpresent}{false}}{% 
+        \setboolean{auteurcitationpresent}{true}% 
+        \savebox{\auteurcitation}{#1}}% 在必要时存储作者
+...
+\end{verbatim}
+\end{dmd}
+
+接下来，修改环境的end条目，只在作者参数出现时插入作者：
+
+\begin{dmd}
+\begin{verbatim}
+{»% 环境的end条目
+    % 如果具有作者，我们将其推至右侧
+    \ifthenelse{\boolean{auteurcitation}}% 
+    {\par\nopagebreak\hfill\usebox{\auteurcitation}} 
+    {}% 否则，什么也不做……
+\end{verbatim}
+\end{dmd}
+
+最终，我们为引言添加底纹。例如，我们可以借助包\textsf{xcolor}定义这个颜色：
+
+\begin{dmd}
+\verb+\definecolor{coulcitation}{rgb}{0.90,0.75,0.20}%+
+\end{dmd}
+
+只需将end条目中的指令\verb|\usebox|替换为以下内容：
+
+\begin{dmd}
+\begin{verbatim}
+\setlength{\fboxsep}{10pt}% 
+\colorbox{coulcitation}{\usebox{\boitecitation}}
+\end{verbatim}
+\end{dmd}
+
+最终的效果为：
+
+\newboolean{auteurcitationpresent}
+\definecolor{coulcitation}{rgb}{0.90,0.75,0.20}%
+
+\newenvironment{citationiv}[1][]{%
+  \ifthenelse{\equal{#1}{}}{%
+    \setboolean{auteurcitationpresent}{false}}{%
+    \setboolean{auteurcitationpresent}{true}%
+    \savebox{\auteurcitation}{#1}}% on le sauve si nécessaire
+  \begin{lrbox}{\boitecitation}
+    \begin{minipage}{.8\linewidth}%
+      \setlength{\parindent}{10pt}%
+      \small\slshape«\ignorespaces}% on passe en petit et penché
+    {\unskip»
+      \ifthenelse{\boolean{auteurcitationpresent}}%
+      {\par\nopagebreak\hfill\usebox{\auteurcitation}}
+      {}% sinon on ne fait rien...
+    \end{minipage}
+  \end{lrbox}
+  \begin{center}
+    \setlength{\fboxsep}{10pt}%
+    \colorbox{coulcitation}{\usebox{\boitecitation}}
+  \end{center}}
+%
+
+\begin{codelist}[11.15]{
+前文 前文 前文 前文 前文 前文 前文
+\begin{citationiv}[皮埃尔·德普罗热
+    （Pierre \textsc{Desproges}）]
+    他是如此痴迷，以至于最终甚至
+    不吃饭。
+\end{citationiv}
+后文 后文 后文 后文 后文 后文 后文
+}\begin{verbatim}
+前文 前文 前文 前文 前文 前文 前文
+\begin{citationiv}[皮埃尔·德普罗热
+    （Pierre \textsc{Desproges}）]
+    他是如此痴迷，以至于最终甚至
+    不吃饭。
+\end{citationiv}
+后文 后文 后文 后文 后文 后文 后文
+\end{verbatim}
+\end{codelist}
+
+\section{首字下沉}
+
+注重排版的文档往往会实现称作\emph{首字下沉}的效果，也就是根据排版学中使用的规则，将各章的首字母放大，并对其后续的单词或词组做类似的处理。例如：
+
+\begin{codelist}[11.16]{
+\lettrine{L}{es documents} soignés font
+souvent appel aux lettrines, qui selon
+les règles d’usage en typographie...
+}\begin{verbatim}
+\lettrine{Les documents} soignés font
+souvent appel aux lettrines, qui selon
+les règles d’usage en typographie...
+\end{verbatim}
+\end{codelist}
+
+从中已经可见实现该效果的两个难点。
+
+\begin{itemize}
+    \item 如何针对指令参数的首字母进行处理。
+    \item 如何让各行文本向后错位来为下沉的首字留出空间。我们可以像提示（\S 11.2）中那样使用指令\verb|\parshape|来实现这一点。
+\end{itemize}
+
+\subsection{指令\texttt{\backslash glurps}，迈向\TeX 的一步}
+
+在\LaTeX 层面，创建新指令的指令是\verb|\newcommand|。对于指令的创建来说，\LaTeX 的一大短板就是限制参数的符号只能为\dm{\{}和\dm{\}}。正如我们稍后会看到的，在\TeX 层面，这中限制不复存在。实际上，想要使用\TeX 创建指令，可以这样编写：
+
+\begin{codelist}[11.17]{
+\def\bidule{一些内容}
+\bidule{} 和 \bidule
+}\begin{verbatim}
+\def\bidule{一些内容}
+\bidule{} 和 \bidule
+\end{verbatim}
+\end{codelist}
+
+对于带有一个即以上参数的情况，可以这样写：
+
+\begin{codelist}[11.18]{
+    \def\bidule#1#2{(1=#1) 和 (2=#2)}
+
+    \bidule{甲乙}{丙丁}
+}\begin{verbatim}
+\def\bidule#1#2{(1=#1) 和 (2=#2)}
+
+\bidule{甲乙}{丙丁}
+\end{verbatim}
+\end{codelist}
+
+注意到，在\TeX 中，我们在定义中按顺序写下参数。有趣的是，对于首字下沉，我们将会探索类似以下示例展示的指令\verb|\bidule|的用法：
+
+\begin{codelist}[11.19]{
+    \def\bidule#1#2{(1=#1) 和 (2=#2)}
+
+\bidule abcd
+
+\bidule ab cd
+}\begin{verbatim}
+\def\bidule#1#2{(1=#1) 和 (2=#2)}
+
+\bidule abcd
+
+\bidule ab cd
+\end{verbatim}
+\end{codelist}
+
+注意到，
