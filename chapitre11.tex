@@ -996,4 +996,272 @@ les règles d’usage en typographie...
 \end{verbatim}
 \end{codelist}
 
-注意到，
+注意到，如果我们不明确地使用\dm{\{}和\dm{\}}来限定参数的范围，那么第一个参数（\dm{\#1}）会自动设置为遇到的第一个字符，第二个参数（\dm{\#2}）会自动设置为遇到的第二个字符，以此类推。更有趣的是，我们可以十分灵活地定义调用该指令的格式，例如：
+
+\begin{dmd}
+\verb|\def\bidule#1#2/{(1=#1) 和 (2=#2)}|
+\end{dmd}
+
+这里，我们指明了在调用指令\verb|\bidule|时需要在该指令后面紧跟两个参数和符号\dm{/}：
+
+\begin{codelist}[11.20]{
+\def\bidule#1#2/{(1=#1) 和 (2=#2)}
+\bidule 甲乙丙/丁
+\bidule 甲乙/丙丁
+}\begin{verbatim}
+\bidule 甲乙丙/丁
+
+\bidule 甲乙/丙丁
+\end{verbatim}
+\end{codelist}
+
+因此，该指令可以将其遇到的第一个字符接收为第一个参数，并将接下来到符号\dm{/}前的所有内容接收为第二个参数。因此，我们可以粗略编写一个关于首字下沉的指令：
+
+\begin{codelist}[11.21]{
+\def\glurps#1#2/{{\Huge#1}\textsc{#2}}
+\newcommand{\lettrinedev}[1]{\glurps#1/}
+\lettrinedev{Bon bé} ouala le travail
+}\begin{verbatim}
+\def\glurps#1#2/{{\Huge#1}\textsc{#2}}
+\newcommand{\lettrinedev}[1]{\glurps#1/}
+\lettrinedev{Bon bé} ouala le travail
+\end{verbatim}
+\end{codelist}
+
+接下来，将放大的字母写得更低一些：
+
+\begin{codelist}[11.22]{
+    \def\glurps#1#2/{%
+    {\Huge#1}%
+    \raisebox{\baselineskip}{\textsc{#2}}}
+\newcommand{\lettrinedev}[1]{\glurps#1/}
+\lettrinedev{Bon bé} ouala le travail
+}\begin{verbatim}
+\def\glurps#1#2/{%
+    {\Huge#1}%
+    \raisebox{\baselineskip}{\textsc{#2}}}
+\newcommand{\lettrinedev}[1]{\glurps#1/}
+\lettrinedev{Bon bé} ouala le travail
+\end{verbatim}
+\end{codelist}
+
+\subsection{在段落中实现首字下沉}
+
+我们可以借助指令\verb|\parshape|在段落中实现首字下沉。图\ref{fig:11.3}展示了为实现首字下沉而应当定义的两个尺寸：
+
+\begin{itemize}
+    \item 首行缩进，即“大字母”及其后参与首字下沉的内容的宽度；
+    \item 次行缩进，即“大字母”的宽度，可根据需要适当扩大空白以留出通风空间。
+\end{itemize}
+
+\begin{figure}[ht]
+    \begin{center}
+      \includegraphics{img/lettrine}
+    \end{center}
+    \caption{在段落中实现首字下沉}
+    \label{fig:11.3}
+\end{figure}
+
+定义如下尺寸：
+
+\begin{itemize}
+\item \verb|\indletH|和\verb|\larligH|，分别代表包含首字下沉的段落的首行［即“上面”（haut）的一行］的缩进和行宽；
+\item \verb|\indletB|和\verb|\larligB|，次行［即“下面”（bas）的一行］的对应尺寸。
+\end{itemize}
+
+这样定义尺寸后，我们可以编写如下内容：
+
+\begin{codelist}[11/23]{
+\newlength{\indletB}
+\newlength{\indletH}
+\newlength{\larligB}
+\newlength{\larligH}
+\setlength{\indletB}{.8cm}% 随意指定的值
+\setlength{\larligB}{\textwidth-\indletB}
+\setlength{\indletH}{1.5cm}% 随意指定的值
+\setlength{\larligH}{\textwidth-\indletH}
+\parshape=3
+\indletH\larligH
+\indletB\larligB
+0pt\textwidth
+这段文字已经准备好接收美观的首字下沉
+效果了，首字下沉会占据大约两行的空间，
+也许是正正好好的两行。
+}\begin{verbatim}
+\setlength{\indletB}{.8cm}% 随意指定的值
+\setlength{\larligB}{\textwidth-\indletB}
+\setlength{\indletH}{1.5cm}% 随意指定的值
+\setlength{\larligH}{\textwidth-\indletH}
+\parshape=3
+\indletH\larligH
+\indletB\larligB
+0pt\textwidth
+
+这段文字已经准备好接收美观的首字下沉
+效果了，首字下沉会占据大约两行的空间，
+也许是正正好好的两行。
+\end{verbatim}
+\end{codelist}
+
+场地已经准备好，接下来要做的就是在合适的位置插入“大字母”以及后续的内容。我们从创建指定字体的指令开始\yz{
+    可以看到，T1编码不支持中文。
+}：
+
+\begin{codelist}[]{
+\DeclareFixedFont{%
+    \lettrinefont}{T1}{ppl}{m}{n}{%
+    2\baselineskip}
+{\lettrinefont
+    Pour écrire les grosses lettres（为了写下大字母）}
+}\begin{verbatim}
+\DeclareFixedFont{%
+    \lettrinefont}{T1}{ppl}{m}{n}{%
+    2\baselineskip}
+{\lettrinefont
+    Pour écrire les grosses lettres
+    （为了写下大字母）}
+\end{verbatim}
+\end{codelist}
+
+接下来，修改指令\verb|\glurps|\jz{
+    可以注意到，在你自己定义的指令中使用如此荒唐的名称绝对是不可接受的……
+}和\verb|\lettrine|，来让它们自身可以计算如下定义的尺寸（\verb|\indletH|、\verb|\larligH|……）：
+
+\begin{dmd}
+\begin{verbatim}
+\newcommand{\lettrineI}[1]{% 
+    \creerlettrine#1/%
+    \setlength{\larligH}{\textwidth-\indletH}%
+    \setlength{\larligB}{\textwidth-\indletB}% 
+    \parshape=3\indletH\larligH\indletB\larligB
+    % 0cm\textwidth% 
+    \noindent\usebox{\lalettrine}}
+\end{verbatim}
+\end{dmd}
+
+效果如下\jz{
+    此处添加的线条用于标示首字下沉字盒的位置。
+}：
+
+\newsavebox{\lalettrine}% une boîte pour la lettrine
+  \def\creerlettrine#1#2/{%
+    \savebox{\lalettrine}{%
+      {\lettrinefont#1}%
+      \raisebox{\baselineskip}{\textsc{#2}}}%
+    \settowidth{\indletB}{{\lettrinefont#1}}%
+    \settowidth{\indletH}{\usebox{\lalettrine}}}
+
+\newcommand{\lettrineI}[1]{%
+  \creerlettrine#1/%
+  \setlength{\larligH}{\textwidth-\indletH}%
+  \setlength{\larligB}{\textwidth-\indletB}%
+  \parshape=3%
+  \indletH\larligH%
+  \indletB\larligB%
+  0cm\textwidth%
+  \setlength{\fboxrule}{.5pt}\setlength{\fboxsep}{-.5pt}%
+  \noindent\fbox{\usebox{\lalettrine}}}
+
+\begin{codelist}[11.25]{
+\lettrineI{Ce chapitre} a pour but de
+produire des caractères les uns derrière
+les autres et ainsi de former des mots
+donnant lieu à des  phrases.
+}\begin{verbatim}
+\lettrineI{Ce chapitre} a pour but de
+produire des caractères les uns derrière
+les autres et ainsi de former des mots
+donnant lieu à des phrases.
+\end{verbatim}
+\end{codelist}
+
+细心的读者可能注意到了，突出显示的部分没有出现在正确的位置，似乎需要我们在水平和竖直方向进行一些必要的平移。这里我们先向左错动，在\verb|\lettrine|定义的最后一行，我们编写如下内容：
+
+\begin{dmd}
+\begin{verbatim}
+% 错动距离等同于总宽度
+\noindent\hspace{-\indletH}
+\end{verbatim}
+\end{dmd}
+
+效果如下：
+
+\newcommand{\lettrineII}[1]{%
+  \creerlettrine#1/%
+  \setlength{\larligH}{\textwidth-\indletH}%
+  \setlength{\larligB}{\textwidth-\indletB}%
+  \parshape=3%
+  \indletH\larligH%
+  \indletB\larligB%
+  0cm\textwidth%
+  \setlength{\fboxrule}{.5pt}\setlength{\fboxsep}{-.5pt}%
+  \noindent\hspace{-\indletH}\fbox{\usebox{\lalettrine}}}
+
+\begin{codelist}[11.26]{
+\lettrineII{Ce chapitre} a pour but de
+produire des caractères les uns derrière
+les autres et ainsi de former des mots
+donnant lieu à des phrases.
+}\begin{verbatim}
+\lettrineII{Ce chapitre} a pour but de
+produire des caractères les uns derrière
+les autres et ainsi de former des mots
+donnant lieu à des phrases.
+\end{verbatim}
+\end{codelist}
+
+然后，我们融入竖直方向的平移：
+
+\begin{dmd}
+\begin{verbatim}
+\noindent\hspace{-\indletH}% 
+\raisebox{-\baselineskip}[0pt][0pt]{\usebox{\lalettrine}}
+\end{verbatim}
+\end{dmd}
+
+效果如下：
+
+\newcommand{\lettrineIII}[1]{%
+  \creerlettrine#1/%
+  \setlength{\larligH}{\textwidth-\indletH}%
+  \setlength{\larligB}{\textwidth-\indletB}%
+  \parshape=3%
+  \indletH\larligH%
+  \indletB\larligB%
+  0cm\textwidth%
+  \setlength{\fboxrule}{.5pt}\setlength{\fboxsep}{-.5pt}%
+  \noindent\hspace{-\indletH}%
+  \raisebox{-\baselineskip}[0pt][0pt]{%
+    \fbox{\usebox{\lalettrine}}}}
+
+\begin{codelist}[11.27]{
+\lettrineIII{Ce chapitre} a pour but de
+produire des caractères les uns derrière
+les  autres et ainsi de former des mots
+donnant lieu à des phrases.
+}\begin{verbatim}
+\lettrineIII{Ce chapitre} a pour but de
+produire des caractères les uns derrière
+les  autres et ainsi de former des mots
+donnant lieu à des phrases.
+\end{verbatim}
+\end{codelist}
+
+更清醒的读者也许会注意到，“大字母”有些太贴近文本了。因此，我们可以稍微将\verb|\indletB|扩大些。最终的首字下沉代码如下：
+
+\begin{dmd}
+\begin{verbatim}
+\newcommand{\lettrine}[1]{%
+    \creerlettrine#1/%
+    \addtolength{\indletB}{3pt}% 目的是留出一些空间
+    \setlength{\larligH}{\textwidth-\indletH}% 
+    \setlength{\larligB}{\textwidth-\indletB}% 
+    \parshape=3% 
+    \indletH\larligH\indletB\larligB0cm\textwidth% 
+    \noindent\hspace{-\indletH}% 
+    \raisebox{-\baselineskip}[0pt][0pt]{%
+        \usebox{\lalettrine}}}
+\end{verbatim}
+\end{dmd}
+
+\section{一种摘要}
