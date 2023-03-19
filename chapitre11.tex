@@ -1466,3 +1466,138 @@ renewcommand{\addcontentsline}[3]{%
 
 \subsection{生成\texttt{.glx}文件}
 
+鉴于\textsf{makeindex}借助该环境生成带有扩展名\dm{glx}的文件的方法，我们以如下方式编写风格文件：
+
+\begin{dmd}
+\begin{verbatim}
+preamble "\n\\begin{leglossaire}"
+postamble "\n\\end{leglossaire}"
+\end{verbatim}
+\end{dmd}
+
+同样应当出现在风格文件（如我们可以命名为\dm{glossaire.ist}）中的，是在\dm{.glo}文件中指明术语字典入口的关键字：
+
+\begin{dmd}
+\verb|keyword "\\glossaryentry"|
+\end{dmd}
+
+为了让每个入口都由项和其定义组成，我们定义了这样一个指令：
+
+\begin{dmd}
+\verb|\newcommand{\entreeglossaire}[2]{\glossary{[#1] #2}}|
+\end{dmd}
+
+它可以像这样使用：
+
+\begin{dmd}
+\verb|\entreeglossaire{球}{十分规则的土豆。}|
+\end{dmd}
+
+其效果是可以在\dm{.glo}文件中编写如下代码：
+
+\begin{dmd}
+\verb|\glossary{[球] 十分规则的土豆。}|
+\end{dmd}
+
+调用如下指令：
+
+\dmh{makeindex -s glossaire.ist \codereplace{文档}.glo -o \codereplace{文档}.glx}
+
+调用后，\dm{.glx}文件中将有如下内容：
+
+\begin{dmd}
+\verb+\begin{leglossaire}+\\
+\verb+\item [球] 十分规则的土豆。, +\codereplace{页码} \\
+\verb+\end{leglossaire}+
+\end{dmd}
+
+你如果很好地跟随了我所说的内容，可能会喘着气说：“也许我们会想删除这里看起来很丑的逗号和后面的页码”——当然。这里的逗号是\dm{makeindex}自动放置的，作为入口索引和该入口出现的页码之间的“第一层”分隔。若要使用逗号外的其他符号（这里没有符号），可以在风格文件中这话编写：
+
+\begin{dmd}
+\verb|delim_0 ""|
+\end{dmd}
+
+最后要做的就是调整页码。我使用的解决方案是使用一个“吸收性的”指令来为页码（参见\S 6.3.3）指定页码。修改过的指令\verb|\entreeglossaire|如下：
+
+\begin{dmd}
+\begin{verbatim}
+\newcommand{\pasdenumerodepage}[1]{}% “吃掉”页码
+\newcommand{\entreeglossaire}[2]{%
+    \glossary{[#1] #2|pasdenumerodepage}}
+\end{verbatim}
+\end{dmd}
+
+这样创建的\dm{.glx}文件如下：
+
+\begin{dmd}
+\begin{verbatim}
+\begin{leglossaire}
+\item [球] 十分规则的土豆。
+    \pagedenumerodepage{27}
+\end{leglossaire}
+\end{verbatim}
+\end{dmd}
+
+其中，将页码（如此处为27）发送给一片虚无。
+
+\subsection{粘合片段}
+
+为了最终实现术语字典，需要创建足够灵活的指令，用于按需生成包含术语字典的章，也就是说，在文档中插入\dm{.glx}文件。我们可以将需要实现的任务拆解为与如下内容相关的指令：
+
+\begin{itemize}
+    \item 生成新的一章（并带有“glossaire”之类的章标题）；
+    \item 从文件中读取术语字典的入口（指令\verb|\entreeglossaire|）；
+    \item 插入\dm{.glx}文件。
+\end{itemize}
+
+实现这些处理的指令如下：
+
+\begin{dmd}
+\begin{verbatim}
+\newcommand{\printglossary}[1][glossaire.tex]{% 
+    \chapter*{Glossaire}
+    \label{chap-glossaire} 
+    \markboth{Glossaire}{Glossaire}% 页眉
+    % 在目录中插入：
+    \addcontentsline{toc}{chapter}{Glossaire}
+    % 插入术语字典的入口
+    \InputIfFileExists{#1}{%
+        \typeout{术语字典的参数}}{%
+        \typeout{文件glossaire.tex不存在}}
+    % 插入.glx文件
+    \InputIfFileExists{\jobname.glx}{%
+        \typeout{术语字典已分类}}{%
+        \typeout{文件\jobname.glx不存在}}
+    }
+\end{verbatim}
+\end{dmd}
+
+对于该指令，注意到以下几点。
+
+\begin{itemize}
+    \item 术语字典入口文件默认为\dm{glossaire.tex}。
+    \item 我们决定将术语字典纳入目录。
+    \item 我们可以调用\verb|\InputIfFileExists|来插入文件。该指令在\LaTeX 格式中定义如下：
+    
+    \begin{dmd}
+    \verb|\InputIfFileExists{|\codereplace{要插入的文件}\}\\
+    \{\codereplace{该文件存在时的\LaTeX 代码}\}\\
+    \{\codereplace{该文件不存在时的\LaTeX 代码}\}
+    \end{dmd}
+
+    \item 在编译过程中，最后的\verb|\jobname|包含了文件（或主文档）的名称。指令\verb|\typeout|可以在编译的命令行中显示信息。
+\end{itemize}
+
+最终的文件\dm{glossaire.ist}包含以下内容：
+
+\begin{dmd}
+\begin{verbatim}
+delim_0 ""
+preamble "\n\\begin{leglossaire}"
+postamble "\n\\end{leglossaire}"
+keyword "\\glossaryentry"
+\end{verbatim}
+\end{dmd}
+
+\section{标签}
+
