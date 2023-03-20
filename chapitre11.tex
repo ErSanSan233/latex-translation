@@ -1601,3 +1601,95 @@ keyword "\\glossaryentry"
 
 \section{标签}
 
+在一开始，我就预计将本书的开本设为比标准A4纸更小的尺寸，来为裁切做准备，创建标签（onglet）的想法因此而生。这里所说的标签，是指在裁切后可以你可以从书页的切口一侧看到的带颜色的小方块。后来，关于裁切本书的必要性，我的想法改变了：一方面，我工作的地方已经舍弃了使用液压切割机；另一方面，不是所有人都能轻易地用上液压机。但无论如何，这些标签还是留在了本书中，尽管它们并没有完全出现在页面的切口处。接下来介绍生成这些标签的方法。
+
+\subsection{已有的想法}
+
+我们的需求如下：
+
+\begin{itemize}
+    \item 每页都出现一个标签，标签的位置为订口的对侧；
+    \item 在偶数页上，它们呈现为“翻转”的样子；
+    \item 标签所处的高度正比于当前的章号。
+\end{itemize}
+
+由此产生的思路为：
+
+\begin{itemize}
+    \item 使用包\textsf{fancyhdr}的功能来生成标签；
+    \item 使用纵向平移来为标签定位。
+\end{itemize}
+
+\subsection{位于侧栏的字盒}
+
+对于在侧栏生成章号的方法，我简单地创建了一个段落字盒，其宽度和高度都是由我指定的\jz{
+    在这里，我们可以注意到程序员的一个毛病：在变量名中混合使用法文和英文……
+}：
+
+\begin{dmd}
+\begin{verbatim}
+\newlength{\ongletwidth}
+\newlength{\ongletheight}
+\setlength{\ongletheight}{32pt}
+\setlength{\ongletwidth}{.96cm}
+\end{verbatim}
+\end{dmd}
+
+生成字盒的指令如下：
+
+\begin{dmd}
+\begin{verbatim}
+\newcommand{\b@iteonglet}{%
+    \colorbox[gray]{.7}{% 灰底填充的字盒，
+        % 该字盒包含了指定宽高的段落字盒：
+        \parbox[t][\ongletheight][s]{\ongletwidth}{%
+            \vfill% 
+            \centering%
+            % 根据当前页面的奇偶性，调用镜面效果
+            \ifthenelse{\isodd{\value{page}}}{%
+                \ongletfont\thechapter}{%
+                \reflectbox{\ongletfont\thechapter}}% 
+            \vfill}}}
+\end{verbatim}
+\end{dmd}
+
+可以注意到，这里使用了包\textsf{graphicx}的指令\verb|\reflectbox|。我们同样可以注意到，段落字盒中的内容是上下居中的，这是借助两个纵向的弹性空间实现的。最后，我们在该字盒中插入章号，并借助指令\verb|\ongletfont|为其选用一个有些神秘的字体\celan{\S 9.4}：
+
+\DeclareFixedFont{\ongletfont}{T1}{phv}{b}{n}{20.74pt}
+
+\newlength{\ongletwidth}
+\newlength{\ongletheight}
+\setlength{\ongletheight}{32pt}
+\setlength{\ongletwidth}{.96cm}
+
+\newcommand{\biteonglet}{%
+    \colorbox[gray]{.7}{% 灰底填充的字盒，
+        % 该字盒包含了指定宽高的段落字盒：
+        \parbox[t][\ongletheight][s]{\ongletwidth}{%
+            \vfill% 
+            \centering%
+            % 根据当前页面的奇偶性，调用镜面效果
+            \ifthenelse{\isodd{\value{page}}}{%
+                \ongletfont\thechapter}{%
+                \reflectbox{\ongletfont\thechapter}}% 
+            \vfill}}}
+
+\begin{codelist}[11.29]{
+    字盒的样式为：\biteonglet……
+}\begin{verbatim}
+字盒的样式为：\b@iteonglet……
+\end{verbatim}
+\end{codelist}
+
+需要注意到，由\verb|\colorbox|生成的字盒尺寸会跟随尺寸\verb|\fboxsep|：
+
+\begin{codelist}[11.30]{
+    \setlength{\fboxsep}{15pt}
+    字盒的样式为：\biteonglet……
+}\begin{verbatim}
+\setlength{\fboxsep}{15pt}
+字盒的样式为：\b@iteonglet……
+\end{verbatim}
+\end{codelist}
+
+\subsection{标签的位置}
