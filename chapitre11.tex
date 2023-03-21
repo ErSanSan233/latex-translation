@@ -1693,3 +1693,328 @@ keyword "\\glossaryentry"
 \end{codelist}
 
 \subsection{标签的位置}
+
+为了确定标签的位置，需要实现两次平移：
+
+\begin{itemize}
+    \item 一次水平方向的平移，目的是将标签推动至侧栏的边缘；
+    \item 一次竖直方向的平移，平移的量是关于章号的函数。
+\end{itemize}
+
+我们使用包\textsf{fancyhdr}中定义页眉的机制来为标签确定位置。思路很简单，编写如下内容：
+
+\begin{dmd}
+\begin{verbatim}
+\fancyhead[RO]{\bfseries\thepage\onglet}
+\fancyhead[LE]{\onglet\bfseries\thepage}
+\end{verbatim}
+\end{dmd}
+
+在此基础上，为了将数字设置得粗一些，我们将指令\verb|\onglet|的结果放到页眉中（对于奇数页，放置在右侧；对于偶数页，放置在左侧）。我们将会看到如何一步一步地来搭建指令。
+
+\subsubsection{在水平方向上确定位置}
+
+对于奇数页，需要第一时间将标签推动到右侧；对于偶数页，则应推动到左侧。无论如何（Qu'à cela ne tienne）\jz{
+    每次遇到句子开头是Q的情况，我都会因计算机现代体下它的美丽而激动不已。
+}：
+
+\begin{dmd}
+\begin{verbatim}
+\newcommand{\ongletI}{% 
+    \ifthenelse{\isodd{\value{page}}}{%
+        % 奇数页 
+        \hspace*{\marginparwidth}\hspace*{\marginparsep}}{% 
+        % 偶数页 
+        \hspace*{-\marginparwidth}\hspace*{-\marginparsep}}%
+    \b@iteonglet}
+\end{verbatim}
+\end{dmd}
+
+对于当前页，它的效果是这样的：
+
+\newcommand{\ongletI}{%
+    \ifthenelse{\isodd{\value{page}}}{%
+      \hspace*{\marginparwidth}\hspace*{\marginparsep}}{%
+      \hspace*{-\marginparwidth}\hspace*{-\marginparsep}}%
+    \biteonglet}
+
+\ifthenelse{\isodd{\value{page}}}{%
+  \begin{flushright}
+    \bfseries\thepage\ongletI\\
+    \rule{\textwidth}{.4pt}
+  \end{flushright}}{%
+  \begin{flushleft}
+  \ongletI\bfseries\thepage\\
+    \rule{\textwidth}{.4pt}
+  \end{flushleft}}
+
+%TODO 规整
+
+为了正确地确定页眉中页码的位置，需要用一个宽度为0且带有标签字盒和水平位移空间的字盒去“诱导”\LaTeX ：
+
+\begin{dmd}
+\begin{verbatim}
+\newcommand{\ongletII}{% \makebox[0pt][l]{%
+    % 对于奇数页
+    \ifthenelse{\isodd{\value{page}}}{%
+        \hspace*{\marginparwidth}\hspace*{\marginparsep}}{% 
+    % 否则
+        \hspace*{-\marginparwidth}\hspace*{-\marginparsep}}% \b@iteonglet}}
+\end{verbatim}
+\end{dmd}
+
+对于当前页，效果如下：
+
+\newcommand{\ongletII}{%
+    \makebox[0pt][l]{%
+    \ifthenelse{\isodd{\value{page}}}{%
+      \hspace*{\marginparwidth}%
+      \hspace*{\marginparsep}}{%
+      \hspace*{-\marginparwidth}%
+      \hspace*{-\marginparsep}}%
+      \biteonglet}}
+
+\ifthenelse{\isodd{\value{page}}}{%
+\begin{flushright}
+\bfseries\thepage\ongletII\\
+\rule{\textwidth}{.4pt}
+\end{flushright}}{%
+\begin{flushleft}
+\ongletII\bfseries\thepage\\
+\rule{\textwidth}{.4pt}
+\end{flushleft}}
+
+对于奇数页，如果希望推动包含标签的字盒来抵住原本为侧注预留的空间的边缘，那么我们同样需要算入该字盒的总宽度，正如下图中的参考点所展示的那样：
+
+\begin{center}
+  \includegraphics[width=.45\textwidth]{img/onglets}
+\end{center}
+
+因此，水平方向上的位置可以借助以下指令确定：
+
+\begin{dmd}
+\begin{verbatim}
+\newcommand{\ongletIII}{%
+    \makebox[0pt][l]{%
+    \ifthenelse{\isodd{\value{page}}}{% 偶数页
+        \hspace*{\marginparwidth}\hspace*{\marginparsep}%
+        \hspace*{-\ongletwidth}\hspace{-2\fboxsep}}{% 奇数页
+        \hspace*{-\marginparwidth}\hspace*{-\marginparsep}}%
+        \b@iteonglet}}
+\end{verbatim}
+\end{dmd}
+
+这是因为，对于标签字盒的宽度来说，需要计入两次由指令\verb|\colorbox|确定的尺寸\verb|\fboxsep|。
+
+\subsubsection{在竖直方向上确定位置}
+
+剩下要做的就是去处理纵向位置的麻烦了……指令\verb|\raisebox|让我们可以在竖直方向上确定标签的位置。此外，借助以下格式，可以使\LaTeX 相信\codereplace{要移动的对象}的高度为零：
+
+\begin{dmd}
+\verb|\raisebox{|\codereplace{要移动的对象}\verb|}[0pt][0pt]{|\codereplace{要移动的对象}\}
+\end{dmd}
+
+这样一来，它周围的对象就不会带有错位，尤其是那些构成页眉的对象。例如，编写如下内容：
+
+\begin{dmd}
+\begin{verbatim}
+\newcommand{\ongletIV}{% 
+    \makebox[0pt][l]{% 
+    \ifthenelse{\isodd{\value{page}}}{%
+        \hspace*{\marginparwidth}\hspace*{\marginparsep}% 
+        \hspace*{-\ongletwidth}\hspace{-2\fboxsep}}{% 
+        \hspace*{-\marginparwidth}\hspace*{-\marginparsep}}% 
+        \raisebox{2cm}[0pt][0pt]{\b@iteonglet}}}
+\end{verbatim}
+\end{dmd}
+
+由此，我们可以放置一个向上平移2厘米的标签：
+
+\newcommand{\ongletIV}{% 
+    \makebox[0pt][l]{% 
+    \ifthenelse{\isodd{\value{page}}}{%
+        \hspace*{\marginparwidth}\hspace*{\marginparsep}% 
+        \hspace*{-\ongletwidth}\hspace{-2\fboxsep}}{% 
+        \hspace*{-\marginparwidth}\hspace*{-\marginparsep}}% 
+        \raisebox{2cm}[0pt][0pt]{\biteonglet}}}
+
+\ifthenelse{\isodd{\value{page}}}{%
+  \begin{flushright}
+    \bfseries\thepage\ongletIV\\[-10pt]
+    \rule{\textwidth}{.4pt}
+  \end{flushright}}{%
+  \begin{flushleft}
+  \ongletIV\bfseries\thepage\\[-10pt]
+    \rule{\textwidth}{.4pt}
+  \end{flushleft}}
+
+我们选用的用于定义字盒位置的方法如下。对于第$c$章：
+
+\begin{itemize}
+    \item 向下平移固定尺寸$d_f$。
+    \item 在此基础上，叠加一个正比于$c$的平移，即第$c$章对应标签的平移量为
+    
+    \begin{center}
+        $c\times$\codereplace{标签高度}$\times \alpha$
+    \end{center}
+
+    其中，$\alpha$是用于控制签标签间距的系数。如果$\alpha=1$，则相邻标签的位置严格相差字盒的高度；如果$\alpha=2$，则标签间会以字盒高度两倍为步长来分布，等等。
+\end{itemize}
+
+对于第一个平移：
+
+\begin{dmd}
+\begin{verbatim}
+% 第一个标签的位置
+\newlength{\ongletvshift}
+\setlength{\ongletvshift}{2cm}
+\end{verbatim}
+\end{dmd}
+
+接下来，对于系数$\alpha$：
+
+\begin{dmd}
+\verb+\newcommand{\ongletsep}{1.37}+
+\end{dmd}
+
+我们声明一个用于确定标签位置的尺寸：
+
+\begin{dmd}
+\verb|\newlength{\ongletpos}|
+\end{dmd}
+
+现在，可以编写指令\verb|\onglet|了：
+
+\begin{dmd}
+\begin{verbatim}
+\newcommand{\onglet}{% 
+    \makebox[0pt][l]{%
+        \ifthenelse{\isodd{\value{page}}}{% 
+            \hspace*{\marginparwidth}\hspace*{\marginparsep}% 
+            \hspace*{-\ongletwidth}\hspace*{-2\fboxsep}%
+        }{% 
+            \hspace*{-\marginparwidth}\hspace*{-\marginparsep}}%
+        % 计算纵向位置
+        \setlength{\ongletvpos}{%
+            -\ongletvshift
+            -\ongletheight*\real{\thechapter}*\real{\ongletsep}}% 
+        % 确定标签位置 
+        \raisebox{\ongletvpos}[0pt][0pt]{\b@iteonglet}}}
+\end{verbatim}
+\end{dmd}
+
+呼！它正常工作了……对于不属于附录的章节来说，是这样的。但对于附录中编号为A、B、C等的章节，它还是不太行。这是因为我们不能通过这样的编号来计算纵向位置。稍微看过\dm{book.cls}后，我们可以确定有这样的内容：
+
+\begin{dmd}
+\begin{verbatim}
+\newcommand\appendix{\par 
+\setcounter{chapter}{0}% 
+\setcounter{section}{0}%
+[...] 
+\gdef\thechapter{\@Alph\c@chapter}}
+\end{verbatim}
+\end{dmd}
+
+这里，我们可以理解，当我们使用\verb|\appendix|开启附录部分时，章节的计数器会自动归零，并且生成大写字母。因此，需要找到一种应付方式，来让标签在我们来到附录后依然可以继续平移。我采用的解决方案比较简单，就是使用新的计数器来为章节和附录计数。为了达到这个目的，我们做如下声明：
+
+\begin{dmd}
+\verb|\newcounter{chapitre}|
+\end{dmd}
+
+我们可以立刻进一步说明想使用阿拉伯数字来生成编号：
+
+\begin{dmd}
+\verb|\renewcommand{\thechapitre}{\arabic{chapitre}}|
+\end{dmd}
+
+我们在\verb+\frontmatter+的定义中来为该计数器归零：
+
+\begin{dmd}
+\begin{verbatim}
+\renewcommand\frontmatter{% 
+    \cleardoublepage 
+    \setcounter{chapitre}{1} 
+    [...]
+    }
+\end{verbatim}
+\end{dmd}
+
+接下来，每次调用指令\verb|\chapter|时，该计数器递增：
+
+\begin{dmd}
+\begin{verbatim}
+\renewcommand{\chapter}{% 
+\cleardoublepage 
+\stepcounter{chapitre} 
+\thispagestyle{plain} 
+[...]
+}
+\end{verbatim}
+\end{dmd}
+
+\section{\LaTeX 示例}
+
+\begin{codelist}[11.31]{
+    作为本章的结尾，我们介绍一下环境
+    \dm{ltxexemple}。它可以用于
+    在文档中展示\LaTeX 代码示例和相
+    关结果……
+}\begin{verbatim}
+作为本章的结尾，我们介绍一下环境
+\ltxenv{ltxexemple}。它可以用于
+在文档中展示\LaTeX{}代码示例和相
+关结果……
+\end{verbatim}
+\end{codelist}
+
+\subsection{必要工具}
+
+包\textsf{fancyvrb}提供了两个针对文件的功能。首先，指令\verb|\VerbatimInput|可以用于插入一个文件的内容。例如：
+
+\begin{dmd}
+\verb|\VerbatimInput[lastline=4]{corps/jouets.tex}|
+\end{dmd}
+
+该指令可以插入（\dm{jouets.tex}正是本章的源代码文件）\yz{
+    此处展示的为原书部分代码。
+}：
+
+\begin{dmd}
+\begin{verbatim}
+\chapter{De nouveaux jouets}
+\label{chap-jouets}
+
+\begin{epigraphe}{Le Cantique des cantiques Ct \textbf{7} 11}
+\end{verbatim}
+\end{dmd}
+
+其次，环境\verb|VerbatimOut|可以做相反的工作：
+
+\begin{dmd}
+\verb|\begin{VerbatimOut}{|\codereplace{文件}\}\\
+\verb|    |\codereplace{\LaTeX 代码}\\
+\verb|\end{VerbatimOut}|
+\end{dmd}
+
+这样可以将\codereplace{\LaTeX 代码}存入名为\codereplace{文件}的文件。
+
+第二个必要的工具的灵感来自文件\dm{latex.ltx}中指令\verb|\settowidth|、\verb|\settoheight|等的定义。这个指令可以获取对象总高度，也就是计算高度和深度的和：
+
+\begin{dmd}
+\begin{verbatim}
+\newcommand{\hauteurtotale}[2]{% 
+    % 存储要测量的对象
+    \setbox\@tempboxa\hbox{{#2}}%
+    % 获取高度
+    \setlength{#1}{\ht\@tempboxa}% 
+    % 在高度基础上加上深度
+    \addtolength{#1}{\dp\@tempboxa}%
+    % 排空临时字盒
+    \setbox\@tempboxa\box\voidb@x}%
+\end{verbatim}
+\end{dmd}
+
+注意，这里使用了\TeX 的指令，\verb|\ht|和\verb|\dp|可以分别返回字盒的高度和深度，指令\verb|\setbox|等价于\TeX 的\verb|\savebox|，字盒\verb|\@tempboxa|是\LaTeX 使用的临时字盒。最后，字盒\verb|\voidb@x|是空字盒。
+
+\subsection{环境\texttt{ltxexemple}的原则}
+
