@@ -2018,3 +2018,182 @@ keyword "\\glossaryentry"
 
 \subsection{环境\texttt{ltxexemple}的原则}
 
+本章开头介绍的环境\dm{ltxexemple}比目前我们遇到的环境稍微复杂些。实际上，当我们写下如下指令的时候，一方面需要能够生成正如\codereplace{内容}的内容（也就是完全照抄），另一方面需要能够解释它，也就是像\LaTeX 的行为那样去处理它：
+
+\begin{dmd}
+\verb|\begin{ltxexemple}|\codereplace{内容}\verb|\end{ltxexemple}|
+\end{dmd}
+
+最终，我们就会知道，需要让\LaTeX 处理\codereplace{内容}\emph{两遍}，而这是很难实现的。详细说来，一种规避这种问题的方案是将\codereplace{内容}存储在一个可以重复使用的文件中。这里的重复使用，要么是指照抄，要么是指由\LaTeX 去解释。如此一来，浮现出的第一个难点是储存内容的环境的创建：
+
+\begin{dmd}
+\begin{verbatim}
+\newenvironment{ltxexemple}{% 
+    \VerbatimEnvironment 
+    \begin{VerbatimOut}{\jobname.exa}}{% begin条目
+    \end{VerbatimOut}}% end条目
+\end{verbatim}
+\end{dmd}
+
+\begin{qquestion}
+不要看到包的文档中没有记录就来问我指令\verb|\VerbatimEnvironment|是干什么用的，上面定义的环境有了它才能正常实现功能。
+\end{qquestion}
+
+我们写得很好看，但这个环境目前只能把其内容存储到文件中。因此，需要在环境的end条目中编写如下内容：
+
+\begin{dmd}
+\begin{verbatim}
+\end{VerbatimOut}%
+\VerbatimInput{\jobname.exa}% 照抄内容 
+\input{\jobname.exa}% 由LaTeX解释内容
+\end{verbatim}
+\end{dmd}
+
+这样一来，
+
+\newenvironment{ltxexemplei}{%
+    \VerbatimEnvironment%
+    \begin{VerbatimOut}[gobble=2]{\jobname.exa}}
+    {%
+    \end{VerbatimOut}%
+    \VerbatimInput{\jobname.exa}%
+    \input{\jobname.exa}}
+
+\newsavebox{\bitebxedminipage}
+
+\newenvironment{boxedminipage}[2][c]{%
+    \begin{lrbox}{\bitebxedminipage}%
+    \begin{minipage}[#1]{#2}}{%
+    \end{minipage}\end{lrbox}%
+    \fbox{\usebox{\bitebxedminipage}}}
+
+\begin{flushleft}
+    \begin{boxedminipage}{.33\linewidth}
+  \begin{dmd}
+\begin{verbatim}
+\begin{ltxexemplei}
+    \LaTeX{}代码……
+\end{ltxexemplei}
+\end{verbatim}
+  \end{dmd}
+    \end{boxedminipage}%
+    \hfill 的结果是：\hfill
+    \begin{boxedminipage}{.4\linewidth}
+\begin{ltxexemplei}
+    \LaTeX{}代码……
+\end{ltxexemplei}
+  \end{boxedminipage}
+  \end{flushleft}
+
+接下来要做的就是为这两个部分排版。这正是接下来我们的目的。
+
+\subsection{装入字盒}
+
+我们的思路是将内容装入两个字盒：
+
+\begin{dmd}
+\begin{verbatim}
+\newsavebox{\b@iteentree}
+\newsavebox{\b@itesortie}
+\end{verbatim}
+\end{dmd}
+
+这样做的目的是存储“入口”（entrée；代码）和“出口”（sortie；由\LaTeX 解释的代码）。因此，在end条文中，我们可以编写如下环境：
+
+\begin{dmd}
+\begin{verbatim}
+[...]
+\end{VerbatimOut}%
+\begin{ltxexempleenv}% 拓宽边栏
+    \savebox{\b@iteentree}{% 保存照抄代码
+        \begin{minipage}{.57\linewidth}
+            \VerbatimInput{\jobname.exa}
+        \end{minipage}}%
+    \savebox{\b@itesortie}{% 被解释的代码
+        \begin{minipage}{.40\linewidth} 
+            \setlength{\parindent}{10pt}% 默认为0pt
+            \input{\jobname.exa}
+        \end{minipage}}%
+    \usebox{\b@iteentree}
+    \usebox{\b@itesortie}
+\end{ltxexempleenv}
+\end{verbatim}
+\end{dmd}
+
+环境\dm{ltxexempleenv}和我们讲到拓宽边栏\celan{\S 11.1.4}时介绍的很像，唯一的区别时这里切换到了\verb|\small|\yz{
+    似乎没有？
+}%TODO 是吗
+，并对竖直方向的空白做出了一些调整。可以注意到，“入口”字盒占页面宽度的57\%，而“出口”字盒占40\%。这样一来，以下代码：
+
+\begin{dmd}
+\begin{verbatim}
+\begin{ltxexempleii}
+    \LaTeX{}代码……
+    \par\noindent
+    后面没了。
+\end{ltxexempleii}
+\end{verbatim}
+\end{dmd}
+
+的效果是：
+
+\makeatletter%
+
+\newsavebox{\b@iteentree}
+\newsavebox{\b@itesortie}
+
+\newlength{\ltxexmargintdeborde}
+\newlength{\ltxexmargextdeborde}
+\setlength{\ltxexmargintdeborde}{5mm}
+\setlength{\ltxexmargextdeborde}{10mm}
+
+\newenvironment{ltxexempleenv}{%
+  \begin{list}{}{%
+      \setlength{\topsep}{5pt}%
+      \setlength{\listparindent}{0pt}%
+      \checkoddpage%
+      \ifcpoddpage% si la page est impaire on fait d�border "un peu" le code et "bcp" l'exemple
+        \setlength{\leftmargin}{-\ltxexmargintdeborde}%
+        \setlength{\rightmargin}{-\ltxexmargextdeborde}
+      \else% si la page est paire, on fait d�border "bcp" le code "un peu l'exemple"
+        \setlength{\leftmargin}{-\ltxexmargextdeborde}%
+        \setlength{\rightmargin}{-\ltxexmargintdeborde}
+      \fi
+      \setlength{\itemindent}{0pt}%
+      \setlength{\parsep}{\parskip}}%
+    \item[]\noindent\small\ignorespaces%
+  }%
+{\end{list}}
+
+\newcommand{\ltxexoutputwidthpercent}{44}
+\newcommand{\ltxexinputwidthpercent}{53}
+
+\newcommand{\ltxexoutputwidthratio}{.\ltxexoutputwidthpercent}
+\newcommand{\ltxexinputwidthratio}{.\ltxexinputwidthpercent}
+
+\newenvironment{ltxexempleii}{%
+  \setlength{\fboxsep}{.5pt}%
+  \VerbatimEnvironment%
+  \begin{VerbatimOut}[gobble=2]{\jobname.exa}}{%
+  \end{VerbatimOut}%
+  \begin{ltxexempleenv}% ø\ccomment{pour agrandir les marges}ø
+    \savebox{\b@iteentree}{% ø\ccomment{le code en verbatim}ø
+      \begin{boxedminipage}{\ltxexinputwidthratio\linewidth}
+        \VerbatimInput{\jobname.exa}
+      \end{boxedminipage}}%
+    \savebox{\b@itesortie}{%ø\ccomment{le code interprété}ø
+      \begin{boxedminipage}{\ltxexoutputwidthratio\linewidth} 
+        \setlength{\parindent}{10pt}% ø\ccomment{par défaut \texttt{0pt}}ø
+        \input{\jobname.exa}
+      \end{boxedminipage}}%
+    \usebox{\b@iteentree}%
+    \usebox{\b@itesortie}
+  \end{ltxexempleenv}}%
+\makeatother%
+
+\begin{ltxexempleii}
+    \LaTeX{}代码……
+    \par\noindent
+    后面没了。
+\end{ltxexempleii}
+
