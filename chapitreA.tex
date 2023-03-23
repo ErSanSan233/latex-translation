@@ -1,0 +1,16 @@
+\part{附录}
+\appendix
+\chapter{生成“PDF”}
+
+本附录介绍一种生成PDF（portable document format）文档的新方法。这种格式由Adobe公司创造，优势是使一台计算机向另一台计算机传输文件的过程具有十足的便携性，以及能使不同操作系统间传输文件的通用性。因此，在今天能够才\LaTeX 源代码生成这种文件是十分有趣的。
+
+\section{通用原则}
+
+从\LaTeX 文档生成PDF文件至少有三种方法：
+
+\begin{enumerate}
+    \item 借助\textsf{pdflatex}代替\textsf{latex}程序将\LaTeX 源代码翻译为PDF文件；
+    \item 借助\textsf{dvipdf}将DVI文件翻译为PDF文件；
+    \item 借助\textsf{ps2pdf}将PostScript格式的输出翻译为PDF文件。
+\end{enumerate}
+

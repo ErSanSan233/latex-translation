@@ -2128,9 +2128,9 @@ keyword "\\glossaryentry"
 \begin{dmd}
 \begin{verbatim}
 \begin{ltxexempleii}
-    \LaTeX{}代码……
-    \par\noindent
-    后面没了。
+  \LaTeX{}代码……
+  \par\noindent
+  后面没了。
 \end{ltxexempleii}
 \end{verbatim}
 \end{dmd}
@@ -2192,8 +2192,276 @@ keyword "\\glossaryentry"
 \makeatother%
 
 \begin{ltxexempleii}
-    \LaTeX{}代码……
-    \par\noindent
-    后面没了。
+  \LaTeX{}代码……
+  \par\noindent
+  后面没了。
 \end{ltxexempleii}
 
+在这里，我们展示了“入口”和“出口”字盒的边界，从而说明它们的尺寸。同样可以注意到，这里环境的begin条文实际是这样定义的：
+
+\begin{dmd}
+\begin{verbatim}
+\pagebreak[3]% 我们建议于此处换页
+\VerbatimEnvironment% 
+\begin{VerbatimOut}[gobble=2]{\jobname.exa}
+\end{verbatim}
+\end{dmd}
+
+选项\dm{[gobble=2]}用于系统性地“吞掉”各行开头的两个字符，因为所有优秀的编辑器\jz{
+    我当然指的是\makebox[0pt][l]{//}vi，不好意思，\textsf{Emacs}……
+}都会为源文件各行首加上两个空格作为缩进。因此，如下代码：
+
+\begin{dmd}
+\begin{verbatim}
+\begin{ltxexempleii}
+\LaTeX{}代码……
+\par\noindent
+后面没了。
+\end{ltxexempleii}
+\end{verbatim}
+\end{dmd}
+
+的效果是：
+
+\begin{ltxexempleii}
+\LaTeX{}代码……
+\par\noindent
+后面没了。
+\end{ltxexempleii}
+
+接下来有关排版的工作就是创建中间的竖条。这正是11.8.5小节的目标。在此之前，我们在为示例编号这件工作上的进度延迟了些。
+
+\subsection{示例的编号}
+
+为了给示例编号，我们需要声明一个计数器\celan{\S 4.1}：
+
+\begin{dmd}
+\verb|\newcounter{c@exemple}[chapter]|
+\end{dmd}
+
+这个计数器应该在各章首归零。在将其作为引用之时，我们需要详细指明它的呈现方式：
+
+\begin{dmd}
+\begin{verbatim}
+\renewcommand{\thec@exemple}{% 
+    \thechapter.\arabic{c@exemple}}
+\end{verbatim}
+\end{dmd}
+
+每次调用环境\dm{ltxexemple}时，我们都调用如下指令：
+
+\begin{dmd}
+\verb|\refstepcounter{c@exemple}|
+\end{dmd}
+
+该指令可以使计数器递增，并为系统的引用更新改值。你在示例中间看到的小黑字盒宽度为\verb|\l@rgeurnumex|（定义为16 pt），由如下代码生成：
+
+\begin{dmd}
+\begin{tabbing}
+1234567890123456789012345678901234567890\= \kill
+\verb|\newcommand{\affichenumex}{% |\\
+\verb|    \raisebox{-1.7pt}[0pt][0pt]{% |\\
+\verb|        \setlength{\fboxsep}{.7pt}% |\\
+\verb|        \colorbox{black}{%|\> $\leftarrow$\textsf{黑色字盒}\\
+\verb|            \makebox[\l@rgeurnumex]{%|\> $\leftarrow$\textsf{宽度固定的字盒}\\
+\verb|                \color{white}%|\> $\leftarrow$\textsf{内容展现为白色}\\
+\verb|                \tiny\textsf{\thec@exemple}}}}}|
+\end{tabbing}
+\end{dmd}
+
+这样一来：
+
+\newcounter{cexemple}[chapter]
+\renewcommand{\thecexemple}{% 
+\thechapter.\arabic{cexemple}}
+\setcounter{cexemple}{34}
+
+\newcommand{\affichenumex}{% 
+\raisebox{-1.7pt}[0pt][0pt]{% 
+\setlength{\fboxsep}{.7pt}%
+\colorbox{black}{% 
+\makebox[16pt]{%
+\color{white}%
+\tiny\textsf{\thecexemple}}}}}
+
+\begin{codelist}[11.34]{
+小字盒（\affichenumex）
+}\begin{verbatim}
+小字盒（\affichenumex）
+\end{verbatim}
+\end{codelist}
+
+因此，环境\verb|ltxexemple|可以更新为如下版本：
+
+\begin{dmd}
+\begin{verbatim}
+\newenvironment{ltxexempleiii}{%
+\VerbatimEnvironment%
+\begin{VerbatimOut}[gobble=2]{\jobname.exa}}{%
+\end{VerbatimOut}%
+\begin{ltxexempleenv}% 
+\end{verbatim}
+\verb+    \refstepcounter{c@exemple}% +\quad$\leftarrow$\textsf{计数器递增}
+\begin{verbatim}
+    \savebox{\b@iteentree}{ [...] }% 
+    \savebox{\b@itesortie}{ [...] }%
+    \usebox{\b@iteentree}%
+    \kern2pt%
+    \parbox{3pt}{\rotatebox{90}{\affichenumex}}%
+    \kern2pt%
+    \usebox{\b@itesortie}
+\end{ltxexempleenv}}%
+\end{verbatim}
+\end{dmd}
+
+效果如下：
+
+\makeatletter
+\newenvironment{ltxexempleiii}{%
+  \setlength{\fboxsep}{.5pt}%
+  \VerbatimEnvironment%
+  \begin{VerbatimOut}[gobble=2]{\jobname.exa}}{%
+  \end{VerbatimOut}%
+  \begin{ltxexempleenv}% ø\ccomment{pour agrandir les marges}ø
+    \refstepcounter{cexemple}
+    \savebox{\b@iteentree}{% ø\ccomment{le code en verbatim}ø
+      \begin{boxedminipage}{\ltxexinputwidthratio\linewidth}
+        \VerbatimInput{\jobname.exa}
+      \end{boxedminipage}}%
+    \savebox{\b@itesortie}{%ø\ccomment{le code interprété}ø
+      \begin{boxedminipage}{\ltxexoutputwidthratio\linewidth} 
+        \setlength{\parindent}{10pt}% ø\ccomment{par défaut \texttt{0pt}}ø
+        \input{\jobname.exa}
+      \end{boxedminipage}}%
+    \usebox{\b@iteentree}%
+    \kern2pt%
+    \parbox{3pt}{\rotatebox{90}{\affichenumex}}%
+    \kern2pt%
+    \usebox{\b@itesortie}
+  \end{ltxexempleenv}}%
+\makeatother%
+
+\begin{ltxexempleiii}
+  \setlength{\fboxsep}{-2pt}
+  \setlength{\fboxrule}{.5mm}
+  这个\fbox{例子}有点蠢……
+\end{ltxexempleiii}
+
+最后一个难点是处理引用系统。实际上，我们不能像这样编写：
+
+\begin{dmd}
+\verb|以下一个示例。\label{monexemple}|
+\end{dmd}
+
+这是因为，字符串\verb|\label{monexemple}|会出现在示例中：
+
+\begin{codelist}[11.36]{
+以下一个示例。
+}\begin{verbatim}
+以下一个示例。\label{monexemple}
+\end{verbatim}
+\end{codelist}
+
+我们不希望这样……对此，这里采用的解决方案是，以一个指令作为媒介，将可能出现的标签\verb|\label|传递给环境。编写如下代码：
+
+\begin{dmd}
+\begin{verbatim}
+\newcommand{\l@belex}{} % 当前标签值
+% 用于更新标签的指令 
+\newcommand{\labelexemple}[1]{%
+\renewcommand{\l@belex}{#1}}
+\end{verbatim}
+\end{dmd}
+
+这样一来，在使用环境\dm{ltxexemple}前，只需要调用如下指令：
+
+\begin{dmd}
+\verb|\labelexemple{|\codereplace{标签}\}
+\end{dmd}
+
+这样，就可以在接下来的过程中使用\verb|\ref{|\codereplace{标签}\verb+}+或等价指令来引用它。在环境\dm{ltxexemple}的定义中，新增如下内容：
+
+\begin{dmd}
+\begin{verbatim}
+% 如果当前标签不为空
+\ifthenelse{\equal{\l@belex}{}}{}{%
+    \label{\l@belex}}% 放置一个标签
+\end{verbatim}
+\end{dmd}
+
+用法语来讲，这里的意思是：“如果指令\verb|\l@belex|被定义为非空的值，我们就使用这个值来放置标签（指令\verb|\label|）”。接下来，需要将指令\verb|\l@belex|设置为空值，因为有一些情况与此相反，会多次定义标签（\LaTeX 的消息“Label ``$\times\!\times\!\times$''\ multiply defined”）。因此，我们可以这样写：
+
+\begin{dmd}
+\begin{verbatim}
+% 如果当前标签不为空 
+\ifthenelse{\equal{\l@belex}{}}{}{%
+    \label{\l@belex}% 放置标签
+    \renewcommand{\l@belex}{}}
+\end{verbatim}
+\end{dmd}
+
+从语法角度来讲，这样编写是正确的，但是这里指令\verb|\renewcommand|的有效范围是局部的，它被限制为只能在检测\verb|\ifthenelse|的区域内生效。为了规避这个问题，我们可以使用\TeX 的结构：
+
+\begin{dmd}
+\verb|\global\def\l@belex{}|
+\end{dmd}
+
+该结构可以代替\verb|\renewcommand|，从而使用全局的工作范围来重新定义。
+
+\subsection{竖线}
+
+剩余的工作来到了绘制两个字盒间那条有点丑的线条这边。第一件要做的事情是分别去测量两个字盒的总高，并保留其中的较大值。以下代码可以实现这个目的：
+
+\begin{dmd}
+\begin{verbatim}
+% 测量入口字盒
+\hauteurtotale{\tempodim}{\usebox{\b@iteentree}}%
+% 测量出口字盒
+\hauteurtotale{\hauteurdutrait}{\usebox{\b@itesortie}}% 
+% 取较大值
+\ifthenelse{\hauteurdutrait>\tempodim}{%
+    \setlength{\tempodim}{\hauteurdutrait}}{}
+\end{verbatim}
+\end{dmd}
+
+当然，需要提前声明尺寸\verb|\hauteurdutrait|和\verb|\tempodim|。在11.8.1小节中，我们可以看到有关指令\verb|\settotoalheight|的介绍。
+
+这里在入口和出口字盒间要绘制的黑线的尺寸严格等于\verb|\hauteurtrait|减去\verb|\l@rgeurnumex|（带有示例编号字盒的宽度）。我们存储该尺寸：
+
+\begin{dmd}
+\begin{verbatim}
+% 出去编号字盒的线高
+\setlength{\hauteurdutrait}{\tempodim-\l@rgeurnumex}
+\end{verbatim}
+\end{dmd}
+
+经过作者大会无记名投票，决定线条长度的70\%绘制在编号上方，30\%绘制在编号下方。因此，中央的线条由如下的\verb|\parbox|生成：
+
+\begin{dmd}
+\begin{verbatim}
+% 中央的线条
+\parbox{3pt}{%
+    \begin{center}
+        % 上方70% 
+        \rule{3pt}{.7\hauteurdutrait}\\\nointerlineskip% 
+        \rotatebox{90}{\affichenumex}\\\nointerlineskip% 
+        % 下方30% 
+        \rule{3pt}{.3\hauteurdutrait}%
+    \end{center}}
+\end{verbatim}
+\end{dmd}
+
+因此，指令\verb|\nointerlineskip|可以删除竖直方向上所有多余的空白，而这些空白可能是由指令\verb|\\|插入的。在关于微型目录的小节\celan{\S 10.7.4}中，我们给出了更多的细节。
+
+\begin{codelist}[11.37]{
+好了，这就是关于这个出色的环境
+\dm{ltexexemple}的全部内容。
+注意，尺寸\dm{3pt}也可以是
+某个长度定义的对象……
+}\begin{verbatim}
+好了，这就是关于这个出色的环境
+\ltxenv{ltexexemple}的全部内容。
+注意，尺寸\texttt{3pt}也可以是
+某个长度定义的对象……
+\end{verbatim}
+\end{codelist}
