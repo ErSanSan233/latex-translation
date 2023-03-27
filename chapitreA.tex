@@ -14,3 +14,123 @@
     \item 借助\textsf{ps2pdf}将PostScript格式的输出翻译为PDF文件。
 \end{enumerate}
 
+\begin{exclamation}
+拥有关于上述第一条的一些经验的鄙人将专注于pdflatex。想要正确使用这个软件，有一些前提条件：
+
+\begin{itemize}
+    \item 要么使用了包lmodern；
+    \item 要么安装了弗拉基米尔·沃洛维奇（Vladimir Volovich）的扩展“CM-Super font”。Debian的发行版Etch包含了开箱即用的包。我们同样可以在用于为Debian的一个发行版——Sarge借助te\TeX 安装该扩展的网站（\wz{http://sravier.free.fr/linux/\linebreak debian\_latex\_cm-super.html}）上找到相关文档。
+\end{itemize}
+\end{exclamation}
+
+\section{更改之处}
+
+为了编译\LaTeX 源文件、生成PDF格式的文件，我们可以以如下方式使用软件\textsf{pdflatex}：
+
+\dmh{pdflatex monfichier.tex}
+
+如果源文档之中没有错误，该指令会创建名为\dm{monfichier.pdf}的文件。如下是几个需要注意的重点。
+
+\begin{description}
+    \item[图形] 对于图片，应当以PNG或JPEG格式包含在文档中；对于绘制的图画，应当以PDF格式包含\jz{
+        软件\textsf{Xfig}的软件可以被转换为PDF。%TODO 啥？
+    }。
+    \item[链接] 在包含了包\textsf{hyperref}的情况下，PDF文档会在指令\verb|\ref|出现时、目录中、索引中等情况下自动包含链接。此外，适用于软件\textsf{Acrobat Reader}的可折叠目录也会生成。
+\end{description}
+
+\section{一些技巧}
+
+考虑到我们经常使用同一个源文件生成DVI或PDF，且根据具体情况应当包含不同的图像文件，可以借助包\textsf{ifpdf}来实现这样的技巧：
+
+\begin{dmd}
+\begin{verbatim}
+\ifpdf
+% 针对输出PDF而特定的内容
+\else
+% 针对输出DVI而特定的内容
+\fi  
+\end{verbatim}
+\end{dmd}
+
+\subsection{处理图像}
+
+我们可以编写如下的内容：
+
+\begin{dmd}
+\begin{verbatim}
+\ifpdf
+\graphicspath{{pngs/}{{pdfs/}}
+\else
+\graphicspath{{epss}}
+\fi
+\end{verbatim}
+\end{dmd}
+
+这对应于我们将图像文件按\dm{pngs}、\dm{pdfs}、\dm{epss}等目录整理的情况。这个新的“if”语句也可以写成如下结构：
+
+\begin{dmd}
+\begin{verbatim}
+\ifpdf
+\includegraphics[pdftex]{graphicx}
+\else
+\includegraphics{graphicx}
+\fi
+\end{verbatim}
+\end{dmd}
+
+在最新的\LaTeX 版本中，这样写不是必需的。
+
+\subsection{缩略图}
+
+\textsf{pdflatex}近期的版本支持了为包括但不仅限于\textsf{evince}、\textsf{Acrobat Reader}等浏览器创建缩略图（vignettes；英：\emph{thumbnail}）。以前，则需要使用包\textsf{thumbpdf}：
+
+\begin{dmd}
+\verb+\usepackage{thumbpdf}+
+\end{dmd}
+
+并且执行：
+
+\dmh{thumbpdf monfichier.pdf}
+
+该指令会创建名为\dm{monfichier.tpt}的文件，会在接下来使用\textsf{pdflatex}编译时被包含。
+
+\subsection{页码}
+
+为了在浏览器\textsf{Acrobat Reader}中展示页码，需要在包含包\textsf{hyperref}（参见\S A.4）添加选项\dm{pdfpagelabels}。
+
+\subsection{书签}
+
+PDF浏览器中的书签（signet；英：\emph{bookmarks}）是一种“目录浏览器”，可以直接跳转到某一指定级别的某一节。在生成目录上，需要绕过两个难点。
+
+\begin{enumerate}
+    \item 将“收尾”的内容（参考文献、术语字典、索引）设置为该浏览器中各部分的同一级别。默认情况下，这些信息会“掩盖”在附录部分中，因为它们与各\verb|\chapter|处于同一深度。
+    \item 确保书签中指向索引的链接确实指向索引……
+\end{enumerate}
+
+对于第一个问题，你只需要使\LaTeX 相信“收尾”内容中的\emph{章}与目录、各\emph{部分}处于同一深度。这里的咒语是：
+
+\begin{dmd}
+\verb|\renewcommand{\toclevel@chapter}{-1}|
+\end{dmd}
+
+它需要放置在风格文件中的适当位置。我们重定义\verb|\backmatter|\celan{\S 10.4.4}的地方无疑是很好的选择。
+
+\begin{qquestion}
+作为\emph{书签}部分的结尾，为了让指向索引的书签实际指向索引（！），我们这次要念的是萨满教的咒语：
+
+\begin{dmd}
+\begin{verbatim}
+\let\printindexORIG\printindex 
+\renewcommand{\printindex}{%
+    \cleardoublepage
+    \phantomsection% 创建一个假节
+    \addcontentsline{toc}{chapter}{Index} 
+    \printindexORIG}
+\end{verbatim}
+\end{dmd}
+
+该咒语通过包hyperref提供的指令\verb|\phantomsection|为指令\verb|\printindex|添加了一个并不存在的节，使其过载。别问我更多了\dm{:-)}
+\end{qquestion}
+
+\section{超链接}
+
