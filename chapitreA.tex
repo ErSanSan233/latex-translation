@@ -134,3 +134,227 @@ PDF浏览器中的书签（signet；英：\emph{bookmarks}）是一种“目录�
 
 \section{超链接}
 
+借助包\textsf{hyperref}，可以在\dm{.dvi}或\dm{.pdf}文件中插入可以被浏览器（如\textsf{xdvi}和\textsf{Acrobat Reader}等）检测到的特殊指令。我们可以点击由\verb|\ref|等特殊指令生成的文本，从而自动定义到被引用的位置。在本文档的电子版中，存在以下我们可以点击的链接：
+
+\begin{itemize}
+    \item 所有由\verb|\ref|、\verb|\pageref|、\verb|\vref|生成的引用；
+    \item 页脚的注释；
+    \item 由指令\verb|\url|生成的网址；
+    \item 对参考文献的引用；
+    \item 索引各入口中的页码。
+\end{itemize}
+
+我们可以编写如下内容来激活超链接系统：
+
+\begin{dmd}
+\begin{verbatim}
+\ifpdf
+\usepackage[pdftex=true,
+            hyperindex=true,
+            colorlinks=true]{hyperref}
+\else
+\usepackage[hypertex=true,
+            hyperindex=true,
+            colorlinks=false]{hyperref}
+\fi
+\end{verbatim}
+\end{dmd}
+
+这样可以只在PDF版本中为链接设置颜色。PostScript版本中的链接会以黑色生成，以在文档以黑白模式打印时保持可读性。
+
+\begin{qquestion}
+我们在文档中包含不同包的允许会影响到扩展hyperref的正常功能，有时甚至包含包的位置都会造成编译错误。至于什么样的顺序是合适的，就交给你来探索了\dm{:-)}
+\end{qquestion}
+
+\section{和\textsf{psfrag}及\textsf{pstricks}互动}
+
+\subsection{textsf{pstricks}}
+
+该包可以用来“作弊”（tricher，英：\emph{trick}）。简单来说，我们可以写下这样的代码：
+
+\begin{mdframed}
+    \begin{dmd}
+    \begin{verbatim}
+令：
+\begin{pspicture}[](-1,-1)(1,1)
+\parametricplot[linewidth=.5pt,plotstyle=ccurve]% 
+{0}{360}{4 t mul sin 3 t mul sin} \psgrid[gridlabels=0pt](-1,-1)(1,1)
+\end{pspicture}
+\quad $x=\sin(4t), y=\sin(3t)$的图像……\end{verbatim}\end{dmd}
+\end{mdframed}
+
+这样的效果如下：
+
+\begin{mdframed}
+    令：
+    \begin{pspicture}[](-1,-1)(1,1)
+    \parametricplot[linewidth=.5pt,plotstyle=ccurve]% 
+    {0}{360}{4 t mul sin 3 t mul sin} \psgrid[gridlabels=0pt](-1,-1)(1,1)
+    \end{pspicture}
+    \quad $x=\sin(4t), y=\sin(3t)$的图像……
+\end{mdframed}
+
+还挺奇怪的，对不？确实。扩展\verb|pstricks|的原则就是在\dm{.dvi}文件中插入PostScript代码，程序\textsf{dvips}同样可以绘制这些代码。我们想要在使用\textsf{pdflatex}时使用这些小块图时，问题就会变得复杂。实际上，\textsf{pdflatex}会直接用\dm{.tex}文件直接生成\dm{.pdf}文件，而在PDF格式的文件中插入PostScript片段毫无效果……然而，还是有能规避这个问题的可能：
+
+\begin{enumerate}
+    \item 先生成一个包含\textsf{pstricks}中指令的最小\LaTeX 文件；
+    \item 使用\LaTeX 编译这个文档，生成\dm{.dvi}文件；
+    \item 使用选项\dm{-E}，指示\textsf{dvips}以封装后的PostScript格式创建文件；
+    \item 将该文件转换为PDF格式；
+    \item 在使用\textsf{pdflatex}时包含该文件。
+\end{enumerate}
+
+这个解决方案有点“拧巴”，但我们可以借助Makefile、UNIX的小脚本、指令等实现自动化。
+
+首先：
+
+\begin{dmd}
+\begin{verbatim}
+\newcommand{\includepstricksgraphics}[1]{% 
+\ifpdf\includegraphics{#1}\else\input{#1}\fi}
+\end{verbatim}
+\end{dmd}
+
+这里的思路是将带有\textsf{pstricks}的指令的一部分代码抽取出来，存储在文件\dm{bidule.tex}中。接下来：
+
+\begin{dmd}
+\begin{verbatim}
+\includepstricksgraphics{bidule}
+\end{verbatim}
+\end{dmd}
+
+我们编写这样的指令时，如果使用\textsf{pdflatex}，就可以包含\dm{bidule.pdf}；如果使用\LaTeX 就可以包含\dm{bidule.tex}。此外，对于UNIX的“小”脚本，我们可以根据需求来编写：
+
+\begin{dmd}
+\begin{verbatim}
+#!/bin/sh
+# 移除第一个参数的扩展名
+FILE=${1%.*}
+# 创建一个临时文件
+psttemp.tex
+cat > psttemp.tex <<EOF
+\end{verbatim}
+\verb+\documentclass{manuel}+\quad$\leftarrow$\textsf{设定类型和适当的包}
+\begin{verbatim}
+\thispagestyle{empty}
+\begin{document}
+\input{$FILE}
+\end{document}
+EOF
+# 创建DVI文件
+latex psttemp
+# 创建EPS文件
+dvips -E  $TMPFILE.dvi -o psttemp.eps
+# 创建PDF文件
+epstopdf psttemp.eps --debug --outfile=$FILE.pdf
+# 清除临时文件
+rm -f psttemp.*
+\end{verbatim}
+\end{dmd}
+
+这些内容存储在名为\dm{pstricks.sh}的文件中，可以通过如下方式使用：
+
+\dmh{./pstricks.sh bidule.tex}
+
+这样会创建文件\dm{bidule.pdf}。这次，\textsf{pdflatex}会乖乖包含我们想要的内容，这要归功于上文编写的指令\verb+\includepstricksgraphics+。对于Makefile，根据前面的脚本，不难定义出用于将\dm{.tex}文件转换为\dm{.pdf}文件的规则。借助GNU版本的\textsf{make}，我们可以写出如下代码：
+
+\begin{dmd}
+\begin{verbatim}
+%.pdf : %.tex
+      ./pstricks.sh $<
+\end{verbatim}
+\end{dmd}
+
+\begin{qquestion}
+程序dvips并不总能正确计算包裹被封装的PostScript的字盒。特别地，pstricks文档\jz{\wz{http://tug.org/PSTricks}}的41节指出，dvips无法考虑到生成出的PostScript代码，从而估计包裹它的字盒。在这种情况下，建议要么在图像的前后添加文本，来帮助dvips脱身，要么使用环境\dm{TeXtoEPS}。这样一来，前文脚本中的临时文档需要做出更新：
+
+\begin{dmd}
+\begin{verbatim}
+cat > psttemp.tex <<EOF
+\documentclass{manuel}
+\usepackage{pst-eps}
+\thispagestyle{empty}
+\begin{document}
+\end{verbatim}
+\verb+\begin{TeXtoEPS}+\quad$\leftarrow$\textsf{帮助PSTricks计算字盒}
+\begin{verbatim}
+\input{$FILE}
+\end{TeXtoEPS}
+\end{document}
+EOF
+\end{verbatim}
+\end{dmd}
+\end{qquestion}
+
+\subsection{\textsf{psfrag}}
+
+\textsf{psfrag}的限制和原则与\textsf{pstricks}相同。对于搭配\textsf{pdflatex}使用\textsf{psfrag}，需要如下的过程：
+
+\begin{enumerate}
+    \item 先生成一个包含\textsf{psfrag}中指令的最小\LaTeX 文件；
+    \item 使用\LaTeX 编译这个文档，生成\dm{.dvi}文件；
+    \item 使用选项\dm{-E}，指示\textsf{dvips}以封装后的PostScript格式创建文件；
+    \item 将该文件转换为PDF格式；
+    \item 在使用\textsf{pdflatex}时包含该文件。
+\end{enumerate}
+
+然而，这里有一个小“症结”——我们使用\textsf{dvips}计算的外围字盒所包裹的图包含了由\textsf{psfrag}生成的文本，也就指明了即将进行的替换。我们应当考虑到这一点。在shell脚本中，创建一个函数：
+
+\begin{dmd}
+\begin{verbatim}
+function genere_eps
+{
+  cat > $TMPFILE.tex <<EOF
+\documentclass{manuel}
+\end{verbatim}
+\verb+\documentclass{manuel}+\quad$\leftarrow$设定类型和适当的包
+\begin{verbatim}
+\thispagestyle{empty}
+\begin{document}
+  \input{$1}
+\end{document}
+EOF
+  echo "生成DVI文件"
+  latex $TMPFILE > $LOGFILE
+  echo "生成$TMPFILE.eps文件"
+  dvips -E  $TMPFILE.dvi -o $TMPFILE.eps >> $LOGFILE 2>&1
+}
+
+\end{verbatim}
+\end{dmd}
+
+接下来，在脚本中使用该函数两次，具体如下：
+
+\begin{dmd}
+\begin{verbatim}
+FILE=${1%.*}
+TMPFILE=truc
+LOGFILE=truc.log
+sanspsfrag=$TMPFILE-sanspsf.tex
+
+# 删除包含指令\psfrag的行
+# 并获取包裹EPS文件且不含psfrag的字盒
+# sans les psfrag
+grep -v \\\\psfrag $FILE.tex > $sanspsfrag
+genere_eps $sanspsfrag
+bonnebb=$(grep "^%%BoundingBox" $TMPFILE.eps | head -1)
+
+# 获取包裹EPS文件且包含psfrag的字盒
+genere_eps $FILE
+mauvaisebb=$(grep "^%%BoundingBox" $TMPFILE.eps | head -1)
+
+# 将包裹的字盒替换为效果正确的版本
+sed  -i "s/$mauvaisebb/$bonnebb/" $TMPFILE.eps
+
+echo "创建PDF文件"
+epstopdf $TMPFILE.eps --debug \
+--outfile=pdfs/${FILE##*/}.pdf >>  $LOGFILE 2>&1
+
+# 做好清洁工作
+rm -f $TMPFILE.* $LOGFILE $sanspsfrag
+\end{verbatim}
+\end{dmd}
+
+\begin{exclamation}
+该脚本有许多缺陷。例如，在指令\verb+\psfrag+占据多行的情况下会失败。实际上，我们要求grep做的事情是删除包含\verb+\psfrag+的行，而不去验证该指令是否在几行之后才结束……
+\end{exclamation}
