@@ -4,3 +4,58 @@
 
 \section{扩展}
 
+正如前言所说，\TeX 和\LaTeX 都是\emph{开放}系统。围绕着\LaTeX 内核，有相当数量的标准包建起了该系统的基础。然而，所有的用户都可以为\LaTeX 添加不同的功能，来让它进化。因此，我们搜寻了一批扩展［extension；也可以按英文称为包（\emph{package}）］格式或文档类型格式的工具。一些工具已经称为了标准，“所有”工具都可以在\LaTeX 发行版（参见第8章）的服务器或私人页面上下载，其他的则随论文征集或其他作者指南提供。
+
+在这里，我们为你提供一个“标准”包的列表，并且邀请你去参阅通常随包附带的相关文档。注意，CTAN（\wz{http://www.ctan.org}）提供了包目录项的参考。
+% TODO 缺三角
+\begin{packages}
+    \item[french]用于将文档“法文化”。避免在词和双标点之间打断句子。同时提供若干围绕法文排版的指令（参见第7章）。
+    \item[amsmath]用于制作完美的数学式和方程的包。
+    \item[array]改善\dm{tabular}的使用。
+    \item[hhline]扩展\LaTeX 基础表格的边线。
+    \item[fancyhdr]用于定制页眉和页脚。请看看本书的页眉和页脚。
+    \item[varioref]提供指令\verb+\vref+，用于取代\verb+\ref+，根据跳转阅读的提示语和目的位置的相对关系添加“下一页”“第12页”或空白等格式。
+    \item[ifthen]提供两种\emph{控制结构}，即“if then else”和“do while”。这使得稍微复杂些的指令成为可能。
+    \item[chapterbib]用于在各章末插入参考文献。
+    \item[overcite]将参考文献标注为上标。
+    \item[bibunits]用于生成多个单位组成的参考文献。
+    \item[fancybox]提供4种\verb+\fbox+的变体，即\shadowbox{\verb+\shadowbox+}、\doublebox{\verb+\doublebox+}、\ovalbox{\verb+\ovalbox+}、\Ovalbox{\verb+\Ovalbox+}。
+    \item[algorithms]以可浮动或不可浮动的环境格式展示代码。
+    \item[geometry]用于以一种足够灵活的方式修改边距和页面上大部分相关尺寸。
+    \item[url]用于以URL格式展示网址，其中的断字“以最佳方式”处理。
+    \item[fancyvrb]提供了环境\dm{verbatim}的改进版本。
+\end{packages}
+
+\section{辅助文件}
+
+如下列表展示了你可以在磁盘中源文件旁找到的文件。这些文件的扩展名都由3个字母组成，具体如下\jz{
+    一些包（例如\textsf{minitoc}和类\textsf{lettre}）可以创建它们自己的辅助文件，本列表不涵盖这些情况
+}：
+
+\begin{ficaux}
+    \item[tex]\LaTeX 源文件；
+    \item[aux]\LaTeX 用于解析引用等内容的辅助文件；
+    \item[log]跟踪文件［fichier de trace；英文成为\emph{日志文件（log file）}］；
+    \item[dvi]\emph{设备无关（device independant）}文件，根据使用场景可以用于显示或打印；
+    \item[toc]包含目录的文件（代表\emph{table of contents}）；
+    \item[lof]包含图列表的文件（代表\emph{list of figure}）；
+    \item[lot]包含表格列表的文件；
+    \item[bib]包含的参考文献入口的\bib 源文件；
+    \item[bbl]包含参考文献的文件，可以由\bib 生成；
+    \item[blg]\bib 的跟踪文件；
+    \item[idx]未经筛选的索引入口文件；
+    \item[ind]包含索引的文件，通常由\textsf{makeindex}生成；
+    \item[ilg]\textsf{makeindex}跟踪文件；
+    \item[sty]包含更改版式或支持特定工具的指令的定义的文件。
+    \item[cls]定义文档类型的文件。 
+\end{ficaux}
+
+在将\LaTeX 文档归档时，不同的文件可以有不同的处理方式。
+
+\begin{description}
+    \item[可以删除的文件]所有的辅助文件、\emph{log}文件，以及目录文件和图表列表文件都可以删除。
+    \item[同样可以删除的文件]\dm{ddl}文件（如果你可以从\dm{bib}文件借助\bib 生成它）。索引文件通常同样可以删除，因为它们原则上是\textsf{makeindex}生成的。\dm{dvi}文件同样不是必需的，因为我们认为你已经有\LaTeX 源文件了。
+    \item[需要保留的文件]\LaTeX 源文件和你定义的所有必需的风格文件（\dm{sty}和\dm{cls}文件）都需要保留。但如果你已经知道如何定义文档类型了，那么这个建议可能有点蠢……
+\end{description}
+
+\section{Auc\TeX }
