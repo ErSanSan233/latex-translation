@@ -1,0 +1,417 @@
+\chapter{符号}
+
+在本附录中，你将会找到\LaTeX 中可用的“全部”数学符号的列表\yz{
+    由于中文包会引入各种冲突，此附录有多处表格显示不全的问题。若表格中直接标明了表格显示不全，或指令对应的结果为空白，请先参考原书。
+}。我们将这些符号分成以下几类。
+
+\begin{itemize}
+    \item 标准符号，见表\ref{tab:C.1}～表\ref{tab:C.10}。
+    \item 包\textsf{latexsym}提供的\LaTeX 可用符号，见表\ref{tab:C.11}。
+    \item 美国数学协会通过包\textsf{amssymb}提供的符号，见表\ref{tab:C.12}～表\ref{tab:C.19}。
+    \item 包\textsf{textcomp}提供的符号，见表\ref{tab:C.20}和表\ref{tab:C.21}。
+    \item 广为人知的PostScript字体Zapf Dingbats和Symbol中的符号。包含包\textsf{pifont}后，可以通过指令访问字体中的符号。对于字体Zapf Dingbats，使用如下指令：
+    
+    \begin{dmd}
+\verb+\Pisymbol{pzd}{+\codereplace{序号}\}
+    \end{dmd}
+
+    对于字体Symbol，使用如下指令：
+
+    \begin{dmd}
+\verb+\Pisymbol{psy}{+\codereplace{序号}\}
+    \end{dmd}
+    
+    数字\codereplace{序号}代表你在表\ref{tab:C.22}和表\ref{tab:C.23}中选用的符号所在的方格中的数字。
+\end{itemize}
+
+\newcommand{\ms}[1]{\dm{\backslash #1} & $\csname#1\endcsname$}
+\newcommand{\msdel}[1]{\dm{\backslash #1} & $\left\csname#1\endcsname\right.$}
+
+\section{标准符号}
+
+\begin{table}[H]
+    \caption{希腊字母}\label{tab:C.1}
+    \centering
+    \begin{tabular}{llllllll}
+        \ms{alpha}  &\ms{beta}      &\ms{gamma}   &\ms{delta}  \\
+        \ms{epsilon}&\ms{varepsilon}&\ms{zeta}    &\ms{eta}    \\
+        \ms{theta}  &\ms{vartheta}  &\ms{iota}    &\ms{kappa}  \\
+        \ms{lambda} &\ms{mu}        &\ms{nu}      &\ms{xi}     \\
+        \texttt{o}  & $o$    &\ms{pi}        &\ms{varpi}   &\ms{rho}    \\
+        \ms{varrho} &\ms{sigma}     &\ms{varsigma}&\ms{tau}    \\
+        \ms{upsilon}&\ms{phi}       &\ms{varphi}  &\ms{chi}    \\
+        \ms{psi}    &\ms{omega}     &    &        &     &      \\
+        &     &      &        &    &        &     &      \\
+        \ms{Gamma}  &\ms{Delta}     &\ms{Theta}   &\ms{Lambda} \\
+        \ms{Xi}     &\ms{Pi}        &\ms{Sigma}   &\ms{Upsilon}\\
+        \ms{Phi}    &\ms{Psi}       &\ms{Omega}   &     &      \\
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \caption{二元操作符}
+    \centering
+    \begin{tabular}{llllllll}
+        \ms{pm}    &\ms{cdot} &\ms{setminus}       &\ms{ominus} \\
+        \ms{mp}    &\ms{cap}  &\ms{wr}             &\ms{otimes} \\
+        \ms{times} &\ms{cup}  &\ms{diamond}        &\ms{oslash} \\
+        \ms{div}   &\ms{uplus}&\ms{bigtriangleup}  &\ms{odot}   \\
+        \ms{ast}   &\ms{sqcap}&\ms{bigtriangledown}&\ms{bigcirc}\\
+        \ms{star}  &\ms{sqcup}&\ms{triangleleft}   &\ms{dagger} \\
+        \ms{circ}  &\ms{vee}  &\ms{triangleright}  &\ms{ddagger}\\
+        \ms{bullet}&\ms{wedge}&\ms{oplus}          &\ms{amalg}  \\
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \caption{可变尺寸的符号}
+    \centering
+    \begin{tabular}{llllllll}
+        \ms{sum}   &\ms{prod}     &\ms{coprod}  &\ms{int}\\   %  &\ms{oint}    \\
+        \ms{bigcap}&\ms{bigcup}   &\ms{bigsqcup}&\ms{bigvee}\\ %  &\ms{bigwedge}\\
+        \ms{bigodot}&\ms{bigotimes}&\ms{bigoplus}&\ms{biguplus} \\
+        \ms{oint}&\ms{bigwedg} & &\\
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \caption{点}
+    \centering
+    \begin{tabular}{llllllll}
+        \ms{ldots}&\ms{cdots}&\ms{vdots}&\ms{ddots}
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \caption{比较关系}
+    \centering
+    \begin{tabular}{llllllll}
+        \ms{leq}       &\ms{geq}       &\ms{equiv} &\ms{models}  \\
+        \ms{prec}      &\ms{succ}      &\ms{sim}   &\ms{perp}    \\
+        \ms{preceq}    &\ms{succeq}    &\ms{simeq} &\ms{mid}     \\
+        \ms{ll}        &\ms{gg}        &\ms{asymp} &\ms{parallel}\\
+        \ms{subset}    &\ms{supset}    &\ms{approx}&\ms{bowtie}  \\
+        \ms{subseteq}  &\ms{supseteq}  &\ms{cong}  &\ms{smile}   \\
+        \ms{sqsubseteq}&\ms{sqsupseteq}&\ms{neq}   &\ms{frown}   \\
+        \ms{in}        &\ms{ni}        &\ms{doteq} &     &       \\
+        \ms{vdash}     &\ms{dashv}     &\ms{propto}&     &       \\
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \caption{箭头}
+    \centering
+    \begin{tabular}{llllll}
+        \ms{leftarrow}      &\ms{longleftarrow}      &\ms{uparrow}    \\
+        \ms{Leftarrow}      &\ms{Longleftarrow}      &\ms{Uparrow}    \\
+        \ms{rightarrow}     &\ms{longrightarrow}     &\ms{downarrow}  \\
+        \ms{Rightarrow}     &\ms{Longrightarrow}     &\ms{Downarrow}  \\
+        \ms{leftrightarrow} &\ms{longleftrightarrow} &\ms{updownarrow}\\
+        \ms{Leftrightarrow} &\ms{Longleftrightarrow} &\ms{Updownarrow}\\
+        \ms{mapsto}         &\ms{longmapsto}         &\ms{nearrow}    \\
+        \ms{hookleftarrow}  &\ms{hookrightarrow}     &\ms{searrow}    \\
+        \ms{leftharpoonup}  &\ms{rightharpoonup}     &\ms{swarrow}    \\
+        \ms{leftharpoondown}&\ms{rightharpoondown}   &\ms{nwarrow}   
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \caption{杂项}
+    \centering
+    \begin{tabular}{llllllll}
+        \ms{aleph}&\ms{prime}   &\ms{forall}   &\ms{infty}      \\
+        \ms{hbar} &\ms{emptyset}&\ms{exists}   &\ms{triangle}   \\
+        \ms{imath}&\ms{nabla}   &\ms{neg}      &\ms{clubsuit}   \\
+        \ms{jmath}&\ms{surd}    &\ms{flat}     &\ms{diamondsuit}\\
+        \ms{ell}  &\ms{top}     &\ms{natural}  &\ms{heartsuit}  \\
+        \ms{wp}   &\ms{bot}     &\ms{sharp}    &\ms{spadesuit}  \\
+        \ms{Re}   &\ms{|}       &\ms{backslash}&        &       \\
+        \ms{Im}   &\ms{angle}   &\ms{partial}  &        &       
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \caption{函数}
+    \centering
+    \begin{tabular}{llllllll}
+        \dm{\backslash arccos}&\dm{\backslash cos}   &\dm{\backslash csc} &\dm{\backslash exp}&
+        \dm{\backslash ker}   &\dm{\backslash limsup}&\dm{\backslash min} &\dm{\backslash sinh}\\
+        \dm{\backslash arcsin}&\dm{\backslash cosh}  &\dm{\backslash deg} &\dm{\backslash gcd}&
+        \dm{\backslash lg}    &\dm{\backslash ln}    &\dm{\backslash Pr}  &\dm{\backslash sup} \\
+        \dm{\backslash arctan}&\dm{\backslash cot}   &\dm{\backslash det} &\dm{\backslash hom}&
+        \dm{\backslash lim}   &\dm{\backslash log}   &\dm{\backslash sec} &\dm{\backslash tan} \\
+        \dm{\backslash arg}   &\dm{\backslash coth}  &\dm{\backslash dim} &\dm{\backslash inf}&
+        \dm{\backslash liminf}&\dm{\backslash max}   &\dm{\backslash sin} &\dm{\backslash tanh}\\
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \caption{定界符}
+    \centering
+    \begin{tabular}{llllllll}
+        \ms{uparrow}      &\ms{Uparrow}      &\ms{downarrow}  &\ms{Downarrow}  \\
+        \verb+\{+&$\{$    &\verb+\}+&        $\}$             &\ms{updownarrow}     &\ms{Updownarrow}\\
+        \ms{lfloor}       &\ms{rfloor}       &\ms{lceil}      &\ms{rceil}      \\
+        \ms{langle}       &\ms{rangle}       &\texttt{/}&$/$  &\ms{backslash}  \\
+        \verb+|+&$|$      &\ms{|}            &       &        &         &  
+    \end{tabular}
+    
+\end{table}
+
+% TODO 此表有包冲突
+\begin{table}[H]
+    \caption{大型定界符（此表有包冲突，显示不全）}\label{tab:C.10}
+    \centering
+    \begin{tabular}{llllllll}
+        \msdel{rmoustache} &\msdel{lmoustache} &\msdel{rgroup}   &\msdel{lgroup}\\
+        % \msdel{arrowvert}  &\msdel{Arrowvert}  &\msdel{bracevert}& &         
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \caption{\textsf{latexsym}的符号}\label{tab:C.11}
+    \centering
+      \begin{tabular}{llllllll}
+        \ms{lhd}     &\ms{rhd}      &\ms{unlhd}  &\ms{unrhd}\\
+        \ms{sqsubset}&\ms{sqsubset} &\ms{Join}   &\ms{mho}  \\
+        \ms{Box}     &\ms{Diamond}  &\ms{leadsto}&   &      
+      \end{tabular}
+\end{table}
+
+\section{\AmS 的符号}
+
+\begin{table}[H]
+    \caption{\AmS 中的箭头}\label{tab:C.12}
+    \centering
+    \begin{tabular}{llll}
+          \ms{dashrightarrow}   &\ms{dashleftarrow}     \\
+          \ms{leftrightarrows}  &\ms{Lleftarrow}        \\
+          \ms{leftarrowtail}    &\ms{looparrowleft}       \\   
+          \ms{curvearrowleft}   &\ms{circlearrowleft}       \\ 
+          \ms{upuparrows}       &\ms{upharpoonleft}          \\
+          \ms{multimap}         &\ms{leftrightsquigarrow}\\
+          \ms{rightleftarrows}  &\ms{rightrightarrows}     \\  
+          \ms{twoheadrightarrow}&\ms{rightarrowtail}         \\
+          \ms{rightleftharpoons}&\ms{curvearrowright}   \\
+          \ms{Rsh}              &\ms{downdownarrows}    \\
+          \ms{downharpoonright} &\ms{rightsquigarrow}   \\
+          \ms{circlearrowright} &\ms{upharpoonright}    \\
+          \ms{leftleftarrows}   &\ms{twoheadleftarrow} \\      
+          \ms{leftrightharpoons} &\ms{Lsh}              \\ 
+          \ms{downharpoonleft}   &\ms{rightrightarrows} \\ 
+          \ms{rightleftarrows}  &\ms{looparrowright}   \\ 
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \caption{\AmS 中的关系}\label{tab-amsrel}
+    \centering
+    \begin{tabular}{llll}
+        \ms{leq}            &\ms{leqslant}           \\
+        \ms{lesssim}        &\ms{lessapprox}         \\
+        \ms{lessdot}        &\ms{lll}                \\      
+        \ms{lesseqgtr}      &\ms{lesseqqgtr}         \\      
+        \ms{risingdotseq}   &\ms{fallingdotseq}      \\      
+        \ms{backsimeq}      &\ms{subseteqq}          \\      
+        \ms{sqsubset}       &\ms{preccurlyeq}        \\      
+        \ms{precsim}        &\ms{precapprox}         \\      
+        \ms{trianglelefteq} &\ms{vDash}              \\      
+        \ms{smallsmile}     &\ms{smallfrown}         \\      
+        \ms{Bumpeq}         &\ms{geqq}               \\      
+        \ms{eqslantgtr}     &\ms{gtrsim}             \\      
+        \ms{gtrdot}         &\ms{ggg}                \\      
+        \ms{gtreqless}      &\ms{gtreqqless}         \\      
+        \ms{circeq}         &\ms{triangleq}          \\      
+        \ms{thickapprox}    &\ms{supseteqq}          \\      
+        \ms{sqsupset}       &\ms{succcurlyeq}        \\      
+        \ms{succsim}        &\ms{succapprox}         \\      
+        \ms{trianglerighteq}&\ms{Vdash}              \\      
+        \ms{shortparallel}  &\ms{between}            \\      
+        \ms{varpropto}      &\ms{blacktriangleleft}  \\      
+        \ms{backepsilon}    &\ms{blacktriangleright}\\ 
+        \ms{eqslantless}   &\ms{approxeq}        \\
+        \ms{lessgtr}       &\ms{doteqdot}        \\
+        \ms{backsim}       &\ms{Subset}          \\
+        \ms{curlyeqprec}   &\ms{vartriangleleft} \\
+        \ms{Vvdash}        &\ms{bumpeq}          \\
+        \ms{geqslant}      &\ms{gtrapprox}       \\
+        \ms{gtrless}       &\ms{eqcirc}          \\
+        \ms{thicksim}      &\ms{Supset}          \\
+        \ms{curlyeqsucc}   &\ms{vartriangleright}\\
+        \ms{shortmid}      &\ms{pitchfork}       \\
+        \ms{therefore}     &\ms{because}         \\
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \caption{\AmS 中的否定箭头}\label{tab-amsnegfleche}
+    \centering
+    \begin{tabular}{llllll}
+        \ms{nleftarrow} &\ms{nrightarrow}    &\ms{nLeftarrow}\\         
+        \ms{nRightarrow}&\ms{nleftrightarrow}&\ms{nLeftrightarrow}         
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \caption{\AmS 中的希腊字母和希伯来字母}\label{tab:C.15}
+    \centering
+    \begin{tabular}{llllllllll}
+        \ms{digamma}&\ms{varkappa}&\ms{beth}&\ms{daleth}&\ms{gimel}
+    \end{tabular}
+\end{table}-
+
+\newcommand{\amsdel}[1]{\dm{\backslash #1} & $\csname#1\endcsname \alpha$}
+
+\begin{table}[H]
+    \caption{\AmS 中的定界符}\label{tab:C.16}
+    \centering
+    \begin{tabular}{llllllll}
+        \amsdel{ulcorner} & \amsdel{urcorner} & \amsdel{llcorner} & \amsdel{lrcorner}
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \caption{\AmS 中的否定关系}\label{tab:C.17}
+    \centering
+    \begin{tabular}{llllll}
+        \ms{nless}         &\ms{nleq}           &\ms{nleqslant}       \\
+        \ms{nleqq}         &\ms{lneq}           &\ms{lneqq}           \\
+        \ms{lvertneqq}     &\ms{lnsim}          &\ms{lnapprox}        \\
+        \ms{nprec}         &\ms{npreceq}        &\ms{precnsim}        \\
+        \ms{precnapprox}   &\ms{nsim}           &\ms{nshortmid}       \\
+        \ms{nmid}          &\ms{nvdash}         &\ms{nvDash}          \\
+        \ms{ntriangleleft} &\ms{ntrianglelefteq}&\ms{nsubseteq}       \\
+        \ms{subsetneq}     &\ms{varsubsetneq}   &\ms{subsetneqq}      \\
+        \ms{varsubsetneqq} &\ms{ngtr}           &\ms{ngeq}            \\
+        \ms{ngeqslant}     &\ms{ngeqq}          &\ms{gneq}            \\
+        \ms{gneqq}         &\ms{gvertneqq}      &\ms{gnsim}           \\
+        \ms{gnapprox}      &\ms{nsucc}          &\ms{nsucceq}         \\
+        \ms{succnsim}      &\ms{succnapprox}    &\ms{ncong}           \\
+        \ms{nshortparallel}&\ms{nparallel}      &\ms{nvDash}          \\
+        \ms{nVDash}        &\ms{ntriangleright} &\ms{ntrianglerighteq}\\
+        \ms{nsupseteq}     &\ms{nsupseteqq}     &\ms{supsetneq}       \\
+        \ms{varsupsetneq}  &\ms{supsetneqq}     &\ms{varsupsetneqq}
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \caption{\AmS 中的双目运算符}\label{tab:C.18}
+    \centering
+    \begin{tabular}{llllll}
+        \ms{dotplus}        &\ms{smallsetminus}&\ms{Cap}           \\
+        \ms{Cup}            &\ms{barwedge}     &\ms{veebar}        \\
+        \ms{doublebarwedge} &\ms{boxminus}     &\ms{boxtimes}      \\
+        \ms{boxdot}         &\ms{boxplus}      &\ms{divideontimes} \\
+        \ms{ltimes}         &\ms{rtimes}       &\ms{leftthreetimes}\\
+        \ms{rightthreetimes}&\ms{curlywedge}   &\ms{curlyvee}      \\
+        \ms{circleddash}    &\ms{circledast}   &\ms{circledcirc}   \\
+        \ms{symcenterdot}      &\ms{intercal}     &        &       
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \caption{\AmS 中的杂项符号}\label{tab:C.19}
+    \centering
+    \begin{tabular}{llllll}
+        \ms{hbar}          &\ms{hslash}       &\ms{vartriangle}      \\
+        \ms{triangledown}  &\ms{square}       &\ms{lozenge}          \\
+        \ms{circledS}      &\ms{angle}        &\ms{measuredangle}    \\
+        \ms{nexists}       &\ms{mho}          &\ms{Finv}             \\
+        \ms{Game}          &\ms{Bbbk}         &\ms{backprime}        \\
+        \ms{varnothing}    &\ms{blacktriangle}&\ms{blacktriangledown}\\
+        \ms{blacksquare}   &\ms{blacklozenge} &\ms{bigstar}          \\
+        \ms{sphericalangle}&\ms{complement}   &\ms{eth}              \\
+        \ms{diagup}        &\ms{diagdown}     &     &                
+    \end{tabular}
+\end{table}
+
+\newcommand{\comp}[1]{\dm{\backslash #1} & \csname#1\endcsname}
+
+\section{包\textsf{textcomp}中的符号}
+
+\begin{table}[H]
+    \caption{包\textsf{textcomp}中的符号}
+    \centering
+    \label{tab:C.20}
+    \begin{tabular}{llll}
+        \comp{textacutedbl} & \comp{textascendercompwordmark}\\
+        \comp{textasciiacute} & \comp{textasciibreve}\\
+        \comp{textasciicaron} & \comp{textasciidieresis}\\
+        \comp{textasciigrave} & \comp{textasciimacron}\\
+        \comp{textasterisksymcentered} & \comp{textbaht}\\
+        \comp{textbardbl} & \comp{textbigcircle}\\
+        \comp{textblank} & \comp{textborn}\\
+        \comp{textbrokenbar} & \comp{textbullet}\\
+        \comp{textcapitalcompwordmark} & \comp{textcelsius}\\
+        \comp{textcent} & \comp{textcentoldstyle}\\ 
+        \comp{textcircledP} &   \comp{textcolonmonetary} \\
+        \comp{textcopyleft} &  \comp{textcopyright}\\
+        \comp{textcurrency} &  \comp{textdagger} \\
+        \comp{textdaggerdbl}&   \comp{textdblhyphen}\\
+        \comp{textdblhyphenchar} &  \comp{textdegree} \\
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \caption{包\textsf{textcomp}中的符号（续）}
+    \label{tab:C.21}
+    \centering
+    \begin{tabular}{llll}
+        \comp{textdied} &   \comp{textdiscount}\\
+        \comp{textdiv}&    \comp{textdivorced}\\
+        \comp{textdollar} &    \comp{textdollaroldstyle} \\
+        \comp{textdong} &   \comp{textdownarrow} \\
+        \comp{texteightoldstyle} &  \comp{textestimated} \\
+        \comp{texteuro} &  \comp{textfiveoldstyle} \\
+        \comp{textflorin} &    \comp{textfouroldstyle} \\
+        \comp{textfractionsolidus} &  \comp{textgravedbl} \\
+        \comp{textguarani}&   \\
+        \comp{textinterrobang} &  \comp{textinterrobangdown}\\
+        \comp{textlangle} &   \comp{textlbrackdbl} \\
+        \comp{textleaf} &   \comp{textleftarrow}  \\
+        \comp{textlira} & \comp{textlnot}\\
+        \comp{textlquill} & \comp{textmarried}\\
+        \comp{textmho} & \comp{textminus}\\
+        \comp{textmu} & \comp{textmusicalnote}\\
+        \comp{textnaira} & \comp{textnineoldstyle}\\
+        \comp{textnumero} & \comp{textohm}\\
+        \comp{textonehalf} & \comp{textoneoldstyle}\\
+        \comp{textonequarter} & \comp{textonesuperior}\\
+        \comp{textopenbullet} & \comp{textordfeminine}\\
+        \comp{textordmasculine} & \comp{textparagraph}\\
+        \comp{textperiodsymcentered} & \comp{textpertenthousand}\\
+        \comp{textperthousand} & \comp{textpeso}\\
+        \comp{textpilcrow} & \comp{textpm}\\
+        \comp{textquotesingle} & \comp{textquotestraightbase}\\
+        \comp{textquotestraightdblbase} & \comp{textrangle}\\
+        \comp{textrbrackdbl} & \comp{textrecipe}\\
+        \comp{textreferencemark} & \comp{textregistered}\\
+        \comp{textrightarrow} & \comp{textrquill}\\
+        \comp{textsection} & \comp{textservicemark}\\
+        \comp{textsevenoldstyle} & \comp{textsixoldstyle}\\
+        \comp{textsterling} & \comp{textsurd}\\
+        \comp{textthreeoldstyle} & \comp{textthreequarters}\\
+        \comp{textthreequartersemdash} & \comp{textthreesuperior}\\
+        \comp{texttildelow} & \comp{texttimes}\\
+        \comp{texttrademark} & \comp{texttwelveudash}\\
+        \comp{texttwooldstyle} & \comp{texttwosuperior}\\
+        \comp{textuparrow} & \comp{textwon}\\
+        \comp{textyen} & \comp{textzerooldstyle}\\
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+\caption{字体Zapf Dingbats}
+\label{tab:C.22}
+\begin{center}
+\symboles{pzd}{16}{16}
+\end{center}
+\end{table}
+
+\begin{table}[H]
+\caption{字体Symbol}
+\label{tab:C.23}
+\begin{center}
+\symboles{psy}{16}{16}
+\end{center}
+\end{table}

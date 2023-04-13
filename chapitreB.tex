@@ -59,3 +59,102 @@
 \end{description}
 
 \section{Auc\TeX }
+
+Auc\TeX 是\textsf{Emacs}的一个模块，它简化了\LaTeX 文件的录入。我们打开带有扩展名\dm{.tex}、\dm{.sty}或\dm{.cls}的文件时，它会自动加载。Auc\TeX 可以为我们提供3大类功能：
+
+\begin{enumerate}
+    \item 源文件的排版（颜色、缩进等）；
+    \item 用于插入指令和环境的快捷键；
+    \item 编译。
+\end{enumerate}
+
+\subsection{源文件的排版}
+
+在C和C++的缓冲区，颜色和键\textsf{tab}扮演相同的角色。我们可以注意到，\fbox{\dm{M-q}}可以将段落“排版”，也就是自动将段落打断成长度相近的若干行。
+
+\subsection{快捷键}
+
+\subsubsection{字体}
+
+\fbox{\dm{C-c C-f}}［代表切换字体（\underline{C}hanger \underline{F}ont）］后接以下内容：
+
+\begin{itemize}
+    \item \fbox{\dm{C-e}}，可以插入\verb+\emph{}+；
+    \item \fbox{\dm{C-b}}，可以插入\verb+\textbf{}+；
+    \item \fbox{\dm{C-t}}，可以插入\verb+\texttt{}+；
+    \item \fbox{\dm{C-s}}，可以插入\verb+\textsl{}+；
+    \item \fbox{\dm{C-c}}，可以插入\verb+\textsc{}+；
+    \item ……
+\end{itemize}
+
+\subsubsection{节}
+
+\fbox{\dm{C-c C-s}}可以插入节（\underline{S}ection），并要求你提供其层级、标题，以及在微型缓冲区中的标签。%TODO 啥？以及它这个奇怪的快捷键代表啥
+
+\subsubsection{指令和环境}
+
+\fbox{\dm{M-Tab}}可以补全当前的名称（\emph{英：automatic completion}）。
+\fbox{\dm{C-c RET}}插入一条指令。
+\fbox{\dm{C-c C-e}}插入一个环境（\underline{E}nvironnement）\jz{
+    对于语法可被Auc\TeX 识别的某些环境和某些指令，则需要提供一些细节（参数值、图例、表格的形式……）。
+}。
+\fbox{\dm{C-u C-c C-e}}更改一个环境。
+\fbox{\dm{C-c ]}}插入缺失的\verb+\end+来关闭一格环境。
+
+\subsection{编译}
+
+使用\fbox{\dm{C-c C-c}}可以尝试遵循文档编译的流程，根据情况运行\LaTeX 、\bib 或\textsf{xdvi}……同样需要注意，使用Auc\TeX 可以管理主文件的机制（参见6.4节）。为此，则需要在\textsf{Emacs}中打开新文件时输入主文件的文件名。相反，则需要通过以下方式耐心地向Auc\TeX 解释哪个文件是主文件：
+
+\dmh{\textsf{M-x TeX-master-file-ask}\textrm{ 或 }\textsf{C-c\_}}%啥？以及这个字体其实要换成Helvetica
+
+你同样需要输入主文件的文件名。这样一来，在你通过\fbox{\dm{C-c C-c}}在“子”文档上执行编译时，将作用于\emph{主}文件。
+
+\subsection{Aspell}
+
+\textsf{Aspell}是一个多语种拼写纠正工具，可以与万能的文本编辑器\textsf{Emacs}对接。若要在\textsf{Emacs}中使用它，需要掌握两条指令：
+
+\dmh{\textsf{M-x ispell-change-dictionary}}
+
+以上指令用于选择字典语言（法文\dm{francais}或英文\dm{english}）；
+
+\dmh{\textsf{M-x ispell-buffer}}
+
+以上指令可以在缓冲区开启一次纠错过程。我们也可以借助以下指令检查单独的词的拼写：
+
+\dmh{\textsf{M-xispell-word}\textrm{ 或 }\textsf{M-\$}}
+
+\begin{exclamation}
+在我写下这行文字时，发行版Debian配置Emacs默认不是用程序Aspell。因此，需要在你的\dm{.emacs}文件中添加以下代码行：
+
+\begin{dmd}
+(setq-default ispell-program-name "aspell")
+\end{dmd}
+\end{exclamation}
+
+尤其实用的是，我们可以通过配置程序\textsf{Aspell}，来明确地要求它忽略或不忽略\LaTeX 指令的参数。例如，我们可以跳过不含有法文的指令中的参数。这样一来，如果我们定义了以下指令：
+
+\begin{dmd}
+\begin{verbatim}
+\newcommand{\bidule}[2]{% 接受2个参数的指令
+    ... }
+\end{verbatim}
+\end{dmd}
+
+只需要在其文件\verb+~/.aspell.conf+中编写如下内容，即可要求\textsf{Aspell}验证第二个参数（\dm{P}）而忽略第一个参数的内容（\dm{p}）：
+
+\begin{dmd}
+add-tex-command bidule pP
+\end{dmd}
+
+若要同时忽略两个参数，则需要编写如下内容：
+
+\begin{dmd}
+    add-tex-command bidule pp
+\end{dmd}
+
+最后，\textsf{Emacs}也提供了单词纠错的“飞打”（à la volée）\jz{
+    有些人会称“随词”（译注：原文为à la ouôrde，其中ouôrde即模仿英文word的发音）……
+}模式，我们可以通过以下指令来设定该模式是否激活：
+
+\dmh{\textsf{M-x flyspell-mode}}
+
