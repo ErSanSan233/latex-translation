@@ -380,8 +380,8 @@ a a a a a a a a a a a a a a a a a a a
 
 因此，想要在段落中插入提示，我们可以借助该指令将前两行错位：
 
-\newlength{\larnota}
-\newlength{\largligne}
+% \newlength{\larnota}
+% \newlength{\largligne}
 
 \begin{codelist}[11.6]{
 \setlength{\larnota}{.9cm}
@@ -547,8 +547,8 @@ img/fmb-important}
     \item 在图标和文档之间添加一些空间是个不错的想法。为此，我们定义一个长度\verb|\padnota|。
 \end{itemize}
 
-\newlength{\padnota}
-\newlength{\indnota}
+% \newlength{\padnota}
+% \newlength{\indnota}
 
 \begin{codelist}[11.11]{
 \setlength{\padnota}{5pt}
@@ -621,7 +621,7 @@ img/fmb-important}
 接下来，我们可以使用此环境，并为其传入特殊的文件作为参数。更好的方案是，我们可以去定义新的环境，例如：
 
 \begin{dmd}
-\verb+\newenvironment{nota}{%+
+\verb+\newenvironment{nota}{%+\\
 \verb+    \begin{pictonote}{+\codereplace{你的文件}\verb+}}{\end{pictnote}}+
 \end{dmd}
 
@@ -685,8 +685,46 @@ img/fmb-important}
 \subsection{引用内容}
 
 本书各处散步着各式各样的引用内容（citation），它们由手工制作的环境生成：
+\newsavebox{\auteurcitation} 
+\newsavebox{\boitecitation}
 
-\begin{codelist}[11.12]{
+\newboolean{auteurcitationpresent}
+\definecolor{coulcitation}{rgb}{0.90,0.75,0.20}%
+
+\newenvironment{citationzero}[1][]{%
+  \ifthenelse{\equal{#1}{}}{%
+    \setboolean{auteurcitationpresent}{false}}{%
+    \setboolean{auteurcitationpresent}{true}%
+    \savebox{\auteurcitation}{#1}}% on le sauve si nécessaire
+  \begin{lrbox}{\boitecitation}
+    \begin{minipage}{.8\linewidth}%
+      \setlength{\parindent}{10pt}%
+      \small\slshape«\ignorespaces}% on passe en petit et penché
+    {\unskip»
+      \ifthenelse{\boolean{auteurcitationpresent}}%
+      {\par\nopagebreak\hfill\usebox{\auteurcitation}}
+      {}% sinon on ne fait rien...
+    \end{minipage}
+  \end{lrbox}
+  \begin{center}
+    \setlength{\fboxsep}{10pt}%
+    \colorbox{coulcitation}{\usebox{\boitecitation}}
+  \end{center}}
+%
+
+\begin{codelist}[11.12]{%TODO 
+xxxxxxxxxxxxx
+\begin{citationzero}[乔治·巴塔伊
+    （Georges \textsc{Bataille}）]
+    老去的恐惧无穷无尽地延续着。
+    衰老将未完成的存在重置为开端。
+    我隐约在坟墓的边缘看见的开端是
+    死亡和侮辱都不能杀死的心中的
+    \emph{猪肉}。坟墓边缘的恐惧是
+    神授予的，我堕落于作为孩子的恐
+    惧之中。
+\end{citationzero}
+xxxxxxxxxxxxxxx
 }\begin{verbatim}
 xxxxxxxxxxxxx
 \begin{unecitation}[乔治·巴塔伊
@@ -728,8 +766,6 @@ xxxxxxxxxxxxxxx
 
 这样的效果是：
 
-\newsavebox{\auteurcitation} 
-\newsavebox{\boitecitation}
 \newenvironment{citationi}[1]{% begin条目
     % 存储带有作者信息的参数1
     \savebox{\auteurcitation}{#1}% 
@@ -888,8 +924,8 @@ xxxxxxxxxxxxxxx
 
 最终的效果为：
 
-\newboolean{auteurcitationpresent}
-\definecolor{coulcitation}{rgb}{0.90,0.75,0.20}%
+% \newboolean{auteurcitationpresent}
+% \definecolor{coulcitation}{rgb}{0.90,0.75,0.20}%
 
 \newenvironment{citationiv}[1][]{%
   \ifthenelse{\equal{#1}{}}{%
