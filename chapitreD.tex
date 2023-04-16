@@ -4,3 +4,104 @@
 
 \section{此时的发行版}
 
+本书在发行版Ubuntu 12.04上使用发行版\TeX live 2013编译。我们也欢迎在其他系统上的任何成功经验……此外，对于生成PDF格式的文档，我们只测试了计算机现代字体族的“CM-Super”版本。
+
+\section{文档源文件}
+
+\subsection{结构}
+
+本书的源文件依以下原则组织：
+
+\begin{itemize}
+    \item \LaTeX 源代码位于目录\dm{corps}中，每章一个文件；
+    \item 风格定义（\dm{sty}及\dm{cls}）位于目录\dm{pngs}中；
+    \item 目录\dm{texs}包括文档中需要包含的\LaTeX 源代码（信件、传真模板，包含调用Psfrag或Pstricks的代码）；%TODO textsf
+    \item 目录\dm{figs}包含\textsf{xfig}源文件；
+    \item 与索引、参考文献、术语字典有关的内容存储在目录\dm{bibidx}中。
+\end{itemize}
+
+\textsf{xfig}源文件和\LaTeX 文件的特定“端”由makefile翻译为PDF格式，无论是否封装PostScript。根据其使用的引擎不同（\dm{latex}或\dm{pdflatex}），makefile将其存储于以下位置：
+
+\begin{itemize}
+    \item 目录\dm{epss}中；
+    \item 目录\dm{pdfs}中；
+    \item 目录\dm{pss}中；
+\end{itemize}
+
+\subsection{风格}
+
+文件\dm{framabook.cls}包含了本书文档类型的定义。该文件调用了一系列“商用型”和“自制”包，对于后者，有针对以下内容的文件：
+
+\begin{itemize}
+    \item 各种“新玩具”：标签、提示框、摘要、术语字典、带有标题的字盒（\dm{titlebox.sty}）、示例、首字下沉、跳转阅读（\dm{voir.sty}）、引用，以及题记；
+    \item 全书摘要；
+    \item 文档的全局尺寸设定；
+    \item 页眉和页脚的风格；
+    \item 章节等层级的风格；
+    \item 文档使用的其余杂项指令（位于文件\dm{manumac.sty}中）。
+\end{itemize}
+
+除非另有说明，否则这些文件的命名与其内容高度相似。
+
+\section{编译}
+
+在主文件\dm{framabook.tex}中，我们可以指明文档类型选项：
+
+\begin{itemize}
+    \item \dm{versionenligne}可以将生成文件中的超链接显示为彩色；
+    \item \dm{versionpapier}致力于生成用于印刷并裁切成书的文件版本。
+\end{itemize}
+
+\begin{exclamation}
+目前，本书基于而组织对\emph{不同于A4}的纸张尺寸的支持而组织。因此，如果你没有裁切机，生成的文档看起来会挺丑的。可以通过以下网站获取适用于在A4纸上打印的版本：\wz{http://www.enise.fr/cours/info}。
+\end{exclamation}
+
+\subsection{Makefile}
+
+源文件目录树的根部包含一个关于本书Makefile文件，应该将其复制：
+
+\dmh{cp Makefile.frama Makefile}
+
+\subsection{图片}
+
+图片可以借助以下指令编译：
+
+\begin{dmd}
+make figs
+\end{dmd}
+
+\begin{exclamation}
+需要部署与xfig有关的软件transfig以将源文件翻译为\dm{pdf}或\dm{eps}。网站\linebreak \wz{http://cours.enise.fr/info/latex}提供了一个已经翻译过的图片档案，可供下载……
+\end{exclamation}
+
+\subsection{DVI和PostScript}
+
+%TODO 加线
+\begin{verbatim}
+latex framabook
+make bibindex
+latex framabook
+latex framabook
+dvips framabook -o framabook
+\end{verbatim}
+
+\subsection{PDF}
+
+没什么特别的：
+
+%TODO 加线
+\begin{verbatim}
+ex framabook 
+make bibindex 
+pdflatex framabook 
+pdflatex framabook
+\end{verbatim}
+
+\subsection{春季大扫除}
+
+\begin{tabbing}
+1234567890123456789012345\= \kill
+\dmh{make cleanfigs}\> \leftarrow 抹除所有eps、pdf……\\
+\dmh{make cleantex}\> \leftarrow 抹除所有辅助文件\\
+\dmh{make cleandocs}\> \leftarrow 抹除所有生成的文件（dvi、ps、pdf……）
+\end{tabbing}
