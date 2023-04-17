@@ -68,8 +68,7 @@
 \begin{dmd}
 \begin{verbatim}
 delim_0 " \\dotfill \ "
-delim_1 " \\dotfill \ "
-\end{verbatim}
+delim_1 " \\dotfill \ "\end{verbatim}
 \end{dmd}
 
 我们将默认用于分隔索引入口和页码的逗号替换成了省略号。接下来，通过严谨地阅读\textsf{makeindex}的文档\jz{
@@ -85,8 +84,7 @@ headings\_flag 1
 \begin{dmd}
 \begin{verbatim}
 heading_prefix "{\\large\\sffamily\\bfseries\\shadowbox{"
-heading_suffix "}\\hfill}\\nopagebreak\n"
-\end{verbatim}
+heading_suffix "}\\hfill}\\nopagebreak\n"\end{verbatim}
 \end{dmd}
 
 这段你已经可以看懂的示例内容，就会生成我们需要的字盒。例如对于字母C：
@@ -94,10 +92,10 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 \begin{codelist}[10.1]{
     {\large\sffamily\bfseries%
     \shadowbox{C}\hfil}\nopagebreak
-}\begin{verbatim}
+}
+\begin{verbatim}
 {\large\sffamily\bfseries%
-    \shadowbox{C}\hfil}\nopagebreak
-\end{verbatim}
+    \shadowbox{C}\hfil}\nopagebreak\end{verbatim}
 \end{codelist}
 
 这段指令会被\dm{group\_skip}的内容覆盖掉。而我们稍早前说过，\dm{group\_skip}的默认值是\verb|\indexspace|。在研究了几个月之后\jz{
@@ -157,8 +155,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
     {1} % 标题层级
     {0pt} % 缩进
     {-3.5ex plus -1ex minus -.2ex}% 段前纵向空间
-    {2.3ex plus.2ex}% 段后纵向空间{\normalfont\Large\bfseries}} % 标题外观
-\end{verbatim}
+    {2.3ex plus.2ex}% 段后纵向空间{\normalfont\Large\bfseries}} % 标题外观\end{verbatim}
 \end{dmd}
 
 该段代码定义了节标题的生成方式。可以观察到，指令\verb|\section|调用了指令\verb|\@startsection|，而后者需要6各参数：
@@ -187,8 +184,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 \begin{verbatim}
 \newlength{\sectiontitleindent}
 \newlength{\subsectiontitleindent}
-\newlength{\subsubsectiontitleindent}
-\end{verbatim}
+\newlength{\subsubsectiontitleindent}\end{verbatim}
 \end{dmd}
 
 长度值如下：
@@ -197,8 +193,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 \begin{verbatim}
 \setlength{\sectiontitleindent}{-1cm}
 \setlength{\subsectiontitleindent}{-.5cm}
-\setlength{\subsubsectiontitleindent}{-.25cm}
-\end{verbatim}
+\setlength{\subsubsectiontitleindent}{-.25cm}\end{verbatim}
 \end{dmd}
 
 此外，我们为标题还定义了特殊的字体，具体如下：
@@ -208,8 +203,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 \newcommand{\sectionfont}{% 
     \fontencoding{\encodingdefault}% 
     \fontfamily{pag}% \fontseries{bc}%
-    \fontshape{n}% \selectfont}
-\end{verbatim}
+    \fontshape{n}% \selectfont}\end{verbatim}
 \end{dmd}
 
 该指令可以选用PostScript字体AvantGarde的加粗紧缩版本（参阅9.4节）%TODO 解释中文的使用
@@ -223,8 +217,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
     {1}%
     {\sectiontitleindent}%
     {-3.5ex plus -1ex minus -.2ex}% 
-    {2.3ex plus.2ex}% {\sectionfont\Large}}
-\end{verbatim}
+    {2.3ex plus.2ex}% {\sectionfont\Large}}\end{verbatim}
 \end{dmd}
 
 对于更少层级的标题，我们也编写了等价的指令。
@@ -243,8 +236,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
     ...
     \thispagestyle{plain}%
     ...
-    \secdef\@chapter\@schapter} % 我们感兴趣的行
-\end{verbatim}
+    \secdef\@chapter\@schapter} % 我们感兴趣的行\end{verbatim}
 \end{dmd}
 
 指令\verb|\chapter|本身会调用两个不同的指令：
@@ -268,8 +260,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
     ...
     \else% 针对不分栏的文档
     \@makechapterhead{#2}% 我们感兴趣的代码行
-    \fi}
-\end{verbatim}
+    \fi}\end{verbatim}
 \end{dmd}
 
 这段代码把我们领上道了……实际上，\verb+\@makechapterhead+（可以按字面翻译为“制作章首装饰”）正是我们更改图案所需要重定义的指令。经过进一步的搜索，我们可以发现指令\verb|\@makeschapterhead|能够生成未编号的章首装饰。这两条指令接受章名作为其参数。
@@ -287,8 +278,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
         \setlength{\itemindent}{0pt}% 
         \setlength{\labelsep}{0pt}%
     }\item}% 
-{\end{list}}
-\end{verbatim}
+{\end{list}}\end{verbatim}
 \end{dmd}
 
 同时，可以使用布尔值\dm{@mainmatter}来获取我们目前是否处于文档的“中心”——这是针对指令\verb|\mainmatter|被调用的情况。
@@ -341,8 +331,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
     \begin{flushright}
         % 这里插入章标题
     \end{flushright}
-\end{cadrechap}
-\end{verbatim}
+\end{cadrechap}\end{verbatim}
 \end{dmd}
 
 此处无疑需要注意到，左侧的字盒（即接收微型目录的字盒）带有可指定的高度，用于以一致的方法来生成章首装饰而无须关注章中的节数（即无须关注微型目录的高度）。接下来，为不同元素定义不同的字体，就可以完成章首装饰的定义。在本文档中，我们的定义如下：
@@ -354,8 +343,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 % “章”一词
 \DeclareFixedFont{\chapchapfont}{T1}{phv}{b}{n}{16pt}
 % 章标题
-\DeclareFixedFont{\chaptitfont}{T1}{phv}{b}{n}{24.88pt}
-\end{verbatim}
+\DeclareFixedFont{\chaptitfont}{T1}{phv}{b}{n}{24.88pt}\end{verbatim}
 \end{dmd}
 
 \DeclareFixedFont{\chapnumfont}{T1}{phv}{b}{n}{80pt}
@@ -366,10 +354,10 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 \begin{codelist}[10.2]{
     {\chapnumfont 8}
     {\chaptitfont Oula !}
-}\begin{verbatim}
+}
+\begin{verbatim}
 {\chapnumfont 8}
-{\chaptitfont Oula !}
-\end{verbatim}
+{\chaptitfont Oula !}\end{verbatim}
 \end{codelist}
 
 \subsection{部分}
@@ -383,8 +371,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
     \thispagestyle{plain}
     [...]
     \null\vfil
-    \secdef\@part\@spart}
-\end{verbatim}
+    \secdef\@part\@spart}\end{verbatim}
 \end{dmd}
 
 该定义告诉我们，正如各章一样，指令\verb|\part|会调用两条独立的指令，用于生成编号和不编号的部分（分别借助指令\verb|\@part|和\verb|\@spart|）。在之前的实践中，我们指定了页面的风格，使得各部分的开头为空（即没有页码和部分开头的装饰等），指令如下：
@@ -396,8 +383,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
     \thispagestyle{empty}% 代替默认的plain
     [...]
     \null\vfil% 空字盒和竖直方向的弹性空间
-    \secdef\@part\@spart}
-\end{verbatim}
+    \secdef\@part\@spart}\end{verbatim}
 \end{dmd}
 
 接下来，我们可以查看指令\verb|\@part|的定义。该指令用于生成展示文档部分的页：
@@ -413,8 +399,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
         \vskip 20\pt
      [...]
      \Huge \bfseries #2\par}% 
-\@endpart}
-\end{verbatim}
+\@endpart}\end{verbatim}
 \end{dmd}
 
 通过查看这段代码，我们了解到，展现部分的页面由一行加粗加大的“部分”字样和部分的序号构成\jz{
@@ -439,8 +424,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
      \par
      \vskip 50\p@% 将20点改为50点
      \partfont #2\par}% 使用自定义字体的标题
-    \@endpart}
-\end{verbatim}
+    \@endpart}\end{verbatim}
 \end{dmd}
 
 为了与章首装饰保持一致，我们定义指定字体的指令如下：
@@ -451,8 +435,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
     \fontencoding{\encodingdefault}\fontfamily{phv}% 
     \fontseries{bc}\fontshape{n}% \fontsize{32}{34}%
     \selectfont}
-\DeclareFixedFont{\partnumfont}{T1}{phv}{bc}{n}{80}%
-\end{verbatim}
+\DeclareFixedFont{\partnumfont}{T1}{phv}{bc}{n}{80}%\end{verbatim}
 \end{dmd}
 
 \begin{exclamation}
@@ -470,8 +453,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
     body={150mm,250mm}, 
     left=25mm,top=25mm, 
     headheight=7mm,headsep=4mm, marginparsep=4mm, 
-    marginparwidth=27mm}
-\end{verbatim}
+    marginparwidth=27mm}\end{verbatim}
 \end{dmd}
 
 这会分别定义如下元素（如图\ref{fig:10.1}所示）：
@@ -561,8 +543,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 \fancyfoot[LO,RE]{%
     关于\LaTeX{}的那些你想知道的问题}
 % 线条粗细
-\renewcommand{\footrulewidth}{3pt}
-\end{verbatim}
+\renewcommand{\footrulewidth}{3pt}\end{verbatim}
 \end{dmd}
 
 \fancyhf{} 
@@ -585,8 +566,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
     \fancyfoot[C]{\thepage}% 页面底部的页码
     % 清空所有线条
     \renewcommand{\headrulewidth}{0pt}% 
-    \renewcommand{\footrulewidth}{0pt}}
-\end{verbatim}
+    \renewcommand{\footrulewidth}{0pt}}\end{verbatim}
 \end{dmd}
 
 可以注意到，本书各章的章首正是采用了这种风格……
@@ -603,8 +583,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
     \vspace*{\fill}
     \thispagestyle{empty}% 添加此行 
     \newpage
-    \fi}
-\end{verbatim}
+    \fi}\end{verbatim}
 \end{dmd}
 
 你可以翻阅本书，看看章首前的页面是否是空白的……
@@ -685,8 +664,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
     \markright{\sectionfont\thesection\ #1}}
 % #2 包含章标题
 \renewcommand{\chaptermark}[1]{%
-    \markboth{\sectionfont#1}{}}
-\end{verbatim}
+    \markboth{\sectionfont#1}{}}\end{verbatim}
 \end{dmd}
 
 接下来有：
@@ -695,8 +673,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 \begin{verbatim}
 \fancyhead[LE,RO]{\thepage}
 \fancyhead[LO]{\rightmark}
-\fancyhead[RE]{\leftmark}
-\end{verbatim}
+\fancyhead[RE]{\leftmark}\end{verbatim}
 \end{dmd}
 
 这样一来：
@@ -731,8 +708,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 [...]
 \backmatter % 用于收尾
 [...]
-\end{document}
-\end{verbatim}
+\end{document}\end{verbatim}
 \end{dmd}
 
 接下来，我们将会着手逐一修改这三个指令。目前你需要知道的是，类型\dm{book}种定义了一个布尔值：
@@ -767,8 +743,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
     \cleardoublepage
     \@frontmatterfalse
     \@mainmatterfalse
-}
-\end{verbatim}
+}\end{verbatim}
 \end{dmd}
 
 在\LaTeX 源代码中一番翻找后，我们就可以明白，指令\verb|\pagenumbering|能够修改编号方式，并且将页码计数器重置为1。
@@ -806,16 +781,14 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 \let\indexORI\index% 保存初始的定义
 \renewcommand{\index}[1]{\indexORI{##1|textsc}} 
 \fancyfoot{}
-\fancyhead[LE,RO]{\textsc{\thepage}}
-\end{verbatim}
+\fancyhead[LE,RO]{\textsc{\thepage}}\end{verbatim}
 \end{dmd}
 
 在\verb|\mainmatter|的定义中添加如下内容：
 
 \begin{dmd}
 \begin{verbatim}
-\let\index\indexORI% 以回到初始的定义
-\end{verbatim}
+\let\index\indexORI% 以回到初始的定义\end{verbatim}
 \end{dmd}
 
 为了完美地达到我们的严格标准，我们也会修改章首页的风格：
@@ -831,8 +804,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
     \fi
     \renewcommand{\headrulewidth}{0pt}
     \renewcommand{\footrulewidth}{0pt}}
-\makeatother
-\end{verbatim}
+\makeatother\end{verbatim}
 \end{dmd}
 
 \subsection{索引、参考文献和目录}
@@ -862,8 +834,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
            {\MakeUppercase\contentsname}}%
     \@starttoc{toc}% 
     [...]
-}
-\end{verbatim}
+}\end{verbatim}
 \end{dmd}
 
 我希望本文档的页眉不采用大写形式。有采用两种解决方式。
@@ -893,8 +864,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
     \@mkboth{\indexname}{\indexname}
     \thispagestyle{plain}
     [...]
-{\if@restonecol\onecolumn\else\clearpage\fi}
-\end{verbatim}
+{\if@restonecol\onecolumn\else\clearpage\fi}\end{verbatim}
 \end{dmd}
 
 \section{“照抄”环境}
@@ -922,7 +892,8 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 \begin{codelist}[10.3]{
 \backslash bidule\{一些东西\} \textbf{加粗}\par
 现在回到\LaTeX{}模式……
-}\begin{verbatim}
+}
+\begin{verbatim}
 { \catcode`\/=0 \catcode`\(=1 
   \catcode`\)=2 \catcode`\#=14
   \catcode`\{=11 \catcode`\}=11 
@@ -930,19 +901,18 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
   # 这行应该看不到……
   \bidule{一些东西} /textbf(加粗)
   )\par
-  现在回到\LaTeX{}模式……
-\end{verbatim}
+  现在回到\LaTeX{}模式……\end{verbatim}
 \end{codelist}
 
 此外，有趣的是，\TeX 可以让某些符号活跃起来（将其归入类13）。这样，这些符号就可以被定义为指令。以下是一个有些蠢的示例：
 
 \begin{codelist}[10.4]{
 3 加 4 = 7
-}\begin{verbatim}
+}
+\begin{verbatim}
 \catcode`\+=13
 \newcommand{+}{加}
-3 + 4 = 7
-\end{verbatim}
+3 + 4 = 7\end{verbatim}
 \end{codelist}
 
 这个示例中，我们让字符\dm{+}“活跃”了起来，并像定义指令那样定义了它。可以注意到，这里，我们曾可以不调用符号\dm{\backslash}就创建一个可用的指令。
@@ -955,8 +925,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 *\show~
 > ~=macro:
 ->\nobreakspace {}.
-<*> \show~
-\end{verbatim}
+<*> \show~\end{verbatim}
 \end{dmd}
 \end{ii}
 
@@ -969,8 +938,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 \DefineVerbatimEnvironment{unixcom}{Verbatim}{% 
     commandchars=¢« »,
     frame=single, framerule=.4pt, framesep=1.5mm, gobble=2,
-    xleftmargin=15pt}
-\end{verbatim}
+    xleftmargin=15pt}\end{verbatim}
 \end{dmd}
 
 这个环境属于一种\dm{verbatim}，但我们可以在其中“执行”\LaTeX 指令。这需要借助属于类0的符号\dm{¢}、属于类1的符号\dm{«}，以及属于类2的符号\dm{»}——很显然，我们可以随意选择字符来实现这一点。然而，这样做需要秉持着符号应当易读且其用途几乎仅为向\LaTeX 传递控制指令的精神。
@@ -978,12 +946,12 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 \begin{codelist}[10.5]{%这个序号原书没有显示出来，但确实占了一个号
 为了显示变量的内容：\\
 \dmh{echo \$\{}\codereplace{我的变量}\dm{\}}
-}\begin{verbatim}
+}
+\begin{verbatim}
 为了显示变量的内容：
 \begin{unixcom}
     echo ${¢marg«我的变量»} 
-\end{unixcom}
-\end{verbatim}
+\end{unixcom}\end{verbatim}
 \end{codelist}
 
 %TODO 左边距根据原文修改
@@ -997,8 +965,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 \DefineVerbatimEnvironment{emacscom}{Verbatim}{%
     commandchars=¢« »,
     frame=leftline, framerule=1mm, framesep=2mm, 
-    gobble=2, xleftmargin=15pt}
-\end{verbatim}
+    gobble=2, xleftmargin=15pt}\end{verbatim}
 \end{dmd}
 
 使用如下：
@@ -1006,12 +973,12 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 \begin{codelist}[10.6]{
 在\textsf{Emacs}中玩俄罗斯方块：\\
 \dmh{}{\fontencoding{T1} \fontfamily{phv} \selectfont M-x tetris}
-}\begin{verbatim}
+}
+\begin{verbatim}
 在\soft{Emacs}中玩俄罗斯方块：
 \begin{emacscom}
     M-x tetris
-\end{emacscom}
-\end{verbatim}
+\end{emacscom}\end{verbatim}
 \end{codelist}
 
 \subsection{用于编程语言的环境}
@@ -1020,8 +987,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 
 \begin{dmd}
 \begin{verbatim}
-\lstnewenvironment{C}{\lstset{language=C}}{}
-\end{verbatim}
+\lstnewenvironment{C}{\lstset{language=C}}{}\end{verbatim}
 \end{dmd}
 
 接下来，可以简单地编写代码：
@@ -1030,7 +996,8 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 
 \begin{codelist}[10.7]{
 \includegraphics{texs/chelloworld1}
-}\begin{verbatim}
+}
+\begin{verbatim}
 \begin{C}
     /* 用C写成的hello world */
     int main()
@@ -1038,8 +1005,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
         printf("Hello !\n");
         return 0;
     }
-\end{C}
-\end{verbatim}
+\end{C}\end{verbatim}
 \end{codelist}
 
 显然，有大量配置选项让你可以根据需要来调整该环境。想要了解它们，阅读包的文档无疑是最简单有效的。例如，我们可以修改相关编程语言中保留字和注释的版式。如此一来，我们就可以通过如下代码来实现不同的字体效果：
@@ -1049,13 +1015,13 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 \lstnewenvironment{Cbis}{% 
     \lstset{language=C,
         basicstyle=\rmfamily\slshape,
-        commentstyle=\rmfamily\upshape,}}{}
-\end{verbatim}
+        commentstyle=\rmfamily\upshape,}}{}\end{verbatim}
 \end{dmd}
 
 \begin{codelist}[10.8]{
     \includegraphics{texs/chelloworld2}
-}\begin{verbatim}
+}
+\begin{verbatim}
 \begin{C}
     /* 用C写成的hello world */
     int main()
@@ -1063,8 +1029,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
         printf("Hello !\n");
         return 0;
     }
-\end{C}
-\end{verbatim}
+\end{C}\end{verbatim}
 \end{codelist}
 
 此外，因为还要考虑用于\emph{逃回\LaTeX }的特殊字符，你需要知道，正如\textsf{fancyvrb}，包\textsf{listings}也允许你指定一个用于逃跑的字符：
@@ -1072,23 +1037,22 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 \begin{dmd}
 \begin{verbatim}
 \lstnewenvironment{Cter}{% 
-    \lstset{language=C, escapechar=@}}{}
-\end{verbatim}
+    \lstset{language=C, escapechar=@}}{}\end{verbatim}
 \end{dmd}
 
 以上代码在代码清单中插入\LaTeX 指令的效果如下：
 
 \begin{codelist}[10.9]{
     \includegraphics{texs/chelloworld3}
-}\begin{verbatim}
+}
+\begin{verbatim}
 \begin{Cter}
     int main()
     {
         printf("Hi !\n");
         return @\fbox{返回代码}@;
     } 
-\end{Cter}
-\end{verbatim}
+\end{Cter}\end{verbatim}
 \end{codelist}
 
 \section{关于那个叫做“法文引号”的玩意儿}
@@ -1101,8 +1065,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 \begin{verbatim}
 \begin{minipage}{3.7cm}
     字盒中的这句话仅仅是为了去证明此处出现的法文引号处理得不够 « 优雅 »。
-\end{minipage}
-\end{verbatim}
+\end{minipage}\end{verbatim}
 \end{dmd}
 
 这个字盒的显示效果为：
@@ -1117,8 +1080,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 \begin{dmd}
 \begin{verbatim}
 \catcode`\«=13
-\catcode`\»=13
-\end{verbatim}
+\catcode`\»=13\end{verbatim}
 \end{dmd}
 
 然后定义以下两个指令：
@@ -1128,8 +1090,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 \newcommand{\fermerguillemets}{% 
 \unskip\kern.15em\symbol{20}} 
 \newcommand{\ouvrerguillemets}{%
-\symbol{19}\ignorespaces\kern.15em}
-\end{verbatim}
+\symbol{19}\ignorespaces\kern.15em}\end{verbatim}
 \end{dmd}
 
 注意到，此处使用了可以根据指定长度插入一段不可打断的空白的指令\TeX 指令\verb|\kern|，使用了指令\verb|\unskip|\celan{\S 9.2.1}，还使用了指令\verb|\symbol|来插入当前字体中的第19和第20个字符：
@@ -1141,12 +1102,12 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 \whiledo{\value{car}<64}{%
   \symbol{\value{car}}$_{\thecar}$
   \stepcounter{car}}
-}\begin{verbatim}
+}
+\begin{verbatim}
 \setcounter{car}{1}
 \whiledo{\value{car}<64}{%
   \symbol{\value{car}}$_{\thecar}$
-  \stepcounter{car}}
-\end{verbatim}
+  \stepcounter{car}}\end{verbatim}
 \end{codelist}
 
 最终，我们为这两个符号分配了前面的指令：
@@ -1154,8 +1115,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 \begin{dmd}
 \begin{verbatim}
 \let»=\fermerguillemets
-\let«=\ouvrerguillemets
-\end{verbatim}
+\let«=\ouvrerguillemets\end{verbatim}
 \end{dmd}
 
 \begin{qquestion}
@@ -1225,10 +1185,10 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 \begin{codelist}[10.11]{
     \titlebox{\footnotesize 标题}{%
   字盒中的内容}
-}\begin{verbatim}
+}
+\begin{verbatim}
 \titlebox{\footnotesize 标题}{%
-  字盒中的内容}
-\end{verbatim}
+  字盒中的内容}\end{verbatim}
 \end{codelist}
 
 以及：
@@ -1240,14 +1200,14 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 \begin{minipage}{3cm}\begin{center} 
     一些东西\\ 一些玩意
 \end{center}\end{minipage}}
-}\begin{verbatim}
+}
+\begin{verbatim}
 \setlength{\fboxsep}{5pt}
 \setlength{\fboxrule}{2pt}
 \titlebox{另一个标题}{%
 \begin{minipage}{3cm}\begin{center} 
     一些东西\\ 一些玩意
-\end{center}\end{minipage}}
-\end{verbatim}
+\end{center}\end{minipage}}\end{verbatim}
 \end{codelist}
 
 \subsection{还是得来点\TeX}
@@ -1263,10 +1223,10 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 \begin{codelist}[10.13]{
 \framebox[3cm]{%
   \leaders\hbox{o}\hfill}
-}\begin{verbatim}
+}
+\begin{verbatim}
 \framebox[3cm]{%
-    \leaders\hbox{o}\hfill}
-\end{verbatim}
+    \leaders\hbox{o}\hfill}\end{verbatim}
 \end{codelist}
 
 \TeX 原语\verb|\hbox|（由\verb|\mbox|和\verb|\makebox|使用）可以创建水平字盒：
@@ -1274,10 +1234,10 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 \begin{codelist}[10.14]{
 \framebox[3cm]{%
     \leaders\hbox to 3pt{o}\hfill}
-}\begin{verbatim}
+}
+\begin{verbatim}
 \framebox[3cm]{%
-    \leaders\hbox to 3pt{o}\hfill}
-\end{verbatim}
+    \leaders\hbox to 3pt{o}\hfill}\end{verbatim}
 \end{codelist}
 
 \verb|\leaders|同样可以与\TeX 原语\verb|\hrule|结合，用来画线：
@@ -1285,10 +1245,10 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 \begin{codelist}[10.15]{
 \framebox[3cm]{%
     \leaders\hrule height 4pt\hfill}
-}\begin{verbatim}
+}
+\begin{verbatim}
 \framebox[3cm]{%
-    \leaders\hrule height 4pt\hfill}
-\end{verbatim}
+    \leaders\hrule height 4pt\hfill}\end{verbatim}
 \end{codelist}
 
 这里，弹性长度\verb|\hfill|延展为\verb|\framebox|的3 cm，并由线宽为4 pt的线段填充。
@@ -1298,12 +1258,12 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
     \leaders\hbox to5pt{%
       \leaders\hrule width1pt\hfill%
       \kern2pt}\hfill}
-}\begin{verbatim}
+}
+\begin{verbatim}
 \framebox[3cm]{%
     \leaders\hbox to5pt{%
         \leaders\hrule width1pt\hfill%
-        \kern2pt}\hfill}
-\end{verbatim}
+        \kern2pt}\hfill}\end{verbatim}
 \end{codelist}
 
 在上述示例中，3 cm的空间被宽度为5 pt的字盒填充，每个字盒中包含如前展示的\verb|\leaders|，以及宽度为2 pt的空白。借助\TeX ，我们可以使用以下方式规范弹性长度的“僵硬”程度\celan{\S 4.2.4}：
@@ -1312,11 +1272,11 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
     \framebox[4cm]{%
     \hskip0pt plus 2fill X%
     \hskip0pt plus 3fill}
-}\begin{verbatim}
+}
+\begin{verbatim}
 \framebox[4cm]{%
     \hskip0pt plus 2fill X%
-    \hskip0pt plus 3fill}
-\end{verbatim}
+    \hskip0pt plus 3fill}\end{verbatim}
 \end{codelist}
 
 其中，以下尺寸可以定义相对“僵硬”程度为$n$的弹性长度：
@@ -1334,19 +1294,18 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 \begin{dmd}
 \begin{verbatim}
 \newcommand{\traitressort}[2][1]{%
-    \leaders\hrule height#2\hskip0pt plus #1fill\relax}
-\end{verbatim}
+    \leaders\hrule height#2\hskip0pt plus #1fill\relax}\end{verbatim}
 \end{dmd}
 
 \begin{codelist}[10.18]{
     \framebox[4cm]{%
     \traitressort[2]{2ex}X%
     \traitressort{2pt}}
-}\begin{verbatim}
+}
+\begin{verbatim}
 \framebox[4cm]{%
     \traitressort[2]{2ex}X%
-    \traitressort{2pt}}
-\end{verbatim}
+    \traitressort{2pt}}\end{verbatim}
 \end{codelist}
 
 在该5 cm宽的字盒中，我们有：
@@ -1403,8 +1362,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 \begin{dmd}
 \begin{verbatim}
 \newlength{\largeurboitetitre}
-\newlength{\hauteurboitetitre}
-\end{verbatim}
+\newlength{\hauteurboitetitre}\end{verbatim}
 \end{dmd}
 
 尺寸的名称十分具体\yz{
@@ -1424,8 +1382,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
     \settodepth{\tempdim}{\usebox{\boitetitre}}% 
     \addtolength{\hauteurboitetitre}{%
         \tempdim+2\fboxrule+2\fboxsep}%
-    ... }
-\end{verbatim}
+    ... }\end{verbatim}
 \end{dmd}
 
 \verb|\kern|是\TeX 指令，用于插入可插入的空白，此处为宽度\verb|\fboxsep|。注意，为了测量总高度，我们借助了一个求高度（\emph{英：height}）和深度（\emph{英：depth}）之和的临时长度。接下来，我们在该总高度的基础上添加了两倍的线宽和两倍的空间\verb|\fboxsep|。回忆一下，尺寸\verb|\fboxrule|和\verb|\fboxsep|分别定义了线宽和简单字盒\celan{\S 4.4.1}内容和边框间的空间。因此，我们有：
@@ -1448,8 +1405,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
             \usebox{\boitetitre} 
         \end{flushleft}}%
     \parbox{\fboxrule}{% 右侧线段
-        \rule{\fboxrule}{\hauteurboitetitre}}}}
-\end{verbatim}
+        \rule{\fboxrule}{\hauteurboitetitre}}}}\end{verbatim}
 \end{dmd}
 
 \newcommand{\titleboxI}[2]{%
@@ -1478,12 +1434,12 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 
 \titleboxI{encore}{%
   \parbox{4cm}{东西\\玩意\\零七八碎}}
-}\begin{verbatim}
+}
+\begin{verbatim}
 \titleboxI{titre}{一些东西二些东西}
 
 \titleboxI{encore}{%
-  \parbox{4cm}{东西\\玩意\\零七八碎}}
-\end{verbatim}
+  \parbox{4cm}{东西\\玩意\\零七八碎}}\end{verbatim}
 \end{codelist}
 
 接下来要做的是修改中央\verb|\parbox|的内容，以加入两条水平线——下方的线段和上方被标题打断的线段。这里的思路是堆叠三个字盒：
@@ -1508,8 +1464,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
             \usebox{\boitetitre}\\
             \rule{\largeurboitetitre}{\fboxrule}
         \end{flushleft}}
-    ...}
-\end{verbatim}
+    ...}\end{verbatim}
 \end{dmd}
 
 \newcommand{\titleboxII}[2]{%
@@ -1541,12 +1496,12 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 
     \titleboxII{再来一个}{%
         \parbox{4cm}{零七\\八碎}}
-}\begin{verbatim}
+}
+\begin{verbatim}
 \titleboxII{标题}{一些东西二些东西}
 
 \titleboxII{再来一个}{%
-    \parbox{4cm}{零七\\八碎}}
-\end{verbatim}
+    \parbox{4cm}{零七\\八碎}}\end{verbatim}
 \end{codelist}
 
 可以说，这“不完全”是我们想要的。接下来需要考虑的是尽量让指令\verb|\\|实现竖直方向上与尺寸\verb|\fboxsep|相同的换行。我们可以顺便让标题竖直向下移动，来实现这一点：
@@ -1564,8 +1519,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
         \usebox{\boitetitre}\\[\fboxsep]
         \rule{\largeurboitetitre}{\fboxrule}
         \end{flushleft}}  
-    ...}
-\end{verbatim}
+    ...}\end{verbatim}
 \end{dmd}
 
 \newcommand{\titleboxIII}[2]{%
@@ -1599,12 +1553,12 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 
 \titleboxIII{再来一个}{%
     \parbox{4cm}{零七\\八碎}}
-}\begin{verbatim}
+}
+\begin{verbatim}
 \titleboxIII{标题}{一些东西二些东西}
 
 \titleboxIII{再来一个}{%
-    \parbox{4cm}{零七\\八碎}}
-\end{verbatim}
+    \parbox{4cm}{零七\\八碎}}\end{verbatim}
 \end{codelist}
 
 可以说规整得没什么效果……需要知道，当\TeX 在纵向模式下堆叠字盒是，它本身就会在字盒间插入空间，来保证行间距为长度\verb|\baselineskip|。在\TeX Book的79页有关处理\emph{glue}的章节中，我们可以找到：
@@ -1631,8 +1585,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
         \usebox{\boitetitre}\\[\fboxsep]\nointerlineskip
         \rule{\largeurboitetitre}{\fboxrule}
         \end{flushleft}}  
-    ...}
-\end{verbatim}
+    ...}\end{verbatim}
 \end{dmd}
 
 \newcommand{\titleboxIV}[2]{%
@@ -1667,12 +1620,12 @@ heading_suffix "}\\hfill}\\nopagebreak\n"
 
 \titleboxIV{再来一个}{%
     \parbox{4cm}{零七\\八碎}}
-}\begin{verbatim}
+}
+\begin{verbatim}
 \titleboxIV{标题}{一些东西二些东西}
 
 \titleboxIV{再来一个}{%
-    \parbox{4cm}{零七\\八碎}}
-\end{verbatim}
+    \parbox{4cm}{零七\\八碎}}\end{verbatim}
 \end{codelist}
 
 这样就满足了我们的需求。

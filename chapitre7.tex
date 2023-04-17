@@ -63,10 +63,10 @@
 
 \begin{codelist}[7.1]{
     fouilla\,! et\enspace\,fouilla !
-}\begin{verbatim}
+}
+\begin{verbatim}
 fouilla ! et \selectlanguage{english}
-fouilla !\selectlanguage{french}
-\end{verbatim}
+fouilla !\selectlanguage{french}\end{verbatim}
 \end{codelist}
 
 \subsection{L-a, e dans l'a, t-i, t-i, a !}
@@ -77,9 +77,9 @@ fouilla !\selectlanguage{french}
 
 \begin{codelist}[7.2]{
     拉蒂希娅（L\ae titia）去了圣心教堂（Sacré-C\oe ur）。
-}\begin{verbatim}
-拉蒂希娅（L\ae titia）去了圣心教堂（Sacré-C\oe ur）。
-\end{verbatim}
+}
+\begin{verbatim}
+拉蒂希娅（L\ae titia）去了圣心教堂（Sacré-C\oe ur）。\end{verbatim}
 \end{codelist}
 
 如果你的键盘允许，也可以直接输入æ。作为参考，在Linux系统上使用组合键\ovalbox{Alt Gr}+\ovalbox{A}可以输入名副其实地得到这种“a中的e”。出于历史原因，“o中的e”不在范式iso-latin1中，我的键盘不支持直接输入合字æ。
@@ -118,7 +118,8 @@ fouilla !\selectlanguage{french}
     
     \begin{codelist}[7.3]{
         Qu'on devra dans ce cas saisir « ainsi ».
-    }\begin{verbatim}
+    }
+\begin{verbatim}
 Qu'on devra dans ce cas saisir
 \og ainsi\fg{}.
     \end{verbatim}
@@ -151,7 +152,8 @@ Qu'on devra dans ce cas saisir
     \item 每逢千位或千分位\yz{即从小数分割符向两侧每三位。}，要插入四分之一全空格：
     \begin{codelist}[7.4]{
         12\,345\,678,234\,34
-    }\begin{verbatim}
+    }
+\begin{verbatim}
 \nombre{12345678,23434}
     \end{verbatim}
     \end{codelist}
@@ -268,8 +270,7 @@ Qu'on devra dans ce cas saisir
 \lieu{Huit sur Loire}
 \telephone{1234567890}
 \fax{0987654321}
-\signature{Tar \textsc{Tempion}}
-\end{verbatim}
+\signature{Tar \textsc{Tempion}}\end{verbatim}
 \end{dmd}
 
 此时，只需借助指令\verb|\institut|在文档的文前部分调用它。该指令会寻找带有扩展名\dm{.ins}的文件：

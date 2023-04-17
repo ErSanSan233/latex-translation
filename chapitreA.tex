@@ -48,8 +48,7 @@
 % 针对输出PDF而特定的内容
 \else
 % 针对输出DVI而特定的内容
-\fi  
-\end{verbatim}
+\fi  \end{verbatim}
 \end{dmd}
 
 \subsection{处理图像}
@@ -62,8 +61,7 @@
 \graphicspath{{pngs/}{{pdfs/}}
 \else
 \graphicspath{{epss}}
-\fi
-\end{verbatim}
+\fi\end{verbatim}
 \end{dmd}
 
 这对应于我们将图像文件按\dm{pngs}、\dm{pdfs}、\dm{epss}等目录整理的情况。这个新的“if”语句也可以写成如下结构：
@@ -74,8 +72,7 @@
 \includegraphics[pdftex]{graphicx}
 \else
 \includegraphics{graphicx}
-\fi
-\end{verbatim}
+\fi\end{verbatim}
 \end{dmd}
 
 在最新的\LaTeX 版本中，这样写不是必需的。
@@ -125,8 +122,7 @@ PDF浏览器中的书签（signet；英：\emph{bookmarks}）是一种“目录�
     \cleardoublepage
     \phantomsection% 创建一个假节
     \addcontentsline{toc}{chapter}{Index} 
-    \printindexORIG}
-\end{verbatim}
+    \printindexORIG}\end{verbatim}
 \end{dmd}
 
 该咒语通过包hyperref提供的指令\verb|\phantomsection|为指令\verb|\printindex|添加了一个并不存在的节，使其过载。别问我更多了\dm{:-)}
@@ -156,8 +152,7 @@ PDF浏览器中的书签（signet；英：\emph{bookmarks}）是一种“目录�
 \usepackage[hypertex=true,
             hyperindex=true,
             colorlinks=false]{hyperref}
-\fi
-\end{verbatim}
+\fi\end{verbatim}
 \end{dmd}
 
 这样可以只在PDF版本中为链接设置颜色。PostScript版本中的链接会以黑色生成，以在文档以黑白模式打印时保持可读性。
@@ -211,16 +206,14 @@ PDF浏览器中的书签（signet；英：\emph{bookmarks}）是一种“目录�
 \begin{dmd}
 \begin{verbatim}
 \newcommand{\includepstricksgraphics}[1]{% 
-\ifpdf\includegraphics{#1}\else\input{#1}\fi}
-\end{verbatim}
+\ifpdf\includegraphics{#1}\else\input{#1}\fi}\end{verbatim}
 \end{dmd}
 
 这里的思路是将带有\textsf{pstricks}的指令的一部分代码抽取出来，存储在文件\dm{bidule.tex}中。接下来：
 
 \begin{dmd}
 \begin{verbatim}
-\includepstricksgraphics{bidule}
-\end{verbatim}
+\includepstricksgraphics{bidule}\end{verbatim}
 \end{dmd}
 
 我们编写这样的指令时，如果使用\textsf{pdflatex}，就可以包含\dm{bidule.pdf}；如果使用\LaTeX 就可以包含\dm{bidule.tex}。此外，对于UNIX的“小”脚本，我们可以根据需求来编写：
@@ -232,8 +225,7 @@ PDF浏览器中的书签（signet；英：\emph{bookmarks}）是一种“目录�
 FILE=${1%.*}
 # 创建一个临时文件
 psttemp.tex
-cat > psttemp.tex <<EOF
-\end{verbatim}
+cat > psttemp.tex <<EOF\end{verbatim}
 \verb+\documentclass{manuel}+\quad$\leftarrow$\textsf{设定类型和适当的包}
 \begin{verbatim}
 \thispagestyle{empty}
@@ -248,8 +240,7 @@ dvips -E  $TMPFILE.dvi -o psttemp.eps
 # 创建PDF文件
 epstopdf psttemp.eps --debug --outfile=$FILE.pdf
 # 清除临时文件
-rm -f psttemp.*
-\end{verbatim}
+rm -f psttemp.*\end{verbatim}
 \end{dmd}
 
 这些内容存储在名为\dm{pstricks.sh}的文件中，可以通过如下方式使用：
@@ -261,8 +252,7 @@ rm -f psttemp.*
 \begin{dmd}
 \begin{verbatim}
 %.pdf : %.tex
-      ./pstricks.sh $<
-\end{verbatim}
+      ./pstricks.sh $<\end{verbatim}
 \end{dmd}
 
 \begin{qquestion}
@@ -274,15 +264,13 @@ cat > psttemp.tex <<EOF
 \documentclass{manuel}
 \usepackage{pst-eps}
 \thispagestyle{empty}
-\begin{document}
-\end{verbatim}
+\begin{document}\end{verbatim}
 \verb+\begin{TeXtoEPS}+\quad$\leftarrow$\textsf{帮助PSTricks计算字盒}
 \begin{verbatim}
 \input{$FILE}
 \end{TeXtoEPS}
 \end{document}
-EOF
-\end{verbatim}
+EOF\end{verbatim}
 \end{dmd}
 \end{qquestion}
 
@@ -305,8 +293,7 @@ EOF
 function genere_eps
 {
   cat > $TMPFILE.tex <<EOF
-\documentclass{manuel}
-\end{verbatim}
+\documentclass{manuel}\end{verbatim}
 \verb+\documentclass{manuel}+\quad$\leftarrow$设定类型和适当的包
 \begin{verbatim}
 \thispagestyle{empty}
@@ -319,7 +306,6 @@ EOF
   echo "生成$TMPFILE.eps文件"
   dvips -E  $TMPFILE.dvi -o $TMPFILE.eps >> $LOGFILE 2>&1
 }
-
 \end{verbatim}
 \end{dmd}
 
@@ -351,8 +337,7 @@ epstopdf $TMPFILE.eps --debug \
 --outfile=pdfs/${FILE##*/}.pdf >>  $LOGFILE 2>&1
 
 # 做好清洁工作
-rm -f $TMPFILE.* $LOGFILE $sanspsfrag
-\end{verbatim}
+rm -f $TMPFILE.* $LOGFILE $sanspsfrag\end{verbatim}
 \end{dmd}
 
 \begin{exclamation}

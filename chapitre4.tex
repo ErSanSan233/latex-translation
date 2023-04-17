@@ -340,14 +340,14 @@
 \item 鸡零狗碎
 \item \hspace{\malongueur}一地毛
 \end{itemize}
-}\begin{verbatim}
+}
+\begin{verbatim}
 \newlength{\malongueur}
 \settowidth{\malongueur}{鸡零狗碎}
 \begin{itemize}
 \item 鸡零狗碎
 \item \hspace{\malongueur}一地毛
-\end{itemize}
-\end{verbatim}
+\end{itemize}\end{verbatim}
 \end{codelist}
 
 长度\verb|\malongueur|代表了文字“鸡零狗碎”的宽度，被用作空格（参见关于\celan{\S 4.3}空格的段落）。
@@ -392,10 +392,10 @@ $$
 \begin{codelist}[4.2]{
   〇\hspace{\stretch{1}}%
 三分点\hspace{\stretch{2}}一
-}\begin{verbatim}
+}
+\begin{verbatim}
 〇\hspace{\stretch{1}}%
-三分点\hspace{\stretch{2}}一
-\end{verbatim}
+三分点\hspace{\stretch{2}}一\end{verbatim}
 \end{codelist}
 
 这段\LaTeX 代码在“〇”和“三分点”、“三分点”和“一”之间依据弹性长度生成了空间\jz{
@@ -462,13 +462,13 @@ Document Class: book 2001/04/21 v1.4 Standard LaTeX document\\
 \vspace{2\baselineskip}
 
 再跳过两行。
-}\begin{verbatim}
+}
+\begin{verbatim}
 空\hspace{1cm}出\texttt{1cm}
 
 \vspace{2\baselineskip}
 
-再跳过两行。
-\end{verbatim}
+再跳过两行。\end{verbatim}
 \end{codelist}
 
 \begin{ii}
@@ -512,11 +512,11 @@ Document Class: book 2001/04/21 v1.4 Standard LaTeX document\\
 〇\hspace{1cm}一\par
 〇 \hspace{1cm}一\par
 〇 \hspace{1cm} 一\par
-}\begin{verbatim}
+}
+\begin{verbatim}
 〇\hspace{1cm}一\par
 〇 \hspace{1cm}一\par
-〇 \hspace{1cm} 一\par
-\end{verbatim}
+〇 \hspace{1cm} 一\par\end{verbatim}
 \end{codelist}
 
 接下来，展示\LaTeX 的弹性空间：
@@ -525,11 +525,11 @@ Document Class: book 2001/04/21 v1.4 Standard LaTeX document\\
 〇 \hfill{} 一\par
 〇 \hrulefill{} 一\par
 〇 \dotfill{} 一\par
-}\begin{verbatim}
+}
+\begin{verbatim}
 〇 \hfill{} 一\par
 〇 \hrulefill{} 一\par
-〇 \dotfill{} 一\par
-\end{verbatim}
+〇 \dotfill{} 一\par\end{verbatim}
 \end{codelist}
 
 最后，展示以下相对弹力：
@@ -538,11 +538,11 @@ Document Class: book 2001/04/21 v1.4 Standard LaTeX document\\
 〇 \dotfill{} 二分 \hfill{} 一\par
 〇 \hrulefill{} 三分
 \hspace{\stretch{2}} 一\par
-}\begin{verbatim}
+}
+\begin{verbatim}
 〇 \dotfill{} 二分 \hfill{} 一\par
 〇 \hrulefill{} 三分
-\hspace{\stretch{2}} 一\par
-\end{verbatim}
+\hspace{\stretch{2}} 一\par\end{verbatim}
 \end{codelist}
 
 现在，你应该已经明白了\LaTeX 预定义的“弹力”（即\verb|\hfill|、\verb|\hrulefill|、\verb|\dotfill|）的“僵硬程度”为1。
@@ -619,7 +619,8 @@ Document Class: book 2001/04/21 v1.4 Standard LaTeX document\\
 \hfill{}低
 
 \hrulefill{}
-}\begin{verbatim}
+}
+\begin{verbatim}
 \hrulefill{}
 
 高
@@ -632,8 +633,7 @@ Document Class: book 2001/04/21 v1.4 Standard LaTeX document\\
 
 \hfill{}低
 
-\hrulefill{}
-\end{verbatim}
+\hrulefill{}\end{verbatim}
 \end{codelist}
 
 
@@ -748,10 +748,10 @@ Document Class: book 2001/04/21 v1.4 Standard LaTeX document\\
 \begin{codelist}[4.8]{
   啪\makebox[2cm][c]{嚓！}一个字盒\par
 啪\makebox[3cm][r]{嚓嚓！}又一个字盒。
-}\begin{verbatim}
+}
+\begin{verbatim}
 啪\makebox[2cm][c]{嚓！}一个字盒\par
-啪\makebox[3cm][r]{嚓嚓！}又一个字盒。
-\end{verbatim}
+啪\makebox[3cm][r]{嚓嚓！}又一个字盒。\end{verbatim}
 \end{codelist}
 
 参数\codereplace{宽}和\codereplace{位置}可以省略。如果省略，则字盒的宽度就是其中文本的宽度。此时可以使用：
@@ -764,9 +764,9 @@ Document Class: book 2001/04/21 v1.4 Standard LaTeX document\\
 
 \begin{codelist}[4.9]{
   \makebox[4cm][s]{好累啊！}
-}\begin{verbatim}
-\makebox[4cm][s]{好累啊！}
-\end{verbatim}
+}
+\begin{verbatim}
+\makebox[4cm][s]{好累啊！}\end{verbatim}
 \end{codelist}
 
 \subsubsection{带边框}
@@ -783,11 +783,11 @@ Document Class: book 2001/04/21 v1.4 Standard LaTeX document\\
   好了\framebox[1.5cm][c]{那个}嗒哒！\par
   然后\framebox[2.8cm][r]{对对对}说得对
   \par 还有\fbox{那啥}
-}\begin{verbatim}
+}
+\begin{verbatim}
 好了\framebox[1.5cm][c]{那个}嗒哒！\par
 然后\framebox[2.8cm][r]{对对对}说得对
-\par 还有\fbox{那啥}
-\end{verbatim}
+\par 还有\fbox{那啥}\end{verbatim}
 \end{codelist}
 
 %TODO 到这里，长度这个翻译就显得不太好了
@@ -804,13 +804,13 @@ Document Class: book 2001/04/21 v1.4 Standard LaTeX document\\
 \setlength{\fboxrule}{0.4pt}
 \setlength{\fboxsep}{8pt}
 青 \framebox[2cm]{品} 黄
-}\begin{verbatim}
+}
+\begin{verbatim}
 \setlength{\fboxrule}{5pt}
 红 \framebox[2cm]{绿} 蓝\par
 \setlength{\fboxrule}{0.4pt}
 \setlength{\fboxsep}{8pt}
-青 \framebox[2cm]{品} 黄
-\end{verbatim}
+青 \framebox[2cm]{品} 黄\end{verbatim}
 \end{codelist}
 
 \begin{exclamation}
@@ -842,10 +842,10 @@ Document Class: book 2001/04/21 v1.4 Standard LaTeX document\\
 \begin{codelist}[4.12]{
 \raisebox{8pt}{纽约}飘了，
 纽约在\raisebox{-1ex}{美国。}
-}\begin{verbatim}
+}
+\begin{verbatim}
 \raisebox{8pt}{纽约}飘了，
-纽约在\raisebox{-1ex}{美国。}
-\end{verbatim}
+纽约在\raisebox{-1ex}{美国。}\end{verbatim}
 \end{codelist}
 
 两个参数\codereplace{深}和\codereplace{高}可以“骗过”\LaTeX ，使其认为生成的字盒高度为\codereplace{高}、深度为\codereplace{深}。以下示例中，指令\verb|\raisebox|选择性地使用了一些参数。
@@ -893,10 +893,10 @@ XX\raisebox{0.8\baselineskip}[1ex][2ex]{O}XX\\
 \begin{codelist}[4.13]{
   Internet这个词不要\makebox[1.5cm]{打断}
 \hspace{-1.5cm}\makebox[1.5cm]{///////}。
-}\begin{verbatim}
+}
+\begin{verbatim}
 Internet这个词不要\makebox[1.5cm]{打断}
-\hspace{-1.5cm}\makebox[1.5cm]{///////}。
-\end{verbatim}
+\hspace{-1.5cm}\makebox[1.5cm]{///////}。\end{verbatim}
 \end{codelist}
 
 注意，这不是“划掉”单词的最佳方法，但它展示了如何在水平方向上移动字盒——借助长度为负值的\verb|\hspace|。
@@ -912,14 +912,14 @@ Internet这个词不要\makebox[1.5cm]{打断}
 前前\makebox[0cm][l]{\grogra 高}后后
 
 前前\makebox[0cm][r]{\grogra 乐}后后
-}\begin{verbatim}
+}
+\begin{verbatim}
 \newcommand{\grogra}{\huge\bfseries}
 前前\makebox[0cm][c]{\grogra 戴}后后
 
 前前\makebox[0cm][l]{\grogra 高}后后
 
-前前\makebox[0cm][r]{\grogra 乐}后后
-\end{verbatim}
+前前\makebox[0cm][r]{\grogra 乐}后后\end{verbatim}
 \end{codelist}
 
 我们成功叠加了元素，但对齐方式似乎与我们想象的不太一样。实际上，变量\dm{l}将内容放在了插入字盒位置的\emph{右侧}，而变量\dm{r}则会将其放在\emph{左侧}。
@@ -936,9 +936,9 @@ Internet这个词不要\makebox[1.5cm]{打断}
 
 \begin{codelist}[4.15]{
   当心\rotatebox{30}{转弯}。
-}\begin{verbatim}
-当心\rotatebox{30}{转弯}。
-\end{verbatim}
+}
+\begin{verbatim}
+当心\rotatebox{30}{转弯}。\end{verbatim}
 \end{codelist}
 
 \begin{ii}
@@ -979,8 +979,7 @@ Internet这个词不要\makebox[1.5cm]{打断}
   \parbox[b][2cm][t]{2cm}{高\par 中\par 低}
   \parbox[b][2cm][c]{2cm}{高\par 中\par 低}
   \parbox[b][2cm][s]{2cm}{高\par
-    \vspace{\stretch{2}} 中\par\vfill 低}---
-\end{verbatim}
+    \vspace{\stretch{2}} 中\par\vfill 低}---\end{verbatim}
 \end{dmd}
 
 为清晰起见，配合\verb|\fbox|使用该段指令。运行结果如下：
@@ -999,8 +998,7 @@ Internet这个词不要\makebox[1.5cm]{打断}
 \verb+\begin{minipage}+[\codereplace{盒位置}][\codereplace{高度}][\codereplace{文位置}]\{\codereplace{宽度}\}
 \begin{verbatim}
   ... \marg{文本} ...
-\end{minipage}
-\end{verbatim}
+\end{minipage}\end{verbatim}
 \end{dmd}
 
 如下所示：
@@ -1035,8 +1033,7 @@ Internet这个词不要\makebox[1.5cm]{打断}
   ……但我还是说了。
 
   我本来还想说点别的，但忘了是什么了……
-\end{minipage}
-\end{verbatim}
+\end{minipage}\end{verbatim}
 \end{dmd}
 
 \begin{ii}
@@ -1064,15 +1061,15 @@ Internet这个词不要\makebox[1.5cm]{打断}
   这个\fbox{%
     \parbox[c][3\height]{1cm}{%
       字盒\\空荡荡。}}
-}\begin{verbatim}
+}
+\begin{verbatim}
 这个\framebox[.7\width]{字盒}太挤了。
 
 这个\framebox[1.8\width]{字盒}有些宽。
 
 这个\fbox{%
   \parbox[c][3\height]{1cm}{%
-    字盒\\空荡荡。}}
-\end{verbatim}
+    字盒\\空荡荡。}}\end{verbatim}
 \end{codelist}
 
 \subsection{保留和复用}
@@ -1095,15 +1092,15 @@ Internet这个词不要\makebox[1.5cm]{打断}
   \usebox{\gnu}\usebox{\gnu}\usebox{\gnu}\\
   \usebox{\gnu}\usebox{\gnu}\usebox{\gnu}
   \end{center}
-}\begin{verbatim}
+}
+\begin{verbatim}
 \newsavebox{\gnu}
 \sbox{\gnu}{\fbox{\textsc{Gnu}}}
 \begin{center}
 \usebox{\gnu}\usebox{\gnu}\usebox{\gnu}\\
 \usebox{\gnu}\usebox{\gnu}\usebox{\gnu}\\
 \usebox{\gnu}\usebox{\gnu}\usebox{\gnu}
-\end{center}
-\end{verbatim}
+\end{center}\end{verbatim}
 \end{codelist}
 
 可以将指令\verb|\sbox|和\verb|\savebox|与指令\verb|\mbox|和\verb|\makebox|（参见\S 4.4.1）类比。
@@ -1133,10 +1130,10 @@ Internet这个词不要\makebox[1.5cm]{打断}
 \begin{codelist}[4.18]{
   \newcommand{\lab}{$L^*a^*b^*$}
 设空间\lab{}……
-}\begin{verbatim}
+}
+\begin{verbatim}
 \newcommand{\lab}{$L^*a^*b^*$}
-设空间\lab{}……
-\end{verbatim}
+设空间\lab{}……\end{verbatim}
 \end{codelist}
 
 注意，这个指令不接受参数，因此没有必要选用参数\codereplace{参数量}。可以通过以下方式来改善该指令的使用方法：
@@ -1145,11 +1142,11 @@ Internet这个词不要\makebox[1.5cm]{打断}
 \newcommand{\Lab}{
   \ensuremath{L^*a^*b^*}}
 对于空间\Lab{}及$\vec{c}\in\Lab$……
-}\begin{verbatim}
+}
+\begin{verbatim}
 \newcommand{\Lab}{%
   \ensuremath{L^*a^*b^*}}
-对于空间\Lab{}及$\vec{c}\in\Lab$……
-\end{verbatim}
+对于空间\Lab{}及$\vec{c}\in\Lab$……\end{verbatim}
 \end{codelist}
 
 指令\verb|\ensuremath|确保指令需要在数学环境中使用，上下文可以是任意内容。正如上例所示。
@@ -1166,11 +1163,11 @@ Internet这个词不要\makebox[1.5cm]{打断}
   \newcommand{\Touche}[1]{\Ovalbox{#1}}
 先按\Touche{Tab}键，
 再按\Touche{Entrée}键。
-}\begin{verbatim}
+}
+\begin{verbatim}
 \newcommand{\Touche}[1]{\Ovalbox{#1}}
 先按\Touche{Tab}键，
-再按\Touche{Entrée}键。
-\end{verbatim}
+再按\Touche{Entrée}键。\end{verbatim}
 \end{codelist}
 
 可以看到，此处的指令会等待\emph{一个}变量（这也是变量“\dm{[1]}”的作用）。在指令的定义中，可以使用\verb|#1|来引用这个变量。
@@ -1183,13 +1180,13 @@ Internet这个词不要\makebox[1.5cm]{打断}
   \slash\raisebox{-0.5ex}{#2}}
 \fraction{1}{2}加\fraction{3}{4}等于
 \fraction{5}{4}
-}\begin{verbatim}
+}
+\begin{verbatim}
 \newcommand{\fraction}[2]{%
   \raisebox{0.5ex}{#1}%
   \slash\raisebox{-0.5ex}{#2}}
 \fraction{1}{2}加\fraction{3}{4}等于
-\fraction{5}{4}
-\end{verbatim}
+\fraction{5}{4}\end{verbatim}
 \end{codelist}
 
 可以注意到以下内容：
@@ -1212,11 +1209,11 @@ Internet这个词不要\makebox[1.5cm]{打断}
   \newcommand{\Key}[1][Entrée]{\Ovalbox{#1}} 
   先按\Key[Tab]{}键，
   再按\Key{}键。
-}\begin{verbatim}
+}
+\begin{verbatim}
 \newcommand{\Key}[1][Entrée]{\Ovalbox{#1}} 
 先按\Key[Tab]{}键，
-再按\Key{}键。
-\end{verbatim}
+再按\Key{}键。\end{verbatim}
 \end{codelist}
 
 可以看到，参数\verb|#1|不是强制的，它的默认值是“Entrée”。同时，我们可以注意到，使用非强制参数时，应该使用方括号而非花括号。
@@ -1247,7 +1244,8 @@ Internet这个词不要\makebox[1.5cm]{打断}
   可以每24小时\\
   为女人上一次发条。
 \end{bonmot}
-}\begin{verbatim}
+}
+\begin{verbatim}
 \newenvironment{bonmot}%
 {\small\slshape\begin{flushright}}%
 {\end{flushright}\normalsize\upshape}
@@ -1256,8 +1254,7 @@ Internet这个词不要\makebox[1.5cm]{打断}
   一把钥匙，\\
   可以每24小时\\
   为女人上一次发条。
-\end{bonmot}
-\end{verbatim}
+\end{bonmot}\end{verbatim}
 \end{codelist}
 
 的确，如果我们不指明来源，那么这句“名言”（bon mot）看起来疑点重重。通过为我们的环境添加一个参数，可以补救一下。参数可以使用\verb|#|访问，但这种访问方式只能在\dm{begin}条目中使用。将参数存到字盒中，就能规避这种限制，从而在\dm{end}条目中复用\celan{\S 4.4.5}参数：
@@ -1277,7 +1274,8 @@ Internet这个词不要\makebox[1.5cm]{打断}
   可以每24小时\\
   为女人上一次发条。
 \end{Bonmot}
-}\begin{verbatim}
+}
+\begin{verbatim}
 \newsavebox{\auteurbm}
 \newenvironment{Bonmot}[1]%
   {\small\slshape%
@@ -1291,8 +1289,7 @@ Internet这个词不要\makebox[1.5cm]{打断}
   一把钥匙，\\
   可以每24小时\\
   为女人上一次发条。
-\end{Bonmot}
-\end{verbatim}
+\end{Bonmot}\end{verbatim}
 \end{codelist}
 
 好吧，即使这样做了，这句“名言”的疑点也没有减少……

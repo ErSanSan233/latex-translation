@@ -259,17 +259,17 @@
 \begin{codelist}[1.1]{
     从你手中掉落的工具总是掉到最难够到的地方，或脆弱的物品上。\\
     这是\emph{墨菲}定律（loi de Murphy）的一个体现。
-}  \begin{dmd}
-    \verb+\documentclass{article}+\\
-    \verb+\begin{document}+\\
-    从你手中掉落的工具\\
-    总是掉到最难够到的地方，\\
-    或脆弱的物品上。\\
-    ~\\
-    \verb+这是\emph{墨菲}定律（loi de      Murphy）的+\\
-    一个体现。\\
-    \verb+\end{document}+
-\end{dmd}
+}
+\begin{verbatim}
+\documentclass{article}
+\begin{document}
+从你手中掉落的工具
+总是掉到最难够到的地方，
+或脆弱的物品上。
+
+这是\emph{墨菲}定律（loi de      Murphy）的
+一个体现。
+\end{document}\end{verbatim}
 \end{codelist}
 
 这个示例体现了\LaTeX 中的几个重要的原理，具体如下。
@@ -303,7 +303,9 @@
 
 \begin{codelist}[1.2]{
 \textbf{是}下标：$x_{i+1}$，还是上标：$e^{i\pi}$；这是问题~1！
-}\begin{verbatim}%毫无意义的段落
+}
+\begin{verbatim}
+%毫无意义的段落
 \textbf{是}下标：$x_{i+1}$，
 还是上标：$e^{i\pi}$；
 这是问题~1！%还是问题2？\end{verbatim}
@@ -337,18 +339,19 @@
     此例涉及对西文行文中空格的处理，不宜翻译。
 }。
 
-\begin{codelist}{
+\begin{codelist}[1.3]{
     \TeX book is for \TeX hackers.
 
     \TeX\  has some powerful macros.
 
     \LaTeX{} is a document preparation system
-}\begin{verbatim}\TeX book is for \TeX hackers.
+}
+\begin{verbatim}
+\TeX book is for \TeX hackers.
 
 \TeX\  has some powerful macros.
 
-\LaTeX{} is a document preparation system
-    \end{verbatim}
+\LaTeX{} is a document preparation system\end{verbatim}
 \end{codelist}
 
 \begin{exclamation}

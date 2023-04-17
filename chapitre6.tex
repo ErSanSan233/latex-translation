@@ -31,8 +31,7 @@
         Institut du Pixel\\
         42007 Saint-Etienne---FRANCE}
 \date{2 Avril 1927}
-\begin{document}
-\end{verbatim}
+\begin{document}\end{verbatim}
 \backslash maketitle\textsl{\% 标题插到此处}\\
 ...\\
 \verb|\end{document}|
@@ -95,8 +94,7 @@
             Using Competitive Learning},
     journal=pami,
     volume =16, number=2, pages={1197--1206},
-    month=dec, year=1994}
-\end{verbatim}
+    month=dec, year=1994}\end{verbatim}
 \end{dmd}
 
 有以下几点需要注意。
@@ -120,8 +118,7 @@
 \begin{dmd}
 \begin{verbatim}
 @string{pami="IEEE transactions on Pattern Analysis and
-              Machine Intelligence"}
-\end{verbatim}
+              Machine Intelligence"}\end{verbatim}
 \end{dmd}
 
 \subsubsection{会议析出文章}
@@ -136,8 +133,7 @@
     booktitle={SPIE Conference on Visual Communications
                and Image Processing},
     volume=1199,pages={522--533},
-    year=1989}
-\end{verbatim}
+    year=1989}\end{verbatim}
 \end{dmd}
 
 这里，\dm{author}、\dm{title}、\dm{booktitle}、\dm{year}是必填字段，我们可以选用\dm{volume}和\dm{number}。
@@ -154,8 +150,7 @@
     chapter =   4,
     pages   =   {48--49},
     publisher = {Springer-Verlag},
-    year =      1985}
-\end{verbatim}
+    year =      1985}\end{verbatim}
 \end{dmd}
 
 强制字段为：\dm{author}、\dm{title}、\dm{chapter}或\dm{pages}、\dm{publisher} （出版方），以及\dm{year}。
@@ -327,8 +322,7 @@ Scanning input file guide.idx....done (982 entries accepted, 0 rejected).
 Sorting entries...........done (11254 comparisons).
 Generating output file guide.ind....done (745 lines written, 0 warnings).
 Output written in guide.ind.
-Transcript written in guide.ilg.
-\end{verbatim}
+Transcript written in guide.ilg.\end{verbatim}
 \end{dmd}
 
 因此，在运行失败的情况下，需要警惕可能出现的抛出和警告（\emph{warning}）。\LaTeX 的第二次编译可以在\dm{doc.tex}中指令\verb|\printindex|指出的位置插入格式化过的索引（文件\dm{doc.ind}）：
@@ -413,24 +407,20 @@ Transcript written in guide.ilg.
 \begin{verbatim}
 \documentclass{book}
 
-\begin{document}
-\end{verbatim}
+\begin{document}\end{verbatim}
 \verb+\frontmatter +\textsl{\% 所有介绍性的文字}
 \begin{verbatim}
 \include{preface}
-\tableofcontents
-\end{verbatim}
+\tableofcontents\end{verbatim}
 \verb+\mainmatter +\textsl{\% 文档的“主体”}
 \begin{verbatim}
 \include{chapitre1}
-\include{chapitre2}
-\end{verbatim}
+\include{chapitre2}\end{verbatim}
 \verb+\backmatter +\textsl{\% 文档末尾的索引内容}
 \begin{verbatim}
 \bibliographstyle{plain} 
 \bibliography{machin,bidule,truc}
-\end{document}
-\end{verbatim}
+\end{document}\end{verbatim}
 \end{dmd}
 
 其中的指令\verb|\include|的作用在于，它们减少了你需要同时处理的章节数量，却依然保证了文档的完整性。为此，我们可以在文前部分使用指令\verb|\includeonly|：

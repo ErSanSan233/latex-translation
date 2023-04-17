@@ -19,12 +19,12 @@
 \begin{flushleft}
     \ttfamily latex \codereplace{文件}
 \end{flushleft}
-}\begin{verbatim}
+}
+\begin{verbatim}
 为了编译文件\bwarg{文件}：
 \begin{flushleft}
     \ttfamily latex \bwarg{文件}
-\end{flushleft}
-\end{verbatim}
+\end{flushleft}\end{verbatim}
 \end{codelist}
 
 指令\verb|\bwmarg|可以以\textsl{倾斜字体}来输出其参数，并且置于“⟨”和“⟩”之间。这种括号可以在数学模式下分别由指令\verb|\langle|、\verb|\rangle|生成。此外，你无疑注意到了，我们可以使用下标符号，就像这样：
@@ -36,14 +36,14 @@
     \codereplace{文件$_n$}
     \codereplace{文件$_{dst}$}
 \end{flushleft} 
-}\begin{verbatim}
+}
+\begin{verbatim}
 复制文件：
 \begin{flushleft}\ttfamily
     cp \bwarg[1]{文件} ...
     \bwarg[n]{文件}
     \bwarg[dst]{文件}
-\end{flushleft}
-\end{verbatim}
+\end{flushleft}\end{verbatim}
 \end{codelist}
 
 指令\verb|\bwarg|\jz{
@@ -58,8 +58,7 @@
             % 如果选用了可选参数 
             \ifthenelse{\equal{#1}{}}{} 
             {$_\mathit{#1}$}% 显示下标
-            $\rangle$}}}%
-\end{verbatim}
+            $\rangle$}}}%\end{verbatim}
 \end{dmd}
 
 指令\verb|\normalfont|的效果是回到文档的默认字体。这解释了为什么示例11.1中的“\codereplace{文件}”没有使用打字机字体显示。
@@ -70,8 +69,7 @@
 \begin{verbatim}
 \newcommand{\colarg}[2][]{{% 
     \normalfont\color{blue!90}#2% 蓝色 
-    \ifthenelse{\equal{#1}{}}{}{$_\mathit{#1}$}}}
-\end{verbatim}
+    \ifthenelse{\equal{#1}{}}{}{$_\mathit{#1}$}}}\end{verbatim}
 \end{dmd}
 
 接下来，借助一个巧妙放置的布尔值\celan{\S 9.3.1}，我们可以定义一个通用的指令\verb|\marg|，以调用其中的一个版本（黑白版本或彩色版本）：
@@ -82,8 +80,7 @@
     \let\marg\colarg
 \else
     \let\marg\bwarg
-\fi
-\end{verbatim}
+\fi\end{verbatim}
 \end{dmd}
 
 这个结构调用了\TeX 的指令\verb|\let|，在9.2.3小节有明确的介绍。
@@ -97,10 +94,10 @@
 \begin{codelist}[11.3]{
 借助包\textsf{varioref}，可以
 使用指令\dm{\backslash vref}……
-}\begin{verbatim}
+}
+\begin{verbatim}
 借助包\ltxpack{varioref}，可以
-使用指令\ltxcom{vref}……
-\end{verbatim}
+使用指令\ltxcom{vref}……\end{verbatim}
 \end{codelist}
 
 指令\verb|\ltxpack|的定义如下。首先，以下内容定义的指令\verb|\ltx@pack|可以以非衬线字体展示包名：
@@ -108,8 +105,7 @@
 \begin{dmd}
 \begin{verbatim}
 \newcommand{\ltx@pack}[1]{%
-    \upshape\textsf{#1}}
-\end{verbatim}
+    \upshape\textsf{#1}}\end{verbatim}
 \end{dmd}
 
 接下来，我们像这样定义：
@@ -119,8 +115,7 @@
 \newcommand{\ltxpack}[1]{%
     \ltx@pack{#1}% 
     \protect\index{扩展们！\protect\texttt{#1}}% 
-    \protect\index{#1@\protect\textsf{#1 扩展}}}
-\end{verbatim}
+    \protect\index{#1@\protect\textsf{#1 扩展}}}\end{verbatim}
 \end{dmd}
 
 其中调用了前面定义的指令，并在索引中插入了两个入口，一个遵循“\codereplace{包名}扩展”的格式，另一个作为“扩展们”的\celan{\S 6.3}子入口。这里，指令\verb|\protect|的作用是避免指令\verb|\ltxpack|本身作为作为另一条指令的参数时带来的麻烦。遵循同样的思路，我们可以定义指令\verb|\ltxcom|。首先：
@@ -128,8 +123,7 @@
 \begin{dmd}
 \begin{verbatim}
 \newcommand{\ltx@com}[1]{%
-    \texttt{\symbol{92}#1}}
-\end{verbatim}
+    \texttt{\symbol{92}#1}}\end{verbatim}
 \end{dmd}
 
 以上指令可以以打字机字体生成指令名，并在前面加上字符\dm{\backslash}。\verb|\symbol|是\LaTeX 指令，此处用于插入所选字体下的第92个字符（恰好为反斜杠）。因此，我们最终有如下定义：
@@ -138,8 +132,7 @@
 \begin{verbatim}
 \newcommand{\ltxcom}[1]{%
     \ltx@com{#1}% 
-    \index{#1@\protect\texttt{\symbol{92}#1}}}
-\end{verbatim}
+    \index{#1@\protect\texttt{\symbol{92}#1}}}\end{verbatim}
 \end{dmd}
 
 该指令调用了上一条指令，在索引中插入一个入口。此处需要提炼出的思想是，定义可以自动在索引中插入入口的指令可能很有帮助。举例来说，我们也许可以定义这样一条指令：
@@ -148,8 +141,7 @@
 \begin{verbatim}
 \newcommand{\jargonanglais}[1]{% 
     \emph{#1}%
-    \index{#1}}
-\end{verbatim}
+    \index{#1}}\end{verbatim}
 \end{dmd}
 
 该指令可以在设置英文术语格式的同时将其插入索引——比如某个特殊的索引。同样，如果在文档中经常出现，我们就可以定义一条指令，将其插到索引中。例如，在本书中，我们有这样的定义：
@@ -158,8 +150,7 @@
 \begin{verbatim}
 \newcommand{\postscript}{% 
     PostScript% 
-    \protect\index{PostScript}}
-\end{verbatim}
+    \protect\index{PostScript}}\end{verbatim}
 \end{dmd}
 
 \subsection{跳转提示}
@@ -190,8 +181,7 @@
         \v@irpageimpaire{#1}{#2}{#3}}{% 奇数页的跳转提示
     \else
         \v@irpagepaire{#1}{#2}{#3}}} % 偶数页的跳转提示
-    \fi
-\end{verbatim}
+    \fi\end{verbatim}
 \end{dmd}%TODO 此处括号似乎不配对
 
 我们注意到，除了两个必需的参数外，该指令还可以接收一个可选参数，它默认定义为段落标记（\S）。指令\verb|\v@irpageimpaire|和\verb|\v@irpagepaire|是对称的，作用如下：
@@ -207,11 +197,11 @@
     天啊，那些“美观”的三角形：
 $\blacktriangleleft$和
 $\blacktriangleright$！
-}\begin{verbatim}
+}
+\begin{verbatim}
 天啊，那些“蟀爆了”的三角形：
 $\blacktriangleleft$和
-$\blacktriangleright$！
-\end{verbatim}
+$\blacktriangleright$！\end{verbatim}
 \end{codelist}
 
 如下所示，是针对在偶数页实现跳转提示的指令的最终版本：
@@ -225,8 +215,7 @@ $\blacktriangleright$！
             {\footnotesize\sffamily%
                 \hfill#1~\ref{#2}}~{\small$\blacktriangleleft$}\\
             {\footnotesize\sffamily%
-                \mbox{}\hfill p.~\pageref{#2}\hfill\mbox{}}}}
-\end{verbatim}
+                \mbox{}\hfill p.~\pageref{#2}\hfill\mbox{}}}}\end{verbatim}
 \end{dmd}% TODO 括号配对
 
 注意到，在侧栏的跳转内容包含于一个\verb|\parbox|\celan{\S 4.4.3}，其中分两行展示章节编号和页码\yz{
@@ -238,8 +227,7 @@ $\blacktriangleright$！
 \begin{dmd}
 \begin{verbatim}
 \newcommand{\voir}[3][\S]{% 
-    \hyperref[#2]{#3}}
-\end{verbatim}
+    \hyperref[#2]{#3}}\end{verbatim}
 \end{dmd}
 
 其中的可选参数没有过多的用处，只是为了与“纸质”版本中的指令\verb+\voir+兼容。
@@ -260,8 +248,7 @@ $\blacktriangleright$！
         \setlength{\leftmargin}{#1}% 
         \setlength{\rightmargin}{#2}%
     }\item }% 
-    {\end{list}}
-\end{verbatim}
+    {\end{list}}\end{verbatim}
 \end{dmd}
 
 其中的思路是定义一个列表，而我们修改其中的侧栏。该环境接收的两个参数分别代表左侧和右侧的边距尺寸。这样的思路可以让环境产生很有趣的结果：边距会根据页面的奇偶性而实用不同的尺寸。这样的环境可以定义如下：
@@ -282,8 +269,7 @@ $\blacktriangleright$！
             \setlength{\leftmargin}{-#2}
             \setlength{\rightmargin}{-#1}
         \fi}\item }% 
-    {\end{list}}
-\end{verbatim}
+    {\end{list}}\end{verbatim}
 \end{dmd}
 
 \newenvironment{agrandirmarges}[2]{% 
@@ -329,8 +315,7 @@ $\blacktriangleright$！
         ...
         \caption{一幅内容完全不重要的……}
         \end{agrandirmarges}
-      \end{figure}
-\end{verbatim}
+      \end{figure}\end{verbatim}
 \end{dmd}
 
 \section{各种提示}
@@ -347,7 +332,8 @@ $\blacktriangleright$！
 a a a a a a a a a a a a a a a a a a a 
 a a a a a a a a a a a a a a a a a a a 
 a a a a a a a a a a a a a a a a a a a 
-}\begin{verbatim}
+}
+\begin{verbatim}
 \parshape=5
 1.5cm 2.5cm
 1.5cm 2.5cm
@@ -356,8 +342,7 @@ a a a a a a a a a a a a a a a a a a a
 0pt \textwidth 
 a a a a a a a a a a a a a a a a a a a 
 a a a a a a a a a a a a a a a a a a a 
-a a a a a a a a a a a a a a a a a a a 
-\end{verbatim}
+a a a a a a a a a a a a a a a a a a a \end{verbatim}
 \end{codelist}
 
 \begin{figure}[htb]
@@ -396,7 +381,8 @@ a a a a a a a a a a a a a a a a a a a
 将段落中的两行内容错后一些，并
 让随后的内容如同什么都没有发生
 一样继续……
-}\begin{verbatim}
+}
+\begin{verbatim}
 \setlength{\larnota}{.9cm}
 \setlength{\largligne}{%
     \textwidth-\larnota}
@@ -408,8 +394,7 @@ a a a a a a a a a a a a a a a a a a a
 作用，就是用来证明我们确实可以
 将段落中的两行内容错后一些，并
 让随后的内容如同什么都没有发生
-一样继续……
-\end{verbatim}
+一样继续……\end{verbatim}
 \end{codelist}
 
 好了，接下来要做的事情就是在指令\verb|\parshape|留下的“洞口”中放上图片，让我们来简单地尝试一下：
@@ -427,7 +412,8 @@ img/fmb-important}
 用来证明我们确实可以将段落中的
 两行内容错后一些，并让随后的内
 容如同什么都没有发生一样继续……
-}\begin{verbatim}
+}
+\begin{verbatim}
 \setlength{\larnota}{.9cm}
 \setlength{\largligne}{%
     \textwidth-\larnota}
@@ -439,8 +425,7 @@ img/fmb-important}
 注意，这个段落唯一的作用，就是
 用来证明我们确实可以将段落中的
 两行内容错后一些，并让随后的内
-容如同什么都没有发生一样继续……
-\end{verbatim}
+容如同什么都没有发生一样继续……\end{verbatim}
 \end{codelist}
 
 显然，这里的图像像其他字符一样放置在行上。我们将其放入宽度为零的字盒中，这样可以让字盒的内容右对齐：
@@ -458,7 +443,8 @@ img/fmb-important}
 注意，这个美观的段落唯一的作用
 ，就是用来证明我们确实可以将段
 落中的两行内容错后一些 [...]
-}\begin{verbatim}
+}
+\begin{verbatim}
 \setlength{\larnota}{.9cm}
 \setlength{\largligne}{%
     \textwidth-\larnota}%
@@ -470,8 +456,7 @@ img/fmb-important}
         \ficnota}}%
 注意，这个美观的段落唯一的作用
 ，就是用来证明我们确实可以将段
-落中的两行内容错后一些 [...]
-\end{verbatim}
+落中的两行内容错后一些 [...]\end{verbatim}
 \end{codelist}
 
 接下来要做的是为这个图标施加竖直方向的位移（实际上，这个图标是正方形的，因此我们可以使用尺寸\verb|\indnota|）：
@@ -490,7 +475,8 @@ img/fmb-important}
 注意，这个美观的段落唯一的作用
 ，就是用来证明我们确实可以将段
 落中的两行内容错后一些 [...]
-}\begin{verbatim}
+}
+\begin{verbatim}
 \setlength{\larnota}{.9cm}
 \setlength{\largligne}{%
     \textwidth-\larnota}
@@ -503,8 +489,7 @@ img/fmb-important}
             \ficnota}}}%
 注意，这个美观的段落唯一的作用
 ，就是用来证明我们确实可以将段
-落中的两行内容错后一些 [...]
-\end{verbatim}
+落中的两行内容错后一些 [...]\end{verbatim}
 \end{codelist}
 
 得，还是不行。需要让\LaTeX 相信我们所移动的字盒的尺寸为零：
@@ -523,7 +508,8 @@ img/fmb-important}
 注意，这个美观的段落唯一的作用
 ，就是用来证明我们确实可以将段
 落中的两行内容错后一些 [...]
-}\begin{verbatim}
+}
+\begin{verbatim}
 \setlength{\larnota}{.9cm}
 \setlength{\largligne}{%
     \textwidth-\larnota}
@@ -536,8 +522,7 @@ img/fmb-important}
             \ficnota}}}%
 注意，这个美观的段落唯一的作用
 ，就是用来证明我们确实可以将段
-落中的两行内容错后一些 [...]
-\end{verbatim}
+落中的两行内容错后一些 [...]\end{verbatim}
 \end{codelist}
 
 我们就快要达到目的了。接下来需要做两处调整。
@@ -567,7 +552,8 @@ img/fmb-important}
 注意，这个美观的段落唯一的作用
 ，就是用来证明我们确实可以将段
 落中的两行内容错后一些 [...]
-}\begin{verbatim}
+}
+\begin{verbatim}
 \setlength{\padnota}{5pt}
 \setlength{\larnota}{.9cm}
 \setlength{\indnota}{\larnota+\padnota}
@@ -583,8 +569,7 @@ img/fmb-important}
     \hspace*{\padnota}}}%
 注意，这个美观的段落唯一的作用
 ，就是用来证明我们确实可以将段
-落中的两行内容错后一些 [...]
-\end{verbatim}
+落中的两行内容错后一些 [...]\end{verbatim}
 \end{codelist}
 
 当当当当！接下来将这些代码修改成可以创建新环境的样子就可以了。这里使用的技巧基于9.5节介绍的环境\dm{list}。环境的完整代码如下：
@@ -610,8 +595,7 @@ img/fmb-important}
                 \includegraphics[width=\largeurnota]{#1}%
                  \hspace{\paddingnota}}}%
         \ignorespaces}{% 
-    \end{list}}
-\end{verbatim}
+    \end{list}}\end{verbatim}
 \end{dmd}
 
 \begin{exclamation}
@@ -650,8 +634,7 @@ img/fmb-important}
 \begin{epigraphe}{《圣经·箴言》\textbf{21} 11}
     亵慢的人受刑罚，愚蒙的人就得智慧。
     智慧人受训诲，便得知识。
-\end{epigraphe}
-\end{verbatim}
+\end{epigraphe}\end{verbatim}
 \end{dmd}
 
 环境\dm{epigraphe}的定义如下：
@@ -670,8 +653,7 @@ img/fmb-important}
         {% end文牧
             \\[4pt]\usebox{\nomepigraphe}.% 插入来源
         \end{flushright}%
-    \end{changemargin}\par\vspace*{0.6cm}}
-\end{verbatim}
+    \end{changemargin}\par\vspace*{0.6cm}}\end{verbatim}
 \end{dmd}
 
 其中，需要\celan{\S 4.4.5}声明用于储存引文来源的字盒：
@@ -725,7 +707,8 @@ xxxxxxxxxxxxx
     惧之中。
 \end{citationzero}
 xxxxxxxxxxxxxxx
-}\begin{verbatim}
+}
+\begin{verbatim}
 xxxxxxxxxxxxx
 \begin{unecitation}[乔治·巴塔伊
     （Georges \textsc{Bataille}）]
@@ -737,8 +720,7 @@ xxxxxxxxxxxxx
     神授予的，我堕落于作为孩子的恐
     惧之中。
 \end{unecitation}
-xxxxxxxxxxxxxxx
-\end{verbatim}
+xxxxxxxxxxxxxxx\end{verbatim}
 \end{codelist}
 
 我们将会一步一步地创建这个环境。在创建过程中，可以预见\LaTeX 会抛给我们一些经典的问题。我们会基于9.6节和4.5.2小节的环境来定义可以生成引文和作者的引文环境：
@@ -760,8 +742,7 @@ xxxxxxxxxxxxxxx
     \end{lrbox}
     \begin{center}
         \usebox{\boitecitation}
-    \end{center}
-\end{verbatim}
+    \end{center}\end{verbatim}
 \end{dmd}
 
 这样的效果是：
@@ -792,7 +773,8 @@ xxxxxxxxxxxxxxx
 后文 后文 后文 后文 后文 后文 后文
 后文 后文 后文 后文 后文 后文 后文
 
-}\begin{verbatim}
+}
+\begin{verbatim}
 前文 前文 前文 前文 前文 前文 前文
 前文 前文 前文 前文 前文 前文 前文
 \begin{citationi}{米歇尔·巴库尼%
@@ -802,8 +784,7 @@ xxxxxxxxxxxxxxx
     自身的自由就不可能实现。
 \end{citationi}
 后文 后文 后文 后文 后文 后文 后文
-后文 后文 后文 后文 后文 后文 后文
-\end{verbatim}
+后文 后文 后文 后文 后文 后文 后文\end{verbatim}
 \end{codelist}
 
 我们也可以在环境中修改程度\verb|\parindent|的值，来修改微型页面中段落的缩进（在该环境中，默认为\dm{0pt}）：
@@ -826,8 +807,7 @@ xxxxxxxxxxxxxxx
     \small\slshape« \ignorspaces}% 设为小字号斜体
     {\unskip »
         \par\mbox{}\hfill\usebox{\auteurcitation}
-...
-\end{verbatim}
+...\end{verbatim}
 \end{dmd}
 
 对于指令\verb|\ignorespaces|和\verb|\unskip|的含义，可以参考9.2.1小节。目前的效果如下：
@@ -859,7 +839,8 @@ xxxxxxxxxxxxxxx
 \end{citationiii}
 后文 后文 后文 后文 后文 后文 后文
 后文 后文 后文 后文 后文 后文 后文
-}\begin{verbatim}
+}
+\begin{verbatim}
 前文 前文 前文 前文 前文 前文 前文
 前文 前文 前文 前文 前文 前文 前文
 \begin{citationiii}{
@@ -869,8 +850,7 @@ xxxxxxxxxxxxxxx
     自身的自由就不可能实现。
 \end{citationiii}
 后文 后文 后文 后文 后文 后文 后文
-后文 后文 后文 后文 后文 后文 后文
-\end{verbatim}
+后文 后文 后文 后文 后文 后文 后文\end{verbatim}
 \end{codelist}
 
 我们快要达到目的了。接下来，我们将代表“引言作者”的参数设置为可省略项，从而达到在需要时不显示作者的效果。实现的思路是声明一个布尔值来表明引言（citation）的作者（auteur）是否出现（présent）：
@@ -891,8 +871,7 @@ xxxxxxxxxxxxxxx
         \setboolean{auteurcitationpresent}{false}}{% 
         \setboolean{auteurcitationpresent}{true}% 
         \savebox{\auteurcitation}{#1}}% 在必要时存储作者
-...
-\end{verbatim}
+...\end{verbatim}
 \end{dmd}
 
 接下来，修改环境的end条目，只在作者参数出现时插入作者：
@@ -903,8 +882,7 @@ xxxxxxxxxxxxxxx
     % 如果具有作者，我们将其推至右侧
     \ifthenelse{\boolean{auteurcitation}}% 
     {\par\nopagebreak\hfill\usebox{\auteurcitation}} 
-    {}% 否则，什么也不做……
-\end{verbatim}
+    {}% 否则，什么也不做……\end{verbatim}
 \end{dmd}
 
 最终，我们为引言添加底纹。例如，我们可以借助包\textsf{xcolor}定义这个颜色：
@@ -918,8 +896,7 @@ xxxxxxxxxxxxxxx
 \begin{dmd}
 \begin{verbatim}
 \setlength{\fboxsep}{10pt}% 
-\colorbox{coulcitation}{\usebox{\boitecitation}}
-\end{verbatim}
+\colorbox{coulcitation}{\usebox{\boitecitation}}\end{verbatim}
 \end{dmd}
 
 最终的效果为：
@@ -956,15 +933,15 @@ xxxxxxxxxxxxxxx
     不吃饭。
 \end{citationiv}
 后文 后文 后文 后文 后文 后文 后文
-}\begin{verbatim}
+}
+\begin{verbatim}
 前文 前文 前文 前文 前文 前文 前文
 \begin{citationiv}[皮埃尔·德普罗热
     （Pierre \textsc{Desproges}）]
     他是如此痴迷，以至于最终甚至
     不吃饭。
 \end{citationiv}
-后文 后文 后文 后文 后文 后文 后文
-\end{verbatim}
+后文 后文 后文 后文 后文 后文 后文\end{verbatim}
 \end{codelist}
 
 \section{首字下沉}
@@ -975,11 +952,11 @@ xxxxxxxxxxxxxxx
 \lettrine{L}{es documents} soignés font
 souvent appel aux lettrines, qui selon
 les règles d’usage en typographie...
-}\begin{verbatim}
+}
+\begin{verbatim}
 \lettrine{Les documents} soignés font
 souvent appel aux lettrines, qui selon
-les règles d’usage en typographie...
-\end{verbatim}
+les règles d’usage en typographie...\end{verbatim}
 \end{codelist}
 
 从中已经可见实现该效果的两个难点。
@@ -996,10 +973,10 @@ les règles d’usage en typographie...
 \begin{codelist}[11.17]{
 \def\bidule{一些内容}
 \bidule{} 和 \bidule
-}\begin{verbatim}
+}
+\begin{verbatim}
 \def\bidule{一些内容}
-\bidule{} 和 \bidule
-\end{verbatim}
+\bidule{} 和 \bidule\end{verbatim}
 \end{codelist}
 
 对于带有一个即以上参数的情况，可以这样写：
@@ -1008,11 +985,11 @@ les règles d’usage en typographie...
     \def\bidule#1#2{(1=#1) 和 (2=#2)}
 
     \bidule{甲乙}{丙丁}
-}\begin{verbatim}
+}
+\begin{verbatim}
 \def\bidule#1#2{(1=#1) 和 (2=#2)}
 
-\bidule{甲乙}{丙丁}
-\end{verbatim}
+\bidule{甲乙}{丙丁}\end{verbatim}
 \end{codelist}
 
 注意到，在\TeX 中，我们在定义中按顺序写下参数。有趣的是，对于首字下沉，我们将会探索类似以下示例展示的指令\verb|\bidule|的用法：
@@ -1023,13 +1000,13 @@ les règles d’usage en typographie...
 \bidule abcd
 
 \bidule ab cd
-}\begin{verbatim}
+}
+\begin{verbatim}
 \def\bidule#1#2{(1=#1) 和 (2=#2)}
 
 \bidule abcd
 
-\bidule ab cd
-\end{verbatim}
+\bidule ab cd\end{verbatim}
 \end{codelist}
 
 注意到，如果我们不明确地使用\dm{\{}和\dm{\}}来限定参数的范围，那么第一个参数（\dm{\#1}）会自动设置为遇到的第一个字符，第二个参数（\dm{\#2}）会自动设置为遇到的第二个字符，以此类推。更有趣的是，我们可以十分灵活地定义调用该指令的格式，例如：
@@ -1044,11 +1021,11 @@ les règles d’usage en typographie...
 \def\bidule#1#2/{(1=#1) 和 (2=#2)}
 \bidule 甲乙丙/丁
 \bidule 甲乙/丙丁
-}\begin{verbatim}
+}
+\begin{verbatim}
 \bidule 甲乙丙/丁
 
-\bidule 甲乙/丙丁
-\end{verbatim}
+\bidule 甲乙/丙丁\end{verbatim}
 \end{codelist}
 
 因此，该指令可以将其遇到的第一个字符接收为第一个参数，并将接下来到符号\dm{/}前的所有内容接收为第二个参数。因此，我们可以粗略编写一个关于首字下沉的指令：
@@ -1057,11 +1034,11 @@ les règles d’usage en typographie...
 \def\glurps#1#2/{{\Huge#1}\textsc{#2}}
 \newcommand{\lettrinedev}[1]{\glurps#1/}
 \lettrinedev{Bon bé} ouala le travail
-}\begin{verbatim}
+}
+\begin{verbatim}
 \def\glurps#1#2/{{\Huge#1}\textsc{#2}}
 \newcommand{\lettrinedev}[1]{\glurps#1/}
-\lettrinedev{Bon bé} ouala le travail
-\end{verbatim}
+\lettrinedev{Bon bé} ouala le travail\end{verbatim}
 \end{codelist}
 
 接下来，将放大的字母写得更低一些：
@@ -1072,13 +1049,13 @@ les règles d’usage en typographie...
     \raisebox{\baselineskip}{\textsc{#2}}}
 \newcommand{\lettrinedev}[1]{\glurps#1/}
 \lettrinedev{Bon bé} ouala le travail
-}\begin{verbatim}
+}
+\begin{verbatim}
 \def\glurps#1#2/{%
     {\Huge#1}%
     \raisebox{\baselineskip}{\textsc{#2}}}
 \newcommand{\lettrinedev}[1]{\glurps#1/}
-\lettrinedev{Bon bé} ouala le travail
-\end{verbatim}
+\lettrinedev{Bon bé} ouala le travail\end{verbatim}
 \end{codelist}
 
 \subsection{在段落中实现首字下沉}
@@ -1123,7 +1100,8 @@ les règles d’usage en typographie...
 这段文字已经准备好接收美观的首字下沉
 效果了，首字下沉会占据大约两行的空间，
 也许是正正好好的两行。
-}\begin{verbatim}
+}
+\begin{verbatim}
 \setlength{\indletB}{.8cm}% 随意指定的值
 \setlength{\larligB}{\textwidth-\indletB}
 \setlength{\indletH}{1.5cm}% 随意指定的值
@@ -1135,8 +1113,7 @@ les règles d’usage en typographie...
 
 这段文字已经准备好接收美观的首字下沉
 效果了，首字下沉会占据大约两行的空间，
-也许是正正好好的两行。
-\end{verbatim}
+也许是正正好好的两行。\end{verbatim}
 \end{codelist}
 
 场地已经准备好，接下来要做的就是在合适的位置插入“大字母”以及后续的内容。我们从创建指定字体的指令开始\yz{
@@ -1149,14 +1126,14 @@ les règles d’usage en typographie...
     2\baselineskip}
 {\lettrinefont
     Pour écrire les grosses lettres（为了写下大字母）}
-}\begin{verbatim}
+}
+\begin{verbatim}
 \DeclareFixedFont{%
     \lettrinefont}{T1}{ppl}{m}{n}{%
     2\baselineskip}
 {\lettrinefont
     Pour écrire les grosses lettres
-    （为了写下大字母）}
-\end{verbatim}
+    （为了写下大字母）}\end{verbatim}
 \end{codelist}
 
 接下来，修改指令\verb|\glurps|\jz{
@@ -1171,8 +1148,7 @@ les règles d’usage en typographie...
     \setlength{\larligB}{\textwidth-\indletB}% 
     \parshape=3\indletH\larligH\indletB\larligB
     % 0cm\textwidth% 
-    \noindent\usebox{\lalettrine}}
-\end{verbatim}
+    \noindent\usebox{\lalettrine}}\end{verbatim}
 \end{dmd}
 
 效果如下\jz{
@@ -1203,12 +1179,12 @@ les règles d’usage en typographie...
 produire des caractères les uns derrière
 les autres et ainsi de former des mots
 donnant lieu à des  phrases.
-}\begin{verbatim}
+}
+\begin{verbatim}
 \lettrineI{Ce chapitre} a pour but de
 produire des caractères les uns derrière
 les autres et ainsi de former des mots
-donnant lieu à des phrases.
-\end{verbatim}
+donnant lieu à des phrases.\end{verbatim}
 \end{codelist}
 
 细心的读者可能注意到了，突出显示的部分没有出现在正确的位置，似乎需要我们在水平和竖直方向进行一些必要的平移。这里我们先向左错动，在\verb|\lettrine|定义的最后一行，我们编写如下内容：
@@ -1216,8 +1192,7 @@ donnant lieu à des phrases.
 \begin{dmd}
 \begin{verbatim}
 % 错动距离等同于总宽度
-\noindent\hspace{-\indletH}
-\end{verbatim}
+\noindent\hspace{-\indletH}\end{verbatim}
 \end{dmd}
 
 效果如下：
@@ -1238,12 +1213,12 @@ donnant lieu à des phrases.
 produire des caractères les uns derrière
 les autres et ainsi de former des mots
 donnant lieu à des phrases.
-}\begin{verbatim}
+}
+\begin{verbatim}
 \lettrineII{Ce chapitre} a pour but de
 produire des caractères les uns derrière
 les autres et ainsi de former des mots
-donnant lieu à des phrases.
-\end{verbatim}
+donnant lieu à des phrases.\end{verbatim}
 \end{codelist}
 
 然后，我们融入竖直方向的平移：
@@ -1251,8 +1226,7 @@ donnant lieu à des phrases.
 \begin{dmd}
 \begin{verbatim}
 \noindent\hspace{-\indletH}% 
-\raisebox{-\baselineskip}[0pt][0pt]{\usebox{\lalettrine}}
-\end{verbatim}
+\raisebox{-\baselineskip}[0pt][0pt]{\usebox{\lalettrine}}\end{verbatim}
 \end{dmd}
 
 效果如下：
@@ -1275,12 +1249,12 @@ donnant lieu à des phrases.
 produire des caractères les uns derrière
 les  autres et ainsi de former des mots
 donnant lieu à des phrases.
-}\begin{verbatim}
+}
+\begin{verbatim}
 \lettrineIII{Ce chapitre} a pour but de
 produire des caractères les uns derrière
 les  autres et ainsi de former des mots
-donnant lieu à des phrases.
-\end{verbatim}
+donnant lieu à des phrases.\end{verbatim}
 \end{codelist}
 
 更清醒的读者也许会注意到，“大字母”有些太贴近文本了。因此，我们可以稍微将\verb|\indletB|扩大些。最终的首字下沉代码如下：
@@ -1296,8 +1270,7 @@ donnant lieu à des phrases.
     \indletH\larligH\indletB\larligB0cm\textwidth% 
     \noindent\hspace{-\indletH}% 
     \raisebox{-\baselineskip}[0pt][0pt]{%
-        \usebox{\lalettrine}}}
-\end{verbatim}
+        \usebox{\lalettrine}}}\end{verbatim}
 \end{dmd}
 
 \section{一种摘要}
@@ -1308,16 +1281,14 @@ donnant lieu à des phrases.
 
 \begin{dmd}
 \begin{verbatim}
-\@starttoc{toc}
-\end{verbatim}
+\@starttoc{toc}\end{verbatim}
 \end{dmd}
 
 在指令\verb|\listoffigures|中，其形式为：
 
 \begin{dmd}
 \begin{verbatim}
-\@starttoc{lof}
-\end{verbatim}
+\@starttoc{lof}\end{verbatim}
 \end{dmd}
 
 内部指令\verb|\@starttoc|可以借助一个辅助文件开启表格（目录、图，等等），而通过传入参数，可以提供辅助文件的拓展名。这里，对于目录使用了\dm{toc}，对于图片列表使用了\dm{lof}。因此，我们可以首先以如下方式创建指令\verb|\sommaire|：
@@ -1326,8 +1297,7 @@ donnant lieu à des phrases.
 \begin{verbatim}
 \newcommand{\sommaire}{% 
     \chapter*{Sommaire} 
-    \@starttoc{som}}
-\end{verbatim}
+    \@starttoc{som}}\end{verbatim}
 \end{dmd}
 
 对应地，辅助文件带有扩展名\dm{som}，并且包含摘要的入口。接下来，我们需要为该\dm{som}文件填充内容。为此，需要知道，指令\verb|\chapter|、\verb|\section|等都可以调用一个为目录插入入口的指令。这样一来，我们如果编写这样的代码：
@@ -1359,8 +1329,7 @@ donnant lieu à des phrases.
 \begin{dmd}
 \begin{verbatim}
 \contentsline{chapter}{%
-    \numberline {1}二些东西}{3}{chapter.1}
-\end{verbatim}
+    \numberline {1}二些东西}{3}{chapter.1}\end{verbatim}
 \end{dmd}
 
 这样（赫尔克里·波洛有事情做了），上述指令会最终调用如下形式的指令：
@@ -1388,8 +1357,7 @@ renewcommand{\addcontentsline}[3]{%
     \ifthenelse{% 插入节、章、部分
         \equal{#2}{section} \or \equal{#2}{chapter} 
                             \or \equal{#2}{part}}{%
-            \aclORIG{som}{#2}{#3}}{}}
-\end{verbatim}
+            \aclORIG{som}{#2}{#3}}{}}\end{verbatim}
 \end{dmd}
 
 \begin{exclamation}
@@ -1436,8 +1404,7 @@ renewcommand{\addcontentsline}[3]{%
 \begin{verbatim}
 \begin{theglossary}
     \item 一些内容\pfill 27
-    \end{theglossary}
-\end{verbatim}
+    \end{theglossary}\end{verbatim}
 \end{dmd}
 
 注意到，这样即将需要具体插入我们的文档的术语字典由环境\dm{theglossary}构成，每个入口都由\verb|\item|和页码（此例中为27）构成。为了达到最终的目的，接下来需要做的工作如下。
@@ -1471,8 +1438,7 @@ renewcommand{\addcontentsline}[3]{%
     \setlength{\itemsep}{.8\baselineskip}%
     \renewcommand{\makelabel}[1]{%
         \boiteentreeglossaire{##1}}}}
-    {\end{list}}
-\end{verbatim}
+    {\end{list}}\end{verbatim}
 \end{dmd}
 
 其中，\verb|\boiteentreeglossaire|为：
@@ -1483,8 +1449,7 @@ renewcommand{\addcontentsline}[3]{%
     \parbox[b]{\labelwidth}{%
         \setlength{\fboxsep}{3pt}% 
         \setlength{\fboxrule}{.4pt}% 
-        \shadowbox{\sffamily#1}\\\hfill\mbox{}}}
-\end{verbatim}
+        \shadowbox{\sffamily#1}\\\hfill\mbox{}}}\end{verbatim}
 \end{dmd}
 
 我们参考以上相关段落来解释这些指令。总的来说，我们的效果如下：
@@ -1493,11 +1458,11 @@ renewcommand{\addcontentsline}[3]{%
 \begin{leglossaire}
 \item[球] 十分规则的土豆。
 \end{leglossaire}
-}\begin{verbatim}
+}
+\begin{verbatim}
 \begin{leglossaire}
 \item[球] 十分规则的土豆。
-\end{leglossaire}
-\end{verbatim}
+\end{leglossaire}\end{verbatim}
 \end{codelist}
 
 \subsection{生成\texttt{.glx}文件}
@@ -1507,8 +1472,7 @@ renewcommand{\addcontentsline}[3]{%
 \begin{dmd}
 \begin{verbatim}
 preamble "\n\\begin{leglossaire}"
-postamble "\n\\end{leglossaire}"
-\end{verbatim}
+postamble "\n\\end{leglossaire}"\end{verbatim}
 \end{dmd}
 
 同样应当出现在风格文件（如我们可以命名为\dm{glossaire.ist}）中的，是在\dm{.glo}文件中指明术语字典入口的关键字：
@@ -1559,8 +1523,7 @@ postamble "\n\\end{leglossaire}"
 \begin{verbatim}
 \newcommand{\pasdenumerodepage}[1]{}% “吃掉”页码
 \newcommand{\entreeglossaire}[2]{%
-    \glossary{[#1] #2|pasdenumerodepage}}
-\end{verbatim}
+    \glossary{[#1] #2|pasdenumerodepage}}\end{verbatim}
 \end{dmd}
 
 这样创建的\dm{.glx}文件如下：
@@ -1570,8 +1533,7 @@ postamble "\n\\end{leglossaire}"
 \begin{leglossaire}
 \item [球] 十分规则的土豆。
     \pagedenumerodepage{27}
-\end{leglossaire}
-\end{verbatim}
+\end{leglossaire}\end{verbatim}
 \end{dmd}
 
 其中，将页码（如此处为27）发送给一片虚无。
@@ -1604,8 +1566,7 @@ postamble "\n\\end{leglossaire}"
     \InputIfFileExists{\jobname.glx}{%
         \typeout{术语字典已分类}}{%
         \typeout{文件\jobname.glx不存在}}
-    }
-\end{verbatim}
+    }\end{verbatim}
 \end{dmd}
 
 对于该指令，注意到以下几点。
@@ -1631,8 +1592,7 @@ postamble "\n\\end{leglossaire}"
 delim_0 ""
 preamble "\n\\begin{leglossaire}"
 postamble "\n\\end{leglossaire}"
-keyword "\\glossaryentry"
-\end{verbatim}
+keyword "\\glossaryentry"\end{verbatim}
 \end{dmd}
 
 \section{标签}
@@ -1667,8 +1627,7 @@ keyword "\\glossaryentry"
 \newlength{\ongletwidth}
 \newlength{\ongletheight}
 \setlength{\ongletheight}{32pt}
-\setlength{\ongletwidth}{.96cm}
-\end{verbatim}
+\setlength{\ongletwidth}{.96cm}\end{verbatim}
 \end{dmd}
 
 生成字盒的指令如下：
@@ -1685,8 +1644,7 @@ keyword "\\glossaryentry"
             \ifthenelse{\isodd{\value{page}}}{%
                 \ongletfont\thechapter}{%
                 \reflectbox{\ongletfont\thechapter}}% 
-            \vfill}}}
-\end{verbatim}
+            \vfill}}}\end{verbatim}
 \end{dmd}
 
 可以注意到，这里使用了包\textsf{graphicx}的指令\verb|\reflectbox|。我们同样可以注意到，段落字盒中的内容是上下居中的，这是借助两个纵向的弹性空间实现的。最后，我们在该字盒中插入章号，并借助指令\verb|\ongletfont|为其选用一个有些神秘的字体\celan{\S 9.4}：
@@ -1712,9 +1670,9 @@ keyword "\\glossaryentry"
 
 \begin{codelist}[11.29]{
     字盒的样式为：\biteonglet……
-}\begin{verbatim}
-字盒的样式为：\b@iteonglet……
-\end{verbatim}
+}
+\begin{verbatim}
+字盒的样式为：\b@iteonglet……\end{verbatim}
 \end{codelist}
 
 需要注意到，由\verb|\colorbox|生成的字盒尺寸会跟随尺寸\verb|\fboxsep|：
@@ -1722,10 +1680,10 @@ keyword "\\glossaryentry"
 \begin{codelist}[11.30]{
     \setlength{\fboxsep}{15pt}
     字盒的样式为：\biteonglet……
-}\begin{verbatim}
+}
+\begin{verbatim}
 \setlength{\fboxsep}{15pt}
-字盒的样式为：\b@iteonglet……
-\end{verbatim}
+字盒的样式为：\b@iteonglet……\end{verbatim}
 \end{codelist}
 
 \subsection{标签的位置}
@@ -1742,8 +1700,7 @@ keyword "\\glossaryentry"
 \begin{dmd}
 \begin{verbatim}
 \fancyhead[RO]{\bfseries\thepage\onglet}
-\fancyhead[LE]{\onglet\bfseries\thepage}
-\end{verbatim}
+\fancyhead[LE]{\onglet\bfseries\thepage}\end{verbatim}
 \end{dmd}
 
 在此基础上，为了将数字设置得粗一些，我们将指令\verb|\onglet|的结果放到页眉中（对于奇数页，放置在右侧；对于偶数页，放置在左侧）。我们将会看到如何一步一步地来搭建指令。
@@ -1762,8 +1719,7 @@ keyword "\\glossaryentry"
         \hspace*{\marginparwidth}\hspace*{\marginparsep}}{% 
         % 偶数页 
         \hspace*{-\marginparwidth}\hspace*{-\marginparsep}}%
-    \b@iteonglet}
-\end{verbatim}
+    \b@iteonglet}\end{verbatim}
 \end{dmd}
 
 对于当前页，它的效果是这样的：
@@ -1795,8 +1751,7 @@ keyword "\\glossaryentry"
     \ifthenelse{\isodd{\value{page}}}{%
         \hspace*{\marginparwidth}\hspace*{\marginparsep}}{% 
     % 否则
-        \hspace*{-\marginparwidth}\hspace*{-\marginparsep}}% \b@iteonglet}}
-\end{verbatim}
+        \hspace*{-\marginparwidth}\hspace*{-\marginparsep}}% \b@iteonglet}}\end{verbatim}
 \end{dmd}
 
 对于当前页，效果如下：
@@ -1836,8 +1791,7 @@ keyword "\\glossaryentry"
         \hspace*{\marginparwidth}\hspace*{\marginparsep}%
         \hspace*{-\ongletwidth}\hspace{-2\fboxsep}}{% 奇数页
         \hspace*{-\marginparwidth}\hspace*{-\marginparsep}}%
-        \b@iteonglet}}
-\end{verbatim}
+        \b@iteonglet}}\end{verbatim}
 \end{dmd}
 
 这是因为，对于标签字盒的宽度来说，需要计入两次由指令\verb|\colorbox|确定的尺寸\verb|\fboxsep|。
@@ -1860,8 +1814,7 @@ keyword "\\glossaryentry"
         \hspace*{\marginparwidth}\hspace*{\marginparsep}% 
         \hspace*{-\ongletwidth}\hspace{-2\fboxsep}}{% 
         \hspace*{-\marginparwidth}\hspace*{-\marginparsep}}% 
-        \raisebox{2cm}[0pt][0pt]{\b@iteonglet}}}
-\end{verbatim}
+        \raisebox{2cm}[0pt][0pt]{\b@iteonglet}}}\end{verbatim}
 \end{dmd}
 
 由此，我们可以放置一个向上平移2厘米的标签：
@@ -1903,8 +1856,7 @@ keyword "\\glossaryentry"
 \begin{verbatim}
 % 第一个标签的位置
 \newlength{\ongletvshift}
-\setlength{\ongletvshift}{2cm}
-\end{verbatim}
+\setlength{\ongletvshift}{2cm}\end{verbatim}
 \end{dmd}
 
 接下来，对于系数$\alpha$：
@@ -1935,8 +1887,7 @@ keyword "\\glossaryentry"
             -\ongletvshift
             -\ongletheight*\real{\thechapter}*\real{\ongletsep}}% 
         % 确定标签位置 
-        \raisebox{\ongletvpos}[0pt][0pt]{\b@iteonglet}}}
-\end{verbatim}
+        \raisebox{\ongletvpos}[0pt][0pt]{\b@iteonglet}}}\end{verbatim}
 \end{dmd}
 
 呼！它正常工作了……对于不属于附录的章节来说，是这样的。但对于附录中编号为A、B、C等的章节，它还是不太行。这是因为我们不能通过这样的编号来计算纵向位置。稍微看过\dm{book.cls}后，我们可以确定有这样的内容：
@@ -1947,8 +1898,7 @@ keyword "\\glossaryentry"
 \setcounter{chapter}{0}% 
 \setcounter{section}{0}%
 [...] 
-\gdef\thechapter{\@Alph\c@chapter}}
-\end{verbatim}
+\gdef\thechapter{\@Alph\c@chapter}}\end{verbatim}
 \end{dmd}
 
 这里，我们可以理解，当我们使用\verb|\appendix|开启附录部分时，章节的计数器会自动归零，并且生成大写字母。因此，需要找到一种应付方式，来让标签在我们来到附录后依然可以继续平移。我采用的解决方案比较简单，就是使用新的计数器来为章节和附录计数。为了达到这个目的，我们做如下声明：
@@ -1971,8 +1921,7 @@ keyword "\\glossaryentry"
     \cleardoublepage 
     \setcounter{chapitre}{1} 
     [...]
-    }
-\end{verbatim}
+    }\end{verbatim}
 \end{dmd}
 
 接下来，每次调用指令\verb|\chapter|时，该计数器递增：
@@ -1984,8 +1933,7 @@ keyword "\\glossaryentry"
 \stepcounter{chapitre} 
 \thispagestyle{plain} 
 [...]
-}
-\end{verbatim}
+}\end{verbatim}
 \end{dmd}
 
 \section{\LaTeX 示例}
@@ -1995,12 +1943,12 @@ keyword "\\glossaryentry"
     \dm{ltxexemple}。它可以用于
     在文档中展示\LaTeX 代码示例和相
     关结果……
-}\begin{verbatim}
+}
+\begin{verbatim}
 作为本章的结尾，我们介绍一下环境
 \ltxenv{ltxexemple}。它可以用于
 在文档中展示\LaTeX{}代码示例和相
-关结果……
-\end{verbatim}
+关结果……\end{verbatim}
 \end{codelist}
 
 \subsection{必要工具}
@@ -2020,8 +1968,7 @@ keyword "\\glossaryentry"
 \chapter{De nouveaux jouets}
 \label{chap-jouets}
 
-\begin{epigraphe}{Le Cantique des cantiques Ct \textbf{7} 11}
-\end{verbatim}
+\begin{epigraphe}{Le Cantique des cantiques Ct \textbf{7} 11}\end{verbatim}
 \end{dmd}
 
 其次，环境\verb|VerbatimOut|可以做相反的工作：
@@ -2046,8 +1993,7 @@ keyword "\\glossaryentry"
     % 在高度基础上加上深度
     \addtolength{#1}{\dp\@tempboxa}%
     % 排空临时字盒
-    \setbox\@tempboxa\box\voidb@x}%
-\end{verbatim}
+    \setbox\@tempboxa\box\voidb@x}%\end{verbatim}
 \end{dmd}
 
 注意，这里使用了\TeX 的指令，\verb|\ht|和\verb|\dp|可以分别返回字盒的高度和深度，指令\verb|\setbox|等价于\TeX 的\verb|\savebox|，字盒\verb|\@tempboxa|是\LaTeX 使用的临时字盒。最后，字盒\verb|\voidb@x|是空字盒。
@@ -2067,8 +2013,7 @@ keyword "\\glossaryentry"
 \newenvironment{ltxexemple}{% 
     \VerbatimEnvironment 
     \begin{VerbatimOut}{\jobname.exa}}{% begin条目
-    \end{VerbatimOut}}% end条目
-\end{verbatim}
+    \end{VerbatimOut}}% end条目\end{verbatim}
 \end{dmd}
 
 \begin{qquestion}
@@ -2078,11 +2023,9 @@ keyword "\\glossaryentry"
 我们写得很好看，但这个环境目前只能把其内容存储到文件中。因此，需要在环境的end条目中编写如下内容：
 
 \begin{dmd}
-\begin{verbatim}
-\end{VerbatimOut}%
+\begin{verbatim}\end{verbatimOut}%
 \VerbatimInput{\jobname.exa}% 照抄内容 
-\input{\jobname.exa}% 由LaTeX解释内容
-\end{verbatim}
+\input{\jobname.exa}% 由LaTeX解释内容\end{verbatim}
 \end{dmd}
 
 这样一来，
@@ -2095,7 +2038,7 @@ keyword "\\glossaryentry"
     \VerbatimInput{\jobname.exa}%
     \input{\jobname.exa}}
 
-\newsavebox{\bitebxedminipage}
+% \newsavebox{\bitebxedminipage}
 
 \newenvironment{boxedminipage}[2][c]{%
     \begin{lrbox}{\bitebxedminipage}%
@@ -2109,8 +2052,7 @@ keyword "\\glossaryentry"
 \begin{verbatim}
 \begin{ltxexemplei}
     \LaTeX{}代码……
-\end{ltxexemplei}
-\end{verbatim}
+\end{ltxexemplei}\end{verbatim}
   \end{dmd}
     \end{boxedminipage}%
     \hfill 的结果是：\hfill
@@ -2130,16 +2072,14 @@ keyword "\\glossaryentry"
 \begin{dmd}
 \begin{verbatim}
 \newsavebox{\b@iteentree}
-\newsavebox{\b@itesortie}
-\end{verbatim}
+\newsavebox{\b@itesortie}\end{verbatim}
 \end{dmd}
 
 这样做的目的是存储“入口”（entrée；代码）和“出口”（sortie；由\LaTeX 解释的代码）。因此，在end条文中，我们可以编写如下环境：
 
 \begin{dmd}
 \begin{verbatim}
-[...]
-\end{VerbatimOut}%
+[...]\end{verbatimOut}%
 \begin{ltxexempleenv}% 拓宽边栏
     \savebox{\b@iteentree}{% 保存照抄代码
         \begin{minipage}{.57\linewidth}
@@ -2152,8 +2092,7 @@ keyword "\\glossaryentry"
         \end{minipage}}%
     \usebox{\b@iteentree}
     \usebox{\b@itesortie}
-\end{ltxexempleenv}
-\end{verbatim}
+\end{ltxexempleenv}\end{verbatim}
 \end{dmd}
 
 环境\dm{ltxexempleenv}和我们讲到拓宽边栏\celan{\S 11.1.4}时介绍的很像，唯一的区别时这里切换到了\verb|\small|\yz{
@@ -2167,45 +2106,14 @@ keyword "\\glossaryentry"
   \LaTeX{}代码……
   \par\noindent
   后面没了。
-\end{ltxexempleii}
-\end{verbatim}
+\end{ltxexempleii}\end{verbatim}
 \end{dmd}
 
 的效果是：
 
 \makeatletter%
 
-\newsavebox{\b@iteentree}
-\newsavebox{\b@itesortie}
 
-\newlength{\ltxexmargintdeborde}
-\newlength{\ltxexmargextdeborde}
-\setlength{\ltxexmargintdeborde}{5mm}
-\setlength{\ltxexmargextdeborde}{10mm}
-
-\newenvironment{ltxexempleenv}{%
-  \begin{list}{}{%
-      \setlength{\topsep}{5pt}%
-      \setlength{\listparindent}{0pt}%
-      \checkoddpage%
-      \ifcpoddpage% si la page est impaire on fait d�border "un peu" le code et "bcp" l'exemple
-        \setlength{\leftmargin}{-\ltxexmargintdeborde}%
-        \setlength{\rightmargin}{-\ltxexmargextdeborde}
-      \else% si la page est paire, on fait d�border "bcp" le code "un peu l'exemple"
-        \setlength{\leftmargin}{-\ltxexmargextdeborde}%
-        \setlength{\rightmargin}{-\ltxexmargintdeborde}
-      \fi
-      \setlength{\itemindent}{0pt}%
-      \setlength{\parsep}{\parskip}}%
-    \item[]\noindent\small\ignorespaces%
-  }%
-{\end{list}}
-
-\newcommand{\ltxexoutputwidthpercent}{44}
-\newcommand{\ltxexinputwidthpercent}{53}
-
-\newcommand{\ltxexoutputwidthratio}{.\ltxexoutputwidthpercent}
-\newcommand{\ltxexinputwidthratio}{.\ltxexinputwidthpercent}
 
 \newenvironment{ltxexempleii}{%
   \setlength{\fboxsep}{.5pt}%
@@ -2239,8 +2147,7 @@ keyword "\\glossaryentry"
 \begin{verbatim}
 \pagebreak[3]% 我们建议于此处换页
 \VerbatimEnvironment% 
-\begin{VerbatimOut}[gobble=2]{\jobname.exa}
-\end{verbatim}
+\begin{VerbatimOut}[gobble=2]{\jobname.exa}\end{verbatim}
 \end{dmd}
 
 选项\dm{[gobble=2]}用于系统性地“吞掉”各行开头的两个字符，因为所有优秀的编辑器\jz{
@@ -2253,8 +2160,7 @@ keyword "\\glossaryentry"
 \LaTeX{}代码……
 \par\noindent
 后面没了。
-\end{ltxexempleii}
-\end{verbatim}
+\end{ltxexempleii}\end{verbatim}
 \end{dmd}
 
 的效果是：
@@ -2280,8 +2186,7 @@ keyword "\\glossaryentry"
 \begin{dmd}
 \begin{verbatim}
 \renewcommand{\thec@exemple}{% 
-    \thechapter.\arabic{c@exemple}}
-\end{verbatim}
+    \thechapter.\arabic{c@exemple}}\end{verbatim}
 \end{dmd}
 
 每次调用环境\dm{ltxexemple}时，我们都调用如下指令：
@@ -2322,9 +2227,9 @@ keyword "\\glossaryentry"
 
 \begin{codelist}[11.34]{
 小字盒（\affichenumex）
-}\begin{verbatim}
-小字盒（\affichenumex）
-\end{verbatim}
+}
+\begin{verbatim}
+小字盒（\affichenumex）\end{verbatim}
 \end{codelist}
 
 因此，环境\verb|ltxexemple|可以更新为如下版本：
@@ -2333,10 +2238,8 @@ keyword "\\glossaryentry"
 \begin{verbatim}
 \newenvironment{ltxexempleiii}{%
 \VerbatimEnvironment%
-\begin{VerbatimOut}[gobble=2]{\jobname.exa}}{%
-\end{VerbatimOut}%
-\begin{ltxexempleenv}% 
-\end{verbatim}
+\begin{VerbatimOut}[gobble=2]{\jobname.exa}}{%\end{verbatimOut}%
+\begin{ltxexempleenv}% \end{verbatim}
 \verb+    \refstepcounter{c@exemple}% +\quad$\leftarrow$\textsf{计数器递增}
 \begin{verbatim}
     \savebox{\b@iteentree}{ [...] }% 
@@ -2346,8 +2249,7 @@ keyword "\\glossaryentry"
     \parbox{3pt}{\rotatebox{90}{\affichenumex}}%
     \kern2pt%
     \usebox{\b@itesortie}
-\end{ltxexempleenv}}%
-\end{verbatim}
+\end{ltxexempleenv}}%\end{verbatim}
 \end{dmd}
 
 效果如下：
@@ -2393,9 +2295,9 @@ keyword "\\glossaryentry"
 
 \begin{codelist}[11.36]{
 以下一个示例。
-}\begin{verbatim}
-以下一个示例。\label{monexemple}
-\end{verbatim}
+}
+\begin{verbatim}
+以下一个示例。\label{monexemple}\end{verbatim}
 \end{codelist}
 
 我们不希望这样……对此，这里采用的解决方案是，以一个指令作为媒介，将可能出现的标签\verb|\label|传递给环境。编写如下代码：
@@ -2405,8 +2307,7 @@ keyword "\\glossaryentry"
 \newcommand{\l@belex}{} % 当前标签值
 % 用于更新标签的指令 
 \newcommand{\labelexemple}[1]{%
-\renewcommand{\l@belex}{#1}}
-\end{verbatim}
+\renewcommand{\l@belex}{#1}}\end{verbatim}
 \end{dmd}
 
 这样一来，在使用环境\dm{ltxexemple}前，只需要调用如下指令：
@@ -2421,8 +2322,7 @@ keyword "\\glossaryentry"
 \begin{verbatim}
 % 如果当前标签不为空
 \ifthenelse{\equal{\l@belex}{}}{}{%
-    \label{\l@belex}}% 放置一个标签
-\end{verbatim}
+    \label{\l@belex}}% 放置一个标签\end{verbatim}
 \end{dmd}
 
 用法语来讲，这里的意思是：“如果指令\verb|\l@belex|被定义为非空的值，我们就使用这个值来放置标签（指令\verb|\label|）”。接下来，需要将指令\verb|\l@belex|设置为空值，因为有一些情况与此相反，会多次定义标签（\LaTeX 的消息“Label ``$\times\!\times\!\times$''\ multiply defined”）。因此，我们可以这样写：
@@ -2432,8 +2332,7 @@ keyword "\\glossaryentry"
 % 如果当前标签不为空 
 \ifthenelse{\equal{\l@belex}{}}{}{%
     \label{\l@belex}% 放置标签
-    \renewcommand{\l@belex}{}}
-\end{verbatim}
+    \renewcommand{\l@belex}{}}\end{verbatim}
 \end{dmd}
 
 从语法角度来讲，这样编写是正确的，但是这里指令\verb|\renewcommand|的有效范围是局部的，它被限制为只能在检测\verb|\ifthenelse|的区域内生效。为了规避这个问题，我们可以使用\TeX 的结构：
@@ -2456,8 +2355,7 @@ keyword "\\glossaryentry"
 \hauteurtotale{\hauteurdutrait}{\usebox{\b@itesortie}}% 
 % 取较大值
 \ifthenelse{\hauteurdutrait>\tempodim}{%
-    \setlength{\tempodim}{\hauteurdutrait}}{}
-\end{verbatim}
+    \setlength{\tempodim}{\hauteurdutrait}}{}\end{verbatim}
 \end{dmd}
 
 当然，需要提前声明尺寸\verb|\hauteurdutrait|和\verb|\tempodim|。在11.8.1小节中，我们可以看到有关指令\verb|\settotoalheight|的介绍。
@@ -2467,8 +2365,7 @@ keyword "\\glossaryentry"
 \begin{dmd}
 \begin{verbatim}
 % 出去编号字盒的线高
-\setlength{\hauteurdutrait}{\tempodim-\l@rgeurnumex}
-\end{verbatim}
+\setlength{\hauteurdutrait}{\tempodim-\l@rgeurnumex}\end{verbatim}
 \end{dmd}
 
 经过作者大会无记名投票，决定线条长度的70\%绘制在编号上方，30\%绘制在编号下方。因此，中央的线条由如下的\verb|\parbox|生成：
@@ -2483,8 +2380,7 @@ keyword "\\glossaryentry"
         \rotatebox{90}{\affichenumex}\\\nointerlineskip% 
         % 下方30% 
         \rule{3pt}{.3\hauteurdutrait}%
-    \end{center}}
-\end{verbatim}
+    \end{center}}\end{verbatim}
 \end{dmd}
 
 因此，指令\verb|\nointerlineskip|可以删除竖直方向上所有多余的空白，而这些空白可能是由指令\verb|\\|插入的。在关于微型目录的小节\celan{\S 10.7.4}中，我们给出了更多的细节。
@@ -2494,10 +2390,10 @@ keyword "\\glossaryentry"
 \dm{ltexexemple}的全部内容。
 注意，尺寸\dm{3pt}也可以是
 某个长度定义的对象……
-}\begin{verbatim}
+}
+\begin{verbatim}
 好了，这就是关于这个出色的环境
 \ltxenv{ltexexemple}的全部内容。
 注意，尺寸\texttt{3pt}也可以是
-某个长度定义的对象……
-\end{verbatim}
+某个长度定义的对象……\end{verbatim}
 \end{codelist}

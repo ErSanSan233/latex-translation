@@ -173,17 +173,83 @@
 
 %代码清单
 %NOTE 代码清单序号在翻译时进行了手动调整，跟原书有较大差别，不用自动计数为宜
-\newenvironment{codelist}[2][TODO代码清单序号]{
-    \setlength{\parindent}{0pt}
-    \begin{mdframed}
-        \textbf{清单 #1}
-        \begin{mdframed}[backgroundcolor=lightgray,hidealllines=true]
-            #2 
-        \end{mdframed}
-}
-{
-    \end{mdframed}
-}
+\makeatletter
+
+\newsavebox{\b@iteentree}
+\newsavebox{\b@itesortie}
+\newsavebox{\list@nb}
+\newsavebox{\bitebxedminipage}
+\newlength{\ltxexmargintdeborde}
+\newlength{\ltxexmargextdeborde}
+
+\setlength{\ltxexmargintdeborde}{5mm}
+\setlength{\ltxexmargextdeborde}{10mm}
+
+\newcommand{\ltxexoutputwidthpercent}{44}
+\newcommand{\ltxexinputwidthpercent}{53}
+\newcommand{\ltxexoutputwidthratio}{.\ltxexoutputwidthpercent}
+\newcommand{\ltxexinputwidthratio}{.\ltxexinputwidthpercent}
+
+\newenvironment{ltxexempleenv}{%
+    \noindent
+    }{}
+
+\newlength{\hauteurdutrait}
+\newlength{\tempodim}
+
+\newcommand{\hauteurtotale}[2]{%
+    % 存储要测量的对象
+    \setbox\@tempboxa\hbox{{#2}}%
+    % 获取高度
+    \setlength{#1}{\ht\@tempboxa}% 
+    % 在高度基础上加上深度
+    \addtolength{#1}{\dp\@tempboxa}%
+    % 排空临时字盒
+    \setbox\@tempboxa\box\voidb@x}%
+
+\newenvironment{codelist}[2][TODO代码清单序号]{%
+    \setlength{\fboxsep}{.5pt}%
+    \savebox{\b@itesortie}{%
+    \begin{minipage}{\ltxexoutputwidthratio\linewidth} 
+        \setlength{\parindent}{10pt}%
+        #2%把文件效果誊写进来
+    \end{minipage}}%
+    \savebox{\list@nb}{%
+        \raisebox{-1.7pt}[0pt][0pt]{% 
+        \setlength{\fboxsep}{.7pt}%
+        \colorbox{black}{% 
+        \makebox[16pt]{%
+        \color{white}%
+        \tiny\sffamily{\textbf{#1}}}}}%
+    }
+    \VerbatimEnvironment%
+    \begin{VerbatimOut}{\jobname.exa}}{
+    \end{VerbatimOut}%照抄到外面的文件
+    \begin{ltxexempleenv}%
+        \savebox{\b@iteentree}{%
+        \begin{minipage}{\ltxexinputwidthratio\linewidth}
+            \input{\jobname.exa}%\VerbatimInput{\jobname.exa}%照抄进来
+        \end{minipage}}%
+        % 测量入口字盒 
+        \hauteurtotale{\tempodim}{\usebox{\b@iteentree}}%
+        % 测量出口字盒 
+        \hauteurtotale{\hauteurdutrait}{\usebox{\b@itesortie}}%
+        % 取较大值
+        \ifthenelse{\hauteurdutrait<\tempodim}{%
+            \setlength{\hauteurdutrait}{\tempodim}}{}%
+        \addtolength{\hauteurdutrait}{-16pt}
+        %开始绘制
+        \usebox{\b@iteentree}%
+        \parbox{3pt}{%
+        \begin{center}%
+            \rule{2pt}{.7\hauteurdutrait}\\\nointerlineskip
+            \rotatebox{90}{\usebox{\list@nb}}\\\nointerlineskip
+            \rule{2pt}{.3\hauteurdutrait}%
+        \end{center}}%
+        \kern4pt%
+        \usebox{\b@itesortie}%
+    \end{ltxexempleenv}}%
+\makeatother%
 
 %字体
 \setCJKmainfont[
@@ -303,7 +369,7 @@
 \input{chapitreA.tex}
 \input{chapitreB.tex}
 \input{chapitreC.tex}
-% \input{chapitreD.tex}
+\input{chapitreD.tex}
 
 \backmatter
 \input{biliographie.tex}

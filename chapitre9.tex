@@ -48,8 +48,7 @@
 \begin{verbatim}
 This is e-TeXk, Version 3.14159-2.1 (Web2C 7.4.5)
 %&-line parsing enabled.
-**
-\end{verbatim}
+**\end{verbatim}
 \end{dmd}
 
 在“赤裸裸的\TeX ”呼喊出这个冷峻的提示（\dm{**}）的邀请下，我勇敢地回复了\verb|&latex|来要求加载\LaTeX 格式。没有丝毫延迟，就得到了答复：
@@ -61,8 +60,7 @@ entering extended mode
 LaTeX2e <2001/06/01>
 Babel <v3.7h> and hyphenation patterns for american,
 french loaded.
-*
-\end{verbatim}
+*\end{verbatim}
 \end{dmd}
 
 注意，提示中少了一个星号。从现在开始，我们就可以交互式地编写\LaTeX 文档了。从绝对意义商来说，这样做的乐趣不大，但从获取指令的定义和语法上来说，却很有帮助。因此，举例来说，我们可以写下这样的指令：
@@ -76,8 +74,7 @@ french loaded.
 \begin{dmd}
 \begin{verbatim}
 *\show\mbox
-> \mbox=\long macro:
-\end{verbatim}
+> \mbox=\long macro:\end{verbatim}
 \verb|#1->\leavevmode \hbox {#1}.| \quad $\leftarrow$\textsf{此处为定义}\\
 \verb+<*> \show\mbox+
 \end{dmd}
@@ -118,12 +115,12 @@ french loaded.
     bidule
 }
 ==(\beurk)==
-}\begin{verbatim}
+}
+\begin{verbatim}
 \newcommand{\beurk}{
     bidule
 }
-==(\beurk)==
-\end{verbatim}
+==(\beurk)==\end{verbatim}
 \end{codelist}
 
 可以观察到，“bidule”一词的两侧出现了我们不想要的空格。为了避免这种现象，可以使用如下方式改写：
@@ -134,12 +131,12 @@ french loaded.
     bidule%
 }
 ==(\beurk)==
-}\begin{verbatim}
+}
+\begin{verbatim}
 \newcommand{\beurk}{%
     bidule%
 }
-==(\beurk)==
-\end{verbatim}
+==(\beurk)==\end{verbatim}
 \end{codelist}
 
 在另一些场景下，空格会为行文带来有害的干预。定义以下环境：
@@ -148,8 +145,7 @@ french loaded.
 \begin{verbatim}
 \newenvironment{hyperimportant}{% 
     \bfseries\itshape}{% 
-    \upshape\mdseries}
-\end{verbatim}
+    \upshape\mdseries}\end{verbatim}
 \end{dmd}
 
 \newenvironment{hyperimportant}{% 
@@ -162,13 +158,13 @@ french loaded.
   de multiplier les sauvegardes
 \end{hyperimportant}
 de vos documents personnels
-}\begin{verbatim}
+}
+\begin{verbatim}
 Il est impératif
 \begin{hyperimportant}
     de multiplier les sauvegardes
 \end{hyperimportant}
-de vos documents personnels
-\end{verbatim}
+de vos documents personnels\end{verbatim}
 \end{codelist}
 
 如果仔细观察生成的文本，可以注意到，在粗斜体部分文本“{\bfseries\itshape de ... sauvegardes}”的两侧各有两个空格：
@@ -185,12 +181,12 @@ Il est impératif\begin{hyperimportant} de
 multiplier  les
 sauvegardes\end{hyperimportant} de vos
 documents personnels
-}\begin{verbatim}
+}
+\begin{verbatim}
 Il est impératif\begin{hyperimportant} de
 multiplier  les
 sauvegardes\end{hyperimportant} de vos
-documents personnels
-\end{verbatim}
+documents personnels\end{verbatim}
 \end{codelist}
 
 为了防止被这种问题牵扯精力，一般可以求助于两条用于删除双重空格的指令。对于序列之前的双重空格，可以调用指令\verb+\ignorespaces+来消除它；对于序列之后的，可以调用\verb|\unskip|。
@@ -205,13 +201,13 @@ documents personnels
 
 a\truc\bidule b\par
 a\ignorespaces\truc\bidule b
-}\begin{verbatim}
+}
+\begin{verbatim}
 \newcommand{\truc}{ }
 \newcommand{\bidule}{ }
 
 a\truc\bidule b\par
-a\ignorespaces\truc\bidule b
-\end{verbatim}
+a\ignorespaces\truc\bidule b\end{verbatim}
 \end{codelist}
 
 以上示例中，指令\verb|\truc|和\verb|\bidule|的唯一作用都是在被调用时生成空格。例如，以下指令会生成“\verb*|a { }b|”：
@@ -225,8 +221,7 @@ a\ignorespaces\truc\bidule b
 \begin{dmd}
 \begin{verbatim}
 \newenvironment{hyperimportant}{% 
-    \bfseries\itshape\ignorespaces}{\upshape\mdseries}
-\end{verbatim}
+    \bfseries\itshape\ignorespaces}{\upshape\mdseries}\end{verbatim}
 \end{dmd}
 
 这样就能删除一个空格：
@@ -240,13 +235,13 @@ a\ignorespaces\truc\bidule b
     de multiplier les sauvegardes
 \end{hyperimportant}
 de vos documents personnels.
-}\begin{verbatim}
+}
+\begin{verbatim}
 Il est impératif
 \begin{hyperimportant}
     de multiplier les sauvegardes
 \end{hyperimportant}
-de vos documents personnels.
-\end{verbatim}
+de vos documents personnels.\end{verbatim}
 \end{codelist}
 
 \subsubsection{指令\dm{\backslash unskip}}
@@ -258,12 +253,12 @@ de vos documents personnels.
 \newcommand{\bidule}{ }
 a\truc\bidule b\par
 a\truc\bidule\unskip b
-}\begin{verbatim}
+}
+\begin{verbatim}
 \newcommand{\truc}{ }
 \newcommand{\bidule}{ }
 a\truc\bidule b\par
-a\truc\bidule\unskip b
-\end{verbatim}
+a\truc\bidule\unskip b\end{verbatim}
 \end{codelist}
 
 最后，我们环境的“正确”定义如下：
@@ -271,8 +266,7 @@ a\truc\bidule\unskip b
 \begin{dmd}
 \begin{verbatim}
 \newenvironment{hyperimportant}{% 
-    \bfseries\itshape\ignorespaces}{\unskip\upshape\mdseries}
-\end{verbatim}
+    \bfseries\itshape\ignorespaces}{\unskip\upshape\mdseries}\end{verbatim}
 \end{dmd}
 
 这样，就可以删除所有我们不希望插入的空格：
@@ -286,13 +280,13 @@ Il est impératif
   de multiplier les sauvegardes
 \end{hyperimportant}
 de vos documents personnels.
-}\begin{verbatim}
+}
+\begin{verbatim}
 Il est impératif
 \begin{hyperimportant}
   de multiplier les sauvegardes
 \end{hyperimportant}
-de vos documents personnels.
-\end{verbatim}
+de vos documents personnels.\end{verbatim}
 \end{codelist}
 
 \subsection{字符\dm{@}}
@@ -305,8 +299,7 @@ de vos documents personnels.
 % 我们可以在这里胡说八道
 \renewcommand{\@ttention}{oulala...}
 \makeatother
-% 但在这里就不行了
-\end{verbatim}
+% 但在这里就不行了\end{verbatim}
 \end{dmd}
 
 这里举例的指令\verb+\@ttention+只有在字符\dm{@}被当作字母的情况下才能被操作。这正是\verb+\makeatletter+的作用：将字符\dm{@}转化为字母，就像其他字母一样。而指令\verb+\makeatother+可以重新赋予该字符区别于其他字母的特殊性。
@@ -437,12 +430,12 @@ de vos documents personnels.
     \begin{displaymath}
         9!=9\times 8\times 7\times 6\times 5\times 4\times 3\times 2\times 1
     \end{displaymath}
-}\begin{verbatim}
+}
+\begin{verbatim}
 9的阶乘可以表达为：
 \begin{displaymath}
     9!=\itfactorielle{9}
-\end{displaymath}
-\end{verbatim}
+\end{displaymath}\end{verbatim}
 \end{codelist}
 
 解决该问题的一种方法是，编写一个指令，其中包含循环\verb|\whiledo|：
@@ -474,8 +467,7 @@ de vos documents personnels.
     \thecptfact\times % 显示计数器，并紧跟一个乘号
     \addtocounter{cptfact}{-1} % 计数器递减
     \recfactorielle{\thecptfact}} % 做一次递归调用
-{1}} % 否则（即值为1）显示1
-\end{verbatim}
+{1}} % 否则（即值为1）显示1\end{verbatim}
 \end{dmd}
 
 该指令当然与之前的方法生成相同的结果。注意到，在\verb|\ifthenelse|的条件中，我们将一个数（\dm{\#1}）与另一个数（1）作比较。我们也能注意到，\verb|\times|的出现说明了该指令需要在数学模式中执行。如果有需要，我们也可以通过指令\verb|\ensuremath|\celan{\S 4.5.1}来避开这个问题。
@@ -494,10 +486,10 @@ de vos documents personnels.
 \begin{codelist}[9.10]{
     \affsymb{pzd}{249} \affsymb{pzd}{75}
     \affsymb{pzd}{221} \affsymb{pzd}{88}
-}\begin{verbatim}
+}
+\begin{verbatim}
 \affsymb{pzd}{249} \affsymb{pzd}{75}
-\affsymb{pzd}{221} \affsymb{pzd}{88}
-\end{verbatim}
+\affsymb{pzd}{221} \affsymb{pzd}{88}\end{verbatim}
 \end{codelist}
 
 这个指令如下：
@@ -509,8 +501,7 @@ de vos documents personnels.
         \parbox[][16pt][b]{1em}{ % 使用段落字盒框起
             \centering % 字盒高度为16pt，宽度为1em
             \Pisymbol{#1}{#2}\\ % 字盒的内容居中 
-            \tiny#2}}} % 字盒的内容由符号和其编号组成
-\end{verbatim}
+            \tiny#2}}} % 字盒的内容由符号和其编号组成\end{verbatim}
 \end{dmd}
 
 参数\dm{\#1}是字体名（\dm{pzd}或\dm{psy}），参数\dm{\#2}是符号\celan{\S C}的编号。如果你一路阅读本书到这里，并且已经仔细阅读了第4章，尤其是4.4节，那么这段指令对你来说没什么特别的……接下来，我们定义一个指令，用于显示一系列符号：
@@ -549,13 +540,13 @@ de vos documents personnels.
 \begin{center}
     \symboles[40]{pzd}{3}{6}
 \end{center}
-}\begin{verbatim}
+}
+\begin{verbatim}
 如下是Zapf Dingbats字体下的一些符号，
 从40号开始，排列成3行6列：
 \begin{center}
     \symboles[40]{pzd}{3}{6}
-\end{center}
-\end{verbatim}
+\end{center}\end{verbatim}
 \end{codelist}
 
 如下所示，是指令\verb|\symboles|：
@@ -582,8 +573,7 @@ de vos documents personnels.
             \stepcounter{ccol}} % 进到下一列
         \stepcounter{clig} % 进到下一行
     % 换行，除非到达结尾
-    \ifthenelse{\value{clig}<\value{cligmax}}{\\}{}}}
-\end{verbatim}
+    \ifthenelse{\value{clig}<\value{cligmax}}{\\}{}}}\end{verbatim}
 \end{dmd}
 
 当然，需要使用指令\verb|\newcounter|声明其中的五个计数器。
@@ -594,13 +584,13 @@ de vos documents personnels.
 \begin{center}
     \symboles[240]{psy}{3}{6}
 \end{center}
-}\begin{verbatim}
+}
+\begin{verbatim}
 我知道，你尤其好奇在计数器到达边界时，
 指令会怎样处理：
 \begin{center}
     \symboles[240]{psy}{3}{6}
-\end{center}
-\end{verbatim}
+\end{center}\end{verbatim}
 \end{codelist}
 
 \subsection{判断页码的奇偶性}
@@ -611,8 +601,7 @@ de vos documents personnels.
 \begin{verbatim}
 \ifthenelse{\isodd{\value{page}}} 
 {……对于奇数页……}
-{……对于偶数页……}
-\end{verbatim}
+{……对于偶数页……}\end{verbatim}
 \end{dmd}
 
 这是因为，在\emph{两个页面的交界处}检测时，页码计数器可能不会被更新：如果在页面开头请求的页码计数器，它会返回前一页的页码……这要归咎于\TeX 实现换页时的处理方法。为了避开这个问题，有很多可用的解决方案。此处采用的方法是使用包\textbf{chngpage}。它使得我们可以在想要检测页码奇偶性的时候人工插入一个\verb|\label|。
@@ -625,8 +614,7 @@ de vos documents personnels.
     ……对于奇数页……
 \else
     ……对于偶数页……
-\fi 
-\end{verbatim}
+\fi \end{verbatim}
 \end{dmd}
 
 \section{字体}
@@ -874,13 +862,13 @@ de vos documents personnels.
     faire de l'\emph{italique}... c'est
     dingue !} Et hop nous voila de nouveau
     en \dm{\backslash rmdefault}
-}\begin{verbatim}
+}
+\begin{verbatim}
 {\fontfamily{cmfr}\selectfont  On passe
   en ``Funny Roman'' et même qu'on peut
   faire de l'\emph{italique}... c'est
   dingue !} Et hop nous voila de nouveau
-  en \verb+\rmdefault+
-\end{verbatim}
+  en \verb+\rmdefault+\end{verbatim}
 \end{codelist}
 
 在\verb|\selectfont|前可以使用调用的指令如下：
@@ -902,14 +890,14 @@ de vos documents personnels.
   
 Et nous voila de nouveau en
 \dm{\backslash rmdefault}
-}\begin{verbatim}
+}
+\begin{verbatim}
 {\fontfamily{ppl}\fontseries{b}%
   \fontsize{1.8cm}{2cm}\selectfont
   Big!}
 
 Et nous voila de nouveau en
-\verb+\rmdefault+
-\end{verbatim}
+\verb+\rmdefault+\end{verbatim}
 \end{codelist}
 
 最后，如果我们调用指令时，总是重复使用各种属性都完全相同的字体，则可以借助指令\verb|\DeclareFixedFont|。该指令可以接受六个参数（名称、编码方式、族、自重、风格、字号），以便我们像使用指令一样去在接下来的文本中使用：
@@ -920,13 +908,13 @@ Et nous voila de nouveau en
 Avant {\toupiti bon bé là à moins d'avoir
 une bonne loupe vous ne serez pas capable
 de lire ce texte} après.
-}\begin{verbatim}
+}
+\begin{verbatim}
 \DeclareFixedFont{\toupiti}
 {T1}{pag}{m}{n}{3pt}
 Avant {\toupiti bon bé là à moins d'avoir
 une bonne loupe vous ne serez pas capable
-de lire ce texte} après.
-\end{verbatim}
+de lire ce texte} après.\end{verbatim}
 \end{codelist}
 
 \section{新环境列表}
@@ -942,8 +930,7 @@ de lire ce texte} après.
 \newenvironment{自定义列表}% {\begin{list}%
 {……默认项的代码……}
 {……列表的特征……} }%
-{\end{list}}
-\end{verbatim}
+{\end{list}}\end{verbatim}
 \end{dmd}
 
 环境\dm{list}接收\emph{两个}参数。第一个参数可以定义默认项目标签（或项）的样式，第二个参数可以定义列表本身，尤其是：
@@ -1083,8 +1070,7 @@ de lire ce texte} après.
 \begin{verbatim}
 \newenvironment{listebasique}
 {\begin{list}{}{}}
-{\end{list}}
-\end{verbatim}
+{\end{list}}\end{verbatim}
 \end{dmd}
 
 那么对于带有项目标签的列表，可以这样使用它：
@@ -1105,7 +1091,8 @@ de lire ce texte} après.
     \end{listebasique}
     后文后文后文后文后文后文后文后文后文后文后文
     后文后文后文
-}\begin{verbatim}
+}
+\begin{verbatim}
 前文前文前文前文前文前文前文前文前文前文前文
 前文前文
 \begin{listebasique}
@@ -1116,8 +1103,7 @@ de lire ce texte} après.
     \item[一个东西] v v v v v v v v v v v
 \end{listebasique}
 后文后文后文后文后文后文后文后文后文后文后文
-后文后文后文
-\end{verbatim}
+后文后文后文\end{verbatim}
 \end{codelist}
 
 对于没有列表标签的情况，则可以这样使用：
@@ -1131,7 +1117,8 @@ de lire ce texte} après.
     \end{listebasique}
     后文后文后文后文后文后文后文后文后文后文后文
     后文后文后文
-}\begin{verbatim}
+}
+\begin{verbatim}
 前文前文前文前文前文前文前文前文前文前文前文
 前文前文
 \begin{listebasique}
@@ -1139,8 +1126,7 @@ de lire ce texte} après.
         e e e e e e e e e e e e e e e e e e
 \end{listebasique}
 后文后文后文后文后文后文后文后文后文后文后文
-后文后文后文
-\end{verbatim}
+后文后文后文\end{verbatim}
 \end{codelist}
 
 \subsection{示例}
@@ -1166,7 +1152,8 @@ B.2节中，描述\LaTeX 辅助文件的列表是使用如下代码生成的：
         \item[dvi] \emph{独立于设备}的文
         件……
     \end{ficaux}
-}\begin{verbatim}
+}
+\begin{verbatim}
 \begin{ficaux}
     \item[tex] \LaTeX{} 源文件，吧啦
     吧啦吧啦……
@@ -1174,8 +1161,7 @@ B.2节中，描述\LaTeX 辅助文件的列表是使用如下代码生成的：
     \item[log] 跟踪……
     \item[dvi] \emph{独立于设备}的文
     件……
-\end{ficaux}
-\end{verbatim}
+\end{ficaux}\end{verbatim}
 \end{codelist}
 
 环境\dm{ficaux}按如下方式定义：
@@ -1191,8 +1177,7 @@ B.2节中，描述\LaTeX 辅助文件的列表是使用如下代码生成的：
         % 左边距：
         \setlength{\leftmargin}{\labelwidth+\labelsep} 
         \renewcommand{\makelabel}[1]{% 生成项目标签：
-            \framebox[\labelwidth]{\texttt{##1}}}}}{\end{list}}
-\end{verbatim}
+            \framebox[\labelwidth]{\texttt{##1}}}}}{\end{list}}\end{verbatim}
 \end{dmd}
 
 在这个例子中，以下关系使得列表入口的位置按图\ref{fig:9.2a}所示的方式确定：
@@ -1246,7 +1231,8 @@ B.2节中，描述\LaTeX 辅助文件的列表是使用如下代码生成的：
         \item o o o o o o o o o o o o o o o o
             o o o o o o o o o o o o o o o o o
     \end{question}
-}\begin{verbatim}
+}
+\begin{verbatim}
 \begin{question}
     \item o o o o o o o o o o o o o o o o
         o o o o o o o o o o o o o o o o o
@@ -1255,8 +1241,7 @@ B.2节中，描述\LaTeX 辅助文件的列表是使用如下代码生成的：
         o o o o o o o o o o o o o o o o o
     \item o o o o o o o o o o o o o o o o
         o o o o o o o o o o o o o o o o o
-\end{question}
-\end{verbatim}
+\end{question}\end{verbatim}
 \end{codelist}
 
 该环境可以由以下代码生成：
@@ -1272,8 +1257,7 @@ B.2节中，描述\LaTeX 辅助文件的列表是使用如下代码生成的：
         \setlength{\rightmargin}{10pt} 
         \renewcommand{\makelabel}[1]{%
             \etiquettequestion{##1}}}}
-   {\end{list}}
-\end{verbatim}
+   {\end{list}}\end{verbatim}
 \end{dmd}
 
 对应的位置确定过程如图\ref{fig:9.2b}所示。注意到，在列表的定义中，指令\verb|\usecounter|用来创建编号，并且指明了会用到的计数器。因此，需要声明所涉及的计数器：
@@ -1288,8 +1272,7 @@ B.2节中，描述\LaTeX 辅助文件的列表是使用如下代码生成的：
 \begin{verbatim}
 \newcommand{\etiquettequestion}[1]{% 
     \makebox[\labelwidth]{%
-        \Pisymbol{pzd}{47}$_\thecptquestion$}}
-\end{verbatim}
+        \Pisymbol{pzd}{47}$_\thecptquestion$}}\end{verbatim}
 \end{dmd}
 
 最后，以下指令重定义了指令\verb|\makelabel|：
@@ -1310,8 +1293,7 @@ B.2节中，描述\LaTeX 辅助文件的列表是使用如下代码生成的：
     \setlength{\leftmargin}{\labelwidth+\labelsep}% 
     \renewcommand{\makelabel}[1]{%
         $\blacktriangle$ \ltxpack{##1} \hfil:}}}
-    {\end{list}}
-\end{verbatim}
+    {\end{list}}\end{verbatim}
 \end{dmd}
 
 \newenvironment{packages}{\begin{list}{}{%
@@ -1331,12 +1313,12 @@ B.2节中，描述\LaTeX 辅助文件的列表是使用如下代码生成的：
         \item[▴\ 某东西] 该包可以用于在文档中插入
         某东西，而不需要这个玩意和那个物件……
     \end{packages}
-}\begin{verbatim}
+}
+\begin{verbatim}
 \begin{packages}
     \item[某东西] 该包可以用于在文档中插入
     某东西，而不需要这个玩意和那个物件……
-\end{packages}
-\end{verbatim}
+\end{packages}\end{verbatim}
 \end{codelist}
 
 \subsection{略微变形的示例}
@@ -1392,8 +1374,7 @@ B.2节中，描述\LaTeX 辅助文件的列表是使用如下代码生成的：
     \setlength{\itemsep}{.8\baselineskip}% 
     \renewcommand{\makelabel}[1]{%
         \boiteentreeglossaire{##1}}}}
-{\end{list}}
-\end{verbatim}
+{\end{list}}\end{verbatim}
 \end{dmd}
 
 \verb|\itemsep|的值\verb|.8\baselineskip|针对每个列表入口插入了空白，可以项目标签“透透气”。以下指令用于生成包含列表入口的字盒，可以使段落重叠在上面：
@@ -1404,8 +1385,7 @@ B.2节中，描述\LaTeX 辅助文件的列表是使用如下代码生成的：
     \parbox[b]{\labelwidth}{%
         \setlength{\fboxsep}{3pt}% 
         \setlength{\fboxrule}{.4pt}% 
-        \shadowbox{\sffamily#1}\\\hfill\mbox{}}}
-\end{verbatim}
+        \shadowbox{\sffamily#1}\\\hfill\mbox{}}}\end{verbatim}
 \end{dmd}
 
 为了了解该字盒是如何放置的，我们对上述指令做出了一些调整，来绘制字盒的轮廓：
@@ -1450,7 +1430,8 @@ B.2节中，描述\LaTeX 辅助文件的列表是使用如下代码生成的：
           o o o o o o o o o o o o o o o o o o
           o o o o o o o o o o o o o o o o o o
     \end{leglossaire}
-}\begin{verbatim}
+}
+\begin{verbatim}
 \begin{leglossaire}
     \renewcommand{\boiteentreeglossaire}{%
     \fboiteentreeglossaire}% 
@@ -1460,8 +1441,7 @@ B.2节中，描述\LaTeX 辅助文件的列表是使用如下代码生成的：
     \item[零七又八碎] o o o o o o o o o o
       o o o o o o o o o o o o o o o o o o
       o o o o o o o o o o o o o o o o o o
-\end{leglossaire}
-\end{verbatim}
+\end{leglossaire}\end{verbatim}
 \end{codelist}
 
 \section{被“打包成盒”的环境}
@@ -1500,8 +1480,7 @@ B.2节中，描述\LaTeX 辅助文件的列表是使用如下代码生成的：
     % begin条文 
     \begin{center}\begin{minipage}{.8\textwidth}}{% 
     % end条文
-    \end{minipage}\end{center}}
-\end{verbatim}
+    \end{minipage}\end{center}}\end{verbatim}
 \end{dmd}
 
 环境带有这样的使用场景：
@@ -1519,14 +1498,14 @@ B.2节中，描述\LaTeX 辅助文件的列表是使用如下代码生成的：
     \hfill 弗兰克·扎帕 （Frank Zappa）
 \end{remarque}
 接下来继续我们的正文……
-}\begin{verbatim}
+}
+\begin{verbatim}
 我们可以（启发性地）突出显示如下内容：
 \begin{remarque}
     爵士未死，只是闻起来显得滑稽。
     \hfill 弗兰克·扎帕 （Frank Zappa）
 \end{remarque}
-接下来继续我们的正文……
-\end{verbatim}
+接下来继续我们的正文……\end{verbatim}
 \end{codelist}
 
 问题来了：\emph{该如何将这个突出显示的内容框起来？}不带一丝犹豫，我们就可以回答：\emph{借助环境}\dm{lrbox}\emph{。}考虑到\LaTeX 没有方法来在\dm{begin}条文中开启一个\verb|\fbox|并在\dm{end}条文中结束它，我们可以利用如下原则：
@@ -1551,8 +1530,7 @@ B.2节中，描述\LaTeX 辅助文件的列表是使用如下代码生成的：
     % 生成带框的字盒
     \begin{center}
         \fbox{\usebox{\boiteremarque}}
-    \end{center}}
-\end{verbatim}
+    \end{center}}\end{verbatim}
 \end{dmd}
 
 \newsavebox{\boiteremarque} 
@@ -1575,14 +1553,14 @@ B.2节中，描述\LaTeX 辅助文件的列表是使用如下代码生成的：
     \hfill 弗兰克·扎帕 （Frank Zappa）
 \end{remarque}
 接下来继续我们的正文……
-}\begin{verbatim}
+}
+\begin{verbatim}
 我们可以（启发性地）突出显示如下内容：
 \begin{remarque}
     爵士未死，只是闻起来显得滑稽。
     \hfill 弗兰克·扎帕 （Frank Zappa）
 \end{remarque}
-接下来继续我们的正文……
-\end{verbatim}
+接下来继续我们的正文……\end{verbatim}
 \end{codelist}
 
 这个思路在接下来的几章中会反复使用。

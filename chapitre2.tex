@@ -57,8 +57,8 @@
     \texttt{char}类型的\emph{变量}\textsl{总是}被编码为\textbf{8 位}。
 }
 \begin{verbatim}
-\texttt{char}类型的\emph{变量}\textsl{总是}被编码为\textbf{8 位}。
-\end{verbatim}
+\texttt{char}类型的\emph{变量}\textsl{总是}
+被编码为\textbf{8 位}。\end{verbatim}
 \end{codelist}
 
 注意，在上面的命令中，指令\verb|\emph|（对应的声明是\verb|\em|，可以以更优雅的方式突出显示一组词）。相较声明，强烈建议使用\emph{指令}。当要修改文本的一部分时，使用指令是更明智的选择\jz{定义指令也是。}：
@@ -66,20 +66,19 @@
 \begin{codelist}[2.2]{
     {\em \bfseries 马格马（Magma） \mdseries 的音乐就像一面镜子，每个人都能看到他自己的倒影。}
 }
-    \begin{verbatim}
+\begin{verbatim}
 {\em \bfseries 马格马（Magma） \mdseries 的音乐
-就像一面镜子，每个人都能看到他自己的倒影。}
-    \end{verbatim}
+就像一面镜子，每个人都能看到他自己的倒影。}\end{verbatim}
 \end{codelist}
 
 接下来的例子展示了如何使用组。声明\verb|\slshape|出现在一个组中，因此它只在组内发挥作用。此外，组会继承它外层的组的参数。这样一来，“silence”一词会使用\textsf{非衬线}体（根据外层的组），并且\textsl{倾斜}展示（根据内层的声明）：
 
 \begin{codelist}[2.3]{
     \sffamily 在爵士乐中，{\slshape 沉默（silence）\/}永远是正确的。因此，这是一种充满万千可能的音乐。
-}\begin{verbatim}\sffamily 在爵士乐中，
+}
+\begin{verbatim}\sffamily 在爵士乐中，
 {\slshape 沉默（silence）\/}永远是正确的。因此，
-这是一种充满万千可能的音乐。
-\end{verbatim}
+这是一种充满万千可能的音乐。\end{verbatim}
 \end{codelist}
 
 \subsection{意大利体校正}
@@ -90,10 +89,11 @@
     le {\em chef} a toujours raison.\par
     le {\em chef\/} a toujours raison.\par
     le \emph{chef} a toujours raison.\par
-}\begin{verbatim}le {\em chef} a toujours raison.\par
+}
+\begin{verbatim}
+le {\em chef} a toujours raison.\par
 le {\em chef\/} a toujours raison.\par
-le \emph{chef} a toujours raison.\par
-\end{verbatim}
+le \emph{chef} a toujours raison.\par\end{verbatim}
 \end{codelist}
 
 我们可以看到，指令\verb|\emph|实现了校正，然而，若要使用声明，则需要明确地借助宏\verb|\/|来实现相同的效果。
@@ -171,14 +171,15 @@ le \emph{chef} a toujours raison.\par
         且前后带有间距
     \end{center}
     然后继续下一段……
-}\begin{verbatim}……上一段的结尾。
+}
+\begin{verbatim}
+……上一段的结尾。
 \begin{center}
   完美居中的\\
   几行文字\\
   且前后带有间距
 \end{center}
-然后继续下一段……
-\end{verbatim}
+然后继续下一段……\end{verbatim}
 \end{codelist}
 
 同样，我们可以轻易地借助环境\dm{flushright}，让一个段落右对齐排列：
@@ -190,15 +191,14 @@ le \emph{chef} a toujours raison.\par
       的文字
     \end{flushright}
     然后继续下一段……
-    }{
-\begin{verbatim}……上一段的结尾。
+    }
+\begin{verbatim}
+……上一段的结尾。
 \begin{flushright}
   两行右对齐\\
   的文字
 \end{flushright}
-然后继续下一段……
-\end{verbatim}
-    }
+然后继续下一段……\end{verbatim}
 \end{codelist}
 
 注意，以上两个示例中，命令\verb|\\|起到了换行的功能。除一些特殊场景（表格、文档的标题和作者、特意的居中或对齐处理）外，不要使用这个命令——如果想要换行，需要使用空行或命令\verb|\par|。
@@ -229,12 +229,12 @@ le \emph{chef} a toujours raison.\par
 
     {\centering Emacs\\Makes\\
       A\\Computer\\Slow\\}
-}{\begin{verbatim}Emacs代表:
+}
+\begin{verbatim}
+Emacs代表:
 
 {\centering Emacs\\Makes\\
-  A\\Computer\\Slow\\}
-\end{verbatim}
-}
+  A\\Computer\\Slow\\}\end{verbatim}
 \end{codelist}
 
 \subsection{列表}
@@ -250,7 +250,8 @@ le \emph{chef} a toujours raison.\par
 \item 不应当写逗号。
 \end{itemize}
 然后行文继续。
-}\begin{verbatim}
+}
+\begin{verbatim}
 ……一句话的结尾。
 \begin{itemize}
 \item 在复杂的计算中，
@@ -258,8 +259,7 @@ le \emph{chef} a toujours raison.\par
   传递给分母；
 \item 不应当写逗号。
 \end{itemize}
-然后行文继续。
-\end{verbatim}
+然后行文继续。\end{verbatim}
 \end{codelist}
 
 环境\dm{enumerate}遵循类似的规则，只不过项目会被编号。一个环境中可以套用另一个环境。下面的例子中，我们同时展示了\dm{ enumerate}和\dm{description}环境：
@@ -275,7 +275,9 @@ le \emph{chef} a toujours raison.\par
       \end{enumerate}
     \end{description}
     跟之前一样，接下来段落继续……
-}\begin{verbatim}……还是一句话的结尾。
+}
+\begin{verbatim}
+……还是一句话的结尾。
 \begin{description}
 \item[\TeX] \TeX{}book；
 \item[\LaTeX] 两本重要的书：
@@ -286,8 +288,7 @@ le \emph{chef} a toujours raison.\par
   \item 《\LaTeX{}伴侣》。
   \end{enumerate}
 \end{description}
-跟之前一样，接下来段落继续……
-\end{verbatim}
+跟之前一样，接下来段落继续……\end{verbatim}
 \end{codelist}
 
 至于环境\dm{description}的列表，在我们习惯的文档处理中没有对应内容。不幸的是，对于\LaTeX 初学者，它最好的结果是被误用，最差的结果是被无视。
@@ -305,15 +306,15 @@ le \emph{chef} a toujours raison.\par
     xxxxxxxxx \= \kill
     \> 无观点
     \end{tabbing}
-}\begin{verbatim}
+}
+\begin{verbatim}
 \begin{tabbing}
   左倾 \= 中间立场 \= 右倾 \\
   \> 中立派 \\
   \> \> 保守派 \\
   字字字字字 \= \kill
   \> 无观点
-\end{tabbing}
-\end{verbatim}
+\end{tabbing}\end{verbatim}
 \end{codelist}
 
 我们可以从这个例子中看到两个规则：
@@ -336,14 +337,16 @@ le \emph{chef} a toujours raison.\par
         俩 & 仨 \\
         五个 & 六个  \\ \hline
       \end{tabular}
-}\begin{verbatim}嚯：
+}
+\begin{verbatim}
+嚯：
 \begin{tabular}{|r|c|}
   \hline
   俩 & 仨 \\
   五个 & 六个  \\ \hline
-\end{tabular}
-\end{verbatim}
+\end{tabular}\end{verbatim}
 \end{codelist}
+
 通过这个例子，我们可以得到以下结论。
 
 \begin{itemize}
@@ -373,13 +376,14 @@ le \emph{chef} a toujours raison.\par
 \end{tabular}
 ，另一个表：\begin{tabular}[t]{|c|} 
 丙\\丁\end{tabular}
-}\begin{verbatim}一个表：\begin{tabular}[b]{|c|} 
+}
+\begin{verbatim}
+一个表：\begin{tabular}[b]{|c|} 
   甲\\乙
 \end{tabular}
 ，另一个表：\begin{tabular}[t]{|c|} 
   丙\\丁
-\end{tabular}
-\end{verbatim}
+\end{tabular}\end{verbatim}
 \end{codelist}
 
 我们可以看出，参数\dm{b}将表格“放置”在当前行上，参数\dm{t}将表格“悬挂”在当前行下。如果没有参数，表格会在竖直方向上居中，就像前面的例子一样。
@@ -404,8 +408,7 @@ le \emph{chef} a toujours raison.\par
 class pixel{
   int x,y;
 public:
-  pixel(int i=0, int j=0);};
-\end{verbatim}
+  pixel(int i=0, int j=0);};\end{verbatim}
 \backslash end\{verbatim\}
 \end{codelist}
 
@@ -418,12 +421,12 @@ public:
 这两个指令的参数不使用花括号括起，而夹在任何一种可以满足以下两个条件的符号之间：不能是特殊符号、不能在参数中包含：
 
 \begin{codelist}[2.14]{
-  使用{\ttfamily \#include<stdlib.h>+}可以
+  使用{\ttfamily \#include<stdlib.h>}可以
   包含C语言标准库的原型。
-}\begin{verbatim}
+}
+\begin{verbatim}
 使用\verb+#include<stdlib.h>+可以
-包含C语言标准库的原型。
-\end{verbatim}
+包含C语言标准库的原型。\end{verbatim}
 \end{codelist}
 
 \begin{exclamation}
@@ -444,7 +447,8 @@ public:
   \hfill\textbf{帕斯卡}
 \end{quote}
 然后继续被打断的段落……
-}\begin{verbatim}
+}
+\begin{verbatim}
 ……仍然是一句话的结尾。
 \begin{quote}
   万物相关。\hfill\textbf{爱因斯坦}
@@ -453,8 +457,7 @@ public:
   那就是所有事情都是确定的。
   \hfill\textbf{帕斯卡}
 \end{quote}
-然后继续被打断的段落……
-\end{verbatim}
+然后继续被打断的段落……\end{verbatim}
 \end{codelist}
 
 指令\verb|\hfill|可以插入一段在水平空间上\celan{\S 4.2.4}无限延伸的空白。环境\dm{quotation}有一些细微的差别：
@@ -469,7 +472,8 @@ public:
   （Alphonse Allais）
 \end{quotation}
 然后继续被打断的段落……
-}\begin{verbatim}
+}
+\begin{verbatim}
 ……仍然是一句话的结尾。
 \begin{quotation}
   人有许多缺陷，但我们若能
@@ -478,8 +482,7 @@ public:
   \raggedleft 阿方斯·阿莱
   （Alphonse Allais）
 \end{quotation}
-然后继续被打断的段落……
-\end{verbatim}
+然后继续被打断的段落……\end{verbatim}
 \end{codelist}
 
 实际上，对于这两个环境，根据莱斯利·兰波特的介绍，一个（\dm{quote}）是为引用一条或多条短的内容而准备的，另一个（\dm{quotation}）是为引用一条长的内容而准备。
@@ -539,11 +542,11 @@ public:
   ……一句话的结尾。
   \section*{3.2\quad 结论}
   最终，……
-}\begin{verbatim}
+}
+\begin{verbatim}
 ……一句话的结尾。
 \section{结论}
-最终，……
-\end{verbatim}
+最终，……\end{verbatim}
 \end{codelist}
 
 每种标题指令都带有一种“带星”形式（例如，\verb|\section*|），可以插入不参与编号的标题。但需要注意，这种标题不会出现在\celan{\S 2.9.2}目录中。与节（section）相关的标题指令中可以接受参数，用于明确目录中展示的内容。例如：
@@ -562,10 +565,11 @@ public:
   无论如何，指令\texttt{footnote}$^a$可以在页面底部插入注释。\\
   ————\\%TODO 
   {\footnotesize $^a$正如其名。}
-}\ttfamily
-无论如何，指令\backslash verb +footnote+
-\backslash footnote\{正如其名。\}可以在页面
-底部插入注释。\rmfamily
+}
+\begin{verbatim}
+无论如何，指令\verb+footnote+
+\footnote{正如其名。}可以在页面
+底部插入注释。\end{verbatim}
 \end{codelist}
 
 在一些特殊情况中，\verb|\footnote|不能生成我们想要的效果。此时，有必要分两步走：
@@ -584,12 +588,12 @@ public:
   \end{tabular}\\
   ————\\
   {\footnotesize $^a$一个注释。}
-}\begin{verbatim}
+}
+\begin{verbatim}
 \begin{tabular}{cc}
   甲 & 乙\footnotemark \\
   丙 & 丁
-\end{tabular}\footnotetext{一个注释。}
-\end{verbatim}
+\end{tabular}\footnotetext{一个注释。}\end{verbatim}
 \end{codelist}
 
 \section{页眉和页脚}
@@ -642,7 +646,8 @@ Figure 1: 有个老丁头
 %   \caption*{有个老丁头}
 % \end{figure}
 
-}\begin{verbatim}
+}
+\begin{verbatim}
 此段包含了浮动环境“figure”，
 其内容可以在页面中浮动。
 \begin{figure}
@@ -652,8 +657,7 @@ Figure 1: 有个老丁头
     四\\
   \end{center}
   \caption{有个老丁头}
-\end{figure}
-\end{verbatim}
+\end{figure}\end{verbatim}
 \end{codelist}
 
 注意到，使用指令\verb|\caption|可以生成图题或表题。文本“Figure 1:”会自动生成，并给出对应该图片的编号。这种“风格”也是可以自定义的。
@@ -737,14 +741,15 @@ Figure 1: 有个老丁头
   ax^2 + bx + c = 0 \tag{2.12}
 \end{equation}
 第13页3.5节中的方程2.12这么说完那么说……
-}\begin{verbatim}
+}
+\begin{verbatim}
 \section{二次方程}\label{sec-2dg}
 二次方程具有以下形式 :
 \begin{equation}
   ax^2 + bx + c = 0 \label{equ}
 \end{equation}
-第\pageref{sec-2dg}页\ref{sec-2dg}节中的方程\ref{equ}这么说完那么说……
-\end{verbatim}
+第\pageref{sec-2dg}页\ref{sec-2dg}节
+中的方程\ref{equ}这么说完那么说……\end{verbatim}
 \end{codelist}
 
 在这个示例中，我们引用了对象\verb|\section|和另一个\verb|\equation|。此外，我们还引用了这个关于方程的节所在页的页码。

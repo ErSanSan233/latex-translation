@@ -31,13 +31,13 @@ $$
   f(x)=\sqrt{\frac{x-1}{x+1}}
 \end{displaymath}
 若其导函数存在，求其导函数。
-}\begin{verbatim}
+}
+\begin{verbatim}
 函数$f(x)$定义如下：
 \begin{displaymath}
   f(x)=\sqrt{\frac{x-1}{x+1}}
 \end{displaymath}
-若其导函数存在，求其导函数。
-\end{verbatim}
+若其导函数存在，求其导函数。\end{verbatim}
 \end{codelist}
 
 这个示例告诉我们，我们可以使用\dm{\$}符号来进入“内部”数学模式，并再次使用\dm{\$}符号退出。此外，这里使用了环境\dm{displaymath}，这是最简单的生成数学式的方法。使用\verb|\[|和\verb|\]|也可以达成后者的效果（参见3.7.1节。）
@@ -81,12 +81,12 @@ $$
     \sqrt{\frac{1+\sqrt[3]{3x+1}}
               {3x+\frac{1-x}{1+x}}}
   \end{displaymath}
-}\begin{verbatim}
+}
+\begin{verbatim}
 \begin{displaymath}
   \sqrt{\frac{1+\sqrt[3]{3x+1}}
              {3x+\frac{1-x}{1+x}}}
-\end{displaymath}
-\end{verbatim}
+\end{displaymath}\end{verbatim}
 \end{codelist}
 
 \subsection{符号}
@@ -140,11 +140,11 @@ $$
 $C=\{\vec{c}_0,\vec{c}_1,\dots,
     \vec{c}_N\}$
 为$N$个颜色的集合。
-}\begin{verbatim}
+}
+\begin{verbatim}
 $C=\{\vec{c}_0,\vec{c}_1,\dots,
     \vec{c}_N\}$
-为$N$个颜色的集合。
-\end{verbatim}
+为$N$个颜色的集合。\end{verbatim}
 \end{codelist}
 
 指令\verb|\cdots|生成的省略号圆点上下居中，就像等号一样：
@@ -153,11 +153,11 @@ $C=\{\vec{c}_0,\vec{c}_1,\dots,
   $\vec{\mu}=\frac{1}{N}
 (\vec{c}_0+\vec{c}_1+\cdots+\vec{c}_N)$
 为$N$个颜色的平均值。
-}\begin{verbatim}
+}
+\begin{verbatim}
 $\vec{\mu}=\frac{1}{N}
 (\vec{c}_0+\vec{c}_1+\cdots+\vec{c}_N)$
-为$N$个颜色的平均值。
-\end{verbatim}
+为$N$个颜色的平均值。\end{verbatim}
 \end{codelist}
 
 最后，指令\verb|\vdots|和\verb|\ddots|主要在矩阵中使用（参见3.6节、例3.15）。这两个指令分别可以生成$\vdots$和$\ddots$这两种省略号。
@@ -207,18 +207,18 @@ $\vec{\mu}=\frac{1}{N}
 
 \begin{codelist}[3.5]{
 $\sin^2x + \cos^2 x=1$
-}\begin{verbatim}
-$\sin^2x + \cos^2 x=1$
-\end{verbatim}
+}
+\begin{verbatim}
+$\sin^2x + \cos^2 x=1$\end{verbatim}
 \end{codelist}
 
 如果不使用\LaTeX 函数：
 
 \begin{codelist}[3.6]{
 $sin^2x + cos^2x=1$
-}\begin{verbatim}
-$sin^2x + cos^2x=1$
-\end{verbatim}
+}
+\begin{verbatim}
+$sin^2x + cos^2x=1$\end{verbatim}
 \end{codelist}
 
 二者的区别在于，\LaTeX 会将字符串\dm{cos}视为一系列变量（因此生成意大利体），而将函数\verb|\cos|生成为罗马体的“cos”。另一个区别是对可能存在的下标的处理（参见以下\verb|\max|的示例）。以下函数都是\LaTeX 的标准数学函数。
@@ -234,7 +234,8 @@ $sin^2x + cos^2x=1$
     \begin{displaymath}
       T=\arg \max_{t<0} f(t)
     \end{displaymath}
-  }\begin{verbatim}
+  }
+\begin{verbatim}
 \begin{displaymath}
   T=\arg \max_{t<0} f(t)
 \end{displaymath}
@@ -260,13 +261,13 @@ $sin^2x + cos^2x=1$
   \sum_{i=0}^{n}q^i=
   \frac{\quad 1-q^{n+1}}{1-q}
 \end{displaymath}
-}\begin{verbatim}
+}
+\begin{verbatim}
   对此等比数列求和：
 \begin{displaymath}
   \sum_{i=0}^{n}q^i=
   \frac{1-q^{n+1}}{1-q}
-\end{displaymath}
-\end{verbatim}
+\end{displaymath}\end{verbatim}
 \end{codelist}
 
 类似地，使用指令\verb|\prod|可以生成求积符号$\prod$。
@@ -278,13 +279,13 @@ $sin^2x + cos^2x=1$
   \ln(x)=\int_{1}^{x}\frac{1}{t}
   \,\mathrm{dt}
 \end{displaymath}
-}\begin{verbatim}
+}
+\begin{verbatim}
 对于$x>0$，定义自然对数如下：
 \begin{displaymath}
   \ln(x)=\int_{1}^{x}\frac{1}{t}
   \,\mathrm{dt}
-\end{displaymath}
-\end{verbatim}
+\end{displaymath}\end{verbatim}
 \end{codelist}
 
 指令\verb|\,|可以在“dt”前插入很小的空格（参见3.5.1小节）。你如果更喜欢\emph{线积分}，可以使用\verb|\oint|，这个指令可以生成符号$\oint$。好了，这里会给出一个关于极限的示例，相信你可以看懂：
@@ -294,12 +295,12 @@ $sin^2x + cos^2x=1$
 \begin{displaymath}
   \lim_{x\rightarrow x_0}f(x)=\ell
 \end{displaymath}
-}\begin{verbatim}
+}
+\begin{verbatim}
 $f(x)$在$x_0$处存在极限$\ell$：
 \begin{displaymath}
   \lim_{x\rightarrow x_0}f(x)=\ell
-\end{displaymath}
-\end{verbatim}
+\end{displaymath}\end{verbatim}
 \end{codelist}
 
 希望你能注意到示例中漂亮的$\ell$。为了巩固一下关于两种数学模式的知识，这里给出相同的数学式，但它们这次会镶嵌在行文中：求和，$\sum_{i=0}^{n}q^i=\frac{1-q^{n+1}}{1-q}$；求积分，$\ln(x)=\int_{1}^{x}\frac{1}{t}\,\mathrm{dt}$；求极限，$\lim_{x\rightarrow x_0}f(x)=\ell$。
@@ -312,9 +313,9 @@ $f(x)$在$x_0$处存在极限$\ell$：
 
 \begin{codelist}[3.11]{
   令实数$x \not\in I$……
-}\begin{verbatim}
-  令实数$x \not\in I$……
-\end{verbatim}
+}
+\begin{verbatim}
+  令实数$x \not\in I$……\end{verbatim}
 \end{codelist}
 
 \verb|\not|的输出结果就是在其下一个符号上加上一道“斜杠”。\textbf{注意}，这个操作符并不能总是呈现出完美的效果，例如\verb|$\not\longrightarrow$|会显示为$\not\longrightarrow$。但对于宽度合适的符号，它给出的结果还能令人满意。
@@ -352,11 +353,11 @@ $f(x)$在$x_0$处存在极限$\ell$：
 设$\overrightarrow{A\!B}$在基底
 $(\vec{\imath},\vec{\jmath})$
 下定义。
-}\begin{verbatim}
+}
+\begin{verbatim}
 设$\overrightarrow{A\!B}$在基底
 $(\vec{\imath},\vec{\jmath})$
-下定义。
-\end{verbatim}
+下定义。\end{verbatim}
 \end{codelist}
 
 注意，\verb|$\vec{A\!B}$|会显示为$\vec{A\!B}$（关于\verb|\!|的用途，参见3.5.1小节）。此外，指令\verb|\imath|和\verb|\jmath|分别可以生成不带点的字母i和j：$\imath$、$\jmath$。
@@ -437,14 +438,14 @@ $(\vec{\imath},\vec{\jmath})$
   \mbox{且}\quad v_n=(1+\frac{1}{n})^n
   \label{ex-maths-suite}
 \end{displaymath}
-}\begin{verbatim}
+}
+\begin{verbatim}
 设数列$(u_n),(v_n)$：
 \begin{displaymath}
   u_n=\ln n\quad
   \mbox{且}\quad v_n=(1+\frac{1}{n})^n
   \label{ex-maths-suite}
-\end{displaymath}
-\end{verbatim}
+\end{displaymath}\end{verbatim}
 \end{codelist}
 
 你可以在4.4.1小节找到关于指令\verb|\mbox|的细节。如果你已经在考虑使用包\textsf{amsmath}，相比于使用\verb|\mbox|，也可以考虑使用指令\verb|\text|。
@@ -473,12 +474,12 @@ $(\vec{\imath},\vec{\jmath})$
     -1&1\\
     3&4
   \end{array}$为数字阵列……
-}\begin{verbatim}
+}
+\begin{verbatim}
 设$A=\begin{array}{rc}
   -1&1\\
   3&4
-\end{array}$为数字阵列……
-\end{verbatim}
+\end{array}$为数字阵列……\end{verbatim}
 \end{codelist}
 
 以下示例使用了省略号：
@@ -489,13 +490,13 @@ $(\vec{\imath},\vec{\jmath})$
     \vdots & \ddots & \vdots\\
     a_{n0} & \dots & a_{nn}
   \end{array}\right]\end{displaymath}
-}\begin{verbatim}
+}
+\begin{verbatim}
 \begin{displaymath} A=\left[\begin{array}{ccc}
   a_{00} & \dots & a_{0n}\\
   \vdots & \ddots & \vdots\\
   a_{n0} & \dots & a_{nn}
-\end{array}\right]\end{displaymath}
-\end{verbatim}
+\end{array}\right]\end{displaymath}\end{verbatim}
 \end{codelist}
 
 \subsection{阵列和定界符号}
@@ -531,13 +532,13 @@ $(\vec{\imath},\vec{\jmath})$
   1&0\\0&1
 \end{array}\right]$
 为单位矩阵。
-}\begin{verbatim}
+}
+\begin{verbatim}
 设$I=
 \left[\begin{array}{cc}
   1&0\\0&1
 \end{array}\right]$
-为单位矩阵。
-\end{verbatim}
+为单位矩阵。\end{verbatim}
 \end{codelist}
 
 我们同样可以使用定界符号重写示例3.13，来改变括号的尺寸：
@@ -548,13 +549,13 @@ $(\vec{\imath},\vec{\jmath})$
   u_n=\ln n\quad\mbox{et}
   \quad v_n=\left(1+\frac{1}{n}\right)^n
 \end{displaymath}
-}\begin{verbatim}
+}
+\begin{verbatim}
 设数列$(u_n),(v_n)$：
 \begin{displaymath}
   u_n=\ln n\quad\mbox{et}
   \quad v_n=\left(1+\frac{1}{n}\right)^n
-\end{displaymath}
-\end{verbatim}
+\end{displaymath}\end{verbatim}
 \end{codelist}
 
 \begin{exclamation}
@@ -568,12 +569,12 @@ $(\vec{\imath},\vec{\jmath})$
     -1  & \mbox{若$i$为偶数，}    \\
     1  & \mbox{否则。}
   \end{array}\right.$
-}\begin{verbatim}
+}
+\begin{verbatim}
 设$ S_i=\left\{\begin{array}{rl}
   -1  & \mbox{若$i$为偶数，}    \\
   1  & \mbox{s否则。}
-\end{array}\right.$
-\end{verbatim}
+\end{array}\right.$\end{verbatim}
 \end{codelist}
 
 \subsection{说话的方式简单点……}
@@ -587,14 +588,14 @@ $(\vec{\imath},\vec{\jmath})$
       \sigma_{21} & \sigma_{22} \\
     \end{bmatrix}
   \end{displaymath}
-}\begin{verbatim}
+}
+\begin{verbatim}
 \begin{displaymath}
   \bar{\bar{\sigma}}=\begin{bmatrix}
     \sigma_{11} & \sigma_{12} \\
     \sigma_{21} & \sigma_{22} \\
   \end{bmatrix}
-\end{displaymath}
-\end{verbatim}
+\end{displaymath}\end{verbatim}
 \end{codelist}
 
 \section{方程和环境}
@@ -611,29 +612,29 @@ $(\vec{\imath},\vec{\jmath})$
   \Delta E=\sqrt{
    \Delta L^{*2}+ \Delta a^{*2}
   +\Delta b^{*2}} \]
-}\begin{verbatim}
+}
+\begin{verbatim}
 色度距离：\[
   \Delta E=\sqrt{
    \Delta L^{*2}+ \Delta a^{*2}
-  +\Delta b^{*2}} \]
-\end{verbatim}
+  +\Delta b^{*2}} \]\end{verbatim}
 \end{codelist}
 
 \subsection{方程环境\dm{equation}}
 
 方程环境\dm{equation}的作用与\dm{displaymath}相同，但可以为数学式编号：
 
-\begin{codelist}[]{
+\begin{codelist}[3.21]{
   请牢记，若$a>0$且$b>0$，有
 \begin{equation}
   \ln(ab)=\ln(a)+\ln(b)
 \end{equation}
-}\begin{verbatim}
+}
+\begin{verbatim}
 请牢记，若$a>0$且$b>0$，有
 \begin{equation}
   \ln(ab)=\ln(a)+\ln(b)
-\end{equation}
-\end{verbatim}
+\end{equation}\end{verbatim}
 \end{codelist}
 
 \begin{ii}
@@ -661,12 +662,12 @@ $(\vec{\imath},\vec{\jmath})$
   (a+b)^2 & =  (a+b)(a+b)\nonumber\\
           & =  a^2+b^2+2ab
   \end{align}
-}\begin{verbatim}
+}
+\begin{verbatim}
 \begin{align}
   (a+b)^2 & =  (a+b)(a+b)\nonumber\\
           & =  a^2+b^2+2ab
-\end{align}
-\end{verbatim}
+\end{align}\end{verbatim}
 \end{codelist}
 
 \begin{ii}
@@ -682,14 +683,14 @@ $(\vec{\imath},\vec{\jmath})$
       & =  a^2+b^2+2ab
     \end{split}
   \end{equation}
-}\begin{verbatim}
+}
+\begin{verbatim}
 \begin{equation}
   \begin{split}
     (a+b)^2 & =  (a+b)(a+b)\\
     & =  a^2+b^2+2ab
   \end{split}
-\end{equation}
-\end{verbatim}
+\end{equation}\end{verbatim}
 \end{codelist}
 
 \section{数学模式的风格}
@@ -749,13 +750,13 @@ $(\vec{\imath},\vec{\jmath})$
 相反操作：
 \[ \prod_{1}^{n}f_i
 \mbox{ 和 }\textstyle\prod_{1}^{n}f_i \]
-}\begin{verbatim}
+}
+\begin{verbatim}
 两种形式的积：$\prod_{1}^{n}f_i$
 和$\displaystyle\prod_{1}^{n}f_i$
 相反操作：
 \[ \prod_{1}^{n}f_i
-\mbox{ 和 }\textstyle\prod_{1}^{n}f_i \]
-\end{verbatim}
+\mbox{ 和 }\textstyle\prod_{1}^{n}f_i \]\end{verbatim}
 \end{codelist}
 
 \subsection{创建新操作符}
@@ -766,11 +767,11 @@ $(\vec{\imath},\vec{\jmath})$
 \newcommand{\burps}{
 \mathop{\textrm{burps}}}
 $x=\burps_i f(i)$
-}\begin{verbatim}
+}
+\begin{verbatim}
 \newcommand{\burps}{
 \mathop{\textrm{burps}}}
-$x=\burps_i f(i)$
-\end{verbatim}
+$x=\burps_i f(i)$\end{verbatim}
 \end{codelist}
 
 再看一个例子。为了让“反正弦函数”（默认显示为arcsin）依法国的习惯显示，可以按如下示例操作：
@@ -780,12 +781,12 @@ $x=\burps_i f(i)$
 \renewcommand{\arcsin}{%
   \mathop{\textrm{Arcsin}}\nolimits}
 $\theta = \arcsin x$
-}\begin{verbatim}
+}
+\begin{verbatim}
 $\theta = \arcsin x$
 \renewcommand{\arcsin}{%
   \mathop{\textrm{Arcsin}}\nolimits}
-$\theta = \arcsin x$
-\end{verbatim}
+$\theta = \arcsin x$\end{verbatim}
 \end{codelist}
 
 指令\verb|\nolimits|可以使相关操作符不再将参数显示为上标或下标的形式，正如操作符\verb|\lim|、\verb|\int|等所做的那样\yz{
@@ -806,10 +807,10 @@ $\theta = \arcsin x$
   x=\mathop{\rm vlunch}\limits_{i} f(\theta)
   \]
   其中$\theta =$ Zirgl $y$。
-}\begin{verbatim}
+}
+\begin{verbatim}
 \[x=\vlunch_i f(\theta)\]
-其中$\theta = \zirgl y$。
-\end{verbatim}
+其中$\theta = \zirgl y$。\end{verbatim}
 \end{codelist}
 
 \section{小结}

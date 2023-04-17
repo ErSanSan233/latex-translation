@@ -27,14 +27,14 @@
     \quad\rule{1in}{0.4pt}
     \quad\rule[-0.5em]{1em}{1em}
 \end{center}
-}\begin{verbatim}
+}
+\begin{verbatim}
 这些都是“线”：
 \begin{center}
     \rule[1ex]{1mm}{5mm}
     \quad\rule{1in}{0.4pt}
     \quad\rule[-0.5em]{1em}{1em}
-\end{center}
-\end{verbatim}
+\end{center}\end{verbatim}
 \end{codelist}
 
 \section{图像文件的格式}
@@ -81,11 +81,11 @@
     前前
 \includegraphics{img/punch_small}
 后后。
-}\begin{verbatim}
+}
+\begin{verbatim}
 前前
 \includegraphics{punch}
-后后。
-\end{verbatim}
+后后。\end{verbatim}
 \end{codelist}
 
 \begin{exclamation}
@@ -106,8 +106,7 @@
     \centering\includegraphics[width=5cm]{punch}
     \caption{罗伯特（酒后版）}
     \label{fig-exemple}
-\end{figure}
-\end{verbatim}
+\end{figure}\end{verbatim}
 \end{dmd}
 
 \begin{exclamation}
@@ -142,14 +141,14 @@
     \includegraphics[width=2cm,
                     height=3mm]{img/magma}
     \end{center}
-}\begin{verbatim}
+}
+\begin{verbatim}
 \begin{center}
   \includegraphics[scale=0.2]{magma}\\
   \includegraphics[width=8.5mm]{magma}\\
   \includegraphics[width=2cm,
                    height=3mm]{magma}
-\end{center}
-\end{verbatim}
+\end{center}\end{verbatim}
 \end{codelist}
 
 \subsubsection{旋转}
@@ -165,10 +164,10 @@ angle=\codereplace{角}
 \begin{codelist}[5.4]{
 \includegraphics[angle=45,
                  scale=0.2]{img/magma}
-}\begin{verbatim}
+}
+\begin{verbatim}
 \includegraphics[angle=45,
-                 scale=0.2]{magma}
-\end{verbatim}
+                 scale=0.2]{magma}\end{verbatim}
 \end{codelist}
 
 我们可以在文件\dm{grfguide.pdf}\jz{
@@ -185,11 +184,11 @@ angle=\codereplace{角}
 前前
 \includegraphics[draft,scale=.2]{punch}
 后后。
-}\begin{verbatim}
+}
+\begin{verbatim}
 前前
 \includegraphics[draft,scale=.2]{punch}
-后后。
-\end{verbatim}
+后后。\end{verbatim}
 \end{codelist}
 
 模式\dm{draft}默认在文档选项\dm{draft}指定时启用。如果想要阻止文档选项的转中效果\jz{
@@ -217,8 +216,7 @@ angle=\codereplace{角}
     \caption{Uniweria Zëkt}
     \label{fig-uniweria}
   \end{center}
-\end{figure}
-\end{verbatim}
+\end{figure}\end{verbatim}
 \end{dmd}
 
 \begin{figure}[htbp]
@@ -262,8 +260,7 @@ angle=\codereplace{角}
 
 据我所知，包\textsf{wrapfig}并未
 以提供\dm{dvi}文件的形式给出文档。
-相反，可以在……
-\end{verbatim}
+相反，可以在……\end{verbatim}
 \end{dmd}
 
 \begin{wrapfigure}{r}{1.5cm}
@@ -388,13 +385,13 @@ angle=\codereplace{角}
   一个\colorbox{green}{绿色}字盒。
   
   另一个\fcolorbox{blue}{yellow}{字盒}。
-}\begin{verbatim}
+}
+\begin{verbatim}
 {一些\color{red}红色}和\textcolor{cyan}{青色}的文本。
 
 一个\colorbox{green}{绿色}字盒。
 
-另一个\fcolorbox{blue}{yellow}{字盒}。
-\end{verbatim}
+另一个\fcolorbox{blue}{yellow}{字盒}。\end{verbatim}
 \end{codelist}
 
 在这里，我们可以理解指定颜色的方法。
@@ -435,11 +432,11 @@ angle=\codereplace{角}
   这是
 {\color[rgb]{.2,.4,.5}\bfseries 
  蓝灰色}……
-}\begin{verbatim}
+}
+\begin{verbatim}
 这是
 {\color[rgb]{.2,.4,.5}\bfseries 
- 蓝灰色}……
-\end{verbatim}
+ 蓝灰色}……\end{verbatim}
 \end{codelist}
 
 也可以为上例中的颜色起一个“小名”：
@@ -448,11 +445,11 @@ angle=\codereplace{角}
   \definecolor{bleugris}{rgb}{.2,.4,.5}
 这是
 {\color{bleugris}\bfseries 蓝灰色}……
-}\begin{verbatim}
+}
+\begin{verbatim}
 \definecolor{bleugris}{rgb}{.2,.4,.5}
 这是
-{\color{bleugris}\bfseries 蓝灰色}……
-\end{verbatim}
+{\color{bleugris}\bfseries 蓝灰色}……\end{verbatim}
 \end{codelist}
 
 \begin{ii}
@@ -488,8 +485,7 @@ makefile使生成过程自动化的思路有：
 \begin{verbatim}
 FIGSDIR=Figs
 EPSSDIR=Epss
-IMGSDIR=Imgs
-\end{verbatim}
+IMGSDIR=Imgs\end{verbatim}
 \end{mdframed}
 
 \subsection{图像转码}
@@ -499,8 +495,7 @@ IMGSDIR=Imgs
 \begin{mdframed}
 \begin{verbatim}
 PNGS=$(notdir $(wildcard $(IMGSDIR)/*.png))
-JPGS=$(notdir $(wildcard $(IMGSDIR)/*.jpg))
-\end{verbatim}
+JPGS=$(notdir $(wildcard $(IMGSDIR)/*.jpg))\end{verbatim}
 \end{mdframed}
   
 使用函数\dm{wildcard}可以获得文件夹\verb|$(IMGSDIR)|中文件的列表，而对于每个文件，函数\dm{notdir}可以删除其“目录”的部分。最终，变量\dm{PNGS}包含：
@@ -520,8 +515,7 @@ k.jpg
 \begin{mdframed}
 \begin{verbatim}
 IMGS2EPSS=$(patsubst %,$(EPSSDIR)/%,\
-          $(PNGS:.png=.eps) $(JPGS:.jpg=.eps))
-\end{verbatim}
+          $(PNGS:.png=.eps) $(JPGS:.jpg=.eps))\end{verbatim}
 \end{mdframed}
 
 赋值符号右侧的表达式可以将前文中两个列表中文件的扩展名改为\dm{eps}，并且文件名前加上存储EPS文件的目录作为前缀。因此，\dm{IMG2EPSS}包含：
@@ -534,8 +528,7 @@ Epss/i.eps Epss/j.eps Epss/k.eps
 
 \begin{mdframed}
 \begin{verbatim}
-figs : $(IMGS2EPSS)
-\end{verbatim}
+figs : $(IMGS2EPSS)\end{verbatim}
 \end{mdframed}
 
 此外，也需要向\textsf{make}解释我们如何将图像文件转换为封装好的PostScript格式。可以通过如下规则描述：
@@ -563,8 +556,7 @@ $\longmapsto$\>\verb+convert $< EPS:$@+
 FIGS=$(notdir $(wildcard $(FIGSDIR)/*.fig))
 SVGS=$(notdir $(wildcard $(FIGSDIR)/*.svg))
 FIGS2EPSS=$(patsubst %,$(EPSSDIR)/%,\
-          $(FIGS:.fig=.eps) $(SVGS:.svg=.eps))
-\end{verbatim}
+          $(FIGS:.fig=.eps) $(SVGS:.svg=.eps))\end{verbatim}
 \end{mdframed}
 
 当然，两条转换规则是不同的，因为它们分别会调用\textsf{fig2dev}（\textsf{xfig}的相关工具）和\textsf{Inkscape}本身：
@@ -583,8 +575,7 @@ $\longmapsto$\>\verb+inkscape -E $@ $<+
 
 \begin{mdframed}
 \begin{verbatim}
-figs : $(IMGS2EPSS) $(FIGS2EPSS)
-\end{verbatim}
+figs : $(IMGS2EPSS) $(FIGS2EPSS)\end{verbatim}
 \end{mdframed}
 
 \section{除此之外……}
