@@ -1,10 +1,8 @@
 \chapter{新玩具}
 
-\begin{quote}
-    我属我的良人，他也恋慕我。我的良人，来吧，你我可以往田间去。你我可以在村庄住宿！我们早晨起来往葡萄园去，看看葡萄发芽开花没有，石榴放蕊没有。我在那里要将我的爱情给你。
-
-    \hfill《圣经·雅歌》7:11
-\end{quote}
+\begin{epigraphe}{《圣经·雅歌》7:11}
+    我属我的良人，他也恋慕我。\\我的良人，来吧，你我可以往田间去。你我可以在村庄住宿！\\我们早晨起来往葡萄园去，\\看看葡萄发芽开花没有，石榴放蕊没有。\\我在那里要将我的爱情给你。
+\end{epigraphe}
 
 在本章，我会介绍专为本书创建的工具。为了看懂本章定义的大部分指令和环境，你需要阅读过第9章和第10章的内容……本章中，我们会涉及带有“危险”标记的提示的创建方法、各章开头的首字下沉、摘要、术语字典、带有当前章号的标签，以及并列展示\LaTeX 代码和效果的环境。
 
@@ -667,10 +665,7 @@ img/fmb-important}
 \subsection{引用内容}
 
 本书各处散步着各式各样的引用内容（citation），它们由手工制作的环境生成：
-\newsavebox{\auteurcitation} 
-\newsavebox{\boitecitation}
 
-\newboolean{auteurcitationpresent}
 \definecolor{coulcitation}{rgb}{0.90,0.75,0.20}%
 
 \newenvironment{citationzero}[1][]{%

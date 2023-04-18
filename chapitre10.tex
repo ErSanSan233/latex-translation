@@ -1,10 +1,8 @@
 \chapter{装饰}
 
-\begin{quote}
-    我说，我要上这棕树，抓住枝子。愿你的两乳好像葡萄累累下垂，你鼻子的气味香如苹果。你的口如上好的酒，女子说，为我的良人下咽舒畅，流入睡觉人的嘴中。
-
-    \hfill《圣经·雅歌》7:10
-\end{quote}
+\begin{epigraphe}{《圣经·雅歌》7:10}
+    我说，我要上这棕树，抓住枝子。\\愿你的两乳好像葡萄累累下垂，\\你鼻子的气味香如苹果。\\你的口如上好的酒，女子说，\\为我的良人下咽舒畅，流入睡觉人的嘴中。
+\end{epigraphe}
 
 那本章的主要思路是介绍，介绍那些为生成文档中个别部分而被个性化修改的\LaTeX 的标准工具，间或可以从中看到些用于“调香”的宏。这些个性化设置可以应用于各个层级：使用包的选项，如设置页眉；偶尔涉足宏定义，如设置章节的展现风格；更深入地处理宏，如处理内容的表格。本章的一部分聚焦于我们可以从包\textsf{fancyvrb}中调用的工具。作为本章的末尾，我们会去抨击一下法文的引号。
 
@@ -1125,42 +1123,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"\end{verbatim}
 
 \section{用于微型摘要的字盒}
 
-包\textsf{mini-toc}可以生成“微型目录”（正如其名），以便我们在文档的指定位置插入。一般来说，我们会将微型摘要插在章首。在文前部分使用命令\verb|\dominitoc|之后，我们可以调用指令\verb|\minitoc|来在想要的位置插入这个微型目录。包的文档详细解释了相关信息，还介绍了我们可以使用的不同风格。对于本书，我为章首构思了一种十分漂亮的目录，但该包不支持其中涉及的风格。实际上，我曾希望以如下的方式将各节标题展示在一个方框中：
-
-\newsavebox{\boitetitre}
-\newlength{\tempdim}
-\newlength{\largeurboitetitre}
-\newlength{\hauteurboitetitre}
-\newlength{\largeurtitre}
-
-\newcommand{\espacetitre}{0.6}
-\newcommand{\decalagetitreg}{1}
-\newcommand{\decalagetitred}{5}
-
-\newcommand{\traitressort}[2][1]{%
-  \leaders\hrule height#2\hskip0pt plus #1fill\relax}
-
-\newcommand{\titlebox}[3][-0.5ex]{%
-  \begin{lrbox}{\boitetitre}\kern\fboxsep#3\kern\fboxsep\end{lrbox}%
-  \settowidth{\largeurboitetitre}{\usebox{\boitetitre}}%
-  \settowidth{\largeurtitre}{#2}%
-  \settoheight{\hauteurboitetitre}{\usebox{\boitetitre}}%
-  \settodepth{\tempdim}{\usebox{\boitetitre}}%
-  \addtolength{\hauteurboitetitre}{\tempdim+2\fboxrule+2\fboxsep}%
-  \parbox{\fboxrule}{%
-    \rule{\fboxrule}{\hauteurboitetitre}}%
-  \parbox{\largeurboitetitre}{%
-    \begin{flushleft}
-      \makebox[\largeurboitetitre]{%
-        \traitressort[\decalagetitreg]{\fboxrule}%
-        \raisebox{#1}[0pt][0pt]{%
-          \kern\espacetitre\fboxsep#2\kern\espacetitre\fboxsep}%
-        \traitressort[\decalagetitred]{\fboxrule}}\\[\fboxsep]\nointerlineskip
-      \usebox{\boitetitre}\\[\fboxsep]\nointerlineskip%
-      \rule{\largeurboitetitre}{\fboxrule}
-    \end{flushleft}}%
-  \parbox{\fboxrule}{%
-    \rule{\fboxrule}{\hauteurboitetitre}}}
+包\textsf{minitoc}可以生成“微型目录”（正如其名），以便我们在文档的指定位置插入。一般来说，我们会将微型摘要插在章首。在文前部分使用命令\verb|\dominitoc|之后，我们可以调用指令\verb|\minitoc|来在想要的位置插入这个微型目录。包的文档详细解释了相关信息，还介绍了我们可以使用的不同风格。对于本书，我为章首构思了一种十分漂亮的目录，但该包不支持其中涉及的风格。实际上，我曾希望以如下的方式将各节标题展示在一个方框中：
 
 \begin{center}
     \titlebox{摘要}{%
@@ -1563,11 +1526,9 @@ heading_suffix "}\\hfill}\\nopagebreak\n"\end{verbatim}
 
 可以说规整得没什么效果……需要知道，当\TeX 在纵向模式下堆叠字盒是，它本身就会在字盒间插入空间，来保证行间距为长度\verb|\baselineskip|。在\TeX Book的79页有关处理\emph{glue}的章节中，我们可以找到：
 
-\begin{quote}
+\begin{origincitation}[唐纳德·克努特，\TeX Book{[9]}]
     例外情况：线段字盒的前后不会插入用于跨行分隔的垫胶。你也可以通过在两个字盒间插入\verb|\nointerlineskip|来禁用垫胶。
-
-    \hfill 唐纳德·克努特，\TeX Book[9]
-\end{quote}
+\end{origincitation}
 
 因此，命令\verb|\nointerlineskip|可以解决这个问题：
 

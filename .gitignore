@@ -13,3 +13,5 @@ texs/*
 original-book/*
 
 .DS_Store
+*.mtc*
+*.maf

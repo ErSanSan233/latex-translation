@@ -4,15 +4,12 @@
 
 \usepackage{xeCJK}
 \usepackage{geometry}
-\usepackage{titlesec}
-
 \usepackage{underlin}
 \usepackage{wrapfig}
 \usepackage{caption}
 \usepackage{graphicx}
 \usepackage{psfrag}
 \usepackage{subfig}
-% \usepackage{dvips}
 \usepackage{pdfpages}
 \usepackage{multirow}%表格合并行列单元格
 
@@ -43,7 +40,7 @@
 \usepackage{mdframed}%加阴影
 \usepackage{xcolor}%特殊字体颜色
 \usepackage{setspace}%行距
-\usepackage{hyperref}%所有网页用超链接同步挂靠
+\usepackage{hyperref}
 \usepackage{xpatch}%设置verbatim前后间距
 \usepackage{mflogo}%METAPOST和METAFONT logo
 
@@ -72,6 +69,8 @@
 \usepackage{pst-plot}
 \usepackage{psfrag}
 
+\usepackage{minitoc}
+
 \newcommand\codereplace[1]{%代码中的<可替换>部分
     {\xeCJKsetup{CJKecglue={\hskip 0pt}}%
     {\rm ⟨}\textsl{#1}{\rm ⟩}}}
@@ -93,7 +92,6 @@
     \char"258E \texttt{#1}
     }
 
-
 \newcommand\celan[1]{%侧栏
     \checkoddpage 
     \ifcpoddpage{
@@ -111,7 +109,122 @@
 %bibtex logo
 \def\bib{B\textsc{IB}\TeX}
 
-%原书的提示框
+%%% 以下为字体和特殊字符显示设置 %%%
+
+%正文字体
+\setCJKmainfont[
+    BoldFont={FandolSong-Bold}, % 破产宋 Bold
+    ItalicFont={FandolKai-Regular}, % 破产楷
+    SlantedFont={FandolFang-Regular}, % 破产仿宋
+    ]{STSongti-SC-Regular}  % 破产宋 Regular
+\setCJKsansfont[
+    BoldFont={NotoSansCJKsc-Bold}, % 思源黑
+    ItalicFont={DingTalk-JinBuTi},% 钉钉进步体
+    SlantedFont={FandolFang-Regular}, % 破产仿宋
+    ]{NotoSansCJKsc-DemiLight} % 思源黑半轻
+\setCJKmonofont[
+    BoldFont={PingFangSC-Semibold}, % 苹方中黑
+    ItalicFont={HannotateSC-W7},% 手札体常规
+    SlantedFont={FandolFang-Regular}, % 破产仿宋
+    ]{HYZhengYuan-EEW} % 汉仪正圆
+% \setmonofont[
+%     BoldFont={FiraCodeRoman-SemiBold},
+%     ItalicFont={JetBrainsMonoNL-Italic}, 
+%     ]{FiraCodeRoman-Regular}
+
+%特殊字符的字体显示
+\xeCJKDeclareSubCJKBlock{angleBracket}{
+    "27E8 -> "27E9, %〈〉半角括号
+    "25B4 %▴
+}
+\setCJKmainfont[angleBracket]{STIXTwoMath-Regular}
+
+\xeCJKsetcharclass{"2580}{"259F}{1}%侧栏小方块示例
+\xeCJKsetcharclass{"211A}{"211F}{1}%双钩R
+\xeCJKsetcharclass{"0370}{"03FF}{1}%希腊字母
+\xeCJKsetup{AutoFallBack=true}
+\setCJKfallbackfamilyfont{\CJKrmdefault}{ArialUnicodeMS}
+
+%% 以下为原书展示效果的复刻 %%%
+
+% 章首环绕minitoc的titlebox
+\newsavebox{\boitetitre}
+\newlength{\tempdim}
+\newlength{\largeurboitetitre}
+\newlength{\hauteurboitetitre}
+\newlength{\largeurtitre}
+
+\newcommand{\espacetitre}{0.6}
+\newcommand{\decalagetitreg}{1}
+\newcommand{\decalagetitred}{5}
+\newcommand{\traitressort}[2][1]{%
+  \leaders\hrule height#2\hskip0pt plus #1fill\relax}
+
+\newcommand{\titlebox}[3][-0.5ex]{%
+    \begin{lrbox}{\boitetitre}\kern\fboxsep#3\kern\fboxsep\end{lrbox}%
+    \settowidth{\largeurboitetitre}{\usebox{\boitetitre}}%
+    \settowidth{\largeurtitre}{#2}%
+    \settoheight{\hauteurboitetitre}{\usebox{\boitetitre}}%
+    \settodepth{\tempdim}{\usebox{\boitetitre}}%
+    \addtolength{\hauteurboitetitre}{\tempdim+2\fboxrule+2\fboxsep}%
+    \parbox{\fboxrule}{%
+        \rule{\fboxrule}{\hauteurboitetitre}}%
+    \parbox{\largeurboitetitre}{%
+        \begin{flushleft}
+        \makebox[\largeurboitetitre]{%
+            \traitressort[\decalagetitreg]{\fboxrule}%
+            \raisebox{#1}[0pt][0pt]{%
+            \kern\espacetitre\fboxsep#2\kern\espacetitre\fboxsep}%
+            \traitressort[\decalagetitred]{\fboxrule}}\\[\fboxsep]\nointerlineskip
+        \usebox{\boitetitre}\\[\fboxsep]\nointerlineskip%
+        \rule{\largeurboitetitre}{\fboxrule}
+        \end{flushleft}}%
+    \parbox{\fboxrule}{%
+        \rule{\fboxrule}{\hauteurboitetitre}}}
+
+% minitoc
+%NOTE 原书minitoc太复杂了，主要是改字体、改各种间距，而且似乎没有给macOS的适配，这里放的是简化版本
+
+\nomtcrule
+\nomtcpagenumbers
+\mtcsettitle{minitoc}{}
+\setcounter{minitocdepth}{1}
+\dominitoc
+
+% 原书章首格式
+%NOTE 章首数字如果用\DeclareFixedFont{\chapnumfont}{T1}{phv}{b}{n}{112.8pt}这玩意来定义字体的话，会在第11章开始字号莫名其妙地缩小一圈，所以这里对于\thechapter就直接展开写了
+\DeclareFixedFont{\chapchapfont}{T1}{phv}{b}{n}{22.56pt}
+\makeatletter
+\renewcommand{\@makechapterhead}[1]{%
+    \noindent
+    \begin{minipage}[t][6cm]{.65\linewidth}
+    \raisebox{-2cm}[0pt][0pt]{
+        \titlebox{\textsf{本章摘要}}{
+        \begin{minipage}{0.75\linewidth}
+            \minitoc
+        \end{minipage}}}
+    \end{minipage}%
+    \begin{minipage}[t]{.35\linewidth}
+        \begin{flushright}%
+            {\chapchapfont\chaptername}\\[1cm]
+            {%
+                \fontencoding{T1}%
+                \fontfamily{phv}%
+                \fontseries{b}%
+                \fontshape{n}%
+                \fontsize{112.8pt}{112.8pt}%
+                \selectfont%
+                \thechapter}
+        \end{flushright}
+    \end{minipage}%
+    \begin{flushright}
+        {\fontsize{35.12}{35.12}\selectfont\sffamily{\textbf {#1}}}
+    \end{flushright}
+    \vspace{1cm}
+}
+\makeatother
+
+% 原书的提示框
 %NOTE 这几个环绕形式都会产生问题：要求内容至少占2行。法文篇幅比中文长，所以这种问题没有凸显出来。但到了译文中，这个问题是我们必须要注意的问题。目前采用的解决方案比较简单粗暴：如果译文没有占到2行，则手动添加一个空行。
 \newlength{\larnota}
 \newlength{\largligne}
@@ -136,7 +249,7 @@
     \includegraphics[width=\larnota]{#1}%
     \hspace*{\padnota}}}\ignorespaces}
 
-%原书的圆圈感叹号
+% 原书的圆圈感叹号
 \newenvironment{exclamation}{%
     \begin{mdframed}[backgroundcolor=LightPink,%
         hidealllines=true]%
@@ -145,7 +258,7 @@
     \end{mdframed}%
 }
 
-%原书的圆圈问号
+% 原书的圆圈问号
 \newenvironment{qquestion}{%
     \begin{mdframed}[backgroundcolor=LightPink,%
         hidealllines=true]%
@@ -153,7 +266,7 @@
     \end{mdframed}%
 }
 
-%原书的圆圈i
+% 原书的圆圈i
 \newenvironment{ii}{%
     \begin{mdframed}[backgroundcolor=LightBlue,%
         hidealllines=true]%
@@ -171,7 +284,7 @@
     \vspace{0.5em}
 }
 
-%代码清单
+% 原书的代码清单
 %NOTE 代码清单序号在翻译时进行了手动调整，跟原书有较大差别，不用自动计数为宜
 \makeatletter
 
@@ -207,7 +320,7 @@
     % 排空临时字盒
     \setbox\@tempboxa\box\voidb@x}%
 
-\newenvironment{codelist}[2][TODO代码清单序号]{%
+\newenvironment{codelist}[2][N/A]{%
     \setlength{\fboxsep}{.5pt}%
     \savebox{\b@itesortie}{%
     \begin{minipage}{\ltxexoutputwidthratio\linewidth} 
@@ -251,39 +364,49 @@
     \end{ltxexempleenv}}%
 \makeatother%
 
-%字体
-\setCJKmainfont[
-    BoldFont={FandolSong-Bold}, % 破产宋 Bold
-    ItalicFont={FandolKai-Regular}, % 破产楷
-    SlantedFont={FandolFang-Regular}, % 破产仿宋
-    ]{STSongti-SC-Regular}  % 破产宋 Regular
-\setCJKsansfont[
-    BoldFont={NotoSansCJKsc-Bold}, % 思源黑
-    ItalicFont={DingTalk-JinBuTi},% 钉钉进步体
-    SlantedFont={FandolFang-Regular}, % 破产仿宋
-    ]{NotoSansCJKsc-DemiLight} % 思源黑半轻
-\setCJKmonofont[
-    BoldFont={PingFangSC-Semibold}, % 苹方中黑
-    ItalicFont={HannotateSC-W7},% 手札体常规
-    SlantedFont={FandolFang-Regular}, % 破产仿宋
-    ]{HYZhengYuan-EEW} % 汉仪正圆
-% \setmonofont[
-%     BoldFont={FiraCodeRoman-SemiBold},
-%     ItalicFont={JetBrainsMonoNL-Italic}, 
-%     ]{FiraCodeRoman-Regular}
+% 原书的各章首题记
+\newsavebox{\nomepigraphe}
 
-%特殊字符的字体显示
-\xeCJKDeclareSubCJKBlock{angleBracket}{
-    "27E8 -> "27E9, %〈〉半角括号
-    "25B4 %▴
-}
-\setCJKmainfont[angleBracket]{STIXTwoMath-Regular}
+\newlength{\epigraphetopskip}
+\newlength{\epigraphebottomskip}
 
-\xeCJKsetcharclass{"2580}{"259F}{1}%侧栏小方块示例
-\xeCJKsetcharclass{"211A}{"211F}{1}%双钩R
-\xeCJKsetcharclass{"0370}{"03FF}{1}%希腊字母
-\xeCJKsetup{AutoFallBack=true}
-\setCJKfallbackfamilyfont{\CJKrmdefault}{ArialUnicodeMS}
+\setlength{\epigraphetopskip}{-0.5cm}
+\setlength{\epigraphebottomskip}{1cm}
+
+\newenvironment{epigraphe}[1]{%
+    \vspace*{\epigraphetopskip}%
+    \small\sffamily%
+    \savebox{\nomepigraphe}{#1}% 
+    \slshape% 
+    \begin{flushright}}{% 
+    \\[4pt]\usebox{\nomepigraphe}% 
+    \end{flushright}\par%
+    \vspace*{\epigraphebottomskip}}
+
+% 原书的引文
+\newsavebox{\auteurcitation} 
+\newsavebox{\boitecitation}
+\newboolean{auteurcitationpresent}
+\definecolor{originalcitation}{rgb}{0.90,0.90,0.90}%
+\newenvironment{origincitation}[1][]{%
+    \ifthenelse{\equal{#1}{}}{%
+    \setboolean{auteurcitationpresent}{false}}{%
+    \setboolean{auteurcitationpresent}{true}%
+    \savebox{\auteurcitation}{#1}}% on le sauve si nécessaire
+    \begin{lrbox}{\boitecitation}
+    \begin{minipage}{.8\linewidth}%
+        \setlength{\parindent}{10pt}%
+        \small\slshape«\ignorespaces}% on passe en petit et penché
+    {\unskip»
+        \ifthenelse{\boolean{auteurcitationpresent}}%
+        {\par\nopagebreak\hfill\usebox{\auteurcitation}}
+        {}% sinon on ne fait rien...
+    \end{minipage}
+    \end{lrbox}
+    \begin{center}
+    \setlength{\fboxsep}{10pt}%
+    \colorbox{originalcitation}{\usebox{\boitecitation}}
+\end{center}}
 
 %带跳转的内容颜色
 \definecolor{MediumBlue}{RGB}{0,0,205}
