@@ -394,7 +394,7 @@ $(\vec{\imath},\vec{\jmath})$
 
 \subsection{数学模式的空格}
 
-首先需要知道，\LaTeX 选择添加空格的方式一般是正确的。然而，如果有一天你非要去\rlap{ㄨㄨㄨㄨ}吹毛求疵，表\ref{tab:3.2}可以帮助你在数学式中插入空格。在该表格中，我们在两个$\Box$符号之间夹入不同的空格指令，来展示它们的效果。
+首先需要知道，\LaTeX 选择添加空格的方式一般是正确的。然而，如果有一天你非要去\linebreak\rlap{ㄨㄨㄨㄨ}吹毛求疵，表\ref{tab:3.2}可以帮助你在数学式中插入空格。在该表格中，我们在两个$\Box$符号之间夹入不同的空格指令，来展示它们的效果。
 
 \begin{table}[ht]
   \begin{center}
@@ -711,11 +711,8 @@ $(\vec{\imath},\vec{\jmath})$
 \end{center}
 
 \begin{exclamation}
-指令\verb|\mathcal|只接受大写拉丁字母作为变量，否则结果会展示为乱码。例如：
-
-\begin{dmd}
+指令\verb|\mathcal|只接受大写拉丁字母作为变量，否则结果会展示为乱码。例如：\\
 \verb|\mathcal{abcd\Gamma}|
-\end{dmd}
 
 上述指令的运行结果为$\dashv \lfloor \rfloor \lceil -$。
 \end{exclamation}
