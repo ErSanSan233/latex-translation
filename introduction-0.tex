@@ -1,9 +1,72 @@
 \chapter*{翻译说明}
 
-这是字面翻译的版本。
+这是照猫画虎的翻译版本。
 
-翻译时，没有从源文件直接翻译，而是看着纸质版的PDF文件直接录入，因此，本翻译版本没有保留原版书的排版格式。
+之所以这样说，是因为我虽然在字面上忠实翻译了原文，但在装帧上并没有严格套用原文的代码来编写。一方面，每种语言下使用的包不同，而作者使用的一些包搬到中文环境下会产生各种各样的错误，非要实现一模一样的效果实在是很费经历。另一方面，汉字和拉丁字母的排版有着细枝末节的差别，不能照搬照抄。
 
-有趣的是，本书的原版书中有大量篇幅来说明各个部分是怎样实现的。感兴趣的话，不妨拿来读读看，看到原书中一些比较精致的排版，再到中文版中来寻找对应的内容。
+在翻译过程中，我很少去照着原书的代码翻译，而是打开成品PDF，看到原文用什么样的效果，就尝试按照自己的方式去实现类似的效果。在阅读过程中若是发现了书中给出的代码和效果不太一致的地方，那大概正是画虎画得不像的地方。
 
-本书的内容翻译虽然结束了，但正如上文所说，还有很多版式设计工作没有完成。在版式调整得差不多时，还会发布更新的版本。
+这样带来的损失是毋庸置疑的：一些原本联动跳转的地方变成了直接录入的文本，失去了超链接；一些本该随书写进度推进而动态变化的内容也被固定为特定版本。最可惜的是，原作者为本书准备了两个版本的成品PDF——用于显示的“彩色”版、用于印刷的“纸质”版，二者出了插图的颜色不同，对于某些格式的处理也不太一致。这一特性在译文中也没有实现。
+
+实话说来，本书最有意思的地方就在于“自我指涉”，也就是说，在介绍较为复杂的版式实现方法时，往往是以自身的实现效果作为例子。在阅读中，你若发现本书某个地方的版式很新颖，不妨找来原文看看。
+
+本书翻译过程中，对于一些细枝末节的格式有舍弃。这会带来格式不一致或违背标准做法的问题，但它们都是在翻译过程中发现的，修复起来需要大量排查，而对阅读影响不大，在我看来去处理它们有些得不偿失。具体如下：
+\begin{itemize}
+    \item 舍弃了原书不同环境下对左右侧栏宽度的调整；
+    \item 舍弃了正文中斜杠开头的代码（如\verb+\tableofcontents+等）两侧与中文间的空格；
+    \item 舍弃了希腊字母应以罗马体表示的情况；
+    \item 舍弃了部分照抄（verbatim）环境下以特殊字体展示注释的方式；
+    \item 放弃了对各章首微型目录的调整；
+    \item 放弃了为每一种原文字体找到风格相近的中文字体的尝试；
+    \item 原书附录中展示了一些极特殊数学符号，它们在译文中显示为空白。
+\end{itemize}
+
+祝阅读愉快！
+
+\section*{更多信息}
+
+本书的GitHub库地址为：
+
+\begin{center}
+    \wz{https://github.com/ErSanSan233/latex-translation}
+\end{center}
+
+本书译文采用的中文字体如下：
+
+\begin{itemize}
+    \item 主体字体——STSongti-SC-Regular
+    \begin{itemize}
+        \item 粗——FandolSong-Bold
+        \item 意大利——FandolKai-Regular
+        \item 倾斜——FandolFang-Regular
+    \end{itemize}
+    \item 非衬线字体——思源黑体，半轻（NotoSansCJKsc-DemiLight）
+    \begin{itemize}
+        \item 粗——思源黑体，粗（NotoSansCJKsc-Bold）
+        \item 意大利——钉钉进步体（DingTalk-JinBuTi）
+        \item 倾斜——FandolFang-Regular
+    \end{itemize}
+    \item 等宽字体——汉仪正圆（HYZhengYuan-EEW）
+    \begin{itemize}
+        \item 粗——苹方，中黑（PingFangSC-Semibold）
+        \item 意大利——手札体，粗（HannotateSC-W7）
+        \item 倾斜——FandolFang-Regular
+    \end{itemize}
+    \item 本书也在一些地方使用了得意黑（SmileySans-Oblique）。
+\end{itemize}
+
+
+
+\section*{有关原书}
+
+本书原名为\emph{Tout ce que vous avez toujours voulu savoir sur \LaTeX \ sans jamais avoir osé le demander}，副书名为\emph{Ou comment utiliser \LaTeX \ quand on n'y connaît goutte}。
+
+本译文基于的原书版本为Ver 1.5。
+
+我是在以下页面获取本书源文件的：
+
+\begin{center}
+    \wz{https://archives.framabook.org/tout-sur-latex/index.html}
+\end{center}
+
+我在库中的original-book.zip文件里保留了原书的全部信息，方便想要获取原书的人参考。

@@ -812,10 +812,12 @@ Document Class: book 2001/04/21 v1.4 Standard LaTeX document\\
 \end{codelist}
 
 \begin{exclamation}
-  相较本章后文要提到的段落字盒，简单字盒有一个特点：不断字。这样一来，对于指令：
+  相较本章后文要提到的段落字盒，简单字盒有一个特点：不断字。这样一来，对于\linebreak 指令：
 
-  \verb|=== \framebox[3cm]{这句话再长也不会被打断} ===|
-
+\begin{dmd}
+\verb|=== \framebox[3cm]{这句话再长也不会被打断} ===|
+\end{dmd}
+ 
   其会生成：
 
   === \framebox[3cm]{这句话再长也不会被打断} ===

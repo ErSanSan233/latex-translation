@@ -77,7 +77,8 @@ fouilla !\selectlanguage{french}\end{verbatim}
     拉蒂希娅（L\ae titia）去了圣心教堂（Sacré-C\oe ur）。
 }
 \begin{verbatim}
-拉蒂希娅（L\ae titia）去了圣心教堂（Sacré-C\oe ur）。\end{verbatim}
+拉蒂希娅（L\ae titia）去了
+圣心教堂（Sacré-C\oe ur）。\end{verbatim}
 \end{codelist}
 
 如果你的键盘允许，也可以直接输入æ。作为参考，在Linux系统上使用组合键\ovalbox{Alt Gr}+\ovalbox{A}可以输入名副其实地得到这种“a中的e”。出于历史原因，“o中的e”不在范式iso-latin1中，我的键盘不支持直接输入合字æ。
@@ -114,14 +115,13 @@ fouilla !\selectlanguage{french}\end{verbatim}
 \begin{itemize}
     \item 如果你的键盘支持，法文的引号可以直接使用“«”和“»”输入；如果不支持，可以借助小于号和大于号输入：\dm{<<}和\dm{>>}。此外，还可以借助\verb|\og|和\verb|fg|输入：
     
-    \begin{codelist}[7.3]{
-        Qu'on devra dans ce cas saisir « ainsi ».
-    }
+\begin{codelist}[7.3]{
+    Qu'on devra dans ce cas saisir « ainsi~».
+}
 \begin{verbatim}
 Qu'on devra dans ce cas saisir
-\og ainsi\fg{}.
-    \end{verbatim}
-    \end{codelist}
+\og ainsi\fg{}.\end{verbatim}
+\end{codelist}
 
     \item “英文化”的引号可以使用单引号和反引号生成：\verb|``|和\verb|''|。无论如何，直接使用“\verb|"|”作为引号都是不推荐的。
     
@@ -148,13 +148,14 @@ Qu'on devra dans ce cas saisir
     \item 法文中，整数与小数间的分割符为\emph{逗号}，而英文中为圆点。因此我们“应当”这样写：123,54。
     
     \item 每逢千位或千分位\yz{即从小数分割符向两侧每三位。}，要插入四分之一全空格：
-    \begin{codelist}[7.4]{
-        12\,345\,678,234\,34
-    }
+    
+\begin{codelist}[7.4]{
+12\,345\,678,234\,34
+}
 \begin{verbatim}
 \nombre{12345678,23434}
-    \end{verbatim}
-    \end{codelist}
+\end{verbatim}
+\end{codelist}
 
     \item 可以将专有名词写成小型大写字母的形式，比如John \textsc{Coltrane}。这里使用的方式是\linebreak\verb|\textsc{Coltrane}|，但包\textsf{babel}中包含了宏\verb|\bsc|，可以忽略大小写。也就是说，\verb|\bsc{COLTRANE}|、\linebreak\verb|\bsc{Coltrane}|和\verb|\bsc{coltrane}|都可以生成预期的结果。
     

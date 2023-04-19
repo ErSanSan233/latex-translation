@@ -192,7 +192,7 @@
 三角形可以从包\textsf{amssymb}中包含的符号中获取：
 
 \begin{codelist}[11.4]{
-    天啊，那些“美观”的三角形：
+    天啊，那些“蟀爆了”的三角形：
 $\blacktriangleleft$和
 $\blacktriangleright$！
 }
@@ -1592,6 +1592,12 @@ keyword "\\glossaryentry"\end{verbatim}
 
 \section{标签}
 
+%本节关标签，节后恢复
+\fancyhead[LE]{\bfseries\thepage}
+\fancyhead[RO]{\bfseries\thepage}
+% \fancyhead[LE]{\ongletpaire\bfseries\thepage}
+% \fancyhead[RO]{\bfseries\thepage\ongletimpaire}
+
 在一开始，我就预计将本书的开本设为比标准A4纸更小的尺寸，来为裁切做准备，创建标签（onglet）的想法因此而生。这里所说的标签，是指在裁切后可以你可以从书页的切口一侧看到的带颜色的小方块。后来，关于裁切本书的必要性，我的想法改变了：一方面，我工作的地方已经舍弃了使用液压切割机；另一方面，不是所有人都能轻易地用上液压机。但无论如何，这些标签还是留在了本书中，尽管它们并没有完全出现在页面的切口处。接下来介绍生成这些标签的方法。
 
 \subsection{已有的想法}
@@ -1930,6 +1936,12 @@ keyword "\\glossaryentry"\end{verbatim}
 [...]
 }\end{verbatim}
 \end{dmd}
+
+%开标签
+% \fancyhead[LE]{\bfseries\thepage}
+% \fancyhead[RO]{\bfseries\thepage}
+\fancyhead[LE]{\ongletpaire\bfseries\thepage}
+\fancyhead[RO]{\bfseries\thepage\ongletimpaire}
 
 \section{\LaTeX 示例}
 

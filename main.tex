@@ -70,6 +70,7 @@
 \usepackage{psfrag}
 
 \usepackage{minitoc}
+\usepackage{calc}
 
 \newcommand\codereplace[1]{%代码中的<可替换>部分
     {\xeCJKsetup{CJKecglue={\hskip 0pt}}%
@@ -87,10 +88,15 @@
 \newcommand\dm[1]{%代码
     \texttt{#1}}
 
-\newcommand\dmh[1]{%代码行TODO 兼容多行
-    \xeCJKsetup{CJKecglue={\hskip 0pt}}%
-    \char"258E \texttt{#1}
-    }
+\newcommand\dmh[1]{%代码行
+    {\xeCJKsetup{CJKecglue={\hskip 0pt}}%
+    \vspace{0.5em}\noindent\raisebox{-3.5mm}[0pt][0pt]{\rule[1ex]{1mm}{5.5mm}}\quad \fontencoding{T1}\fontfamily{ccr}\fontseries{m}\fontshape{n}\selectfont #1\vspace{0.5em}
+    }}
+
+\newcommand\dmhmake[1]{%emacs指令行
+    {\xeCJKsetup{CJKecglue={\hskip 0pt}}%
+    \vspace{0.5em}\noindent\raisebox{-3.5mm}[0pt][0pt]{\rule[1ex]{1mm}{5.5mm}}\quad \fontencoding{T1}\fontfamily{phv}\fontseries{m}\fontshape{n}\selectfont #1\vspace{0.5em}
+    }}
 
 \newcommand\celan[1]{%侧栏
     \checkoddpage 
@@ -102,6 +108,7 @@
     \else{
         \footnotesize $\blacktriangleleft$%
         \marginpar{%
+        \hfill
         \footnotesize%
         $\blacktriangleright$ \textsf{#1}}}
     \fi}
@@ -127,6 +134,11 @@
     ItalicFont={HannotateSC-W7},% 手札体常规
     SlantedFont={FandolFang-Regular}, % 破产仿宋
     ]{HYZhengYuan-EEW} % 汉仪正圆
+% \setsansfont[
+%     BoldFont={NotoSansCJKsc-Bold}, % 思源黑
+%     ItalicFont={DingTalk-JinBuTi},% 钉钉进步体
+%     SlantedFont={FandolFang-Regular}, % 破产仿宋
+%     ]{} % 思源黑半轻
 % \setmonofont[
 %     BoldFont={FiraCodeRoman-SemiBold},
 %     ItalicFont={JetBrainsMonoNL-Italic}, 
@@ -145,7 +157,73 @@
 \xeCJKsetup{AutoFallBack=true}
 \setCJKfallbackfamilyfont{\CJKrmdefault}{ArialUnicodeMS}
 
+\setCJKfamilyfont{smileyHeiCJK}{SmileySans-Oblique}
+\setfontfamily\smileyHei{SmileySans-Oblique}%得意黑排LaTeX logo的表现不佳，需单独替换
+
 %% 以下为原书展示效果的复刻 %%%
+
+%原书的书侧面标签
+%NOTE 这个标签在各章最后一页的位置似乎有错误
+\makeatletter
+\DeclareFixedFont{\oongletfont}{T1}{phv}{b}{n}{30pt}
+
+\newcounter{chapitre}
+\renewcommand{\thechapitre}{\arabic{chapitre}}
+
+\newlength{\oongletwidth}
+\newlength{\oongletheight}
+\newlength{\oongletvshift}
+\newlength{\oongletvpos}
+\newlength{\oongletdeltamp}
+
+\setlength{\oongletdeltamp}{3.8mm}
+
+% facteur de decalage entre les chapitre
+\newcommand{\oongletsep}{0.84}
+
+% dimension de la boite qui contient le numero du  chapitre
+\setlength{\oongletheight}{45pt}
+% \setlength{\oongletwidth}{1.4cm}
+\setlength{\oongletwidth}{2cm}
+
+% position de la premiere etiquette
+\setlength{\oongletvshift}{-1cm}
+
+\newcommand{\grisonglet}{couleurfondonglet}
+\newcommand{\noironglet}{couleuronglet}
+% la couleur de fond de l'onglet
+\definecolor{couleurfondonglet}{gray}{.8}
+\definecolor{couleuronglet}{gray}{0.2}
+
+\newcommand{\b@iteonglet}{%
+ \colorbox{\grisonglet}{%
+    \parbox[t][\oongletheight][s]{\oongletwidth}{%
+      \vfill%
+      \centering%
+      \ifthenelse{\isodd{\value{page}}}{%
+        \mbox{\oongletfont\color{\noironglet}\thechapter~}}{%
+        \reflectbox{\oongletfont\color{\noironglet}\thechapter~}}%        
+      \vfill}}}
+
+\newcommand{\oonglet}{%
+  \makebox[0pt][l]{%
+    \ifthenelse{\isodd{\value{page}}}{% page impaire
+      \hspace*{\oongletdeltamp}%
+      \hspace*{\marginparwidth}%
+      \hspace*{\marginparsep}%
+      \hspace*{-\oongletwidth}%
+      \hspace*{-2\fboxsep}%
+    }{%
+      \hspace*{-\oongletdeltamp}%
+      \hspace*{-\marginparwidth}%
+      \hspace*{-\marginparsep}}%
+    \setlength{\oongletvpos}{%
+      -\oongletvshift-\oongletheight*\real{\thechapitre}*\real{\oongletsep}}%
+    \raisebox{\oongletvpos}[0pt][0pt]{\b@iteonglet}}}
+
+\let\ongletpaire\oonglet
+\let\ongletimpaire\oonglet
+\makeatother
 
 % 章首环绕minitoc的titlebox
 \newsavebox{\boitetitre}
@@ -189,6 +267,8 @@
 \nomtcpagenumbers
 \mtcsettitle{minitoc}{}
 \setcounter{minitocdepth}{1}
+\setlength{\mtcindent}{0pt}
+\renewcommand{\mtcSfont}{\sffamily}
 \dominitoc
 
 % 原书章首格式
@@ -222,6 +302,36 @@
     \end{flushright}
     \vspace{1cm}
 }
+
+\renewcommand{\@makeschapterhead}[1]{%
+    \noindent
+    \vspace{3cm}
+    \begin{flushright}
+        {\fontsize{35.12}{35.12}\selectfont\sffamily{\textbf {#1}}}
+    \end{flushright}
+    \vspace{1cm}
+}
+
+%PART的新定义如果参数量设为[2]会导致页面后面以正文字体奇怪地重复一遍标题，目前把接受参数数量改到了4个，不确定是否有别的影响TODO
+\renewcommand{\@part}[4]{%
+    \ifnum \c@secnumdepth >-2\relax
+      \refstepcounter{part}%
+      \addcontentsline{toc}{part}{\thepart\hspace{1em}#2}%
+    \else
+      \addcontentsline{toc}{part}{#2}%
+    \fi
+    \markboth{}{}%
+    \begin{flushright}
+    \interlinepenalty \@M
+     \ifnum \c@secnumdepth >-2\relax
+        \fontsize{30}{30}\selectfont\smileyHei{\partname~\thepart}
+       \par
+     \fi
+     \fontsize{50}{50}\selectfont \sffamily{\textbf{#2}}\par
+
+    \end{flushright}%
+    \@endpart}
+
 \makeatother
 
 % 原书的提示框
@@ -260,7 +370,7 @@
 
 % 原书的圆圈问号
 \newenvironment{qquestion}{%
-    \begin{mdframed}[backgroundcolor=LightPink,%
+    \begin{mdframed}[%
         hidealllines=true]%
     \nota{img/fmb-question}}{%
     \end{mdframed}%
@@ -408,6 +518,8 @@
     \colorbox{originalcitation}{\usebox{\boitecitation}}
 \end{center}}
 
+%%% 原书内容的复刻完毕 %%%
+
 %带跳转的内容颜色
 \definecolor{MediumBlue}{RGB}{0,0,205}
 \hypersetup{
@@ -415,7 +527,7 @@
     linkcolor = MediumBlue
 }
 
-\title{关于\LaTeX 的那些你想知道却从不敢问的问题\\或者说，如何在不会使用\LaTeX 的情况下使用\LaTeX \\{\normalsize Tout ce que vous avez toujours voulu savoir sur \LaTeX \ sans jamais oser le demander\\Ou comment utiliser \LaTeX \ quand on n'y connaît goutte\\~\\ ver. 1.5}}
+\title{关于\LaTeX 的那些你想知道却从不敢问的问题\\或者说，如何在不会使用\LaTeX 的情况下使用\LaTeX}
 \author{Vincent Lozano 著}
 
 \begin{document}
@@ -437,15 +549,15 @@
 \newgeometry{
     % inner = 2cm, outer = 4cm,
     % top = 2.5cm, bottom=2.5cm, 
-    marginparwidth = 2cm, marginparsep = 0.5cm,
+    marginparwidth = 3.1cm, marginparsep = 0.5cm,
     % includeheadfoot
 }
 \pagestyle{fancy}
 
-%原书页眉定义
+%页眉定义，默认开标签
 \fancyhf{}
-\fancyhead[LE]{\bfseries\thepage}
-\fancyhead[RO]{\bfseries\thepage}
+\fancyhead[LE]{\ongletpaire\bfseries\thepage}
+\fancyhead[RO]{\bfseries\thepage\ongletimpaire}
 \fancyhead[LO]{\bfseries\rightmark}
 \fancyhead[RE]{\bfseries\leftmark}
 \renewcommand{\footrulewidth}{0pt}
@@ -468,6 +580,10 @@
 
 \frontmatter
 
+%关标签
+\fancyhead[LE]{\bfseries\thepage}
+\fancyhead[RO]{\bfseries\thepage}
+
 \input{introduction-0.tex}
 \input{lucrece.tex}
 \input{introduction.tex}
@@ -476,25 +592,38 @@
 
 \mainmatter
 
-\input{chapitre1.tex}
-\input{chapitre2.tex}
-\input{chapitre3.tex}
-\input{chapitre4.tex}
-\input{chapitre5.tex}
-\input{chapitre6.tex}
-\input{chapitre7.tex}
+%开标签
+\fancyhead[LE]{\ongletpaire\bfseries\thepage}
+\fancyhead[RO]{\bfseries\thepage\ongletimpaire}
+
+\setcounter{chapitre}{1}
+\input{chapitre1.tex}\stepcounter{chapitre}
+\input{chapitre2.tex}\stepcounter{chapitre}
+\input{chapitre3.tex}\stepcounter{chapitre}
+\input{chapitre4.tex}\stepcounter{chapitre}
+\input{chapitre5.tex}\stepcounter{chapitre}
+\input{chapitre6.tex}\stepcounter{chapitre}
+\input{chapitre7.tex}\stepcounter{chapitre}
 \input{chapitre8.tex}
 
+%下文关标签
 \input{introduction2.tex}
-\input{chapitre9.tex}
-\input{chapitre10.tex}
-\input{chapitre11.tex}
-\input{chapitreA.tex}
-\input{chapitreB.tex}
-\input{chapitreC.tex}
+
+\stepcounter{chapitre}
+%下文开标签
+\input{chapitre9.tex}\stepcounter{chapitre}
+\input{chapitre10.tex}\stepcounter{chapitre}
+\input{chapitre11.tex}\stepcounter{chapitre}
+\input{chapitreA.tex}\stepcounter{chapitre}
+\input{chapitreB.tex}\stepcounter{chapitre}
+\input{chapitreC.tex}\stepcounter{chapitre}
 \input{chapitreD.tex}
 
 \backmatter
+%关标签
+\fancyhead[LE]{\bfseries\thepage}
+\fancyhead[RO]{\bfseries\thepage}
+
 \input{biliographie.tex}
 \input{glossoire.tex}
 

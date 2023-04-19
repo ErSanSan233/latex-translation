@@ -60,7 +60,7 @@
 
     \begin{dmd}
     LaTeX2e <2005/12/01>\\
-    Babel <v3.8h> and hyphenation patterns for english, [...] dumylang, \fbox{french}, loaded.
+    Babel <v3.8h> and hyphenation patterns for english, [...] dumylang,\linebreak \fbox{french}, loaded.
     \end{dmd}
 \end{exclamation}
 
@@ -104,14 +104,13 @@
 \end{ii}
 
 \begin{figure}[H]
-    %TODO 图
     \centering
     \includegraphics[width = 0.8\linewidth]{img/cycle.eps}
     \caption{UNIX中参与生成过程的工具}
     \label{fig:1.2}
 \end{figure}
 
-\subsection{显示}%visualisation有时翻译成可视化，有时翻译成显示，这个可以后期再统一一下。
+\subsection{显示}
 
 在编译后，可以简单地使用\textsf{evince}程序来完成显示步骤。输入以下指令：
 
@@ -120,7 +119,7 @@
 这是一个\textsf{linux}下运行的十分直观的程序，能够给出一个方便阅读的文件预览。
 
 \begin{exclamation}
-    注意，不必在每次编译后都重新运行evince，它显示的内容会自动刷新。
+    注意，不必在每次编译后都重新运行evince，它显示的内容会自动刷新。\\
 \end{exclamation}
 
 \subsection{打印}
@@ -128,10 +127,8 @@
 对于\dm{pdf}格式，如何打印它这一问题就丢给了你的操作系统。关于这一点，没有特殊的注意事项。你有了一个文件，可以自由地处置它，无论是直接打印，还是根据你所处的环境来发挥才艺。
 
 \begin{ii}
-    从\dm{dvi}到\dm{ps}格式的转换需要调用dvips程序：
-
-    \dmh{dvips \codereplace{文件名}.dvi}
-
+    从\dm{dvi}到\dm{ps}格式的转换需要调用dvips程序：\\\dmh{dvips \codereplace{文件名}.dvi}
+    
     这可以生成一个PostScrpt格式的文件。这个格式也由Adobe创造，是一种打印机语言，可以看作\dm{pdf}的祖先。目前的打印机出厂即可识别这种打印机语言。我们可以说，文件发送到打印机时，十有八九传送的是PostScrpt格式的参数。对于PostScript格式的文件，有大量可以显示、修改这种文件的工具。
 \end{ii}
 

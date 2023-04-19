@@ -105,7 +105,7 @@ Auc\TeX 是\textsf{Emacs}的一个模块，它简化了\LaTeX 文件的录入。
 
 使用\fbox{\dm{C-c C-c}}可以尝试遵循文档编译的流程，根据情况运行\LaTeX 、\bib 或\textsf{xdvi}……同样需要注意，使用Auc\TeX 可以管理主文件的机制（参见6.4节）。为此，则需要在\textsf{Emacs}中打开新文件时输入主文件的文件名。相反，则需要通过以下方式耐心地向Auc\TeX 解释哪个文件是主文件：
 
-\dmh{\textsf{M-x TeX-master-file-ask}\textrm{ 或 }\textsf{C-c\_}}%啥？以及这个字体其实要换成Helvetica
+\dmhmake{M-x TeX-master-file-ask}\textrm{ 或 }\textsf{C-c\_}%啥？以及这个字体其实要换成Helvetica
 
 你同样需要输入主文件的文件名。这样一来，在你通过\fbox{\dm{C-c C-c}}在“子”文档上执行编译时，将作用于\emph{主}文件。
 
@@ -113,15 +113,15 @@ Auc\TeX 是\textsf{Emacs}的一个模块，它简化了\LaTeX 文件的录入。
 
 \textsf{Aspell}是一个多语种拼写纠正工具，可以与万能的文本编辑器\textsf{Emacs}对接。若要在\textsf{Emacs}中使用它，需要掌握两条指令：
 
-\dmh{\textsf{M-x ispell-change-dictionary}}
+\dmhmake{M-x ispell-change-dictionary}
 
 以上指令用于选择字典语言（法文\dm{francais}或英文\dm{english}）；
 
-\dmh{\textsf{M-x ispell-buffer}}
+\dmhmake{M-x ispell-buffer}
 
 以上指令可以在缓冲区开启一次纠错过程。我们也可以借助以下指令检查单独的词的拼写：
 
-\dmh{\textsf{M-xispell-word}\textrm{ 或 }\textsf{M-\$}}
+\dmhmake{M-xispell-word}\textrm{或 }\textsf{M-\$}
 
 \begin{exclamation}
 在我写下这行文字时，发行版Debian配置Emacs默认不是用程序Aspell。因此，需要在你的\dm{.emacs}文件中添加以下代码行：
@@ -155,5 +155,5 @@ add-tex-command bidule pP
     有些人会称“随词”（译注：原文为à la ouôrde，其中ouôrde即模仿英文word的发音）……
 }模式，我们可以通过以下指令来设定该模式是否激活：
 
-\dmh{\textsf{M-x flyspell-mode}}
+\dmhmake{M-x flyspell-mode}
 

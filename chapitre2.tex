@@ -359,7 +359,7 @@ Emacs代表:
 因此，我们可以自由地调整\verb|\hline|和\dm{|}的数量，以隐藏或显示表线。包\textsf{array}可以满足一些关于表格的幻想。
 
 \begin{exclamation}
-大多数环境都会另起一行，但\dm{tabular}不会。\dm{tabular}会紧接当前的文本生成表格。
+大多数环境都会另起一行，但\dm{tabular}不会。\dm{tabular}会紧接当前的文本生成\linebreak 表格。
 \end{exclamation}
 
 此外，我们还可以使用参数来精确地指定表格竖直方向上的位置：
@@ -407,7 +407,7 @@ public:
 \end{codelist}
 
 \begin{exclamation}
-我们可以在环境\dm{verbatim}中写任何内容，\emph{除了}以下字符串——\verb|\end{verbatim}|！
+我们可以在环境\dm{verbatim}中写任何内容，\emph{除了}以下字符串——\verb|\end{verbatim}|！\\
 \end{exclamation}
 
 有两个指令可以像\dm{verbatim}一样生成文本片段：\verb|\verb|和\verb|\verb*|。带有星号的版本可以将空格“\verb| |”显示为“\verb*| |”的形式。
@@ -424,7 +424,7 @@ public:
 \end{codelist}
 
 \begin{exclamation}
-在任何情况下，指令\verb|\verb|都不能出现在其他指令的参数中，无论这个指令是什么。
+在任何情况下，指令\verb|\verb|都不能出现在其他指令的参数中，无论这个指令是\linebreak 什么。
 \end{exclamation}
 
 \subsection{引用语}

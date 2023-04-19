@@ -10,7 +10,7 @@
 
 为了修改索引的外观，需要明白，当我们大手一挥噼里啪啦地写下如下指令的时候，我们实际上就生成了一个文件\codereplace{文档}\dm{.ind}：
 
-\dmh{makeindex }\codereplace{文档}
+\dmh{makeindex \codereplace{文档}}
 
 该文件包含了类似下面列出的内容：
 
@@ -684,8 +684,10 @@ heading_suffix "}\\hfill}\\nopagebreak\n"\end{verbatim}
 %TODO 对于前置页面的单章双节？
 
 \fancyhf{}
-\fancyhead[LE]{\bfseries\thepage}
-\fancyhead[RO]{\bfseries\thepage}
+% \fancyhead[LE]{\bfseries\thepage}
+% \fancyhead[RO]{\bfseries\thepage}
+\fancyhead[LE]{\ongletpaire\bfseries\thepage}
+\fancyhead[RO]{\bfseries\thepage\ongletimpaire}
 \fancyhead[LO]{\texttt{\backslash rightmark}的值为“\rightmark{}”，\texttt{\backslash leftmark}的值为“\leftmark”}
 \fancyhead[RE]{\texttt{\backslash rightmark}的值为“\rightmark{}”，\texttt{\backslash leftmark}的值为“\leftmark”}
 \renewcommand{\footrulewidth}{0pt}
@@ -750,8 +752,10 @@ heading_suffix "}\\hfill}\\nopagebreak\n"\end{verbatim}
 % TODO on remet tous commme c'�tait avant
 %
 \fancyhf{}
-\fancyhead[LE]{\bfseries\thepage}
-\fancyhead[RO]{\bfseries\thepage}
+% \fancyhead[LE]{\bfseries\thepage}
+% \fancyhead[RO]{\bfseries\thepage}
+\fancyhead[LE]{\ongletpaire\bfseries\thepage}
+\fancyhead[RO]{\bfseries\thepage\ongletimpaire}
 \fancyhead[LO]{\bfseries\rightmark}
 \fancyhead[RE]{\bfseries\leftmark}
 \renewcommand{\footrulewidth}{0pt}
@@ -942,7 +946,8 @@ heading_suffix "}\\hfill}\\nopagebreak\n"\end{verbatim}
 这个环境属于一种\dm{verbatim}，但我们可以在其中“执行”\LaTeX 指令。这需要借助属于类0的符号\dm{¢}、属于类1的符号\dm{«}，以及属于类2的符号\dm{»}——很显然，我们可以随意选择字符来实现这一点。然而，这样做需要秉持着符号应当易读且其用途几乎仅为向\LaTeX 传递控制指令的精神。
 
 \begin{codelist}[10.5]{%这个序号原书没有显示出来，但确实占了一个号
-为了显示变量的内容：\\
+为了显示变量的内容：
+
 \dmh{echo \$\{}\codereplace{我的变量}\dm{\}}
 }
 \begin{verbatim}
@@ -969,8 +974,9 @@ heading_suffix "}\\hfill}\\nopagebreak\n"\end{verbatim}
 使用如下：
 
 \begin{codelist}[10.6]{
-在\textsf{Emacs}中玩俄罗斯方块：\\
-\dmh{}{\fontencoding{T1} \fontfamily{phv} \selectfont M-x tetris}
+在\textsf{Emacs}中玩俄罗斯方块：
+
+\dmhmake{M-x tetris}
 }
 \begin{verbatim}
 在\soft{Emacs}中玩俄罗斯方块：
