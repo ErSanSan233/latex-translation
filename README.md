@@ -1,4 +1,4 @@
-<img src="img/transparentcover.pdf" alt="cover" style="zoom:80%;" />
+![Cover](cover.svg)
 
 ---
 
