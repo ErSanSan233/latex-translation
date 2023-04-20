@@ -276,6 +276,7 @@
 \DeclareFixedFont{\chapchapfont}{T1}{phv}{b}{n}{22.56pt}
 \makeatletter
 \renewcommand{\@makechapterhead}[1]{%
+    \thispagestyle{empty}
     \noindent
     \begin{minipage}[t][6cm]{.65\linewidth}
     \raisebox{-2cm}[0pt][0pt]{
@@ -304,6 +305,7 @@
 }
 
 \renewcommand{\@makeschapterhead}[1]{%
+    \thispagestyle{empty}
     \noindent
     \vspace{3cm}
     \begin{flushright}
@@ -322,6 +324,7 @@
     \fi
     \markboth{}{}%
     \begin{flushright}
+        \thispagestyle{empty}
     \interlinepenalty \@M
      \ifnum \c@secnumdepth >-2\relax
         \fontsize{30}{30}\selectfont\smileyHei{\partname~\thepart}
@@ -532,6 +535,22 @@
 
 \begin{document}
 
+\newgeometry{
+    inner = 0cm, outer = 0cm,
+    top = 0cm, bottom=0cm, 
+    marginparwidth = 0cm
+    %, marginparsep = 0.5cm,
+    % includeheadfoot
+}
+\thispagestyle{empty}
+\begin{center}
+    ~\\
+    \vspace{\stretch{1}}
+    \includegraphics[width=0.75\linewidth]{img/transparentcover}
+    \vspace{\stretch{1}}
+    ~\\
+\end{center}
+% \vspace{\stretch{1}}
 %去除空白页页眉页脚
 \makeatletter
 \renewcommand{\cleardoublepage}{% 重定义该指令
