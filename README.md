@@ -1,16 +1,16 @@
-# latex-translation
-这个repo旨将Vincent Lozano的图书*Tout ce que vous avez toujours voulu savoir sur LaTeX sans jamais oser le demander*翻译为中文。
-
-原书：https://archives.framabook.org/tout-sur-latex/index.html
-
-当前进度：请看[main.pdf](https://github.com/ErSanSan233/latex-translation/blob/main/main.pdf)文件
-
-本书尚处于翻译阶段，当前中文排版为临时排版，会存在一些间距不当、版面不科学的情况，预计会在翻译后统一处理（如果我实在看不下去了也会不定时调整😂）。
+<img src="img/transparentcover.pdf" alt="cover" style="zoom:80%;" />
 
 ---
 
-In this repository, I try to translate a book called *Tout ce que vous avez toujours voulu savoir sur LaTeX sans jamais oser le demander* into Simplified Chinese.
+偶然间发现了这本名为*[Tout ce que vous avez toujours voulu savoir sur LaTeX sans jamais oser le demander](https://archives.framabook.org/tout-sur-latex/index.html)*的图书，其中涉及了丰富且实用的排版技巧，遂将其翻译为中文，供大家阅读参考。
 
-Original book: https://archives.framabook.org/tout-sur-latex/index.html
+## 编译和阅读
 
-Current progress: see [main.pdf](https://github.com/ErSanSan233/latex-translation/blob/main/main.pdf)
+本工程采用XeLaTeX编译。
+
+文件`main.pdf`为编译后效果，可直接阅读。
+
+## 许可证
+
+本书是开放图书，遵循[开放作品许可](http://www.artlibre.org)（Licence Art Libre，LAL）。
+
