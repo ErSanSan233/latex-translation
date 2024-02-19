@@ -4,7 +4,7 @@
     我说，我要上这棕树，抓住枝子。\\愿你的两乳好像葡萄累累下垂，\\你鼻子的气味香如苹果。\\你的口如上好的酒，女子说，\\为我的良人下咽舒畅，流入睡觉人的嘴中。
 \end{epigraphe}
 
-那本章的主要思路是介绍，介绍那些为生成文档中个别部分而被个性化修改的\LaTeX 的标准工具，间或可以从中看到些用于“调香”的宏。这些个性化设置可以应用于各个层级：使用包的选项，如设置页眉；偶尔涉足宏定义，如设置章节的展现风格；更深入地处理宏，如处理内容的表格。本章的一部分聚焦于我们可以从包\textsf{fancyvrb}中调用的工具。作为本章的末尾，我们会去抨击一下法文的引号。
+那本章的主要思路是介绍，介绍那些为生成文档中个别部分而被个性化修改的\LaTeX 的标准工具，间或可以从中看到些用于``调香''的宏。这些个性化设置可以应用于各个层级：使用包的选项，如设置页眉；偶尔涉足宏定义，如设置章节的展现风格；更深入地处理宏，如处理内容的表格。本章的一部分聚焦于我们可以从包\textsf{fancyvrb}中调用的工具。作为本章的末尾，我们会去抨击一下法文的引号。
 
 \section{索引的外观} % 这节翻译得是什么破玩意
 
@@ -33,7 +33,7 @@
     \item 对于每个\dm{.idm}文件：
     \begin{enumerate}
         \item 写入实体\dm{item\_0}的内容；
-        \item 写入入口（本例中为“Cosmic debris”）；
+        \item 写入入口（本例中为``Cosmic debris''）；
         \item 写入分割符（实体\dm{delin\_0}的值）；
         \item 写入页码。
     \end{enumerate}
@@ -173,7 +173,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"\end{verbatim}
     \item 无缩进（\dm{0pt}）。
     \item 标题前的纵向空间为\dm{3.5ex}，带有正向\dm{-1ex}和负向\dm{-.2ex}的允差。
     \item 标题后的纵向空间为\dm{2.3ex}，带有正向\dm{.2ex}的允差。可以注意到，如果空间为负，则段落开头会紧接标题，而不会重起一段。
-    \item 标题加粗加大，使用“常规”（normal）字体。
+    \item 标题加粗加大，使用``常规''（normal）字体。
 \end{itemize}
 
 为了定义本文档使用的标题样式，我们引入三个长度，分别用于\dm{section}、\dm{subsection}、\dm{subsubsection}的缩进：
@@ -241,7 +241,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"\end{verbatim}
 
 \begin{enumerate}
     \item \verb|\@chapter|，用于被编号的章标题；
-    \item \verb|\@schapter|，用于不被编号的章标题（\dm{s}代表\emph{star}，即“星号”，对应指令\verb|\chapter*|）。
+    \item \verb|\@schapter|，用于不被编号的章标题（\dm{s}代表\emph{star}，即``星号''，对应指令\verb|\chapter*|）。
 \end{enumerate}
 
 在英勇地（同样在文件\dm{book.cls}中）查找这两条指令的定义之后，我们找到了下面这类东西：
@@ -261,7 +261,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"\end{verbatim}
     \fi}\end{verbatim}
 \end{dmd}
 
-这段代码把我们领上道了……实际上，\verb+\@makechapterhead+（可以按字面翻译为“制作章首装饰”）正是我们更改图案所需要重定义的指令。经过进一步的搜索，我们可以发现指令\verb|\@makeschapterhead|能够生成未编号的章首装饰。这两条指令接受章名作为其参数。
+这段代码把我们领上道了……实际上，\verb+\@makechapterhead+（可以按字面翻译为``制作章首装饰''）正是我们更改图案所需要重定义的指令。经过进一步的搜索，我们可以发现指令\verb|\@makeschapterhead|能够生成未编号的章首装饰。这两条指令接受章名作为其参数。
 
 \subsubsection{必要的小工具}
 
@@ -279,7 +279,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"\end{verbatim}
 {\end{list}}\end{verbatim}
 \end{dmd}
 
-同时，可以使用布尔值\dm{@mainmatter}来获取我们目前是否处于文档的“中心”——这是针对指令\verb|\mainmatter|被调用的情况。
+同时，可以使用布尔值\dm{@mainmatter}来获取我们目前是否处于文档的``中心''——这是针对指令\verb|\mainmatter|被调用的情况。
 
 \subsubsection{严格的章首装饰}
 
@@ -287,7 +287,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"\end{verbatim}
 
 \begin{enumerate}
     \item 在左侧的是微型页面字盒。我们指定了它的高度，以便放置微型摘要（参见\S 10.7）。
-    \item 在右侧的是包含“章”一词和章号的字盒。
+    \item 在右侧的是包含``章''一词和章号的字盒。
 \end{enumerate}
 
 \newcommand{\boite}[1]{%
@@ -338,7 +338,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"\end{verbatim}
 \begin{verbatim}
 % 章号
 \DeclareFixedFont{\chapnumfont}{T1}{phv}{b}{n}{80pt}
-% “章”一词
+% ``章''一词
 \DeclareFixedFont{\chapchapfont}{T1}{phv}{b}{n}{16pt}
 % 章标题
 \DeclareFixedFont{\chaptitfont}{T1}{phv}{b}{n}{24.88pt}\end{verbatim}
@@ -400,8 +400,8 @@ heading_suffix "}\\hfill}\\nopagebreak\n"\end{verbatim}
 \@endpart}\end{verbatim}
 \end{dmd}
 
-通过查看这段代码，我们了解到，展现部分的页面由一行加粗加大的“部分”字样和部分的序号构成\jz{
-    实际上，在联动了包\textsf{babel}和选项\dm{french}后，这两个指令会被重定义，以生成形如“Première partie”（第一部分）的内容。
+通过查看这段代码，我们了解到，展现部分的页面由一行加粗加大的``部分''字样和部分的序号构成\jz{
+    实际上，在联动了包\textsf{babel}和选项\dm{french}后，这两个指令会被重定义，以生成形如``Première partie''（第一部分）的内容。
 }：
 
 \begin{dmd}
@@ -500,13 +500,13 @@ heading_suffix "}\\hfill}\\nopagebreak\n"\end{verbatim}
 \end{description}
 
 \begin{exclamation}
-包geometry中，涉及页眉、页脚、边注的尺寸默认算作版心\emph{外}的部分。有一些指令可以将这些尺寸中的一个或多个包含到版心内部来完成计算。例如，我们可以说“我希望版心宽度为10厘米，包含边注”。关于更多相关细节，请参阅包文档。
+包geometry中，涉及页眉、页脚、边注的尺寸默认算作版心\emph{外}的部分。有一些指令可以将这些尺寸中的一个或多个包含到版心内部来完成计算。例如，我们可以说``我希望版心宽度为10厘米，包含边注''。关于更多相关细节，请参阅包文档。
 \end{exclamation}
 
 \section{页眉和页脚}
 
 版心上下的空间分别成为页眉和页脚，可以借助包\textsf{fancyhdr}来定制。定制的基本原则很简单\jz{
-    在读完接下来的内容后，你无疑会开始质疑这里说的“简单”一词……
+    在读完接下来的内容后，你无疑会开始质疑这里说的``简单''一词……
 }，只需要使用以下指令来指明我们想要使用借助包\textsf{fancyhdr}定义的页眉和页脚。该包默认会在页面下方和页脚上方生成一条水平线段，线段粗细分别由\verb|\footrulewidth|和\verb|\headrulewidth|定义。接下来，我们使用以下指令：
 
 \begin{itemize}
@@ -571,7 +571,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"\end{verbatim}
 
 \subsection{章首前的空白页}
 
-在类型\dm{book}的双面模式下（正是本文档对应的情况），\LaTeX 会默认在奇数页——这在排版术语中称作“单面”（belle page）——开始新的一章。为了实现这一点，\LaTeX 在不同的内部指令中调用了指令\verb+\cleardoublepage+。这样可以在必要时在章的首页前插入一个空白页。默认情况下，该空白页会带有目前使用的页眉和页脚。在本文档中，我们针对这些页面修改了文件\dm{latex.ltx}中的指令\verb|\cleardoublepage|，指定了一种“空白”的风格：%TODO 还没搞
+在类型\dm{book}的双面模式下（正是本文档对应的情况），\LaTeX 会默认在奇数页——这在排版术语中称作``单面''（belle page）——开始新的一章。为了实现这一点，\LaTeX 在不同的内部指令中调用了指令\verb+\cleardoublepage+。这样可以在必要时在章的首页前插入一个空白页。默认情况下，该空白页会带有目前使用的页眉和页脚。在本文档中，我们针对这些页面修改了文件\dm{latex.ltx}中的指令\verb|\cleardoublepage|，指定了一种``空白''的风格：%TODO 还没搞
 
 \begin{dmd}
 \begin{verbatim}
@@ -615,7 +615,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"\end{verbatim}
     \item \verb|\markright|将\codereplace{文本}存入队列。
 \end{itemize}
 
-在一个页面中，这两个“标记”指令可以调用多次，也可以一次都不调用。在\TeX 结束版心的排版，在生成页眉和页脚时，会探索栈和队列的参数。这借助了以下指令：
+在一个页面中，这两个``标记''指令可以调用多次，也可以一次都不调用。在\TeX 结束版心的排版，在生成页眉和页脚时，会探索栈和队列的参数。这借助了以下指令：
 
 \begin{itemize}
     \item \verb|\leftmark|返回栈顶，即\emph{上一次调用}\verb|\markboth|时的\codereplace{文本$_{\mbox{左}}$}；
@@ -623,14 +623,14 @@ heading_suffix "}\\hfill}\\nopagebreak\n"\end{verbatim}
 \end{itemize}
 
 \begin{exclamation}
-我们这里介绍的“队列”有一个小巧思：只要页面中没有“标记”指令添加数据，那么队列就会保持此前的页面中\emph{最后插入的信息}。指令\verb|\markboth|和\verb|\markright|一出现，“队列”就被清空。
+我们这里介绍的``队列''有一个小巧思：只要页面中没有``标记''指令添加数据，那么队列就会保持此前的页面中\emph{最后插入的信息}。指令\verb|\markboth|和\verb|\markright|一出现，``队列''就被清空。
 \end{exclamation}
 
 另一个理解这种标记机制的方法可以描述如下：
 
 \begin{itemize}
     \item \verb|\leftmark|包含入栈的最后一条信息（借助\verb|\markboth|的第一个参数）；
-    \item 如果我们在页面上放置了一词\verb|\rightmark|，则它包含“队列”的第一条信息，否则它包含队列中的最后一条信息（借助\verb|\markboth|的第二个参数或\verb|\markright|的参数）。
+    \item 如果我们在页面上放置了一词\verb|\rightmark|，则它包含``队列''的第一条信息，否则它包含队列中的最后一条信息（借助\verb|\markboth|的第二个参数或\verb|\markright|的参数）。
 \end{itemize}
 
 \begin{ii}
@@ -688,8 +688,8 @@ heading_suffix "}\\hfill}\\nopagebreak\n"\end{verbatim}
 % \fancyhead[RO]{\bfseries\thepage}
 \fancyhead[LE]{\ongletpaire\bfseries\thepage}
 \fancyhead[RO]{\bfseries\thepage\ongletimpaire}
-\fancyhead[LO]{\texttt{\backslash rightmark}的值为“\rightmark{}”，\texttt{\backslash leftmark}的值为“\leftmark”}
-\fancyhead[RE]{\texttt{\backslash rightmark}的值为“\rightmark{}”，\texttt{\backslash leftmark}的值为“\leftmark”}
+\fancyhead[LO]{\texttt{\backslash rightmark}的值为``\rightmark{}''，\texttt{\backslash leftmark}的值为``\leftmark''}
+\fancyhead[RE]{\texttt{\backslash rightmark}的值为``\rightmark{}''，\texttt{\backslash leftmark}的值为``\leftmark''}
 \renewcommand{\footrulewidth}{0pt}
 
 如果你不相信，可以亲自看看本章的页眉。
@@ -717,7 +717,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"\end{verbatim}
 \verb|\newif\if@mainmatter|
 \end{dmd}
 
-\LaTeX 默认使用该值来获取当前我们是否处于“main matter”中。此外，我们的文档中还有另一个布尔值：
+\LaTeX 默认使用该值来获取当前我们是否处于``main matter''中。此外，我们的文档中还有另一个布尔值：
 
 \begin{dmd}
 \verb+\newif\if@frontmatter+
@@ -760,7 +760,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"\end{verbatim}
 \fancyhead[RE]{\bfseries\leftmark}
 \renewcommand{\footrulewidth}{0pt}
 
-\subsection{以“小型大写”罗马数字为前言编号}
+\subsection{以``小型大写''罗马数字为前言编号}
 
 鄙人坚持认为，前言部分的页码应当以小型大写罗马数字标示。很不幸，我们不能写成这样：
 
@@ -869,17 +869,17 @@ heading_suffix "}\\hfill}\\nopagebreak\n"\end{verbatim}
 {\if@restonecol\onecolumn\else\clearpage\fi}\end{verbatim}
 \end{dmd}
 
-\section{“照抄”环境}
+\section{``照抄''环境}
 
-包\textsf{fancyvrb}和\textsf{listings}都包含可以生成带特殊符号文本的特性。其中，前者更加灵活，可以生成\dm{verbatim}种类的环境，特别是可以定制必要的边框和边距。最重要的是，它允许你从环境的正中央“逃回\LaTeX ”，或者按英语国家的人所说的：\emph{to escape to \LaTeX }。换句话说，尽管是在符号\verb|\|、\dm{\{}、\dm{\}}都不起作用的环境中，我们仍然可以调用\LaTeX 的指令。
+包\textsf{fancyvrb}和\textsf{listings}都包含可以生成带特殊符号文本的特性。其中，前者更加灵活，可以生成\dm{verbatim}种类的环境，特别是可以定制必要的边框和边距。最重要的是，它允许你从环境的正中央``逃回\LaTeX ''，或者按英语国家的人所说的：\emph{to escape to \LaTeX }。换句话说，尽管是在符号\verb|\|、\dm{\{}、\dm{\}}都不起作用的环境中，我们仍然可以调用\LaTeX 的指令。
 
-后者（\textsf{listings}）致力于生成代码片段。它提供的大量功能中，同样包含可以逃回\LaTeX 的方法。这里我们推荐你借助本章使用的“真实复刻”示例探索一下这两个环境。
+后者（\textsf{listings}）致力于生成代码片段。它提供的大量功能中，同样包含可以逃回\LaTeX 的方法。这里我们推荐你借助本章使用的``真实复刻''示例探索一下这两个环境。
 
 \subsection{跑个题，说说符号……}
 
-在这里我想先说说\TeX 如何“消化吸收”我们喂给它的字符——我相信这题没有白偏\jz{
+在这里我想先说说\TeX 如何``消化吸收''我们喂给它的字符——我相信这题没有白偏\jz{
     在做事低调这件事上，法国人似乎是专家，但我们不要偏太远了……
-}。需要明白，符号可以被划分为16中类别，每个符号只能同时属于其中的一种。每种类别都可以由\TeX 特殊处理。例如，遇到符号\dm{\backslash}时，\TeX 会读取其后面的字符组，来识别指令（或\emph{控制序列}）的名称；遇到符号\dm{\{}时，\TeX 会开启新的组；读取到符号\dm{\%}时，\TeX 会一路忽略接下来符号，直到当前行结束，也就是遇到标记“行末”的符号，等等。\TeX 可以识别的类别举例如下：
+}。需要明白，符号可以被划分为16中类别，每个符号只能同时属于其中的一种。每种类别都可以由\TeX 特殊处理。例如，遇到符号\dm{\backslash}时，\TeX 会读取其后面的字符组，来识别指令（或\emph{控制序列}）的名称；遇到符号\dm{\{}时，\TeX 会开启新的组；读取到符号\dm{\%}时，\TeX 会一路忽略接下来符号，直到当前行结束，也就是遇到标记``行末''的符号，等等。\TeX 可以识别的类别举例如下：
 
 \begin{description}
     \item[类0]控制符号（\LaTeX 中的\dm{\backslash}）；
@@ -889,7 +889,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"\end{verbatim}
     \item[类14]注释（\LaTeX 中的\dm{\%}）。
 \end{description}
 
-我们可以来找找乐子——虽然这样做挺“危险”——来修改各类别的内容。在下面的示例中，我们将\verb|\|、\dm{\{}、\dm{\}}转为字母，并且决定分别让\dm{/}、\dm{(}、\dm{)}出现在控制符号、组起始、组结束类别中。字符\verb+#+同样被修改了类别，现在它属于注释：
+我们可以来找找乐子——虽然这样做挺``危险''——来修改各类别的内容。在下面的示例中，我们将\verb|\|、\dm{\{}、\dm{\}}转为字母，并且决定分别让\dm{/}、\dm{(}、\dm{)}出现在控制符号、组起始、组结束类别中。字符\verb+#+同样被修改了类别，现在它属于注释：
 
 \begin{codelist}[10.3]{
 \backslash bidule\{一些东西\} \textbf{加粗}\par
@@ -917,7 +917,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"\end{verbatim}
 3 + 4 = 7\end{verbatim}
 \end{codelist}
 
-这个示例中，我们让字符\dm{+}“活跃”了起来，并像定义指令那样定义了它。可以注意到，这里，我们曾可以不调用符号\dm{\backslash}就创建一个可用的指令。
+这个示例中，我们让字符\dm{+}``活跃''了起来，并像定义指令那样定义了它。可以注意到，这里，我们曾可以不调用符号\dm{\backslash}就创建一个可用的指令。
 
 \begin{ii}
 需要知道，我们使用了包babel和法文扩展。一些双标点同样被设置为活跃，目的是防止在它们前面出现断字。此外，符号\dm{~}在\LaTeX 被视为活跃，你可以在交互式\LaTeX 绘画中看到其定义：
@@ -943,7 +943,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"\end{verbatim}
     xleftmargin=15pt}\end{verbatim}
 \end{dmd}
 
-这个环境属于一种\dm{verbatim}，但我们可以在其中“执行”\LaTeX 指令。这需要借助属于类0的符号\dm{¢}、属于类1的符号\dm{«}，以及属于类2的符号\dm{»}——很显然，我们可以随意选择字符来实现这一点。然而，这样做需要秉持着符号应当易读且其用途几乎仅为向\LaTeX 传递控制指令的精神。
+这个环境属于一种\dm{verbatim}，但我们可以在其中``执行''\LaTeX 指令。这需要借助属于类0的符号\dm{¢}、属于类1的符号\dm{«}，以及属于类2的符号\dm{»}——很显然，我们可以随意选择字符来实现这一点。然而，这样做需要秉持着符号应当易读且其用途几乎仅为向\LaTeX 传递控制指令的精神。
 
 \begin{codelist}[10.5]{%这个序号原书没有显示出来，但确实占了一个号
 为了显示变量的内容：
@@ -1059,10 +1059,10 @@ heading_suffix "}\\hfill}\\nopagebreak\n"\end{verbatim}
 \end{Cter}\end{verbatim}
 \end{codelist}
 
-\section{关于那个叫做“法文引号”的玩意儿}
+\section{关于那个叫做``法文引号''的玩意儿}
 
-法文排版的乐趣之一不容置疑地归属于卓越的“法国特色”引号的使用方式\jz{
-    此外，我们注意到，现在很流行伸出食指和中指勾动来表示引号，但我们仍在使用代表法文引号“«”和“»”的guillet一词来表示引号。这种兔耳朵一样的手势无疑是从美国人那里传来的。因此，我公开呼吁，我们要使用拇指和食指来表示引号。然而，为了形象地模仿出法文引号这种双层尖角的特征，也许需要再长出两只胳膊，或习惯于扭动一只手的四根手指才行。
+法文排版的乐趣之一不容置疑地归属于卓越的``法国特色''引号的使用方式\jz{
+    此外，我们注意到，现在很流行伸出食指和中指勾动来表示引号，但我们仍在使用代表法文引号``«''和``»''的guillet一词来表示引号。这种兔耳朵一样的手势无疑是从美国人那里传来的。因此，我公开呼吁，我们要使用拇指和食指来表示引号。然而，为了形象地模仿出法文引号这种双层尖角的特征，也许需要再长出两只胳膊，或习惯于扭动一只手的四根手指才行。
 }……然而，我们在文档中输入法文引号时，包\textsf{babel}没法正确处理断字：
 
 \begin{dmd}
@@ -1079,7 +1079,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"\end{verbatim}
 
 至少这种处理方式让人很不舒服……当然，可以借助包\textsf{babel}中的指令\verb|\og|和\verb|\fg|来插入法文引号，但依鄙人的品味，这种输入方式显得束手束脚，尤其是考虑到法文引号可以在法文键盘上直接输入\jz{
     分别使用\ovalbox{Alt Gr}+\ovalbox{Z}和\ovalbox{Alt Gr}+\ovalbox{X}快捷键。
-}。一种曾经由包\textsf{french}适配的解决方案通过将字符“«”和“»”设为活跃\celan{\S 10.5.1}来缓解了断字的问题。因此，我们可以这样编写：
+}。一种曾经由包\textsf{french}适配的解决方案通过将字符``«''和``»''设为活跃\celan{\S 10.5.1}来缓解了断字的问题。因此，我们可以这样编写：
 
 \begin{dmd}
 \begin{verbatim}
@@ -1123,13 +1123,13 @@ heading_suffix "}\\hfill}\\nopagebreak\n"\end{verbatim}
 \end{dmd}
 
 \begin{qquestion}
-这种操作方式有三个我仍然没法解决的小问题。首先，目前没有广泛流传的既能操作编码UTF-8，又能允许\TeX 将符号<<（编码为2字节）设置为活跃的引擎，我必须得谦卑地承认，我还没有测试它们。因此，这里提到的操作仅限于将每个字符编码为1字节的编码方式。其次，我们不能在标题中使用这些引号，因为可能有被识别为“书签”（signet；英：\emph{bookmark}）的可能。最后，这些引号在第11章%TODO
+这种操作方式有三个我仍然没法解决的小问题。首先，目前没有广泛流传的既能操作编码UTF-8，又能允许\TeX 将符号<<（编码为2字节）设置为活跃的引擎，我必须得谦卑地承认，我还没有测试它们。因此，这里提到的操作仅限于将每个字符编码为1字节的编码方式。其次，我们不能在标题中使用这些引号，因为可能有被识别为``书签''（signet；英：\emph{bookmark}）的可能。最后，这些引号在第11章%TODO
 末尾的环境\dm{ltxexemple}中无法使用。悲剧了！
 \end{qquestion}
 
 \section{用于微型摘要的字盒}
 
-包\textsf{minitoc}可以生成“微型目录”（正如其名），以便我们在文档的指定位置插入。一般来说，我们会将微型摘要插在章首。在文前部分使用命令\verb|\dominitoc|之后，我们可以调用指令\verb|\minitoc|来在想要的位置插入这个微型目录。包的文档详细解释了相关信息，还介绍了我们可以使用的不同风格。对于本书，我为章首构思了一种十分漂亮的目录，但该包不支持其中涉及的风格。实际上，我曾希望以如下的方式将各节标题展示在一个方框中：
+包\textsf{minitoc}可以生成``微型目录''（正如其名），以便我们在文档的指定位置插入。一般来说，我们会将微型摘要插在章首。在文前部分使用命令\verb|\dominitoc|之后，我们可以调用指令\verb|\minitoc|来在想要的位置插入这个微型目录。包的文档详细解释了相关信息，还介绍了我们可以使用的不同风格。对于本书，我为章首构思了一种十分漂亮的目录，但该包不支持其中涉及的风格。实际上，我曾希望以如下的方式将各节标题展示在一个方框中：
 
 \begin{center}
     \titlebox{摘要}{%
@@ -1143,8 +1143,8 @@ heading_suffix "}\\hfill}\\nopagebreak\n"\end{verbatim}
         \end{minipage}}
 \end{center}
 
-详细来说，这是一个带有标题的字盒，此处的标题是“摘要”。据我所知，\LaTeX 不提供这种字盒。我在论坛上提出这个问题后，一位好心人——邦雅曼·巴亚尔——为我提供了一段符合需求的代码。在本节，我会为你们提供一段用于生成带标题的字盒的\LaTeX 代码\jz{
-    毫无疑问，这段代码值得商榷，且功能有限，就像哪些诞生于小作坊的“软件”一样……
+详细来说，这是一个带有标题的字盒，此处的标题是``摘要''。据我所知，\LaTeX 不提供这种字盒。我在论坛上提出这个问题后，一位好心人——邦雅曼·巴亚尔——为我提供了一段符合需求的代码。在本节，我会为你们提供一段用于生成带标题的字盒的\LaTeX 代码\jz{
+    毫无疑问，这段代码值得商榷，且功能有限，就像哪些诞生于小作坊的``软件''一样……
 }
 
 \subsection{指令界面}
@@ -1235,7 +1235,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"\end{verbatim}
         \kern2pt}\hfill}\end{verbatim}
 \end{codelist}
 
-在上述示例中，3 cm的空间被宽度为5 pt的字盒填充，每个字盒中包含如前展示的\verb|\leaders|，以及宽度为2 pt的空白。借助\TeX ，我们可以使用以下方式规范弹性长度的“僵硬”程度\celan{\S 4.2.4}：
+在上述示例中，3 cm的空间被宽度为5 pt的字盒填充，每个字盒中包含如前展示的\verb|\leaders|，以及宽度为2 pt的空白。借助\TeX ，我们可以使用以下方式规范弹性长度的``僵硬''程度\celan{\S 4.2.4}：
 
 \begin{codelist}[10.17]{
     \framebox[4cm]{%
@@ -1248,7 +1248,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"\end{verbatim}
     \hskip0pt plus 3fill}\end{verbatim}
 \end{codelist}
 
-其中，以下尺寸可以定义相对“僵硬”程度为$n$的弹性长度：
+其中，以下尺寸可以定义相对``僵硬''程度为$n$的弹性长度：
 
 \begin{dmd}
 \verb|\hskip 0pt plus |\codereplace{n}fill
@@ -1258,7 +1258,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"\end{verbatim}
 \raisebox{0.5ex}{#1}%
 \slash\raisebox{-0.5ex}{#2}}
 
-因此，在上面的示例中，字母“X”出现在字盒中\mafraction{2}{5}的位置……使用此类的弹性空白和\verb|\leaders|，我们可以定义出如下的内容并在以下示例中使用：
+因此，在上面的示例中，字母``X''出现在字盒中\mafraction{2}{5}的位置……使用此类的弹性空白和\verb|\leaders|，我们可以定义出如下的内容并在以下示例中使用：
 
 \begin{dmd}
 \begin{verbatim}
@@ -1280,9 +1280,9 @@ heading_suffix "}\\hfill}\\nopagebreak\n"\end{verbatim}
 在该5 cm宽的字盒中，我们有：
 
 \begin{itemize}
-    \item “僵硬”程度为2的弹性空白，由线宽为4 pt的线段填充；
+    \item ``僵硬''程度为2的弹性空白，由线宽为4 pt的线段填充；
     \item 字母X；
-    \item “僵硬”程度为1的弹性空白，由线宽为2 pt的线段填充；
+    \item ``僵硬''程度为1的弹性空白，由线宽为2 pt的线段填充；
 \end{itemize}
 
 接下来，我们将很快得到该指令为我们服务的消息……
@@ -1414,7 +1414,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"\end{verbatim}
 接下来要做的是修改中央\verb|\parbox|的内容，以加入两条水平线——下方的线段和上方被标题打断的线段。这里的思路是堆叠三个字盒：
 
 \begin{enumerate}
-    \item 包含标题和“弹性线段”的字盒；
+    \item 包含标题和``弹性线段''的字盒；
     \item 存储内容（\verb|\boitetitre|）的字盒；
     \item 宽度为\verb|\largeurboitetitre|的线段。
 \end{enumerate}
@@ -1473,7 +1473,7 @@ heading_suffix "}\\hfill}\\nopagebreak\n"\end{verbatim}
     \parbox{4cm}{零七\\八碎}}\end{verbatim}
 \end{codelist}
 
-可以说，这“不完全”是我们想要的。接下来需要考虑的是尽量让指令\verb|\\|实现竖直方向上与尺寸\verb|\fboxsep|相同的换行。我们可以顺便让标题竖直向下移动，来实现这一点：
+可以说，这``不完全''是我们想要的。接下来需要考虑的是尽量让指令\verb|\\|实现竖直方向上与尺寸\verb|\fboxsep|相同的换行。我们可以顺便让标题竖直向下移动，来实现这一点：
 
 \begin{dmd}
 \begin{verbatim}

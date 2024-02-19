@@ -43,7 +43,7 @@
 
 \section{参考文献}
 
-由两种方式可以使用\LaTeX 起草文章的参考文献部分。其中，可以称得上是“手动”的方式是，在文章中插入环境\dm{thebibliography}。另一种方式，即此处要介绍的方式，是使用\bib ，主要分为如下步骤。
+由两种方式可以使用\LaTeX 起草文章的参考文献部分。其中，可以称得上是``手动''的方式是，在文章中插入环境\dm{thebibliography}。另一种方式，即此处要介绍的方式，是使用\bib ，主要分为如下步骤。
 
 \begin{enumerate}
     \item 创建一个或多个参数文件，包含\bib 格式的各条参考文献入口（entrée；文章、会议……）。这个步骤不可避免地需要我们去\emph{输入}。
@@ -154,7 +154,7 @@
 强制字段为：\dm{author}、\dm{title}、\dm{chapter}或\dm{pages}、\dm{publisher} （出版方），以及\dm{year}。
 
 \begin{ii}
-我们再次强烈建议你使用Emacs组件Auc\TeX 的\bib 模式。特别是该模式为你提供了包含所有入口类型的菜单。选择菜单中的一项，就可以在你的文件中插入入口“骨架”。该组件可以在\wz{ftp.lip6.fr/pub/TeX/CTAN/support/auctex}下载，也可以以包Debian的形式获取。
+我们再次强烈建议你使用Emacs组件Auc\TeX 的\bib 模式。特别是该模式为你提供了包含所有入口类型的菜单。选择菜单中的一项，就可以在你的文件中插入入口``骨架''。该组件可以在\wz{ftp.lip6.fr/pub/TeX/CTAN/support/auctex}下载，也可以以包Debian的形式获取。
 \end{ii}
 
 \subsection{参考文献的标注}
@@ -201,10 +201,10 @@
 \begin{itemize}
     \item \dm{plain}，引用的形式为[2]，参考文献会根据作者名排序。
     \item \dm{unsrt}，参考文献根据引用顺序排序。会议文章经常使用这种风格。
-    \item \dm{alphs}，引用的形式为“作者缩写+年份”。
+    \item \dm{alphs}，引用的形式为``作者缩写+年份''。
 \end{itemize}
 
-接下来，需要指定哪些文件包含了文档中指令\verb|\cite|所“指向”的那些参考文献：
+接下来，需要指定哪些文件包含了文档中指令\verb|\cite|所``指向''的那些参考文献：
 
 \begin{dmd}
 \backslash bibliography\{\codereplace{文件$_1$}, \codereplace{文件$_2$}, \codereplace{……}\}
@@ -244,7 +244,7 @@
 
 如果你对这个过程感到好奇，可以看到：文件\dm{doc.bbl}包含了环境\dm{thebibliography}以供随时使用\jz{
     也就是说，你如果不使用\bib ，就必须着手处理该环境。
-}；文件\dm{doc.blg}是与那些\dm{.log}文件相似的“日志”文件，储存着上一次使用\bib 时一些可能出现的错误或警告。
+}；文件\dm{doc.blg}是与那些\dm{.log}文件相似的``日志''文件，储存着上一次使用\bib 时一些可能出现的错误或警告。
 
 \begin{exclamation}
 程序\bib 对环境\dm{BIBINPUTS}中的参数敏感。因此，在某些情况下，有必要在\linebreak\dm{.bash\_profile}中添加以下一行命令：
@@ -286,7 +286,7 @@
 \begin{dmd}
 \begin{tabbing}
 12345678902234567890\=\kill
-\verb|\index{bidule}|\>\textsf{$\leftarrow$在索引中插入“bidule”}
+\verb|\index{bidule}|\>\textsf{$\leftarrow$在索引中插入``bidule''}
 \end{tabbing}
 \end{dmd}
 
@@ -299,7 +299,7 @@
 
 \subsection{机制细节}
 
-文档\dm{doc.tex}的第一次编译（在满足文前部分带有控制序列\verb|\makeindex|的条件下）会生成包含“散装”的索引入口文件\dm{doc.idx}：
+文档\dm{doc.tex}的第一次编译（在满足文前部分带有控制序列\verb|\makeindex|的条件下）会生成包含``散装''的索引入口文件\dm{doc.idx}：
 
 \begin{center}
     \includegraphics{img/makeindex1}
@@ -348,7 +348,7 @@ Transcript written in guide.ilg.\end{verbatim}
     \verb|\index{bidule!chouette}|
     \end{dmd}
 
-    该指令可以在索引中插入“bidule”的子入口“bidule”。
+    该指令可以在索引中插入``bidule''的子入口``bidule''。
 
     \item 跨页入口：
 \begin{dmd}
@@ -366,7 +366,7 @@ Transcript written in guide.ilg.\end{verbatim}
     \verb|\index{alpha@\alpha}|
     \end{dmd}
 
-    这样的指令会在索引中插入$\alpha$，并按“alpha”将其分类。同样地，以下指令会在索引中插入“épluche”，但分类时会将首字母看作“e”：
+    这样的指令会在索引中插入$\alpha$，并按``alpha''将其分类。同样地，以下指令会在索引中插入``épluche''，但分类时会将首字母看作``e''：
 
     \begin{dmd}
     \verb|\index{eplucher@éplucher}|
@@ -379,7 +379,7 @@ Transcript written in guide.ilg.\end{verbatim}
 \verb|\index{bonjour@\textbf{bonjour}}|
 \end{dmd}
 
-该指令可以在索引中插入\textbf{bonjour}（即将bonjour加粗），同时按“bonjour”将该入口分类。此外，借助以下指令，我们还可以以特殊版式显示页码：
+该指令可以在索引中插入\textbf{bonjour}（即将bonjour加粗），同时按``bonjour''将该入口分类。此外，借助以下指令，我们还可以以特殊版式显示页码：
 
 \begin{dmd}
 \backslash index\{\codereplace{入口}|\codereplace{版式指令}\}
@@ -391,7 +391,7 @@ Transcript written in guide.ilg.\end{verbatim}
 \verb+\index{bidule|textbf}+
 \end{dmd}
 
-该指令可以让索引中“bidule”的页码显示为加粗样式（注意，在版式指令中没有符号\verb|\|）。
+该指令可以让索引中``bidule''的页码显示为加粗样式（注意，在版式指令中没有符号\verb|\|）。
 
 \subsection{术语词典}
 
@@ -410,7 +410,7 @@ Transcript written in guide.ilg.\end{verbatim}
 \begin{verbatim}
 \include{preface}
 \tableofcontents\end{verbatim}
-\verb+\mainmatter +\textsl{\% 文档的“主体”}
+\verb+\mainmatter +\textsl{\% 文档的``主体''}
 \begin{verbatim}
 \include{chapitre1}
 \include{chapitre2}\end{verbatim}

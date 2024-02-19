@@ -4,7 +4,7 @@
     我属我的良人，他也恋慕我。\\我的良人，来吧，你我可以往田间去。你我可以在村庄住宿！\\我们早晨起来往葡萄园去，\\看看葡萄发芽开花没有，石榴放蕊没有。\\我在那里要将我的爱情给你。
 \end{epigraphe}
 
-在本章，我会介绍专为本书创建的工具。为了看懂本章定义的大部分指令和环境，你需要阅读过第9章和第10章的内容……本章中，我们会涉及带有“危险”标记的提示的创建方法、各章开头的首字下沉、摘要、术语字典、带有当前章号的标签，以及并列展示\LaTeX 代码和效果的环境。
+在本章，我会介绍专为本书创建的工具。为了看懂本章定义的大部分指令和环境，你需要阅读过第9章和第10章的内容……本章中，我们会涉及带有``危险''标记的提示的创建方法、各章开头的首字下沉、摘要、术语字典、带有当前章号的标签，以及并列展示\LaTeX 代码和效果的环境。
 
 \section{一些小手工}
 
@@ -25,7 +25,7 @@
 \end{flushleft}\end{verbatim}
 \end{codelist}
 
-指令\verb|\bwmarg|可以以\textsl{倾斜字体}来输出其参数，并且置于“⟨”和“⟩”之间。这种括号可以在数学模式下分别由指令\verb|\langle|、\verb|\rangle|生成。此外，你无疑注意到了，我们可以使用下标符号，就像这样：
+指令\verb|\bwmarg|可以以\textsl{倾斜字体}来输出其参数，并且置于``⟨''和``⟩''之间。这种括号可以在数学模式下分别由指令\verb|\langle|、\verb|\rangle|生成。此外，你无疑注意到了，我们可以使用下标符号，就像这样：
 
 \begin{codelist}[11.2]{
 复制文件：
@@ -45,7 +45,7 @@
 \end{codelist}
 
 指令\verb|\bwarg|\jz{
-    这个名称代表“黑白”参数（« black \& white » argument）……
+    这个名称代表``黑白''参数（« black \& white » argument）……
 }的定义如下：
 
 \begin{dmd}
@@ -59,9 +59,9 @@
             $\rangle$}}}%\end{verbatim}
 \end{dmd}
 
-指令\verb|\normalfont|的效果是回到文档的默认字体。这解释了为什么示例11.1中的“\codereplace{文件}”没有使用打字机字体显示。
+指令\verb|\normalfont|的效果是回到文档的默认字体。这解释了为什么示例11.1中的``\codereplace{文件}''没有使用打字机字体显示。
 
-在本文档的电子版（也就是需要通过屏幕阅读的版本）中，我们决定使用\emph{颜色}而不是字符“⟨”和“⟩”。这样一来，可以定义指令\verb|\colarg|：
+在本文档的电子版（也就是需要通过屏幕阅读的版本）中，我们决定使用\emph{颜色}而不是字符``⟨''和``⟩''。这样一来，可以定义指令\verb|\colarg|：
 
 \begin{dmd}
 \begin{verbatim}
@@ -116,7 +116,7 @@
     \protect\index{#1@\protect\textsf{#1 扩展}}}\end{verbatim}
 \end{dmd}
 
-其中调用了前面定义的指令，并在索引中插入了两个入口，一个遵循“\codereplace{包名}扩展”的格式，另一个作为“扩展们”的\celan{\S 6.3}子入口。这里，指令\verb|\protect|的作用是避免指令\verb|\ltxpack|本身作为作为另一条指令的参数时带来的麻烦。遵循同样的思路，我们可以定义指令\verb|\ltxcom|。首先：
+其中调用了前面定义的指令，并在索引中插入了两个入口，一个遵循``\codereplace{包名}扩展''的格式，另一个作为``扩展们''的\celan{\S 6.3}子入口。这里，指令\verb|\protect|的作用是避免指令\verb|\ltxpack|本身作为作为另一条指令的参数时带来的麻烦。遵循同样的思路，我们可以定义指令\verb|\ltxcom|。首先：
 
 \begin{dmd}
 \begin{verbatim}
@@ -167,7 +167,7 @@
 \verb|\voir{chap-glossaire}{glossaire}|
 \end{dmd}
 
-这个指令的设计过程中，全部的“难点”在于怎样让三角形根据页面奇偶性来改变朝向。借助包\textsf{chngpage}，这一难点得以功课。请参阅9.3.3小节。
+这个指令的设计过程中，全部的``难点''在于怎样让三角形根据页面奇偶性来改变朝向。借助包\textsf{chngpage}，这一难点得以功课。请参阅9.3.3小节。
 
 余下的工作就是展示三角形。为了达成这一目的，我们定义了两个指令，分别生成侧栏的跳转提示和正文中的标记。由此，\verb|\voir|的格式如下：
 
@@ -185,19 +185,19 @@
 我们注意到，除了两个必需的参数外，该指令还可以接收一个可选参数，它默认定义为段落标记（\S）。指令\verb|\v@irpageimpaire|和\verb|\v@irpagepaire|是对称的，作用如下：
 
 \begin{enumerate}
-    \item 将“朝向正确”的三角形放置在文本中，作为跳转提示对象；
+    \item 将``朝向正确''的三角形放置在文本中，作为跳转提示对象；
     \item 在侧栏生成带有跳转目标的注解。
 \end{enumerate}
 
 三角形可以从包\textsf{amssymb}中包含的符号中获取：
 
 \begin{codelist}[11.4]{
-    天啊，那些“蟀爆了”的三角形：
+    天啊，那些``蟀爆了''的三角形：
 $\blacktriangleleft$和
 $\blacktriangleright$！
 }
 \begin{verbatim}
-天啊，那些“蟀爆了”的三角形：
+天啊，那些``蟀爆了''的三角形：
 $\blacktriangleleft$和
 $\blacktriangleright$！\end{verbatim}
 \end{codelist}
@@ -220,7 +220,7 @@ $\blacktriangleright$！\end{verbatim}
     中文版没做。%TODO 页码
 }。对于奇数页，需要做与偶数页相同的事情，只不过需要考虑到它是奇数页\dm{:-)}
 
-在“在线”版本中，跳转提示可以像超文本链接（lien hypertexte）那样呈现。这可以简单地通过指令\verb|\hyperref|（对应包同名）来实现。因此，我们可以编写出这类指令：
+在``在线''版本中，跳转提示可以像超文本链接（lien hypertexte）那样呈现。这可以简单地通过指令\verb|\hyperref|（对应包同名）来实现。因此，我们可以编写出这类指令：
 
 \begin{dmd}
 \begin{verbatim}
@@ -228,7 +228,7 @@ $\blacktriangleright$！\end{verbatim}
     \hyperref[#2]{#3}}\end{verbatim}
 \end{dmd}
 
-其中的可选参数没有过多的用处，只是为了与“纸质”版本中的指令\verb+\voir+兼容。
+其中的可选参数没有过多的用处，只是为了与``纸质''版本中的指令\verb+\voir+兼容。
 
 \subsection{更改侧栏}
 
@@ -308,8 +308,8 @@ $\blacktriangleright$！\end{verbatim}
 \begin{verbatim}
     \begin{figure}[tb]
         \begin{agrandirmarges}{1cm}{2cm}
-            % 这里1cm针对“订口”侧
-            %     2cm针对“切口”侧
+            % 这里1cm针对``订口''侧
+            %     2cm针对``切口''侧
         ...
         \caption{一幅内容完全不重要的……}
         \end{agrandirmarges}
@@ -318,7 +318,7 @@ $\blacktriangleright$！\end{verbatim}
 
 \section{各种提示}
 
-提示中可以见到的符号来源于“剪贴画”（……）。在图\ref{fig:11.2}中以3 cm的宽度展示了这些符号。在文档对应位置插入这些符号的“提示”由鄙人定义的环境生成。环境基于\TeX 层面的一项功能，而这项功能正是我勤勉地阅读\TeX Book是发现的，那就是指令\verb|\parshape|。该指令可以为段落指定任意形状：
+提示中可以见到的符号来源于``剪贴画''（……）。在图\ref{fig:11.2}中以3 cm的宽度展示了这些符号。在文档对应位置插入这些符号的``提示''由鄙人定义的环境生成。环境基于\TeX 层面的一项功能，而这项功能正是我勤勉地阅读\TeX Book是发现的，那就是指令\verb|\parshape|。该指令可以为段落指定任意形状：
 
 \begin{codelist}[11.5]{
 \parshape=5
@@ -353,7 +353,7 @@ a a a a a a a a a a a a a a a a a a a \end{verbatim}
     \label{fig:11.2}
 \end{figure}
 
-符号“=”后面的数字用于指明我们想要变形的行数。接下来，成对出现的数字用于指明缩进和该行变形后的长度。对于上述示例，有：
+符号``=''后面的数字用于指明我们想要变形的行数。接下来，成对出现的数字用于指明缩进和该行变形后的长度。对于上述示例，有：
 
 \begin{itemize}
     \item 最先出现的两行缩进1.5 cm，并且每行长2.5 cm；
@@ -395,7 +395,7 @@ a a a a a a a a a a a a a a a a a a a \end{verbatim}
 一样继续……\end{verbatim}
 \end{codelist}
 
-好了，接下来要做的事情就是在指令\verb|\parshape|留下的“洞口”中放上图片，让我们来简单地尝试一下：
+好了，接下来要做的事情就是在指令\verb|\parshape|留下的``洞口''中放上图片，让我们来简单地尝试一下：
 
 \begin{codelist}[11.7]{
 \setlength{\larnota}{.9cm}
@@ -691,8 +691,7 @@ img/fmb-important}
 
 \begin{codelist}[11.12]{%TODO 
 xxxxxxxxxxxxx
-\begin{citationzero}[乔治·巴塔伊
-    （Georges \textsc{Bataille}）]
+\begin{citationzero}[乔治·巴塔伊]
     老去的恐惧无穷无尽地延续着。
     衰老将未完成的存在重置为开端。
     我隐约在坟墓的边缘看见的开端是
@@ -705,8 +704,7 @@ xxxxxxxxxxxxxxx
 }
 \begin{verbatim}
 xxxxxxxxxxxxx
-\begin{unecitation}[乔治·巴塔伊
-    （Georges \textsc{Bataille}）]
+\begin{unecitation}[乔治·巴塔伊]
     老去的恐惧无穷无尽地延续着。
     衰老将未完成的存在重置为开端。
     我隐约在坟墓的边缘看见的开端是
@@ -759,8 +757,7 @@ xxxxxxxxxxxxxxx\end{verbatim}
 \begin{codelist}[11.13]{
 前文 前文 前文 前文 前文 前文 前文
 前文 前文 前文 前文 前文 前文 前文
-\begin{citationi}{米歇尔·巴库尼%
-    （Michel \textsc{Bakounine}）, 1845}
+\begin{citationi}{米歇尔·巴库尼, 1845}
     在几乎所有的国家，女性都是奴隶。
     只要她们没有完全得到解放，我们
     自身的自由就不可能实现。
@@ -772,8 +769,7 @@ xxxxxxxxxxxxxxx\end{verbatim}
 \begin{verbatim}
 前文 前文 前文 前文 前文 前文 前文
 前文 前文 前文 前文 前文 前文 前文
-\begin{citationi}{米歇尔·巴库尼%
-（Michel \textsc{Bakounine}）, 1845}
+\begin{citationi}{米歇尔·巴库尼, 1845}
     在几乎所有的国家，女性都是奴隶。
     只要她们没有完全得到解放，我们
     自身的自由就不可能实现。
@@ -848,7 +844,7 @@ xxxxxxxxxxxxxxx\end{verbatim}
 后文 后文 后文 后文 后文 后文 后文\end{verbatim}
 \end{codelist}
 
-我们快要达到目的了。接下来，我们将代表“引言作者”的参数设置为可省略项，从而达到在需要时不显示作者的效果。实现的思路是声明一个布尔值来表明引言（citation）的作者（auteur）是否出现（présent）：
+我们快要达到目的了。接下来，我们将代表``引言作者''的参数设置为可省略项，从而达到在需要时不显示作者的效果。实现的思路是声明一个布尔值来表明引言（citation）的作者（auteur）是否出现（présent）：
 
 \begin{dmd}
 \verb|\newboolean{auteurcitationpresent}|
@@ -922,8 +918,7 @@ xxxxxxxxxxxxxxx\end{verbatim}
 
 \begin{codelist}[11.15]{
 前文 前文 前文 前文 前文 前文 前文
-\begin{citationiv}[皮埃尔·德普罗热
-    （Pierre \textsc{Desproges}）]
+\begin{citationiv}[皮埃尔·德普罗热]
     他是如此痴迷，以至于最终甚至
     不吃饭。
 \end{citationiv}
@@ -931,8 +926,7 @@ xxxxxxxxxxxxxxx\end{verbatim}
 }
 \begin{verbatim}
 前文 前文 前文 前文 前文 前文 前文
-\begin{citationiv}[皮埃尔·德普罗热
-    （Pierre \textsc{Desproges}）]
+\begin{citationiv}[皮埃尔·德普罗热]
     他是如此痴迷，以至于最终甚至
     不吃饭。
 \end{citationiv}
@@ -946,12 +940,12 @@ xxxxxxxxxxxxxxx\end{verbatim}
 \begin{codelist}[11.16]{
 \lettrine{L}{es documents} soignés font
 souvent appel aux lettrines, qui selon
-les règles d’usage en typographie...
+les règles d'usage en typographie...
 }
 \begin{verbatim}
 \lettrine{Les documents} soignés font
 souvent appel aux lettrines, qui selon
-les règles d’usage en typographie...\end{verbatim}
+les règles d'usage en typographie...\end{verbatim}
 \end{codelist}
 
 从中已经可见实现该效果的两个难点。
@@ -1058,8 +1052,8 @@ les règles d’usage en typographie...\end{verbatim}
 我们可以借助指令\verb|\parshape|在段落中实现首字下沉。图\ref{fig:11.3}展示了为实现首字下沉而应当定义的两个尺寸：
 
 \begin{itemize}
-    \item 首行缩进，即“大字母”及其后参与首字下沉的内容的宽度；
-    \item 次行缩进，即“大字母”的宽度，可根据需要适当扩大空白以留出通风空间。
+    \item 首行缩进，即``大字母''及其后参与首字下沉的内容的宽度；
+    \item 次行缩进，即``大字母''的宽度，可根据需要适当扩大空白以留出通风空间。
 \end{itemize}
 
 \begin{figure}[ht]
@@ -1073,13 +1067,13 @@ les règles d’usage en typographie...\end{verbatim}
 定义如下尺寸：
 
 \begin{itemize}
-\item \verb|\indletH|和\verb|\larligH|，分别代表包含首字下沉的段落的首行［即“上面”（haut）的一行］的缩进和行宽；
-\item \verb|\indletB|和\verb|\larligB|，次行［即“下面”（bas）的一行］的对应尺寸。
+\item \verb|\indletH|和\verb|\larligH|，分别代表包含首字下沉的段落的首行［即``上面''（haut）的一行］的缩进和行宽；
+\item \verb|\indletB|和\verb|\larligB|，次行［即``下面''（bas）的一行］的对应尺寸。
 \end{itemize}
 
 这样定义尺寸后，我们可以编写如下内容：
 
-\begin{codelist}[11/23]{
+\begin{codelist}[11.23]{
 \newlength{\indletB}
 \newlength{\indletH}
 \newlength{\larligB}
@@ -1111,24 +1105,23 @@ les règles d’usage en typographie...\end{verbatim}
 也许是正正好好的两行。\end{verbatim}
 \end{codelist}
 
-场地已经准备好，接下来要做的就是在合适的位置插入“大字母”以及后续的内容。我们从创建指定字体的指令开始\yz{
+场地已经准备好，接下来要做的就是在合适的位置插入``大字母''以及后续的内容。我们从创建指定字体的指令开始\yz{
     可以看到，T1编码不支持中文。
 }：
 
-\begin{codelist}[]{
+\begin{codelist}[11.24]{
 \DeclareFixedFont{%
     \lettrinefont}{T1}{ppl}{m}{n}{%
     2\baselineskip}
 {\lettrinefont
-    Pour écrire les grosses lettres（为了写下大字母）}
+    Pour écrire les grosses lettres}
 }
 \begin{verbatim}
 \DeclareFixedFont{%
     \lettrinefont}{T1}{ppl}{m}{n}{%
     2\baselineskip}
 {\lettrinefont
-    Pour écrire les grosses lettres
-    （为了写下大字母）}\end{verbatim}
+    Pour écrire les grosses lettres}\end{verbatim}
 \end{codelist}
 
 接下来，修改指令\verb|\glurps|\jz{
@@ -1252,7 +1245,7 @@ les  autres et ainsi de former des mots
 donnant lieu à des phrases.\end{verbatim}
 \end{codelist}
 
-更清醒的读者也许会注意到，“大字母”有些太贴近文本了。因此，我们可以稍微将\verb|\indletB|扩大些。最终的首字下沉代码如下：
+更清醒的读者也许会注意到，``大字母''有些太贴近文本了。因此，我们可以稍微将\verb|\indletB|扩大些。最终的首字下沉代码如下：
 
 \begin{dmd}
 \begin{verbatim}
@@ -1383,7 +1376,7 @@ renewcommand{\addcontentsline}[3]{%
 \verb|\glossary{一些内容}|
 \end{dmd}
 
-这样的指令可以在术语字典中添加“一些内容”。实际上，该指令的作用是在\dm{glo}文件中加入如下代码行：
+这样的指令可以在术语字典中添加``一些内容''。实际上，该指令的作用是在\dm{glo}文件中加入如下代码行：
 
 \begin{dmd}
 \verb+\glossaryentry{一些内容}{+\codereplace{无页码}\}
@@ -1506,17 +1499,17 @@ postamble "\n\\end{leglossaire}"\end{verbatim}
 \verb+\end{leglossaire}+
 \end{dmd}
 
-你如果很好地跟随了我所说的内容，可能会喘着气说：“也许我们会想删除这里看起来很丑的逗号和后面的页码”——当然。这里的逗号是\dm{makeindex}自动放置的，作为入口索引和该入口出现的页码之间的“第一层”分隔。若要使用逗号外的其他符号（这里没有符号），可以在风格文件中这话编写：
+你如果很好地跟随了我所说的内容，可能会喘着气说：``也许我们会想删除这里看起来很丑的逗号和后面的页码''——当然。这里的逗号是\dm{makeindex}自动放置的，作为入口索引和该入口出现的页码之间的``第一层''分隔。若要使用逗号外的其他符号（这里没有符号），可以在风格文件中这话编写：
 
 \begin{dmd}
 \verb|delim_0 ""|
 \end{dmd}
 
-最后要做的就是调整页码。我使用的解决方案是使用一个“吸收性的”指令来为页码（参见\S 6.3.3）指定页码。修改过的指令\verb|\entreeglossaire|如下：
+最后要做的就是调整页码。我使用的解决方案是使用一个``吸收性的''指令来为页码（参见\S 6.3.3）指定页码。修改过的指令\verb|\entreeglossaire|如下：
 
 \begin{dmd}
 \begin{verbatim}
-\newcommand{\pasdenumerodepage}[1]{}% “吃掉”页码
+\newcommand{\pasdenumerodepage}[1]{}% ``吃掉''页码
 \newcommand{\entreeglossaire}[2]{%
     \glossary{[#1] #2|pasdenumerodepage}}\end{verbatim}
 \end{dmd}
@@ -1538,7 +1531,7 @@ postamble "\n\\end{leglossaire}"\end{verbatim}
 为了最终实现术语字典，需要创建足够灵活的指令，用于按需生成包含术语字典的章，也就是说，在文档中插入\dm{.glx}文件。我们可以将需要实现的任务拆解为与如下内容相关的指令：
 
 \begin{itemize}
-    \item 生成新的一章（并带有“glossaire”之类的章标题）；
+    \item 生成新的一章（并带有``glossaire''之类的章标题）；
     \item 从文件中读取术语字典的入口（指令\verb|\entreeglossaire|）；
     \item 插入\dm{.glx}文件。
 \end{itemize}
@@ -1606,7 +1599,7 @@ keyword "\\glossaryentry"\end{verbatim}
 
 \begin{itemize}
     \item 每页都出现一个标签，标签的位置为订口的对侧；
-    \item 在偶数页上，它们呈现为“翻转”的样子；
+    \item 在偶数页上，它们呈现为``翻转''的样子；
     \item 标签所处的高度正比于当前的章号。
 \end{itemize}
 
@@ -1743,7 +1736,7 @@ keyword "\\glossaryentry"\end{verbatim}
 
 %TODO 规整
 
-为了正确地确定页眉中页码的位置，需要用一个宽度为0且带有标签字盒和水平位移空间的字盒去“诱导”\LaTeX ：
+为了正确地确定页眉中页码的位置，需要用一个宽度为0且带有标签字盒和水平位移空间的字盒去``诱导''\LaTeX ：
 
 \begin{dmd}
 \begin{verbatim}
@@ -2082,7 +2075,7 @@ keyword "\\glossaryentry"\end{verbatim}
 \newsavebox{\b@itesortie}\end{verbatim}
 \end{dmd}
 
-这样做的目的是存储“入口”（entrée；代码）和“出口”（sortie；由\LaTeX 解释的代码）。因此，在end条文中，我们可以编写如下环境：
+这样做的目的是存储``入口''（entrée；代码）和``出口''（sortie；由\LaTeX 解释的代码）。因此，在end条文中，我们可以编写如下环境：
 
 \begin{dmd}
 \begin{verbatim}
@@ -2105,7 +2098,7 @@ keyword "\\glossaryentry"\end{verbatim}
 环境\dm{ltxexempleenv}和我们讲到拓宽边栏\celan{\S 11.1.4}时介绍的很像，唯一的区别时这里切换到了\verb|\small|\yz{
     似乎没有？
 }%TODO 是吗
-，并对竖直方向的空白做出了一些调整。可以注意到，“入口”字盒占页面宽度的57\%，而“出口”字盒占40\%。这样一来，以下代码：
+，并对竖直方向的空白做出了一些调整。可以注意到，``入口''字盒占页面宽度的57\%，而``出口''字盒占40\%。这样一来，以下代码：
 
 \begin{dmd}
 \begin{verbatim}
@@ -2148,7 +2141,7 @@ keyword "\\glossaryentry"\end{verbatim}
   后面没了。
 \end{ltxexempleii}
 
-在这里，我们展示了“入口”和“出口”字盒的边界，从而说明它们的尺寸。同样可以注意到，这里环境的begin条文实际是这样定义的：
+在这里，我们展示了``入口''和``出口''字盒的边界，从而说明它们的尺寸。同样可以注意到，这里环境的begin条文实际是这样定义的：
 
 \begin{dmd}
 \begin{verbatim}
@@ -2157,7 +2150,7 @@ keyword "\\glossaryentry"\end{verbatim}
 \begin{VerbatimOut}[gobble=2]{\jobname.exa}\end{verbatim}
 \end{dmd}
 
-选项\dm{[gobble=2]}用于系统性地“吞掉”各行开头的两个字符，因为所有优秀的编辑器\jz{
+选项\dm{[gobble=2]}用于系统性地``吞掉''各行开头的两个字符，因为所有优秀的编辑器\jz{
     我当然指的是\makebox[0pt][l]{//}vi，不好意思，\textsf{Emacs}……
 }都会为源文件各行首加上两个空格作为缩进。因此，如下代码：
 
@@ -2332,7 +2325,7 @@ keyword "\\glossaryentry"\end{verbatim}
     \label{\l@belex}}% 放置一个标签\end{verbatim}
 \end{dmd}
 
-用法语来讲，这里的意思是：“如果指令\verb|\l@belex|被定义为非空的值，我们就使用这个值来放置标签（指令\verb|\label|）”。接下来，需要将指令\verb|\l@belex|设置为空值，因为有一些情况与此相反，会多次定义标签（\LaTeX 的消息“Label ``$\times\!\times\!\times$''\ multiply defined”）。因此，我们可以这样写：
+用法语来讲，这里的意思是：``如果指令\verb|\l@belex|被定义为非空的值，我们就使用这个值来放置标签（指令\verb|\label|）''。接下来，需要将指令\verb|\l@belex|设置为空值，因为有一些情况与此相反，会多次定义标签（\LaTeX 的消息``Label ``$\times\!\times\!\times$''\ multiply defined''）。因此，我们可以这样写：
 
 \begin{dmd}
 \begin{verbatim}

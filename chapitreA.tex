@@ -1,6 +1,6 @@
 \part{附录}
 \appendix
-\chapter{生成“PDF”}
+\chapter{生成``PDF''}
 
 本附录介绍一种生成PDF（portable document format）文档的新方法。这种格式由Adobe公司创造，优势是使一台计算机向另一台计算机传输文件的过程具有十足的便携性，以及能使不同操作系统间传输文件的通用性。因此，在今天能够才\LaTeX 源代码生成这种文件是十分有趣的。
 
@@ -19,7 +19,7 @@
 
 \begin{itemize}
     \item 要么使用了包lmodern；
-    \item 要么安装了弗拉基米尔·沃洛维奇（Vladimir Volovich）的扩展“CM-Super font”。Debian的发行版Etch包含了开箱即用的包。我们同样可以在用于为Debian的一个发行版——Sarge借助te\TeX 安装该扩展的网站（\wz{http://sravier.free.fr/linux/\linebreak debian\_latex\_cm-super.html}）上找到相关文档。
+    \item 要么安装了弗拉基米尔·沃洛维奇（Vladimir Volovich）的扩展``CM-Super font''。Debian的发行版Etch包含了开箱即用的包。我们同样可以在用于为Debian的一个发行版——Sarge借助te\TeX 安装该扩展的网站（\wz{http://sravier.free.fr/linux/\linebreak debian\_latex\_cm-super.html}）上找到相关文档。
 \end{itemize}
 \end{exclamation}
 
@@ -64,7 +64,7 @@
 \fi\end{verbatim}
 \end{dmd}
 
-这对应于我们将图像文件按\dm{pngs}、\dm{pdfs}、\dm{epss}等目录整理的情况。这个新的“if”语句也可以写成如下结构：
+这对应于我们将图像文件按\dm{pngs}、\dm{pdfs}、\dm{epss}等目录整理的情况。这个新的``if''语句也可以写成如下结构：
 
 \begin{dmd}
 \begin{verbatim}
@@ -97,14 +97,14 @@
 
 \subsection{书签}
 
-PDF浏览器中的书签（signet；英：\emph{bookmarks}）是一种“目录浏览器”，可以直接跳转到某一指定级别的某一节。在生成目录上，需要绕过两个难点。
+PDF浏览器中的书签（signet；英：\emph{bookmarks}）是一种``目录浏览器''，可以直接跳转到某一指定级别的某一节。在生成目录上，需要绕过两个难点。
 
 \begin{enumerate}
-    \item 将“收尾”的内容（参考文献、术语字典、索引）设置为该浏览器中各部分的同一级别。默认情况下，这些信息会“掩盖”在附录部分中，因为它们与各\verb|\chapter|处于同一深度。
+    \item 将``收尾''的内容（参考文献、术语字典、索引）设置为该浏览器中各部分的同一级别。默认情况下，这些信息会``掩盖''在附录部分中，因为它们与各\verb|\chapter|处于同一深度。
     \item 确保书签中指向索引的链接确实指向索引……
 \end{enumerate}
 
-对于第一个问题，你只需要使\LaTeX 相信“收尾”内容中的\emph{章}与目录、各\emph{部分}处于同一深度。这里的咒语是：
+对于第一个问题，你只需要使\LaTeX 相信``收尾''内容中的\emph{章}与目录、各\emph{部分}处于同一深度。这里的咒语是：
 
 \begin{dmd}
 \verb|\renewcommand{\toclevel@chapter}{-1}|
@@ -165,7 +165,7 @@ PDF浏览器中的书签（signet；英：\emph{bookmarks}）是一种“目录�
 
 \subsection{textsf{pstricks}}
 
-该包可以用来“作弊”（tricher，英：\emph{trick}）。简单来说，我们可以写下这样的代码：
+该包可以用来``作弊''（tricher，英：\emph{trick}）。简单来说，我们可以写下这样的代码：
 
 \begin{mdframed}
     \begin{dmd}
@@ -199,7 +199,7 @@ PDF浏览器中的书签（signet；英：\emph{bookmarks}）是一种“目录�
     \item 在使用\textsf{pdflatex}时包含该文件。
 \end{enumerate}
 
-这个解决方案有点“拧巴”，但我们可以借助Makefile、UNIX的小脚本、指令等实现自动化。
+这个解决方案有点``拧巴''，但我们可以借助Makefile、UNIX的小脚本、指令等实现自动化。
 
 首先：
 
@@ -216,7 +216,7 @@ PDF浏览器中的书签（signet；英：\emph{bookmarks}）是一种“目录�
 \includepstricksgraphics{bidule}\end{verbatim}
 \end{dmd}
 
-我们编写这样的指令时，如果使用\textsf{pdflatex}，就可以包含\dm{bidule.pdf}；如果使用\LaTeX 就可以包含\dm{bidule.tex}。此外，对于UNIX的“小”脚本，我们可以根据需求来编写：
+我们编写这样的指令时，如果使用\textsf{pdflatex}，就可以包含\dm{bidule.pdf}；如果使用\LaTeX 就可以包含\dm{bidule.tex}。此外，对于UNIX的``小''脚本，我们可以根据需求来编写：
 
 \begin{dmd}
 \begin{verbatim}
@@ -286,7 +286,7 @@ EOF\end{verbatim}
     \item 在使用\textsf{pdflatex}时包含该文件。
 \end{enumerate}
 
-然而，这里有一个小“症结”——我们使用\textsf{dvips}计算的外围字盒所包裹的图包含了由\textsf{psfrag}生成的文本，也就指明了即将进行的替换。我们应当考虑到这一点。在shell脚本中，创建一个函数：
+然而，这里有一个小``症结''——我们使用\textsf{dvips}计算的外围字盒所包裹的图包含了由\textsf{psfrag}生成的文本，也就指明了即将进行的替换。我们应当考虑到这一点。在shell脚本中，创建一个函数：
 
 \begin{dmd}
 \begin{verbatim}

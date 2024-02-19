@@ -19,7 +19,7 @@
 其中\codereplace{纵向位置}可以根据需要在竖直方向上平移线，另外两个参数足以描述线的形态：
 
 \begin{codelist}[5.1]{
-    这些都是“线”：
+    这些都是``线''：
 \begin{center}
     \rule[1ex]{1mm}{5mm}
     \quad\rule{1in}{0.4pt}
@@ -27,7 +27,7 @@
 \end{center}
 }
 \begin{verbatim}
-这些都是“线”：
+这些都是``线''：
 \begin{center}
     \rule[1ex]{1mm}{5mm}
     \quad\rule{1in}{0.4pt}
@@ -40,9 +40,9 @@
 为了在文档中包含图像，需要插入\emph{文件}。\LaTeX 的配置允许其夹带PS（即PostScript）和EPS（即Encapsuled PostScript）类型的文件，至于要插入的文件是由什么软件生成的，\LaTeX 并不关心。你如果认为PostScript格式有诸多限制，那么需要认识到以下事实。
 
 \begin{itemize}
-    \item 所有\emph{合格}的“矢量”绘图软件都具有将图表导出为EPS格式文件的功能。对于印刷设备，这种格式已经成为标准。
+    \item 所有\emph{合格}的``矢量''绘图软件都具有将图表导出为EPS格式文件的功能。对于印刷设备，这种格式已经成为标准。
     \item 所有图片都可以转换为EPS格式。在UNIX系统中，可以借助程序\textsf{convert}完成这一操作\jz{
-        如果你的系统中没有这个程序，请查找“ImageMagick”套件来获取它。
+        如果你的系统中没有这个程序，请查找``ImageMagick''套件来获取它。
     }。我们也可以使用软件\textsf{gimp}（一款自由软件，可以用于修图和创建数字图片）完成这一操作，它也适用于其他操作系统。
 \end{itemize}
 
@@ -55,8 +55,8 @@
 目前，\LaTeX 设计师似乎同意将\emph{图像的}扩展统一起来。1994年年末，两个扩展走入了人们的视野：
 
 \begin{itemize}
-    \item \textsf{graphics}，作为“标准”扩展；
-    \item \textsf{graphicx}，作为“升级版”扩展。
+    \item \textsf{graphics}，作为``标准''扩展；
+    \item \textsf{graphicx}，作为``升级版''扩展。
 \end{itemize}
 
 此处选择介绍\textsf{graphicx}。需要理解，即使该扩展单界面独立于操作系统，用于管理不同种类图像文件的那部分代码也依赖底层系统。这样一来，就需要指明包的\emph{驱动（driver）}。在不同平台上\jz{
@@ -108,11 +108,11 @@
 \end{dmd}
 
 \begin{exclamation}
-注意，环境\dm{figure}可以使图像在页面中“浮动”，而指令\verb|\includegraphics|无法做到这一点。为了防止有人漏掉这一点，再重复一遍：
+注意，环境\dm{figure}可以使图像在页面中``浮动''，而指令\verb|\includegraphics|无法做到这一点。为了防止有人漏掉这一点，再重复一遍：
 \begin{center}
     \bfseries
     环境\dm{figure}可以确保\\
-    图像在页面中“浮动”。\\
+    图像在页面中``浮动''。\\
     这不是由指令\dm{\backslash includegraphics}\\
     来确保的。
 \end{center}
@@ -190,7 +190,7 @@ angle=\codereplace{角}
 \end{codelist}
 
 模式\dm{draft}默认在文档选项\dm{draft}指定时启用。如果想要阻止文档选项的转中效果\jz{
-  例如，你希望同时看到图像和“字盒Overfull标记”。
+  例如，你希望同时看到图像和``字盒Overfull标记''。
 }，可以在使用指令\verb|\includegraphics|或通过\verb|\usepackage|包含扩展时使用选项\dm{final}。
 
 \section{几个实用扩展}
@@ -265,7 +265,7 @@ angle=\codereplace{角}
   \includegraphics[width=1cm]{img/polygons}
 \end{wrapfigure}
 
-据我所知，包\textsf{wrapfig}并未以提供\dm{dvi}文件的形式给出文档。相反，可以在位于\dm{[...]/misc/wrapfig.stys}的\dm{.sty}文件自身中找到十分详细的信息。为了展示图片在段落中浮动带来的文字环绕效果，这段篇幅需要长一些，所以这里我多说一点：我们可以顺便注意到，借助一个著名的扩展——\textsf{docstrip}，所有的包文档都可以“自动归纳”。这些扩展（extension），或者英文的\emph{package}，包含其文档所需的代码，在安装过程中，会陆续被提取出来。\textsf{wrapfig}的作者八成没有遵循这个规则，可惜了……
+据我所知，包\textsf{wrapfig}并未以提供\dm{dvi}文件的形式给出文档。相反，可以在位于\dm{[...]/misc/wrapfig.stys}的\dm{.sty}文件自身中找到十分详细的信息。为了展示图片在段落中浮动带来的文字环绕效果，这段篇幅需要长一些，所以这里我多说一点：我们可以顺便注意到，借助一个著名的扩展——\textsf{docstrip}，所有的包文档都可以``自动归纳''。这些扩展（extension），或者英文的\emph{package}，包含其文档所需的代码，在安装过程中，会陆续被提取出来。\textsf{wrapfig}的作者八成没有遵循这个规则，可惜了……
 
 \subsection{包\textsf{psfrag}}
 
@@ -424,7 +424,7 @@ angle=\codereplace{角}
   \end{dmd}
 \end{itemize}
 
-以上两个指令生成的彩色字盒对于长度\verb|\fboxsep|比较敏感。“如果颜色没有名字\emph{怎么办}？”我听到你在\emph{嘟囔}什么了……对于这个问题，我可以马上回答：
+以上两个指令生成的彩色字盒对于长度\verb|\fboxsep|比较敏感。``如果颜色没有名字\emph{怎么办}？''我听到你在\emph{嘟囔}什么了……对于这个问题，我可以马上回答：
 
 \begin{codelist}[5.7]{
   这是
@@ -437,7 +437,7 @@ angle=\codereplace{角}
  蓝灰色}……\end{verbatim}
 \end{codelist}
 
-也可以为上例中的颜色起一个“小名”：
+也可以为上例中的颜色起一个``小名''：
 
 \begin{codelist}[5.8]{
   \definecolor{bleugris}{rgb}{.2,.4,.5}
@@ -451,7 +451,7 @@ angle=\codereplace{角}
 \end{codelist}
 
 \begin{ii}
-可以注意到，除了使用“\dm{rgb}”色彩模型，也可以使用定义灰度的\dm{gray}模型。同样地，如果使用\dm{html}模型，则可以使用HTML语法来指定颜色。
+可以注意到，除了使用``\dm{rgb}''色彩模型，也可以使用定义灰度的\dm{gray}模型。同样地，如果使用\dm{html}模型，则可以使用HTML语法来指定颜色。
 \end{ii}
 
 \begin{figure}
@@ -469,7 +469,7 @@ angle=\codereplace{角}
 makefile使生成过程自动化的思路有：
 
 \begin{itemize}
-  \item 使用“位图”图像文件生成EPS格式的文件；
+  \item 使用``位图''图像文件生成EPS格式的文件；
   \item 使用带有矢量绘图软件内置格式的文件生成EPS格式的文件。
 \end{itemize}
 
@@ -496,7 +496,7 @@ PNGS=$(notdir $(wildcard $(IMGSDIR)/*.png))
 JPGS=$(notdir $(wildcard $(IMGSDIR)/*.jpg))\end{verbatim}
 \end{mdframed}
   
-使用函数\dm{wildcard}可以获得文件夹\verb|$(IMGSDIR)|中文件的列表，而对于每个文件，函数\dm{notdir}可以删除其“目录”的部分。最终，变量\dm{PNGS}包含：
+使用函数\dm{wildcard}可以获得文件夹\verb|$(IMGSDIR)|中文件的列表，而对于每个文件，函数\dm{notdir}可以删除其``目录''的部分。最终，变量\dm{PNGS}包含：
 
 \begin{dmd}
 i.png j.png
@@ -522,7 +522,7 @@ IMGS2EPSS=$(patsubst %,$(EPSSDIR)/%,\
 Epss/i.eps Epss/j.eps Epss/k.eps
 \end{dmd}
 
-该列表构成了（\textsf{make}意义上）生成图像的“先决”条件。因此，按以下方式定义目标：
+该列表构成了（\textsf{make}意义上）生成图像的``先决''条件。因此，按以下方式定义目标：
 
 \begin{mdframed}
 \begin{verbatim}

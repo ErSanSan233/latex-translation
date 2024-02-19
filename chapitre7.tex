@@ -14,7 +14,7 @@
     即document en français avec des caractères assez pénibles à taper。原书此处以源代码的方式展示部分单词，以展现其烦琐程度。%原书依然错误渲染了上引号和下引号
 }。
 
-今天，这些不悦不再成为人们的糟糕记忆。1990年起，一种容纳了多种语言中带变音符号的字符的字体编码被采用，称为\emph{Cork encoding}或\emph{T1编码（codage T1）}。当然，这种\TeX 编码本身和目前的字符编码标准间存在一定的联系。一些\LaTeX 包就包含了从字符编码（如iso-latin1）到字体编码（如T1编码）的“翻译”操作。
+今天，这些不悦不再成为人们的糟糕记忆。1990年起，一种容纳了多种语言中带变音符号的字符的字体编码被采用，称为\emph{Cork encoding}或\emph{T1编码（codage T1）}。当然，这种\TeX 编码本身和目前的字符编码标准间存在一定的联系。一些\LaTeX 包就包含了从字符编码（如iso-latin1）到字体编码（如T1编码）的``翻译''操作。
 
 \begin{exclamation}
     于20实际90年代末出现的标准是ISO8859，带有针对称为\emph{latin1}的欧洲语言的编码方案扩展。这也是今天最常用的编码方案。然而，近年来，通用的字符表格\emph{统一码（Unicode）}及其编码\dm{UTF-8}标准得到了大多数系统的良好支持。不幸的是，\LaTeX 引擎最初并没有考虑处理含以多个字节存储的带有变音符号的字符的文档的情况\jz{这正是\dm{UTF-8}面临的情况。}。因此，有多种新型引擎见于公众，如pdftex、xe\TeX 、lua\TeX ，但它们暂时都没有被社区承认为标准。因此，编译以\dm{UTF-8}编码的文件时，需要在这些引擎中自行选用。本书创作时，选用了编码ISO88559和引擎pdftex。
@@ -22,7 +22,7 @@
 
 \section{使用\LaTeX 以法文创作}
 
-有两个\LaTeX 包可以将文档“法国化”：\textsf{french}和\textsf{babel}。我们凭借带有绝对偏见的理由选用了后者，使用以下方法激活了包\textsf{babel}：
+有两个\LaTeX 包可以将文档``法国化''：\textsf{french}和\textsf{babel}。我们凭借带有绝对偏见的理由选用了后者，使用以下方法激活了包\textsf{babel}：
 
 \begin{dmd}
 \verb|\usepackage[francais]{babel}|
@@ -36,13 +36,13 @@
     }，尤其是会特殊考虑带有变音符号的法文单词。
     \item[排版] 应用法文的排版规则，特别是在面对涉及引号和其他标点符号的情况时。
     \item[版式] 主要涉及为章节标题后的首段文字重新引入首行缩进\jz{在英文排版时不需引入。}，为列表替换符号、调整空白等。
-    \item[翻译] 将敏感词翻译为法文，如“章”（chapitre）、“目录”（table des matières）等。
+    \item[翻译] 将敏感词翻译为法文，如``章''（chapitre）、``目录''（table des matières）等。
     \item[宏] 包\textsf{babel}中提供了一组可用的宏，用于插入一些法文中日常使用的结构，如no、1er、2o、37°C等。
 \end{description}
 
 \section{包\textsf{babel}和排版}
 
-与法文排版相关的“规则”集合远远超出了本章的框架。幸运的是，包\textsf{babel}从实践的角度，允许我们在不了解这些规则的情况下去使用它们。我们只需简单地遵守\LaTeX 文档的几条\emph{输入}规则，就能使编译结果遵循那些最常用的排版规则。举例来说，\textsf{babel}会自动在分号前插入一个无法打断的四分之一全空格\yz{全空格（cadratin）指当前字体下字符M的宽度。}。对于法文排版，这是十分常见的做法。
+与法文排版相关的``规则''集合远远超出了本章的框架。幸运的是，包\textsf{babel}从实践的角度，允许我们在不了解这些规则的情况下去使用它们。我们只需简单地遵守\LaTeX 文档的几条\emph{输入}规则，就能使编译结果遵循那些最常用的排版规则。举例来说，\textsf{babel}会自动在分号前插入一个无法打断的四分之一全空格\yz{全空格（cadratin）指当前字体下字符M的宽度。}。对于法文排版，这是十分常见的做法。
 
 \begin{ii}
 如果你不想自动插入此类空格，可以调用指令\verb|\NoAutoSpaceBeforeFDP|。这样一来，你就可以全权决定是否在标点符号前插入空格。
@@ -70,8 +70,8 @@ fouilla !\selectlanguage{french}\end{verbatim}
 \subsection{L-a, e dans l'a, t-i, t-i, a !}
 
 我改编了塞尔日·甘斯堡（Serge Gainsbourg）的歌词作为本小节的标题\yz{
-    原歌词为“Elaeudanla teïtéïa”，出自歌曲\emph{Elaeudanla téitéia}。该句歌词描述了拼读Lætitia一词时的发音，其中将æ读作“a, e dans l'a”，即拆读为“a”和“那a中的e”。Lætitia为人名。作者以更贴近Lætitia一词的形式重新拼写该发音作为本小节标题。
-}，来借此介绍法文中的两个“美丽”的合字：æ和œ。为了输入这两个合字，我们可以选择输入\verb|\ae|和\verb+\oe+（对于大写，则使用\verb|\AE|和\verb+\OE+）：
+    原歌词为``Elaeudanla teïtéïa''，出自歌曲\emph{Elaeudanla téitéia}。该句歌词描述了拼读Lætitia一词时的发音，其中将æ读作``a, e dans l'a''，即拆读为``a''和``那a中的e''。Lætitia为人名。作者以更贴近Lætitia一词的形式重新拼写该发音作为本小节标题。
+}，来借此介绍法文中的两个``美丽''的合字：æ和œ。为了输入这两个合字，我们可以选择输入\verb|\ae|和\verb+\oe+（对于大写，则使用\verb|\AE|和\verb+\OE+）：
 
 \begin{codelist}[7.2]{
     拉蒂希娅（L\ae titia）去了圣心教堂（Sacré-C\oe ur）。
@@ -81,11 +81,11 @@ fouilla !\selectlanguage{french}\end{verbatim}
 圣心教堂（Sacré-C\oe ur）。\end{verbatim}
 \end{codelist}
 
-如果你的键盘允许，也可以直接输入æ。作为参考，在Linux系统上使用组合键\ovalbox{Alt Gr}+\ovalbox{A}可以输入名副其实地得到这种“a中的e”。出于历史原因，“o中的e”不在范式iso-latin1中，我的键盘不支持直接输入合字æ。
+如果你的键盘允许，也可以直接输入æ。作为参考，在Linux系统上使用组合键\ovalbox{Alt Gr}+\ovalbox{A}可以输入名副其实地得到这种``a中的e''。出于历史原因，``o中的e''不在范式iso-latin1中，我的键盘不支持直接输入合字æ。
 
 \subsection{包\textsf{babel}中的工具}
 
-在排版时，“是否被排正确”这个问题对于大量细枝末节的内容是很难界定的，例如我想到的以下这些词的缩写：先生、女士、第一、第二、第一，等等。幸运的是，包\textsf{babel}在一定程度上解决了我们的问题。
+在排版时，``是否被排正确''这个问题对于大量细枝末节的内容是很难界定的，例如我想到的以下这些词的缩写：先生、女士、第一、第二、第一，等等。幸运的是，包\textsf{babel}在一定程度上解决了我们的问题。
 
 \begin{center}
     \begin{tabular}{|l|l|}
@@ -113,7 +113,7 @@ fouilla !\selectlanguage{french}\end{verbatim}
 包\textsf{babel}的接下来这些推荐使用的功能没有详细说明。它们都是些你可以在排版书籍中可以找到的建议。
 
 \begin{itemize}
-    \item 如果你的键盘支持，法文的引号可以直接使用“«”和“»”输入；如果不支持，可以借助小于号和大于号输入：\dm{<<}和\dm{>>}。此外，还可以借助\verb|\og|和\verb|fg|输入：
+    \item 如果你的键盘支持，法文的引号可以直接使用``«''和``»''输入；如果不支持，可以借助小于号和大于号输入：\dm{<<}和\dm{>>}。此外，还可以借助\verb|\og|和\verb|fg|输入：
     
 \begin{codelist}[7.3]{
     Qu'on devra dans ce cas saisir « ainsi~».
@@ -123,18 +123,18 @@ Qu'on devra dans ce cas saisir
 \og ainsi\fg{}.\end{verbatim}
 \end{codelist}
 
-    \item “英文化”的引号可以使用单引号和反引号生成：\verb|``|和\verb|''|。无论如何，直接使用“\verb|"|”作为引号都是不推荐的。
+    \item ``英文化''的引号可以使用单引号和反引号生成：\verb|``|和\verb|''|。无论如何，直接使用``\verb|"|''作为引号都是不推荐的。
     
     \item 拉丁短语\emph{理论上（a priori）}应以意大利体输入。
     
     \item 有以下缩写规则\jz{
-        其中，Monsieur不应缩写为“Mr.”——这是英文\emph{mister}的缩写。
+        其中，Monsieur不应缩写为``Mr.''——这是英文\emph{mister}的缩写。
     }：
 
     \begin{center}
         \begin{tabular}{|l|l|l|}
             \hline
-            \emph{et cætera} & 缩写为\quad \verb|etc.| & etc.而不是“etc...” \\
+            \emph{et cætera} & 缩写为\quad \verb|etc.| & etc.而不是``etc...'' \\
             Monsieur & 缩写为\quad \verb|M.| & M. Machin \\
             Messieurs & 缩写为\quad \verb|MM.| & MM. Machin et Bidule\\
             Madame & 缩写为\quad \verb|M\up{me}| & M$^{\rm me}$ Machin\\
@@ -145,7 +145,7 @@ Qu'on devra dans ce cas saisir
         \end{tabular}
     \end{center}
 
-    \item 法文中，整数与小数间的分割符为\emph{逗号}，而英文中为圆点。因此我们“应当”这样写：123,54。
+    \item 法文中，整数与小数间的分割符为\emph{逗号}，而英文中为圆点。因此我们``应当''这样写：123,54。
     
     \item 每逢千位或千分位\yz{即从小数分割符向两侧每三位。}，要插入四分之一全空格：
     
@@ -159,7 +159,7 @@ Qu'on devra dans ce cas saisir
 
     \item 可以将专有名词写成小型大写字母的形式，比如John \textsc{Coltrane}。这里使用的方式是\linebreak\verb|\textsc{Coltrane}|，但包\textsf{babel}中包含了宏\verb|\bsc|，可以忽略大小写。也就是说，\verb|\bsc{COLTRANE}|、\linebreak\verb|\bsc{Coltrane}|和\verb|\bsc{coltrane}|都可以生成预期的结果。
     
-    \item 首字母缩合词应采用大写，并且不加圆点，如RATP\yz{全称为Régie autonome des transports parisiens，即巴黎独立运输公司。}、SNCF\yz{全称为Société nationale des chemins de fer français，即法国国家铁路公司。}、ENISE\yz{即国立圣-埃蒂安工程师学院。}。如果首字母缩合词“可以直接读出来”，则也可以使用小写字母，如Assedic\yz{全称为Association pour l'Emploi dans l'Industrie et le Commerce，即工商业就业协会。}、Inserm\yz{全称为Institut national de la santé et de la recherche médicale，即全国保健和医学研究所。}等。
+    \item 首字母缩合词应采用大写，并且不加圆点，如RATP\yz{全称为Régie autonome des transports parisiens，即巴黎独立运输公司。}、SNCF\yz{全称为Société nationale des chemins de fer français，即法国国家铁路公司。}、ENISE\yz{即国立圣-埃蒂安工程师学院。}。如果首字母缩合词``可以直接读出来''，则也可以使用小写字母，如Assedic\yz{全称为Association pour l'Emploi dans l'Industrie et le Commerce，即工商业就业协会。}、Inserm\yz{全称为Institut national de la santé et de la recherche médicale，即全国保健和医学研究所。}等。
 \end{itemize}
 
 \subsection{欧元符号}
@@ -177,7 +177,7 @@ Qu'on devra dans ce cas saisir
 
 首先，\textbf{大写字母也应带有变音符号}（我没生气，我在解释）。伊夫·佩伊卢梭的手册中有关于此的说法：大写字母的变音符号自16世纪以来就一直存在，但随着盎格鲁-撒克逊人带来的打字机和印刷排版技术而消失了。我们同样可以在各种优秀的排版图书中找到因没有添加变音符号而导致歧义的例子。
 
-其次，\emph{对于标题}，我们只将全句的首字母大写（与此相反，英文中会将每个单词的首字母大写）。最后，需要强调，大写字母如何使用是很微妙的，大写字母的使用与否会带来微妙的差别。这里展示了一些示例，可以让你领会这些“规则”：
+其次，\emph{对于标题}，我们只将全句的首字母大写（与此相反，英文中会将每个单词的首字母大写）。最后，需要强调，大写字母如何使用是很微妙的，大写字母的使用与否会带来微妙的差别。这里展示了一些示例，可以让你领会这些``规则''：
 
 \begin{itemize}
     \item maître de conférences（也就是不用大写）；
@@ -228,7 +228,7 @@ Qu'on devra dans ce cas saisir
     \item[出发地] 使用\verb|\lieu|可以在页面右上方书写下我们的信件来自何地。
     \item[电话和传真] 分别使用指令\verb|\telephone|和\verb|\fax|指明。
     \item[签名] 使用指令\verb|\signature|。
-    \item[信件主题] 使用指令\verb|\conc|（指concernant，即“关于”）。
+    \item[信件主题] 使用指令\verb|\conc|（指concernant，即``关于''）。
     \item[附件] 使用指令\verb|\encl|（指英文的\emph{enclosed}） 。
 \end{description}
 
@@ -248,15 +248,15 @@ Qu'on devra dans ce cas saisir
     \fbox{\begin{minipage}{.7\linewidth}
         \includegraphics[width=\textwidth]{img/ossature}
       \end{minipage}}}
-  \caption{基于类型\dm{lettre}的文档“骨架”}
+  \caption{基于类型\dm{lettre}的文档``骨架''}
   \label{fig:7.1}
   \end{figure}
 
-\subsubsection{“协会”文件}
+\subsubsection{``协会''文件}
 
 类型\dm{lettre}借助文件\dm{default.ins}交付。该文件默认定义了日内瓦天文台的地址。你使用的\LaTeX 系统管理员应当将该文件适配为你的组织。
 
-我们可以定义自己的“协会”文件，并将其包含在信件中。但实际上，当我们想以私人名义寄信时，使用私人通信地址更符合逻辑。因此，我们可以定义名为\dm{moi.ins}的文件，并在其中包含相应信息，例如：
+我们可以定义自己的``协会''文件，并将其包含在信件中。但实际上，当我们想以私人名义寄信时，使用私人通信地址更符合逻辑。因此，我们可以定义名为\dm{moi.ins}的文件，并在其中包含相应信息，例如：
 
 \begin{dmd}
 \begin{verbatim}
@@ -280,7 +280,7 @@ Qu'on devra dans ce cas saisir
 
 信件类型中，同样包含用于传真的环境，它带有你所在组织的笺头。通用的原则和关键字与信件是相同的，只不过需要使用环境\dm{telefax}而不是环境\dm{letter}。
 
-注意，这里我们仍然可以使用“机构”文件。毕竟，指令\verb|\addpages|可以用于需要在传真中附加已打印文档的情况。例如，你不得不向初始传真发送$n$页，就可以添加指令\verb|\addpages{|\codereplace{$n$}\dm{\}}。图\ref{fig:7.2}展示了创建传真需要的最小文档。
+注意，这里我们仍然可以使用``机构''文件。毕竟，指令\verb|\addpages|可以用于需要在传真中附加已打印文档的情况。例如，你不得不向初始传真发送$n$页，就可以添加指令\verb|\addpages{|\codereplace{$n$}\dm{\}}。图\ref{fig:7.2}展示了创建传真需要的最小文档。
 
 
 
@@ -296,6 +296,6 @@ Qu'on devra dans ce cas saisir
     \fbox{\begin{minipage}{.7\linewidth}
         \includegraphics[width=\textwidth]{img/ossature-fax}
       \end{minipage}}}
-  \caption{传真文档的“骨架”}
+  \caption{传真文档的``骨架''}
   \label{fig:7.2}
   \end{figure}

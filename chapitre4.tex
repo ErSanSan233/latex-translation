@@ -4,7 +4,7 @@
     羔羊揭开第七印的时候，\\天上寂静约有二刻……
 \end{epigraphe}
 
-在继续探索\LaTeX 这个庞大且出色的系统前，有必要停下脚步来了解一些重要的概念。实际上，为了成为能在组成这个系统的大量文件中大展身手的“赫尔克里·波洛”\yz{
+在继续探索\LaTeX 这个庞大且出色的系统前，有必要停下脚步来了解一些重要的概念。实际上，为了成为能在组成这个系统的大量文件中大展身手的``赫尔克里·波洛''\yz{
     Hercule Poirot，阿加莎·克里斯蒂所著系列侦探小说中的主角。
 }，掌握这些概念是基本的要求。在本章，我们介绍有关计数器、长度、空白和字盒的内容。如果你在使用\LaTeX 时，除了顺从地使用它提供给你的格式外，还想要其他版式，这4个概念会很有用。
 
@@ -102,13 +102,13 @@
 实际上，所有可以显示计数器的指令或环境都调用了类似的指令。这样一来，我们有如下指令：
 
 \begin{itemize}
-  \item \verb|\thepage|，在此处可以生成“\thepage ”，会在每次换页时调用；
-  \item \verb|\thefootnote|，在此处可以生成“\thefootnote ”，会被\verb|\footnote|调用；
-  \item \verb|\thesubsection|，在此处可以生成“\thesubsection ”，会被指令\verb|\subsection|调用；
+  \item \verb|\thepage|，在此处可以生成``\thepage ''，会在每次换页时调用；
+  \item \verb|\thefootnote|，在此处可以生成``\thefootnote ''，会被\verb|\footnote|调用；
+  \item \verb|\thesubsection|，在此处可以生成``\thesubsection ''，会被指令\verb|\subsection|调用；
   \item ……
 \end{itemize}
 
-“\verb|\the|”家族的指令通常借助以下格式指令定义：
+``\verb|\the|''家族的指令通常借助以下格式指令定义：
 
 \begin{itemize}
   \item \verb|\arabic{|\codereplace{计数器}\verb|}|；
@@ -119,13 +119,13 @@
 以下是几个示例：
 
 \begin{itemize}
-  \item \verb|\arabic{page}|在此处可以生成“\arabic{page}”；
-  \item \verb|\alph{footnote}|在此处可以生成“\alph{footnote}”，\verb|\Alph{section}|在此处可以生成“\Alph{section}”；
-  \item \verb|\Roman{subsection}|在此处可以生成“\Roman{subsection}”，\verb|\roman{page}|在此处可以生成“\roman{page}”；
+  \item \verb|\arabic{page}|在此处可以生成``\arabic{page}''；
+  \item \verb|\alph{footnote}|在此处可以生成``\alph{footnote}''，\verb|\Alph{section}|在此处可以生成``\Alph{section}''；
+  \item \verb|\Roman{subsection}|在此处可以生成``\Roman{subsection}''，\verb|\roman{page}|在此处可以生成``\roman{page}''；
   \item ……
 \end{itemize}
 
-为了自定义文档，重定义“\verb|\the|”家族的指令的做法很常见。例如，在本书的文档中，指令\verb|\thefigure|以如下形式重定义：
+为了自定义文档，重定义``\verb|\the|''家族的指令的做法很常见。例如，在本书的文档中，指令\verb|\thefigure|以如下形式重定义：
 
 \begin{dmd}
 \verb|\arabic{chapter}.\arabic{figure}|
@@ -145,7 +145,7 @@
 \verb|(\Roman{chapter}):\arabic{section}.\arabic{figure}|
 \end{dmd}
 
-这样可以在图题中以另一种形式——也是一种相对不整洁的形式——来为图编号。这里，我们重定义了指令\verb|\thefigure|，来生成新的编号方式：先在括号中以罗马数字形式显示章号，再以圆点分隔以阿拉伯数字形式显示的节号和图号。“\textsc{Fig.}”等字样、图号后的连接号等则需要在指令\verb|\caption|的层级去定义。
+这样可以在图题中以另一种形式——也是一种相对不整洁的形式——来为图编号。这里，我们重定义了指令\verb|\thefigure|，来生成新的编号方式：先在括号中以罗马数字形式显示章号，再以圆点分隔以阿拉伯数字形式显示的节号和图号。``\textsc{Fig.}''等字样、图号后的连接号等则需要在指令\verb|\caption|的层级去定义。
 
 \begin{figure}[ht]
   \centering
@@ -173,11 +173,11 @@
   \item[cm] \emph{厘米}；
   \item[mm] \emph{毫米}；
   \item[in] \emph{英寸}（约\dm{2.54cm}）\yz{
-    目前，1英寸严格定义为2.54 cm，原文中的“约”不严谨。
+    目前，1英寸严格定义为2.54 cm，原文中的``约''不严谨。
   }；
   \item[pt] \emph{点}，通常在排版领域使用，合$\frac{1}{72.27}$英寸；
-  \item[em] 当前字体下字母“M”的宽度；
-  \item[ex] 当前字体下字母“x”的高度。
+  \item[em] 当前字体下字母``M''的宽度；
+  \item[ex] 当前字体下字母``x''的高度。
 \end{description}
 
 注意，单位\dm{em}（对应地，\dm{ex}）一般会在水平（对应地，竖直）方向上衡量尺寸时使用，且使我们得以根据当前字体字号来决定尺寸。
@@ -209,7 +209,7 @@
   \item ……
 \end{itemize}
 
-需要理解，可以使用这些“内置”长度的函数来表示另一个长度，例如：
+需要理解，可以使用这些``内置''长度的函数来表示另一个长度，例如：
 
 \begin{dmd}
 \verb|0.5\textwidth|
@@ -286,7 +286,7 @@
   \item \emph{深度}：从基线到字盒底部的距离。
 \end{itemize}
 
-例如，单词“Ingénierie”中，字盒的组合方式如下：
+例如，单词``Ingénierie''中，字盒的组合方式如下：
 
 \newsavebox{\boitecar}
 \newlength{\interletter}
@@ -317,7 +317,7 @@
   \letterbox{e}}
 \end{center}
 
-其中，符号“\refpoint”代表参考点。可以看到，除了带有字母“g”的字盒外，其他字盒的深度均为0。
+其中，符号``\refpoint''代表参考点。可以看到，除了带有字母``g''的字盒外，其他字盒的深度均为0。
 
 但现在，我们还是先不接着说关于字盒的内容了！
 
@@ -348,7 +348,7 @@
 \end{itemize}\end{verbatim}
 \end{codelist}
 
-长度\verb|\malongueur|代表了文字“鸡零狗碎”的宽度，被用作空格（参见关于\celan{\S 4.3}空格的段落）。
+长度\verb|\malongueur|代表了文字``鸡零狗碎''的宽度，被用作空格（参见关于\celan{\S 4.3}空格的段落）。
 
 \subsection{弹性长度}
 
@@ -396,9 +396,9 @@ $$
 三分点\hspace{\stretch{2}}一\end{verbatim}
 \end{codelist}
 
-这段\LaTeX 代码在“〇”和“三分点”、“三分点”和“一”之间依据弹性长度生成了空间\jz{
+这段\LaTeX 代码在``〇''和``三分点''、``三分点''和``一''之间依据弹性长度生成了空间\jz{
   指令\texttt{\backslash hspace}生成了水平方向的空间，空间的长度取决于传入的参数。
-}，其中第二个空间的“僵硬”程度是第一个空间的两倍，对应地，空白占据了两倍的空间。此外需要注意，这种弹力是\emph{相对}但\emph{无限}的，因此，“〇”和“一”被“推”向了页面边缘。此外补充一点：\verb|\fill|是\verb|\stretch{1}|的简便写法。
+}，其中第二个空间的``僵硬''程度是第一个空间的两倍，对应地，空白占据了两倍的空间。此外需要注意，这种弹力是\emph{相对}但\emph{无限}的，因此，``〇''和``一''被``推''向了页面边缘。此外补充一点：\verb|\fill|是\verb|\stretch{1}|的简便写法。
 
 \subsection{显示长度}
 
@@ -433,7 +433,7 @@ Document Class: book 2001/04/21 v1.4 Standard LaTeX document\\
 
 \section{空间}
 
-我们将在文档不同位置插入的空白区域统称为\emph{空间}。有很多指令可用于按预定义或由用户选择的长度插入空白。当然，此处的“长度”是指\LaTeX 中的长度。
+我们将在文档不同位置插入的空白区域统称为\emph{空间}。有很多指令可用于按预定义或由用户选择的长度插入空白。当然，此处的``长度''是指\LaTeX 中的长度。
 
 \subsection{基本长度}
 
@@ -470,7 +470,7 @@ Document Class: book 2001/04/21 v1.4 Standard LaTeX document\\
 \end{codelist}
 
 \begin{ii}
-\TeX 会在某些情况下删除空间。因此，有必要使用“带星”版本的指令：\verb|\hspace*|和\verb|\vspace*|。会造成问题的情况如下：
+\TeX 会在某些情况下删除空间。因此，有必要使用``带星''版本的指令：\verb|\hspace*|和\verb|\vspace*|。会造成问题的情况如下：
 
 \begin{itemize}
   \item 页首和页末；
@@ -543,7 +543,7 @@ Document Class: book 2001/04/21 v1.4 Standard LaTeX document\\
 \hspace{\stretch{2}} 一\par\end{verbatim}
 \end{codelist}
 
-现在，你应该已经明白了\LaTeX 预定义的“弹力”（即\verb|\hfill|、\verb|\hrulefill|、\verb|\dotfill|）的“僵硬程度”为1。
+现在，你应该已经明白了\LaTeX 预定义的``弹力''（即\verb|\hfill|、\verb|\hrulefill|、\verb|\dotfill|）的``僵硬程度''为1。
 
 \subsubsection{竖直空间}
 
@@ -588,7 +588,7 @@ Document Class: book 2001/04/21 v1.4 Standard LaTeX document\\
 
 也就是说，它会切换自然段，并且插入尺寸为\verb|\fill|的竖直空间：
 
-\begin{codelist}[]{
+\begin{codelist}[4.7]{
 %   \hrulefill{}%TODO 重排此处效果
 
 % 高
@@ -654,7 +654,7 @@ Document Class: book 2001/04/21 v1.4 Standard LaTeX document\\
 
 我们将会看到一些精妙的操作，它们可以结合透明的概念，精益求精地实现一些实用的版式。
 
-第一个示例实用了一些简单的字盒。我能肯定，它曾经让你的眼珠子瞪出来过——\dm{TeX}的标识\TeX 。实际上，其中有三个字母：T、E、X。它们被“装盒”排列，并且在水平和竖直方向上错开：
+第一个示例实用了一些简单的字盒。我能肯定，它曾经让你的眼珠子瞪出来过——\dm{TeX}的标识\TeX 。实际上，其中有三个字母：T、E、X。它们被``装盒''排列，并且在水平和竖直方向上错开：
 
 \begin{center}
   \setlength{\fboxsep}{0pt} \setlength{\fboxrule}{0.2pt} 
@@ -663,7 +663,7 @@ Document Class: book 2001/04/21 v1.4 Standard LaTeX document\\
   \kern-.125em\fbox{X}
 \end{center}
 
-注意，“E”的字盒向下错开，三个字盒彼此重叠。再举一个例子：
+注意，``E''的字盒向下错开，三个字盒彼此重叠。再举一个例子：
 
 \newlength{\tmplength}
 
@@ -701,7 +701,7 @@ Document Class: book 2001/04/21 v1.4 Standard LaTeX document\\
   \end{minipage}}——接着往后看——
 \rotatebox{45}{\fbox{\begin{minipage}[b]{3cm}
   \textbf{嘭！}\\
-  这个“小盒盒”里面有一个数学公式！
+  这个``小盒盒''里面有一个数学公式！
   \begin{displaymath}
     ax+b=c
   \end{displaymath}
@@ -848,7 +848,7 @@ Document Class: book 2001/04/21 v1.4 Standard LaTeX document\\
 纽约在\raisebox{-1ex}{美国。}\end{verbatim}
 \end{codelist}
 
-两个参数\codereplace{深}和\codereplace{高}可以“骗过”\LaTeX ，使其认为生成的字盒高度为\codereplace{高}、深度为\codereplace{深}。以下示例中，指令\verb|\raisebox|选择性地使用了一些参数。
+两个参数\codereplace{深}和\codereplace{高}可以``骗过''\LaTeX ，使其认为生成的字盒高度为\codereplace{高}、深度为\codereplace{深}。以下示例中，指令\verb|\raisebox|选择性地使用了一些参数。
 
 \begin{dmd}
   \begin{verbatim}
@@ -882,9 +882,9 @@ XX\raisebox{0.8\baselineskip}[1ex][2ex]{O}XX\\
   第6行：XXXXX\\
 \end{flushleft}
 
-我们将第2行中间的“〇”提高了一些，边框显示出被提高的字盒的位置\jz{
+我们将第2行中间的``〇''提高了一些，边框显示出被提高的字盒的位置\jz{
   此处的边框出于帮助理解机制的目的而特别展示。
-}。在第5行中间的“〇”同样被提高，但这次我们指定了字盒（以边框展示）的尺寸。因此，\LaTeX 认为字盒的高度是\dm{1ex}，而深度是\dm{2ex}，生成的结果中，看上去O和字盒不在一行上。
+}。在第5行中间的``〇''同样被提高，但这次我们指定了字盒（以边框展示）的尺寸。因此，\LaTeX 认为字盒的高度是\dm{1ex}，而深度是\dm{2ex}，生成的结果中，看上去O和字盒不在一行上。
 
 \subsubsection{水平方向平移}
 
@@ -899,7 +899,7 @@ Internet这个词不要\makebox[1.5cm]{打断}
 \hspace{-1.5cm}\makebox[1.5cm]{///////}。\end{verbatim}
 \end{codelist}
 
-注意，这不是“划掉”单词的最佳方法，但它展示了如何在水平方向上移动字盒——借助长度为负值的\verb|\hspace|。
+注意，这不是``划掉''单词的最佳方法，但它展示了如何在水平方向上移动字盒——借助长度为负值的\verb|\hspace|。
 
 \subsubsection{宽度为0的简单字盒}
 
@@ -1017,7 +1017,7 @@ Internet这个词不要\makebox[1.5cm]{打断}
 我本来还想说点别的，但忘了是什么了……
 \end{minipage}
 
-在本例中，我们创建了一个\dm{minipage}，它的宽度约是文本宽度的一半（55\%），且其中包含了环境\dm{itemize}和脚注\verb|\footnote|。这样一来，创建的字盒会与“由于三个因素……”居中对齐，因为此处没有指定相关的\codereplace{位置}参数：
+在本例中，我们创建了一个\dm{minipage}，它的宽度约是文本宽度的一半（55\%），且其中包含了环境\dm{itemize}和脚注\verb|\footnote|。这样一来，创建的字盒会与``由于三个因素……''居中对齐，因为此处没有指定相关的\codereplace{位置}参数：
 
 \begin{dmd}
 \begin{verbatim}
@@ -1037,7 +1037,7 @@ Internet这个词不要\makebox[1.5cm]{打断}
 \end{dmd}
 
 \begin{ii}
-在段落字盒中，长度\verb|\parindent|会被设置为0。正因如此，前面的示例中“我本来还想说点别的……”一句的段首没有缩进。此外，与使用\verb|\parbox|的情况相反，当我们在\dm{minipage}中参考长度\verb|\textwidth|时，调用的是字盒的宽度，而非文本的宽度。
+在段落字盒中，长度\verb|\parindent|会被设置为0。正因如此，前面的示例中``我本来还想说点别的……''一句的段首没有缩进。此外，与使用\verb|\parbox|的情况相反，当我们在\dm{minipage}中参考长度\verb|\textwidth|时，调用的是字盒的宽度，而非文本的宽度。
 \end{ii}
 
 \subsection{小技巧}
@@ -1113,7 +1113,7 @@ Internet这个词不要\makebox[1.5cm]{打断}
   ……这些宏应当被了解，因为它们的力量如此强大。简短的宏可以代表大量的内容。可以说，宏在某种程度上有一种宏观的效果。
 \end{origincitation}
 
-在文档中，我们会定义独立的“实体”。如果这个实体出现的次数多于“某个特定值”，就有必要去敏锐地判断是否应该将它做成\emph{宏}。这个句子表述得有些模糊。总的来说，使用宏可以避免你将相同的动作重复做$x$次。稍微从实践的角度来说，在情况变得越来越复杂时，可以方便地定义一些指令。
+在文档中，我们会定义独立的``实体''。如果这个实体出现的次数多于``某个特定值''，就有必要去敏锐地判断是否应该将它做成\emph{宏}。这个句子表述得有些模糊。总的来说，使用宏可以避免你将相同的动作重复做$x$次。稍微从实践的角度来说，在情况变得越来越复杂时，可以方便地定义一些指令。
 
 \subsection{指令}
 
@@ -1150,7 +1150,7 @@ Internet这个词不要\makebox[1.5cm]{打断}
 指令\verb|\ensuremath|确保指令需要在数学环境中使用，上下文可以是任意内容。正如上例所示。
 
 \begin{ii}
-\LaTeX 的宏或指令并不完全承载编程语言中函数的意义，它更像是C中的\dm{\# define}，在这种意义上遵循\emph{扩展}机制。如此一来，在前一次出现\verb|\Lab|的示例中，\verb|\Lab|会“扩展”成\verb|$L^*a^*b^*$|。因此，我们就知道了为什么此时的\verb|$...\Lab$|会造成编译错误。
+\LaTeX 的宏或指令并不完全承载编程语言中函数的意义，它更像是C中的\dm{\# define}，在这种意义上遵循\emph{扩展}机制。如此一来，在前一次出现\verb|\Lab|的示例中，\verb|\Lab|会``扩展''成\verb|$L^*a^*b^*$|。因此，我们就知道了为什么此时的\verb|$...\Lab$|会造成编译错误。
 \end{ii}
 
 如下指令使用了一个参数，可以用来代表键盘上的按键\jz{
@@ -1168,7 +1168,7 @@ Internet这个词不要\makebox[1.5cm]{打断}
 再按\Touche{Entrée}键。\end{verbatim}
 \end{codelist}
 
-可以看到，此处的指令会等待\emph{一个}变量（这也是变量“\dm{[1]}”的作用）。在指令的定义中，可以使用\verb|#1|来引用这个变量。
+可以看到，此处的指令会等待\emph{一个}变量（这也是变量``\dm{[1]}''的作用）。在指令的定义中，可以使用\verb|#1|来引用这个变量。
 
 如果希望定义带有多个参数的函数（最多9个），也完全\emph{OK}：
 
@@ -1214,7 +1214,7 @@ Internet这个词不要\makebox[1.5cm]{打断}
 再按\Key{}键。\end{verbatim}
 \end{codelist}
 
-可以看到，参数\verb|#1|不是强制的，它的默认值是“Entrée”。同时，我们可以注意到，使用非强制参数时，应该使用方括号而非花括号。
+可以看到，参数\verb|#1|不是强制的，它的默认值是``Entrée''。同时，我们可以注意到，使用非强制参数时，应该使用方括号而非花括号。
 
 \begin{exclamation}
 可以充分地想象这样一种情景：我们定义的指令带有一个非强制参数和多个强制参数。这种情况下，第一个强制参数应该是\verb|#2|。此外，需要注意到，我们只能将\textbf{第一个参数}设为非强制参数。
@@ -1228,7 +1228,7 @@ Internet这个词不要\makebox[1.5cm]{打断}
 \backslash newenvironment\{\codereplace{环境名}\}[\codereplace{参数量}]\{\codereplace{begin条目}\}\{\codereplace{end条目}\}
 \end{dmd}
 
-其中，可以通过\codereplace{环境名}定义环境名，\codereplace{参数量}代表参数的数量，\codereplace{begin条目}和\codereplace{end条目}分别代表环境“开端”和“末尾”所需的处理。在定义环境时使用其他环境（如\LaTeX 的环境）是很实用的技巧\yz{
+其中，可以通过\codereplace{环境名}定义环境名，\codereplace{参数量}代表参数的数量，\codereplace{begin条目}和\codereplace{end条目}分别代表环境``开端''和``末尾''所需的处理。在定义环境时使用其他环境（如\LaTeX 的环境）是很实用的技巧\yz{
   正如下文所说，译者也只能查到这句话来自维克多·雨果（Vector Hugo）的说法，但没有查到具体出处，只能照字面意义硬翻。
 }：
 
@@ -1255,7 +1255,7 @@ Internet这个词不要\makebox[1.5cm]{打断}
 \end{bonmot}\end{verbatim}
 \end{codelist}
 
-的确，如果我们不指明来源，那么这句“名言”（bon mot）看起来疑点重重。通过为我们的环境添加一个参数，可以补救一下。参数可以使用\verb|#|访问，但这种访问方式只能在\dm{begin}条目中使用。将参数存到字盒中，就能规避这种限制，从而在\dm{end}条目中复用\celan{\S 4.4.5}参数：
+的确，如果我们不指明来源，那么这句``名言''（bon mot）看起来疑点重重。通过为我们的环境添加一个参数，可以补救一下。参数可以使用\verb|#|访问，但这种访问方式只能在\dm{begin}条目中使用。将参数存到字盒中，就能规避这种限制，从而在\dm{end}条目中复用\celan{\S 4.4.5}参数：
 
 \begin{codelist}[4.24]{
   \newsavebox{\auteurbm}
@@ -1290,7 +1290,7 @@ Internet这个词不要\makebox[1.5cm]{打断}
 \end{Bonmot}\end{verbatim}
 \end{codelist}
 
-好吧，即使这样做了，这句“名言”的疑点也没有减少……
+好吧，即使这样做了，这句``名言''的疑点也没有减少……
 
 \subsection{重定义}
 
@@ -1344,12 +1344,12 @@ Internet这个词不要\makebox[1.5cm]{打断}
 /home/lozano/texmf
 \end{dmd}
 
-这条信息表明，系统会在我的私人目录下的\dm{texmf}目录中寻找需要包含单文件。因此，可以将“古法酿造”的扩展放入目录\verb+~/texmf/tex/latex+。
+这条信息表明，系统会在我的私人目录下的\dm{texmf}目录中寻找需要包含单文件。因此，可以将``古法酿造''的扩展放入目录\verb+~/texmf/tex/latex+。
 
 最后再给出一个建议：为了以一种舒适的方式定义属于你单指令或环境，我们建议你稍微看一看以下工具。
 
 \begin{itemize}
-  \item 扩展\textsf{ifthen}\celan{\S 9.3}。借助它，可以使用“如果—则—否则”和“do-while”形式的控制指令。
+  \item 扩展\textsf{ifthen}\celan{\S 9.3}。借助它，可以使用``如果—则—否则''和``do-while''形式的控制指令。
   \item 包\textsf{calc}，可以实现有关计数器和长度的算术。
   \item 环境\textsf{list}\celan{\S 9.5}。对于自定义列表种类的环境，它可以实现很好用的项目符号。
 \end{itemize}

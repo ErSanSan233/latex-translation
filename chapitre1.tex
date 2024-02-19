@@ -5,7 +5,7 @@
     人若身患漏症，\\他因这漏症就不洁净了。
 \end{epigraphe}
 
-本章介绍\LaTeX 的基本原理。你将会看到关于\LaTeX 安装的简介、使用\LaTeX 的基本“流程”（session）介绍、文章格式的结构、使用变音符号的注意事项，认识几个工具，以及了解面对编译错误消息时的态度。
+本章介绍\LaTeX 的基本原理。你将会看到关于\LaTeX 安装的简介、使用\LaTeX 的基本``流程''（session）介绍、文章格式的结构、使用变音符号的注意事项，认识几个工具，以及了解面对编译错误消息时的态度。
 
 \section{安装}
 
@@ -55,7 +55,7 @@
 \end{description}
 
 \begin{exclamation}
-    需要注意，为了使你选用的发行版包含\LaTeX 的“法文”模式，以确保能够正确处理断字（césure；英：hyphenation），我们需要在编译文档是需要更改其“日志”（见1.6节）%带有引用
+    需要注意，为了使你选用的发行版包含\LaTeX 的``法文''模式，以确保能够正确处理断字（césure；英：hyphenation），我们需要在编译文档是需要更改其``日志''（见1.6节）%带有引用
     以使法文模式加载：
 
     \begin{dmd}
@@ -64,7 +64,7 @@
     \end{dmd}
 \end{exclamation}
 
-\section{“生产”周期}
+\section{``生产''周期}
 
 即使\LaTeX 并不是通常意义上说的编译型语言，但我们仍然可以将制作一个\LaTeX 文档的周期与使用一款经典的编程语言开发软件的\textit{编辑—编译—执行}周期进行类比。
 
@@ -89,7 +89,7 @@
 早晚有一天，你会看到编译会产出错误。这将是1.6节会处理的问题。总之，解决了编译问题后，我们会得到一个带有\dm{.pdf}扩展名的文件，它代表\textit{便携文档格式（英：portable document format）}，这是一种由Adobe公司创造的著名格式。
 
 \begin{ii}
-    历史上，编译\LaTeX 源文件会生成\dm{dvi}文件，代表\textit{设备无关（英：device independant）}。此类文件独不受输出环境（如屏幕、打印机等）的影响。这是一种包含了“图像”的\LaTeX 便携二进制文件，可以用于各种操作系统。随后，出现了一批用途各异的程序：
+    历史上，编译\LaTeX 源文件会生成\dm{dvi}文件，代表\textit{设备无关（英：device independant）}。此类文件独不受输出环境（如屏幕、打印机等）的影响。这是一种包含了``图像''的\LaTeX 便携二进制文件，可以用于各种操作系统。随后，出现了一批用途各异的程序：
     \begin{itemize}
         \item 用于显示文档，即\dm{.dvi}\rightarrow 点阵屏幕；
         \item 用于打印，即\dm{.dvi}\rightarrow 打印机语言；
@@ -100,7 +100,7 @@
 图\ref{fig:1.2}表明了UNIX生成最终文件过程中参与流程的多种程序。
 
 \begin{ii}
-    除了使用pdflatex外，也可以使用其他“编译器”来生成PDF文件。例如，xelatex和lualatex可以能正确地处理以UTF-8编码的文件，是常用的替代选项。
+    除了使用pdflatex外，也可以使用其他``编译器''来生成PDF文件。例如，xelatex和lualatex可以能正确地处理以UTF-8编码的文件，是常用的替代选项。
 \end{ii}
 
 \begin{figure}[H]
@@ -166,7 +166,7 @@
 \subsection{文档的类}
 
 所谓类，就是提供给\LaTeX 的一个指示，可以帮助\LaTeX 决定如何为文档的特定部分排版。根据具体使用的类不同，允许使用与否的指令可能不同（如\dm{\backslash chapter}在\dm{book}类中允许使用，在\dm{article}类中不允许使用）。另一方面，根据所选择的类，给出的命令会具有特定的含义（标题、材料表……）。在入门时\jz{
-    实际上，我们可以在\dm{\backslash documentclass}前添加更多神奇的“咒语”……
+    实际上，我们可以在\dm{\backslash documentclass}前添加更多神奇的``咒语''……
 }，所有的\LaTeX 文档都必须以的指令开始——\dm{\backslash documentclass}接由花括号括住的类，包含以下几种：
 
 \begin{itemize}
@@ -272,21 +272,21 @@
 \begin{description}
 
 
-\item[空行代表跳转至下一段] \LaTeX 中的空行代表一段文字的结尾，因此在以上实例中，第一段从“\dm{从你}”开始，直到“\dm{物品上。}”结束。指令\dm{\backslash par}与空行等价，可以用来表示一段文字的起始。
+\item[空行代表跳转至下一段] \LaTeX 中的空行代表一段文字的结尾，因此在以上实例中，第一段从``\dm{从你}''开始，直到``\dm{物品上。}''结束。指令\dm{\backslash par}与空行等价，可以用来表示一段文字的起始。
 
 \item[\LaTeX 会忽略换行]最终的文档中，换行并不由源文件中的换行决定。\LaTeX 会自动为各段文本\textit{打断、压缩、调节}文字，除非你有特殊的要求。
 
 \item[\LaTeX 会忽略重复的空格]输入1个或18784个空格是等价的，比如源码中\dm{de}和\dm{Murphy}前插入的空格那样。此规则也适用于跳转段落：输入一行或多行空格是等价的。
 
-\item[“\backslash ”是转义字符（caractère d’échappement；英：escape char）]“\backslash ”可以告诉\LaTeX 它后面的一系列字符是控制序列，也就是说，是最一般意义上的指令（或宏）。这里，它对“墨菲”一词生效，具体的效果由指令\dm{\backslash emph}控制。
+\item[``\backslash ''是转义字符（caractère d'échappement；英：escape char）]``\backslash ''可以告诉\LaTeX 它后面的一系列字符是控制序列，也就是说，是最一般意义上的指令（或宏）。这里，它对``墨菲''一词生效，具体的效果由指令\dm{\backslash emph}控制。
 
-\item[“\{”和“\}”]它们是\textit{组}的定界符，稍后会进一步解释它们。
+\item[``\{''和``\}'']它们是\textit{组}的定界符，稍后会进一步解释它们。
 
 \end{description}
 
 \subsection{几个特殊字符}
 
-就像符号“\backslash”的出现所暗示的那样，\LaTeX 中还有10个有特殊含义的符号，在此将其列出：
+就像符号``\backslash''的出现所暗示的那样，\LaTeX 中还有10个有特殊含义的符号，在此将其列出：
 
 \begin{dmd}
     \verb+\ $ & % # ^ _ { } ~+
@@ -312,10 +312,10 @@
     \item \dm{\%}会使得\LaTeX 忽略当前行的剩余部分，因此，它是表示注释的符号（与C中的\dm{//}等价）；
     \item \verb+~+代表不可拆分的空格\jz{
         见2.10节。
-    }，可以防止\LaTeX 在指定的位置断字。尽管有大量的情况需要插入这个符号来表示不可拆分（如所有形如“\verb+图~1+”的情况），然而，对于此类符号的使用，并没有系统化的规则。
+    }，可以防止\LaTeX 在指定的位置断字。尽管有大量的情况需要插入这个符号来表示不可拆分（如所有形如``\verb+图~1+''的情况），然而，对于此类符号的使用，并没有系统化的规则。
     \item \dm{\$}用于标记公式的开始和结束。\LaTeX 遇到一个\dm{\$}符号时，它会切换到\celan{第3章}数学模式，直到遇到下一个\dm{\$}符号。
     \item \dm{\_}和\dm{\^{}}分别代表将文本转化为下标和上标。\textbf{注意}，这两个符号只能在数学模式下使用。
-    \item \dm{\{}和\dm{\}}分别表示组的开始和结束。本例中出现了两种组：一种出现在数学模式中，用于把将要放到下标或上标的“子公式”组合起来；另一种把将要设置成粗体的文字组合起来。
+    \item \dm{\{}和\dm{\}}分别表示组的开始和结束。本例中出现了两种组：一种出现在数学模式中，用于把将要放到下标或上标的``子公式''组合起来；另一种把将要设置成粗体的文字组合起来。
 \end{itemize}
 
 我们可以使用如下的指令来在让文档生成部分特殊字符：
@@ -324,7 +324,7 @@
     \verb+\$ \& \% \# \{ \} \_+
 \end{dmd}
 
-这串指令可以输出“\$ \& \% \# \{ \} \_”。2.2.5小节%TODO
+这串指令可以输出``\$ \& \% \# \{ \} \_''。2.2.5小节%TODO
 会解释如何使文档生成其余特殊字符（即\verb+\ ~ ^+）。
 
 \subsection{调用指令}
@@ -348,9 +348,9 @@
 \end{codelist}
 
 \begin{exclamation}
-    \verb*|\ |（其中\verb*| |代表空格）称作控制空格（espace de contrôle）。这个空格不会被\LaTeX 忽略。因此，指令“\verb*|et\ \ \ hop !|”会生成“et\ \ \ hop !”。实际上，以\dm{\backslash}\codereplace{函数}\dm{\{}\codereplace{参数}\dm{\}}的形式来调用宏是很好的习惯。因此，使用上例中的的第三种方式比第二种方式更佳。这种形式可以避免空格被忽略的情况发生\jz{
+    \verb*|\ |（其中\verb*| |代表空格）称作控制空格（espace de contrôle）。这个空格不会被\LaTeX 忽略。因此，指令``\verb*|et\ \ \ hop !|''会生成``et\ \ \ hop !''。实际上，以\dm{\backslash}\codereplace{函数}\dm{\{}\codereplace{参数}\dm{\}}的形式来调用宏是很好的习惯。因此，使用上例中的的第三种方式比第二种方式更佳。这种形式可以避免空格被忽略的情况发生\jz{
         所以他为什么要跟我们说这些？！
-    }。因此，我们将使用\verb|the \teX{}book|来生成“the \TeX{}book”，使用“\verb*|\LaTeX{} is a ...|”来生成“\LaTeX{} is a ...”。
+    }。因此，我们将使用\verb|the \teX{}book|来生成``the \TeX{}book''，使用``\verb*|\LaTeX{} is a ...|''来生成``\LaTeX{} is a ...''。
 \end{exclamation}
 
 \subsection{变音符号}
@@ -376,7 +376,7 @@
     \label{tab:1.1}
 \end{table}
 
-注意！虽然我们可以输入带有变音符号的字符，但不要忘记：这需要我们调用编码。目前，编码可能只针对地球上的某个地区。在法国，我们使用ISO 8859编码，配合拉丁文1区拓展。这套编码允许我们操纵美丽的变音符号。在详细阅读本书中专为使用法文书写文档的情况准备的章节\celan{第7章}之前，我们建议你在你源码的文前部分添加以下指令，以“攻克”法文文档的难关：
+注意！虽然我们可以输入带有变音符号的字符，但不要忘记：这需要我们调用编码。目前，编码可能只针对地球上的某个地区。在法国，我们使用ISO 8859编码，配合拉丁文1区拓展。这套编码允许我们操纵美丽的变音符号。在详细阅读本书中专为使用法文书写文档的情况准备的章节\celan{第7章}之前，我们建议你在你源码的文前部分添加以下指令，以``攻克''法文文档的难关：
 
 \begin{dmd}
     \begin{verbatim}
@@ -394,16 +394,16 @@
 以下几个宏和合字在文档中很常用，因此应当了解它们。首先,\LaTeX 会区分三种连接号：
 
 \begin{itemize}
-    \item \verb|-|，用于“Saint-Étienne”；
-    \item \verb|--|，用于“page 12--24”；
-    \item \verb|---|，在法文中用于插入语，如“une parenthèse --- comme cela”。
+    \item \verb|-|，用于``Saint-Étienne''；
+    \item \verb|--|，用于``page 12--24''；
+    \item \verb|---|，在法文中用于插入语，如``une parenthèse --- comme cela''。
 \end{itemize}
 
 引号应以如下方式输入：
 
 \begin{itemize}
     \item \verb|``|和\verb|''|可以输入英文中的引号\yz{
-        此处与原书不同。原书前文输入变音符号时亦直接使用了单弯引号‘和’，但这两个符号作为命令参数时会导致编译错误，因此分别替换为反引号和直单引号。这可能是编译器的差异导致的。
+        此处与原书不同。原书前文输入变音符号时亦直接使用了单弯引号`和'，但这两个符号作为命令参数时会导致编译错误，因此分别替换为反引号和直单引号。这可能是编译器的差异导致的。
     }——``English''。
     \item 如果键盘允许，对于法文，你可以输入«和»\jz{
         例如，在Linux系统下，分别按键盘的组合键\ovalbox{Alt Gr}+\ovalbox{Z}和\ovalbox{Alt Gr}+\ovalbox{X}（\textsl{译注}：适用于AZERTY键盘）。
@@ -416,7 +416,7 @@
 \begin{itemize}
     \item \verb|\today|可以生成（编译时的）日期——2013年11月22日。
     \item \verb|\S|可以生成段落符号——\S。
-    \item \verb|\ldots|可以在英文文档中生成省略号“\ldots”。但在法文文档中，应当输入三个点“...”（第7章会介绍更多有关法文排版的内容）。%TODO
+    \item \verb|\ldots|可以在英文文档中生成省略号``\ldots''。但在法文文档中，应当输入三个点``...''（第7章会介绍更多有关法文排版的内容）。%TODO
 \end{itemize}
 
 最后要记得，英文中的双成分标点（ponctuation double；包括: ; ! ?）前不加空格，但法文相反，它们的前面需要加空格。另外，在法国这个可爱的国家，我们几乎都靠右行驶。
@@ -424,7 +424,7 @@
 \section{第一组报错}
 
 \begin{ii}
-    接下来，我们会看看\LaTeX 编译你的文档时闹的“情绪”。当我们放出编译指令时，我们会直接在终端看到这些输出。为了能让\LaTeX 得到充分使用，我们鼓励你在自己的环境下找到属于你自己的检查\LaTeX “\textsf{日志}”的方法。这些日体可以为你指明错误信息，以及编译过程中出现的其他警告。
+    接下来，我们会看看\LaTeX 编译你的文档时闹的``情绪''。当我们放出编译指令时，我们会直接在终端看到这些输出。为了能让\LaTeX 得到充分使用，我们鼓励你在自己的环境下找到属于你自己的检查\LaTeX ``\textsf{日志}''的方法。这些日体可以为你指明错误信息，以及编译过程中出现的其他警告。
 \end{ii}
 
 \subsection{症状}
@@ -455,7 +455,7 @@ l.5 paragraphe de ce \empha
 \documentclass{article}
 
 \begin{document}
-Il me semble bien qu’il y ait une erreur dans le
+Il me semble bien qu'il y ait une erreur dans le
 premier paragraphe de ce \empha{document} somme
 toute assez court.
 \end{document}
@@ -479,7 +479,7 @@ toute assez court.
 
 \end{description}
 
-第8行和第9行之间的“裂缝”精准地表明了\LaTeX 崩不住了的地方。以下消息：
+第8行和第9行之间的``裂缝''精准地表明了\LaTeX 崩不住了的地方。以下消息：
 
 \begin{dmd}
     ! Undefined control sequence.
@@ -489,7 +489,7 @@ toute assez court.
 
 \subsection*{治疗方案}
 
-那么，当\LaTeX 给我们展示这个著名的“\dm{?}”时，我们应该怎么回答它呢？这里有3种最简短的方式，可以用来与\LaTeX 轻度交流。
+那么，当\LaTeX 给我们展示这个著名的``\dm{?}''时，我们应该怎么回答它呢？这里有3种最简短的方式，可以用来与\LaTeX 轻度交流。
 
 \begin{itemize}
     \item 按回车键来忽略错误。
@@ -499,10 +499,10 @@ toute assez court.
     \item 输入\dm{h}以获取更多关于该错误的信息。以下是本例中\TeX 提供给你的更多信息：\begin{verbatim}
 Undefined control sequence :
   The control sequence at the end of the top line
-  of your error message was never \def’ed. If you have
-  misspelled it (e.g., ‘\hobx’), type ‘I’ and the
-  correct spelling (e.g., ‘I\hbox’). Otherwise just
-  continue, and I’ll forget about whatever was
+  of your error message was never \def'ed. If you have
+  misspelled it (e.g., `\hobx'), type `I' and the
+  correct spelling (e.g., `I\hbox'). Otherwise just
+  continue, and I'll forget about whatever was
   undefined.\end{verbatim}
 \end{itemize}
 

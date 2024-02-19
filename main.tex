@@ -165,7 +165,7 @@
 %原书的书侧面标签
 %NOTE 这个标签在各章最后一页的位置似乎有错误
 \makeatletter
-\DeclareFixedFont{\oongletfont}{T1}{phv}{b}{n}{30pt}
+\DeclareFixedFont{\oongletfont}{T1}{phv}{b}{n}{20pt}
 
 \newcounter{chapitre}
 \renewcommand{\thechapitre}{\arabic{chapitre}}
@@ -182,7 +182,7 @@
 \newcommand{\oongletsep}{0.84}
 
 % dimension de la boite qui contient le numero du  chapitre
-\setlength{\oongletheight}{45pt}
+\setlength{\oongletheight}{35pt}
 % \setlength{\oongletwidth}{1.4cm}
 \setlength{\oongletwidth}{2cm}
 
@@ -201,8 +201,8 @@
       \vfill%
       \centering%
       \ifthenelse{\isodd{\value{page}}}{%
-        \mbox{\oongletfont\color{\noironglet}\thechapter~}}{%
-        \reflectbox{\oongletfont\color{\noironglet}\thechapter~}}%        
+        \mbox{\oongletfont\color{\noironglet}\thechapter\qquad}}{%
+        \reflectbox{\oongletfont\color{\noironglet}\thechapter~~~\quad}}%        
       \vfill}}}
 
 \newcommand{\oonglet}{%

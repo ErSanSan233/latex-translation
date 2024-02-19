@@ -55,7 +55,7 @@ This is e-TeXk, Version 3.14159-2.1 (Web2C 7.4.5)
 **\end{verbatim}
 \end{dmd}
 
-在“赤裸裸的\TeX ”呼喊出这个冷峻的提示（\dm{**}）的邀请下，我勇敢地回复了\verb|&latex|来要求加载\LaTeX 格式。没有丝毫延迟，就得到了答复：
+在``赤裸裸的\TeX ''呼喊出这个冷峻的提示（\dm{**}）的邀请下，我勇敢地回复了\verb|&latex|来要求加载\LaTeX 格式。没有丝毫延迟，就得到了答复：
 
 \begin{dmd}
 \begin{verbatim}
@@ -127,7 +127,7 @@ french loaded.
 ==(\beurk)==\end{verbatim}
 \end{codelist}
 
-可以观察到，“bidule”一词的两侧出现了我们不想要的空格。为了避免这种现象，可以使用如下方式改写：
+可以观察到，``bidule''一词的两侧出现了我们不想要的空格。为了避免这种现象，可以使用如下方式改写：
 
 
 \begin{codelist}[9.2]{
@@ -171,11 +171,11 @@ Il est impératif
 de vos documents personnels\end{verbatim}
 \end{codelist}
 
-如果仔细观察生成的文本，可以注意到，在粗斜体部分文本“{\bfseries\itshape de ... sauvegardes}”的两侧各有两个空格：
+如果仔细观察生成的文本，可以注意到，在粗斜体部分文本``{\bfseries\itshape de ... sauvegardes}''的两侧各有两个空格：
 
 \begin{itemize}
-    \item “{\bfseries\itshape de}”前面的两个空格分别由“\dm{impératif}”和begin条目“\verb|\begin{hyperimportant}|”后的换行引入；
-    \item “{\bfseries\itshape sauvegardes}”后面的两个空格分别由“\dm{sauvegardes}”和end条目“\verb|\end{hyperimportant}|”后的换行引入。
+    \item ``{\bfseries\itshape de}''前面的两个空格分别由``\dm{impératif}''和begin条目``\verb|\begin{hyperimportant}|''后的换行引入；
+    \item ``{\bfseries\itshape sauvegardes}''后面的两个空格分别由``\dm{sauvegardes}''和end条目``\verb|\end{hyperimportant}|''后的换行引入。
 \end{itemize}
 
 我们可以删除换行，来证明这种观点：
@@ -214,7 +214,7 @@ a\truc\bidule b\par
 a\ignorespaces\truc\bidule b\end{verbatim}
 \end{codelist}
 
-以上示例中，指令\verb|\truc|和\verb|\bidule|的唯一作用都是在被调用时生成空格。例如，以下指令会生成“\verb*|a { }b|”：
+以上示例中，指令\verb|\truc|和\verb|\bidule|的唯一作用都是在被调用时生成空格。例如，以下指令会生成``\verb*|a { }b|''：
 
 \begin{dmd}
 \verb|a\truc\bidule b|
@@ -250,7 +250,7 @@ de vos documents personnels.\end{verbatim}
 
 \subsubsection{指令\dm{\backslash unskip}}
 
-如果细心一些，我们可以发现，“{\bfseries\itshape sauvegardes}”和“de”之间仍然有两个空格抵住了我们的攻击。这就到了\TeX 的原语\verb|\unskip|的用武之地：它可以删除后一个被插入的空格：
+如果细心一些，我们可以发现，``{\bfseries\itshape sauvegardes}''和``de''之间仍然有两个空格抵住了我们的攻击。这就到了\TeX 的原语\verb|\unskip|的用武之地：它可以删除后一个被插入的空格：
 
 \begin{codelist}[9.7]{
     \newcommand{\truc}{ }
@@ -265,7 +265,7 @@ a\truc\bidule b\par
 a\truc\bidule\unskip b\end{verbatim}
 \end{codelist}
 
-最后，我们环境的“正确”定义如下：
+最后，我们环境的``正确''定义如下：
 
 \begin{dmd}
 \begin{verbatim}
@@ -367,7 +367,7 @@ de vos documents personnels.\end{verbatim}
     \item \verb+\equal{+\codereplace{$C_1$}\verb+}{+\codereplace{$C_2$}\dm{\}}可以根据字符串\codereplace{$C_1$}是否等于\codereplace{$C_2$}来返回真或假；
     \item \verb+\isodd{+\codereplace{数}\verb+}+在\codereplace{数}是奇数的时候返回真，否则返回假；
     \item \verb+\value{+\codereplace{计数器}\dm{\}}可以以可被布尔条件使用的形式返回\codereplace{计数器}的值；
-    \item \verb+\lengthtest{\codereplace{长度检验}+\dm{\}}返回表达式\codereplace{长度检验}的结果，所谓“长度检验”包含操作符\dm{>}、\dm{<}或\dm{=}和作为运算量的\LaTeX 长度。
+    \item \verb+\lengthtest{\codereplace{长度检验}+\dm{\}}返回表达式\codereplace{长度检验}的结果，所谓``长度检验''包含操作符\dm{>}、\dm{<}或\dm{=}和作为运算量的\LaTeX 长度。
 \end{itemize}
 
 可以注意到，我们可以使用逻辑连接符\verb+\OR+、\verb+\AND+和\verb+\NOT+，它们在布尔表达式中扮演的正是我们所想象的角色。也可以使用操作符\verb+\(+和\verb+\)+来组合表达式。
@@ -394,8 +394,8 @@ de vos documents personnels.\end{verbatim}
 \{……\codereplace{布尔值标识}为假时的\LaTeX 代码……\}
 \end{dmd}
 
-这里提议了解一下前面内容中的\TeX 版本。实际上，我们可以在\LaTeX 包中找到使用\TeX 编写的代码，特别是对结构“若--则--否则”的使用。如下示例使用了\TeX 定义了新的布尔值\yz{
-    其中，imprimante couleur意为“彩色打印机”。
+这里提议了解一下前面内容中的\TeX 版本。实际上，我们可以在\LaTeX 包中找到使用\TeX 编写的代码，特别是对结构``若--则--否则''的使用。如下示例使用了\TeX 定义了新的布尔值\yz{
+    其中，imprimante couleur意为``彩色打印机''。
 }：
 
 \begin{dmd}
@@ -414,7 +414,7 @@ de vos documents personnels.\end{verbatim}
 \verb|\imprimantecouleurtrue|
 \end{dmd}
 
-接下来，就可以在\TeX 模式的结构“若--则--否则”中操作这个布尔值：
+接下来，就可以在\TeX 模式的结构``若--则--否则''中操作这个布尔值：
 
 \begin{dmd}
 \backslash ifimprimantecouleur\\
@@ -461,7 +461,7 @@ de vos documents personnels.\end{verbatim}
 \verb+\newcounter{cptfact}+
 \end{dmd}
 
-可以注意到，在“只要……”循环中的布尔条件中，我们调用了指令\verb|\value|来比较计数器的值和1。更迂回的办法是，我们可以以递归的方式来实现这个指令：
+可以注意到，在``只要……''循环中的布尔条件中，我们调用了指令\verb|\value|来比较计数器的值和1。更迂回的办法是，我们可以以递归的方式来实现这个指令：
 
 \begin{dmd}
 \begin{verbatim}
@@ -599,7 +599,7 @@ de vos documents personnels.\end{verbatim}
 
 \subsection{判断页码的奇偶性}
 
-有个十分日常的实践，就是创建可以根据页码的奇偶性显示不同内容的指令。我们接下来就来研究下这个事情。在英文问答网站[1]的“Finding if you're on an odd or an even page”入口可以找到，以下天真做法不能得到预期效果：
+有个十分日常的实践，就是创建可以根据页码的奇偶性显示不同内容的指令。我们接下来就来研究下这个事情。在英文问答网站[1]的``Finding if you're on an odd or an even page''入口可以找到，以下天真做法不能得到预期效果：
 
 \begin{dmd}
 \begin{verbatim}
@@ -623,7 +623,7 @@ de vos documents personnels.\end{verbatim}
 
 \section{字体}
 
-\subsection{“三个”字体族的游戏}
+\subsection{``三个''字体族的游戏}
 
 为了保持\LaTeX 文档中字体外形的一致性，三个字体族被定义：
 
@@ -633,7 +633,7 @@ de vos documents personnels.\end{verbatim}
     \item \dm{打字机族，对于使用英文的人，也称\emph{typewriter}族——你无疑没办法避开这个字体族，因为你正在阅读的这行文字正属于打字机族。}
 \end{enumerate}
 
-需要注意，默认的这三个字体族由其作者（高德纳本人）赐名“计算机现代体”（英：Computer Modern），设计的目的是可以在同一文档内呈现得和谐。基于这样的想法，需要始终注意使这三个字体族在视觉上“相容”。\LaTeX 的各发行版通常提供了一些用以在文档中使用PostScript字体的包，其中就有著名\jz{
+需要注意，默认的这三个字体族由其作者（高德纳本人）赐名``计算机现代体''（英：Computer Modern），设计的目的是可以在同一文档内呈现得和谐。基于这样的想法，需要始终注意使这三个字体族在视觉上``相容''。\LaTeX 的各发行版通常提供了一些用以在文档中使用PostScript字体的包，其中就有著名\jz{
     但过时。现在推荐使用包\textsf{mathptmx}。
 }的包\textsf{times}：
 
@@ -660,11 +660,11 @@ de vos documents personnels.\end{verbatim}
 \begin{itemize}
     \item 除少数特殊情况外，我们使用T1编码；
     \item 使用一组字符序列来区分字体族，如\dm{cmr}代表\emph{计算机现代体罗马族（Computer Modern roman）}、\dm{ptm}代表\emph{PostScript Times体}，等等；
-    \item 使用一组字符序列来表示字重，如\dm{m}代表“中等”、\dm{b}代表加粗、\dm{bx}代表“加粗伸展”（gras étendu，英：bold extended；即字母加粗且更宽），等等；
-    \item 使用一组字符序列来表示字体样式（allure，\emph{英：shape}），如\dm{n}d代表“常规”、\dm{it}代表“意大利”、\dm{sl}代表“倾斜”（英：slanted），等等。
+    \item 使用一组字符序列来表示字重，如\dm{m}代表``中等''、\dm{b}代表加粗、\dm{bx}代表``加粗伸展''（gras étendu，英：bold extended；即字母加粗且更宽），等等；
+    \item 使用一组字符序列来表示字体样式（allure，\emph{英：shape}），如\dm{n}d代表``常规''、\dm{it}代表``意大利''、\dm{sl}代表``倾斜''（英：slanted），等等。
 \end{itemize}
 
-\subsubsection{“计算机现代”字体系列}
+\subsubsection{``计算机现代''字体系列}
 
 这一套字体由高德纳绘制，由\LaTeX 默认使用。使用指令\verb|\emph|、\verb|\textbf|等时，会自动选用其中的字体。
 
@@ -736,7 +736,7 @@ de vos documents personnels.\end{verbatim}
 \subsubsection{混凝土体}
 
 {\fontencoding{T1}\fontfamily{ccr}\fontseries{m}\fontshape{n}\selectfont 混凝土体（fontes en béton）是由高德纳为其名为《实用数学》（ \emph{Mathématiques concrètes}，英：\emph{Concrete Mathematics}}）的图书而绘制的\yz{
-    英文的concrete一词既有“混凝土”的含义，又有“实用”的含义。
+    英文的concrete一词既有``混凝土''的含义，又有``实用''的含义。
 }。使用包\textsf{beton}可以在文档中切换该字体。
 
 \begin{decritfonte}[T1]{混凝土体（Concrete fonts，}{ccr}
@@ -746,7 +746,7 @@ de vos documents personnels.\end{verbatim}
     \descriptionfonte{ccr}{m}{it}{意大利}
 \end{decritfonte}
 
-\subsubsection{“哥特风格”字体}
+\subsubsection{``哥特风格''字体}
 
 {\fontencoding{U}\fontfamily{yswab}\fontseries{m}\fontshape{n}\selectfont 下面的这些字体属于哥特风格字体族（famille gothique），只有在使用目的特别明确的情况下才能使用，否则文字会极难阅读——正如这里所展示的一样。此外，你可能已经放弃读下去了，所以我可以说点脏话：yi tuo dabian……\\
 }
@@ -838,7 +838,7 @@ de vos documents personnels.\end{verbatim}
   我们多少可以使用\LaTeX 发行版中的标准包来切换字体：
 
   \begin{description}
-    \item[\textsf{mathptmx}] 用于“丑陋”的Times New Roman；
+    \item[\textsf{mathptmx}] 用于``丑陋''的Times New Roman；
     \item[\textsf{newcent}] 用于New Century；
     \item[\textsf{mathpazo}] 用于Palatino；
     \item[……] 一些只在你使用的发行版中的包……
@@ -854,7 +854,7 @@ de vos documents personnels.\end{verbatim}
   \end{verbatim}
   \end{dmd}
 
-正如9.4.1小节所说，这代表着，通过为三个字体族——“罗马”、“非衬线”，以及“打字机”指定\LaTeX 的标准名，我们重新定义了它们。如\dm{pcn}代表PostScript NewCentury、\dm{pag}代表PostScript AvantGarde等。这些标准名在9.4.2小节的表格中已经给出。
+正如9.4.1小节所说，这代表着，通过为三个字体族——``罗马''、``非衬线''，以及``打字机''指定\LaTeX 的标准名，我们重新定义了它们。如\dm{pcn}代表PostScript NewCentury、\dm{pag}代表PostScript AvantGarde等。这些标准名在9.4.2小节的表格中已经给出。
 
 \subsubsection{局部切换字体}
 
@@ -979,7 +979,7 @@ de lire ce texte} après.\end{verbatim}
 \item[\prout 项目标签：]\makebox[0pt][r]{\dimension{\labelsep}{（2）}}尺寸\verb+\labelsep+［如序号（2）所示］定义了项目标签和段首的间隔。\verb+\labelwidth+［如序号（3）所示］定义了包含项目标签的字盒的宽度。
 
   \makebox[0pt][r]{\dimension{\listparindent}{（5）}}如果我们在列表的一个入口中切换了段落，那么新的段落会依照尺寸\verb+\listparindent+［如序号（5）所示］缩进，默认为0。
-\item[“足够”重要的注意事项：]
+\item[``足够''重要的注意事项：]
   \makebox[0pt][r]{\dimension{\labelsep}{（2）}}如果项目标签的宽度小于\verb+\labelwidth+，那么文本会插入宽度为\verb+\labelwidth+的字盒中。对于相反的情况，正如此处展示的那样，项目标签的文本会插入带有足够宽度的字盒中，文本也会因此缩进。
 \end{listetest}
 
@@ -1097,8 +1097,8 @@ de lire ce texte} après.\end{verbatim}
     后文后文后文
 }
 \begin{verbatim}
-前文前文前文前文前文前文前文前文前文前文前文
-前文前文
+前文前文前文前文前文前文前文前文前文前文
+前文前文前文
 \begin{listebasique}
     \item[X]  o o o o o o o o o o o o o o
         o o o o o o o o o o o o o o o o o
@@ -1106,8 +1106,8 @@ de lire ce texte} après.\end{verbatim}
         u u u u u u u u u u u u u u u u u
     \item[一个东西] v v v v v v v v v v v
 \end{listebasique}
-后文后文后文后文后文后文后文后文后文后文后文
-后文后文后文\end{verbatim}
+后文后文后文后文后文后文后文后文后文后文
+后文后文后文后文\end{verbatim}
 \end{codelist}
 
 对于没有列表标签的情况，则可以这样使用：
@@ -1123,14 +1123,14 @@ de lire ce texte} après.\end{verbatim}
     后文后文后文
 }
 \begin{verbatim}
-前文前文前文前文前文前文前文前文前文前文前文
-前文前文
+前文前文前文前文前文前文前文前文前文前文
+前文前文前文
 \begin{listebasique}
     \item[] e e e e e e e e e e e e e e e e
         e e e e e e e e e e e e e e e e e e
 \end{listebasique}
-后文后文后文后文后文后文后文后文后文后文后文
-后文后文后文\end{verbatim}
+后文后文后文后文后文后文后文后文后文后文
+后文后文后文后文\end{verbatim}
 \end{codelist}
 
 \subsection{示例}
@@ -1141,10 +1141,10 @@ B.2节中，描述\LaTeX 辅助文件的列表是使用如下代码生成的：
 \begin{list}{}{%
     % largeur de la boîte englobant le label :
           \setlength{\labelwidth}{1cm}
-    % espace entre paragraphe et l ’ étiquette :
+    % espace entre paragraphe et l ' étiquette :
           \setlength{\labelsep}{8pt}
     % marge de gauche :
-    \setlength{\leftmargin}{\labelwidth+\labelsep} \renewcommand{\makelabel}[1]{% production de l’étiquette : 
+    \setlength{\leftmargin}{\labelwidth+\labelsep} \renewcommand{\makelabel}[1]{% production de l'étiquette : 
     \framebox[\labelwidth]{\texttt{##1}}}}}{\end{list}}
 
 \begin{codelist}[9.18]{
@@ -1270,7 +1270,7 @@ B.2节中，描述\LaTeX 辅助文件的列表是使用如下代码生成的：
 \verb+\newcounter{cptquestion}+
 \end{dmd}
 
-接下来，每个列表入口由题号和一个“美观”的铅笔图标构成，可以借助以下指令来达到我们的目的：
+接下来，每个列表入口由题号和一个``美观''的铅笔图标构成，可以借助以下指令来达到我们的目的：
 
 \begin{dmd}
 \begin{verbatim}
@@ -1285,7 +1285,7 @@ B.2节中，描述\LaTeX 辅助文件的列表是使用如下代码生成的：
 \verb|\renewcommand{\makelabel}[1]{\etiquettequestion{##1}}}}|
 \end{dmd}
 
-这样的重定义使其调用我们“美观”的铅笔图标。指令\verb|\etiquettequestion|的第一个也是唯一一个参数由表达式\verb+##1+传入。实际上，在定义环境\dm{question}的语境中，\verb|#1|就成为了该语境的第一个参数。
+这样的重定义使其调用我们``美观''的铅笔图标。指令\verb|\etiquettequestion|的第一个也是唯一一个参数由表达式\verb+##1+传入。实际上，在定义环境\dm{question}的语境中，\verb|#1|就成为了该语境的第一个参数。
 
 本书附录B中可以找到包的列表。生成这个列表的代码如下：
 
@@ -1360,7 +1360,7 @@ B.2节中，描述\LaTeX 辅助文件的列表是使用如下代码生成的：
         \subfloat[创建段落字盒使项目标签和段落重叠]{%
           \label{fig:9.3b}
           \includegraphics[width=0.4\linewidth]{img/liste-glo-2}}
-      \caption{列表“术语字典”中项目标签的位置确定}
+      \caption{列表``术语字典''中项目标签的位置确定}
       \label{fig:9.3}
     \end{center}
 \end{figure}
@@ -1381,7 +1381,7 @@ B.2节中，描述\LaTeX 辅助文件的列表是使用如下代码生成的：
 {\end{list}}\end{verbatim}
 \end{dmd}
 
-\verb|\itemsep|的值\verb|.8\baselineskip|针对每个列表入口插入了空白，可以项目标签“透透气”。以下指令用于生成包含列表入口的字盒，可以使段落重叠在上面：
+\verb|\itemsep|的值\verb|.8\baselineskip|针对每个列表入口插入了空白，可以项目标签``透透气''。以下指令用于生成包含列表入口的字盒，可以使段落重叠在上面：
 
 \begin{dmd}
 \begin{verbatim}
@@ -1423,7 +1423,7 @@ B.2节中，描述\LaTeX 辅助文件的列表是使用如下代码生成的：
       }}%
     }
 
-\begin{codelist}[]{
+\begin{codelist}[9.21]{
     \begin{leglossaire}
         \renewcommand{\boiteentreeglossaire}{%
         \fboiteentreeglossaire}% 
@@ -1448,9 +1448,9 @@ B.2节中，描述\LaTeX 辅助文件的列表是使用如下代码生成的：
 \end{leglossaire}\end{verbatim}
 \end{codelist}
 
-\section{被“打包成盒”的环境}
+\section{被``打包成盒''的环境}
 
-本章讨论环境\dm{lrbox}。它可以将一个环境中的“内容”存入字盒中，经常适用于解决将对象打包为字盒的日常问题。接下来的例子中，我们会看到如何使用这种结构。
+本章讨论环境\dm{lrbox}。它可以将一个环境中的``内容''存入字盒中，经常适用于解决将对象打包为字盒的日常问题。接下来的例子中，我们会看到如何使用这种结构。
 
 \subsection{原则}
 
@@ -1526,11 +1526,11 @@ B.2节中，描述\LaTeX 辅助文件的列表是使用如下代码生成的：
 \newsavebox{\boiteremarque} 
 \newenvironment{remarque}{%
     % begin条文
-    \begin{lrbox}{\boiteremarque}% 开始“打包成盒”
+    \begin{lrbox}{\boiteremarque}% 开始``打包成盒''
     \begin{minipage}{.8\textwidth}}{%
     % end条文
     \end{minipage}
-    \end{lrbox}% 结束“打包成盒”
+    \end{lrbox}% 结束``打包成盒''
     % 生成带框的字盒
     \begin{center}
         \fbox{\usebox{\boiteremarque}}
@@ -1540,11 +1540,11 @@ B.2节中，描述\LaTeX 辅助文件的列表是使用如下代码生成的：
 \newsavebox{\boiteremarque} 
 \renewenvironment{remarque}{%
     % begin条文
-    \begin{lrbox}{\boiteremarque}% 开始“打包成盒”
+    \begin{lrbox}{\boiteremarque}% 开始``打包成盒''
     \begin{minipage}{.8\textwidth}}{%
     % end条文
     \end{minipage}
-    \end{lrbox}% 结束“打包成盒”
+    \end{lrbox}% 结束``打包成盒''
     % 生成带框的字盒
     \begin{center}
         \fbox{\usebox{\boiteremarque}}
