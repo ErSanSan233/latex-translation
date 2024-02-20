@@ -16,3 +16,4 @@ original-book/*
 .DS_Store
 *.mtc*
 *.maf
+.DS_Store
