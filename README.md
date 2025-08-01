@@ -2,6 +2,8 @@
 
 ---
 
+[![IIIA-0](https://img.shields.io/badge/IIIA-0-FAB689)](https://github.com/ErSanSan233/IIIA)
+
 偶然间发现了这本名为[*Tout ce que vous avez toujours voulu savoir sur LaTeX sans jamais avoir osé le demander*](https://archives.framabook.org/tout-sur-latex/index.html)的图书，其中涉及了丰富且实用的排版技巧，遂将其翻译为中文，供大家阅读参考。
 
 ## 编译和阅读
